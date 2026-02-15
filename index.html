@@ -348,6 +348,35 @@
             .result-box {
                 padding: 28px 24px;
             }
+
+            /* Mobile theme toggle: icon-only, sticky bottom-right */
+            .theme-toggle {
+                position: fixed !important;
+                top: auto !important;
+                right: 20px !important;
+                bottom: 20px !important;
+                left: auto !important;
+                width: 48px;
+                height: 48px;
+                padding: 0;
+                border-radius: 50%;
+                justify-content: center;
+                background: #2d1b69;
+                border: 1px solid #3a2578;
+                box-shadow: 0 2px 12px rgba(45, 27, 105, 0.35);
+                font-size: 1.3rem;
+                z-index: 9999;
+            }
+
+            .theme-toggle .theme-label {
+                display: none;
+            }
+
+            body.dark .theme-toggle {
+                background: #3d3530 !important;
+                border-color: #4e443d !important;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            }
         }
 
         .comparison-note {
@@ -484,19 +513,19 @@
             background: rgba(134, 134, 139, 0.08);
         }
 
-        /* Dark mode toggle */
+        /* Dark mode toggle — light mode: dark black-purple */
         .theme-toggle {
             position: absolute;
             top: 0;
             right: 0;
-            background: none;
-            border: 1px solid #d2d2d7;
+            background: #2d1b69;
+            border: 1px solid #3a2578;
             border-radius: 100px;
             padding: 8px 16px;
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 500;
-            color: #86868b;
+            color: #d4ccf0;
             font-family: inherit;
             transition: all 0.2s;
             display: flex;
@@ -505,8 +534,8 @@
         }
 
         .theme-toggle:hover {
-            background: #f5f5f7;
-            border-color: #b0b0b5;
+            background: #3a2578;
+            border-color: #482e8a;
         }
 
         .header {
@@ -700,13 +729,14 @@
         }
 
         body.dark .theme-toggle {
-            color: #98989f;
-            border-color: #38383a;
+            background: #3d3530;
+            border-color: #4e443d;
+            color: #e8ddd0;
         }
 
         body.dark .theme-toggle:hover {
-            background: #2c2c2e;
-            border-color: #48484a;
+            background: #4e443d;
+            border-color: #5f5348;
         }
 
         body.dark .form-section h2 span {
@@ -727,7 +757,7 @@
         <div class="header">
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
-                <span id="themeLabel">Dark Mode</span>
+                <span id="themeLabel" class="theme-label">Dark Mode</span>
             </button>
             <div style="margin-bottom: 8px;">
                 <div style="font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; color: #1d1d1f; line-height: 1;" class="logo-text">
