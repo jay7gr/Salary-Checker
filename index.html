@@ -55,6 +55,14 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        .page-layout {
+            display: flex;
+            gap: 24px;
+            max-width: 1200px;
+            width: 100%;
+            align-items: flex-start;
+        }
+
         .container {
             background: white;
             border-radius: 24px;
@@ -63,6 +71,148 @@
             width: 100%;
             padding: 48px 52px;
             align-self: flex-start;
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 40px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+        }
+
+        .sidebar-card h3 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+        }
+
+        /* Cost of Living Rankings */
+        .ranking-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            background: #f5f5f7;
+            border-radius: 10px;
+            padding: 3px;
+        }
+
+        .ranking-tab {
+            flex: 1;
+            padding: 7px 8px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            background: transparent;
+            color: #86868b;
+            transition: all 0.2s;
+        }
+
+        .ranking-tab.active {
+            background: white;
+            color: #1d1d1f;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ranking-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ranking-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .ranking-city {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .ranking-value {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #86868b;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .ranking-bar-bg {
+            height: 6px;
+            background: #e8e8ed;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .ranking-bar-fill {
+            height: 100%;
+            background: #2563eb;
+            border-radius: 3px;
+            transition: width 0.4s ease-out;
+        }
+
+        /* Currency Ticker */
+        .ticker-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticker-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f5;
+        }
+
+        .ticker-row:last-child {
+            border-bottom: none;
+        }
+
+        .ticker-currency {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .ticker-rate {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #86868b;
+            font-variant-numeric: tabular-nums;
         }
 
         .header {
@@ -82,6 +232,24 @@
             color: #86868b;
             font-size: 1.15rem;
             font-weight: 400;
+        }
+
+        .blog-link {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2563eb;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: rgba(37, 99, 235, 0.08);
+            transition: all 0.2s;
+        }
+
+        .blog-link:hover {
+            background: rgba(37, 99, 235, 0.15);
+            transform: translateY(-1px);
         }
 
         .form-section {
@@ -344,6 +512,22 @@
                 padding: 20px 12px;
             }
 
+            .page-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                max-height: none;
+                overflow-y: visible;
+            }
+
+            .sidebar-card {
+                border-radius: 20px;
+            }
+
             .container {
                 padding: 28px 24px;
                 border-radius: 20px;
@@ -355,6 +539,12 @@
 
             .header p {
                 font-size: 1rem;
+            }
+
+            .blog-link {
+                font-size: 0.78rem;
+                padding: 7px 16px;
+                margin-top: 10px;
             }
 
             .section-subtitle {
@@ -600,6 +790,15 @@
             color: #86868b;
         }
 
+        body.dark .blog-link {
+            color: #5b9aff;
+            background: rgba(91, 154, 255, 0.1);
+        }
+
+        body.dark .blog-link:hover {
+            background: rgba(91, 154, 255, 0.18);
+        }
+
         body.dark .form-section + .form-section {
             border-top-color: #38383a;
         }
@@ -790,9 +989,160 @@
         body.dark .logo-option svg {
             color: #f5f5f7;
         }
+
+        /* Dark mode — sidebar */
+        body.dark .sidebar-card {
+            background: #1c1c1e;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark .sidebar-card h3 {
+            color: #f5f5f7;
+        }
+
+        body.dark .ranking-tabs {
+            background: #2c2c2e;
+        }
+
+        body.dark .ranking-tab {
+            color: #86868b;
+        }
+
+        body.dark .ranking-tab.active {
+            background: #3a3a3c;
+            color: #f5f5f7;
+            box-shadow: none;
+        }
+
+        body.dark .ranking-city {
+            color: #f5f5f7;
+        }
+
+        body.dark .ranking-value {
+            color: #98989f;
+        }
+
+        body.dark .ranking-bar-bg {
+            background: #38383a;
+        }
+
+        body.dark .ranking-bar-fill {
+            background: #3b82f6;
+        }
+
+        body.dark .ticker-row {
+            border-bottom-color: #38383a;
+        }
+
+        body.dark .ticker-currency {
+            color: #f5f5f7;
+        }
+
+        body.dark .ticker-rate {
+            color: #98989f;
+        }
+
+        /* Burger button — hidden on desktop, shown on mobile */
+        .sidebar-burger {
+            display: none;
+        }
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-burger {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                z-index: 9999;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                border: 1px solid #d2d2d7;
+                background: white;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+                cursor: pointer;
+                font-size: 1.3rem;
+                padding: 0;
+                font-family: inherit;
+                transition: all 0.2s;
+            }
+
+            body.dark .sidebar-burger {
+                background: #1c1c1e;
+                border-color: #38383a;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            }
+
+            .sidebar-burger.active .burger-icon {
+                display: none;
+            }
+
+            .sidebar-burger.active::after {
+                content: '✕';
+                font-size: 1.2rem;
+                color: #86868b;
+            }
+
+            body.dark .sidebar-burger.active::after {
+                color: #98989f;
+            }
+
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 9997;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+                opacity: 1;
+            }
+
+            .sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                right: -320px;
+                bottom: 0;
+                width: 300px !important;
+                max-height: 100vh !important;
+                padding: 20px;
+                background: #f5f5f7;
+                z-index: 9998;
+                transition: right 0.3s ease;
+                overflow-y: auto !important;
+                border-radius: 0 !important;
+                gap: 16px;
+            }
+
+            body.dark .sidebar {
+                background: #000000;
+            }
+
+            .sidebar.open {
+                right: 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <button class="sidebar-burger" id="sidebarBurger" aria-label="Toggle stats panel">
+        <span class="burger-icon">📊</span>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="page-layout">
     <div class="container">
         <div class="header">
             <button class="theme-toggle" id="themeToggle">
@@ -806,6 +1156,7 @@
                 <div style="width: 40px; height: 3px; background: #2563eb; border-radius: 2px; margin: 10px auto 0;"></div>
             </div>
             <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;">Compare your salary across 100 global cities</p>
+            <a href="https://blog.salary-converter.com" class="blog-link">📝 Read our Blog</a>
         </div>
 
         <div class="error-message" id="error"></div>
@@ -903,6 +1254,59 @@
             <div class="comparison-note" id="comparisonNote"></div>
             <div class="explanation-section" id="explanationSection"></div>
         </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-card" id="coliRankings">
+            <h3>📊 Cost of Living</h3>
+            <div class="ranking-tabs">
+                <button class="ranking-tab active" data-tab="most">Most Expensive</button>
+                <button class="ranking-tab" data-tab="least">Least Expensive</button>
+            </div>
+            <!-- Most Expensive (visible by default) -->
+            <div class="ranking-list" id="rankingMost">
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Zurich</span><span class="ranking-value">122.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Geneva</span><span class="ranking-value">118.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 97%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">New York</span><span class="ranking-value">100</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 82%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">San Francisco</span><span class="ranking-value">97.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 80%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Singapore</span><span class="ranking-value">87.7</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 72%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">London</span><span class="ranking-value">87.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 71%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Copenhagen</span><span class="ranking-value">85.7</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 70%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Amsterdam</span><span class="ranking-value">82.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 67%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Boston</span><span class="ranking-value">82.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 67%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Tel Aviv</span><span class="ranking-value">81.3</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 66%"></div></div></div>
+            </div>
+            <!-- Least Expensive (hidden by default) -->
+            <div class="ranking-list" id="rankingLeast" style="display: none;">
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Chiang Mai</span><span class="ranking-value">22.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Bucharest</span><span class="ranking-value">22.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Mumbai</span><span class="ranking-value">22.3</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 99%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Casablanca</span><span class="ranking-value">22.1</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 98%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Bangalore</span><span class="ranking-value">20.8</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 92%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Medellín</span><span class="ranking-value">20.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 90%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Delhi</span><span class="ranking-value">19.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 86%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Marrakech</span><span class="ranking-value">19.2</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 85%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Chennai</span><span class="ranking-value">18.9</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 84%"></div></div></div>
+                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Cairo</span><span class="ranking-value">16.8</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 74%"></div></div></div>
+            </div>
+        </div>
+
+        <div class="sidebar-card" id="currencyTicker">
+            <h3>💱 Exchange Rates <span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.7rem; color: #86868b;">vs GBP</span></h3>
+            <div class="ticker-list">
+                <div class="ticker-row"><span class="ticker-currency">USD</span><span class="ticker-rate">1.328</span></div>
+                <div class="ticker-row"><span class="ticker-currency">EUR</span><span class="ticker-rate">1.126</span></div>
+                <div class="ticker-row"><span class="ticker-currency">JPY</span><span class="ticker-rate">206</span></div>
+                <div class="ticker-row"><span class="ticker-currency">CHF</span><span class="ticker-rate">1.076</span></div>
+                <div class="ticker-row"><span class="ticker-currency">AUD</span><span class="ticker-rate">1.887</span></div>
+                <div class="ticker-row"><span class="ticker-currency">CAD</span><span class="ticker-rate">1.798</span></div>
+                <div class="ticker-row"><span class="ticker-currency">SGD</span><span class="ticker-rate">1.730</span></div>
+                <div class="ticker-row"><span class="ticker-currency">AED</span><span class="ticker-rate">4.811</span></div>
+                <div class="ticker-row"><span class="ticker-currency">INR</span><span class="ticker-rate">111</span></div>
+                <div class="ticker-row"><span class="ticker-currency">CNY</span><span class="ticker-rate">8.940</span></div>
+            </div>
+        </div>
+    </aside>
     </div>
 
     <script>
@@ -1245,7 +1649,8 @@
                 'Notting Hill': 1.28, 'Soho': 1.22, 'Shoreditch': 1.10,
                 'Camden': 1.05, 'Islington': 1.12, 'Brixton': 0.88,
                 'Hackney': 0.92, 'Peckham': 0.82, 'Canary Wharf': 1.15,
-                'Greenwich': 0.90, 'Clapham': 0.95, 'Stratford': 0.78
+                'Greenwich': 0.90, 'Clapham': 0.95, 'Stratford': 0.78,
+                'Marylebone': 1.32, 'Hampstead': 1.30
             },
             'Paris': {
                 'Le Marais (3rd/4th)': 1.30, 'Saint-Germain (6th)': 1.35, 'Champs-Élysées (8th)': 1.40,
@@ -2176,6 +2581,39 @@
         if (localStorage.getItem('theme') === 'dark') {
             setTheme(true);
         }
+
+        // === SIDEBAR BURGER MENU (mobile) ===
+        const sidebarBurger = document.getElementById('sidebarBurger');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebar = document.querySelector('.sidebar');
+
+        function toggleSidebar() {
+            const isOpen = sidebar.classList.contains('open');
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
+                sidebarBurger.classList.remove('active');
+            } else {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('show');
+                sidebarBurger.classList.add('active');
+            }
+        }
+
+        sidebarBurger.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+
+        // === SIDEBAR COMPONENTS ===
+
+        // Cost of Living Rankings — tab switching (static HTML, SEO-friendly)
+        document.querySelectorAll('.ranking-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('rankingMost').style.display = tab.dataset.tab === 'most' ? '' : 'none';
+                document.getElementById('rankingLeast').style.display = tab.dataset.tab === 'least' ? '' : 'none';
+            });
+        });
 
         // Initialize
         populateSelects();
