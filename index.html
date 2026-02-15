@@ -76,10 +76,19 @@
             font-weight: 600;
             margin-bottom: 22px;
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 8px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
+            flex-wrap: wrap;
+        }
+
+        .section-subtitle {
+            text-transform: none;
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #999;
+            letter-spacing: 0;
         }
 
         .form-group {
@@ -322,6 +331,13 @@
 
             .header p {
                 font-size: 1rem;
+            }
+
+            .section-subtitle {
+                display: block;
+                width: 100%;
+                font-size: 0.75rem;
+                margin-top: -2px;
             }
 
             .two-column {
@@ -807,7 +823,7 @@
         </div>
 
         <div class="form-section">
-            <h2>✈️ Comparable Location <span style="font-weight: 400; font-size: 0.85rem; color: #999;">(what if I were to move to this city?)</span></h2>
+            <h2>✈️ Comparable Location <span class="section-subtitle">(what if I were to move to this city?)</span></h2>
             <div class="two-column">
                 <div class="form-group">
                     <label for="targetCity">Target City</label>
