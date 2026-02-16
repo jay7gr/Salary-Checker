@@ -111,80 +111,6 @@
         }
 
         /* Cost of Living Rankings */
-        .ranking-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 16px;
-            background: #f5f5f7;
-            border-radius: 10px;
-            padding: 3px;
-        }
-
-        .ranking-tab {
-            flex: 1;
-            padding: 7px 8px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            background: transparent;
-            color: #86868b;
-            transition: all 0.2s;
-        }
-
-        .ranking-tab.active {
-            background: white;
-            color: #1d1d1f;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        }
-
-        .ranking-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .ranking-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .ranking-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .ranking-city {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-
-        .ranking-value {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #86868b;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .ranking-bar-bg {
-            height: 6px;
-            background: #e8e8ed;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .ranking-bar-fill {
-            height: 100%;
-            background: #2563eb;
-            border-radius: 3px;
-            transition: width 0.4s ease-out;
-        }
-
         /* Currency Ticker */
 
         .header {
@@ -1126,36 +1052,6 @@
             color: #f5f5f7;
         }
 
-        body.dark .ranking-tabs {
-            background: #2c2c2e;
-        }
-
-        body.dark .ranking-tab {
-            color: #86868b;
-        }
-
-        body.dark .ranking-tab.active {
-            background: #3a3a3c;
-            color: #f5f5f7;
-            box-shadow: none;
-        }
-
-        body.dark .ranking-city {
-            color: #f5f5f7;
-        }
-
-        body.dark .ranking-value {
-            color: #98989f;
-        }
-
-        body.dark .ranking-bar-bg {
-            background: #38383a;
-        }
-
-        body.dark .ranking-bar-fill {
-            background: #3b82f6;
-        }
-
         /* Burger button — hidden on desktop, shown on mobile */
         .sidebar-burger {
             display: none;
@@ -1371,40 +1267,6 @@
     </div>
 
     <aside class="sidebar">
-        <div class="sidebar-card" id="coliRankings">
-            <h3>📊 Cost of Living</h3>
-            <div class="ranking-tabs">
-                <button class="ranking-tab active" data-tab="most">Most Expensive</button>
-                <button class="ranking-tab" data-tab="least">Least Expensive</button>
-            </div>
-            <!-- Most Expensive (visible by default) -->
-            <div class="ranking-list" id="rankingMost">
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Zurich</span><span class="ranking-value">122.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Geneva</span><span class="ranking-value">118.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 97%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">New York</span><span class="ranking-value">100</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 82%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">San Francisco</span><span class="ranking-value">97.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 80%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Singapore</span><span class="ranking-value">87.7</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 72%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">London</span><span class="ranking-value">87.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 71%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Copenhagen</span><span class="ranking-value">85.7</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 70%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Amsterdam</span><span class="ranking-value">82.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 67%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Boston</span><span class="ranking-value">82.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 67%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Tel Aviv</span><span class="ranking-value">81.3</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 66%"></div></div></div>
-            </div>
-            <!-- Least Expensive (hidden by default) -->
-            <div class="ranking-list" id="rankingLeast" style="display: none;">
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Chiang Mai</span><span class="ranking-value">22.6</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Bucharest</span><span class="ranking-value">22.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 100%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Mumbai</span><span class="ranking-value">22.3</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 99%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Casablanca</span><span class="ranking-value">22.1</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 98%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Bangalore</span><span class="ranking-value">20.8</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 92%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Medellín</span><span class="ranking-value">20.4</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 90%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Delhi</span><span class="ranking-value">19.5</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 86%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Marrakech</span><span class="ranking-value">19.2</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 85%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Chennai</span><span class="ranking-value">18.9</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 84%"></div></div></div>
-                <div class="ranking-item"><div class="ranking-item-header"><span class="ranking-city">Cairo</span><span class="ranking-value">16.8</span></div><div class="ranking-bar-bg"><div class="ranking-bar-fill" style="width: 74%"></div></div></div>
-            </div>
-        </div>
-
         <div class="sidebar-card">
             <h3>📝 From the Blog</h3>
             <div id="blogArticlesList" style="display: flex; flex-direction: column; gap: 10px;">
@@ -2789,16 +2651,6 @@
         sidebarOverlay.addEventListener('click', toggleSidebar);
 
         // === SIDEBAR COMPONENTS ===
-
-        // Cost of Living Rankings — tab switching (static HTML, SEO-friendly)
-        document.querySelectorAll('.ranking-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                document.getElementById('rankingMost').style.display = tab.dataset.tab === 'most' ? '' : 'none';
-                document.getElementById('rankingLeast').style.display = tab.dataset.tab === 'least' ? '' : 'none';
-            });
-        });
 
         // === BLOG SIDEBAR: show 3 random articles on each page load ===
         (function() {
