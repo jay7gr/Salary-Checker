@@ -264,7 +264,7 @@
         <div class="content">
             <!-- Live Preview -->
             <div class="preview-section">
-                <iframe id="widgetPreview" src="embed.html" width="420" height="520" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1);"></iframe>
+                <iframe id="widgetPreview" src="embed.html" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1);"></iframe>
             </div>
 
             <!-- Code + Instructions -->
@@ -318,7 +318,7 @@
 
 <script>
     function copyCode() {
-        const code = `<iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        const code = `<iframe src="https://salary-converter.com/embed.html" width="420" height="580" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
         navigator.clipboard.writeText(code).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.textContent = 'Copied!';
@@ -357,7 +357,7 @@
     // Override copy to use current size
     const origCopy = copyCode;
     copyCode = function() {
-        const code = window._currentCode || `<iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        const code = window._currentCode || `<iframe src="https://salary-converter.com/embed.html" width="420" height="580" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
         navigator.clipboard.writeText(code).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.textContent = 'Copied!';
