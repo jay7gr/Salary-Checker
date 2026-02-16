@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Converter Widget</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #ffffff;
+            color: #1d1d1f;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .widget-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .widget-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1d1d1f;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s;
+        }
+
+        .widget-logo:hover {
+            opacity: 0.7;
+        }
+
+        .widget-logo span {
+            color: #2563eb;
+        }
+
+        .widget-subtitle {
+            font-size: 0.75rem;
+            color: #86868b;
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #d2d2d7;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1d1d1f;
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2386868b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .salary-input {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .currency-hint {
+            font-size: 0.7rem;
+            color: #2563eb;
+            margin-top: 4px;
+            min-height: 16px;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid #e8e8ed;
+            margin: 16px 0;
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-calculate:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-calculate:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            background: #f5f5f7;
+            border-radius: 14px;
+            text-align: center;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .result-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
+        }
+
+        .result-breakdown {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .breakdown-stat {
+            text-align: center;
+        }
+
+        .breakdown-stat-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .breakdown-stat-label {
+            font-size: 0.65rem;
+            color: #86868b;
+        }
+
+        .result-note {
+            font-size: 0.75rem;
+            color: #86868b;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .result-note strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .error-msg {
+            display: none;
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .widget-footer {
+            text-align: center;
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .widget-footer a {
+            font-size: 0.7rem;
+            color: #86868b;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .widget-footer a:hover {
+            color: #2563eb;
+        }
+
+        .widget-footer a strong {
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+
+        .widget-footer a strong span {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="widget-header">
+        <a href="https://salary-converter.com" target="_blank" rel="noopener" class="widget-logo">salary<span>:</span>converter</a>
+        <div class="widget-subtitle">Compare salaries across 100 cities</div>
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Current Salary -->
+    <div class="form-group">
+        <label class="form-label">Your Salary</label>
+        <div class="form-row">
+            <input type="text" id="salary" class="salary-input" placeholder="e.g. 75,000" inputmode="numeric">
+            <select id="currentCurrency"></select>
+        </div>
+    </div>
+
+    <!-- Current City -->
+    <div class="form-group">
+        <label class="form-label">Current City</label>
+        <select id="currentCity">
+            <option value="">Select city...</option>
+        </select>
+        <div class="currency-hint" id="currentHint"></div>
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- Target City -->
+    <div class="form-group">
+        <label class="form-label">Compare To</label>
+        <select id="targetCity">
+            <option value="">Select city...</option>
+        </select>
+        <div class="currency-hint" id="targetHint"></div>
+    </div>
+
+    <button class="btn-calculate" id="calcBtn">Check Equivalent Salary</button>
+
+    <div class="result-box" id="resultBox">
+        <div class="result-label">Equivalent Salary</div>
+        <div class="result-amount" id="resultAmount"></div>
+        <div class="result-breakdown">
+            <div class="breakdown-stat">
+                <div class="breakdown-stat-value" id="statRate"></div>
+                <div class="breakdown-stat-label">Exchange Rate</div>
+            </div>
+            <div class="breakdown-stat">
+                <div class="breakdown-stat-value" id="statCOL"></div>
+                <div class="breakdown-stat-label">COL Adjustment</div>
+            </div>
+            <div class="breakdown-stat">
+                <div class="breakdown-stat-value" id="statPower"></div>
+                <div class="breakdown-stat-label">Buying Power</div>
+            </div>
+        </div>
+        <div class="result-note" id="resultNote"></div>
+    </div>
+
+    <div class="widget-footer">
+        <a href="https://salary-converter.com" target="_blank" rel="noopener">Powered by <strong>salary<span>:</span>converter</strong></a>
+    </div>
+
+<script>
+// === DATA ===
+const coliData = {
+    'New York': 100, 'San Francisco': 97.6, 'Los Angeles': 76.3, 'Chicago': 73.2,
+    'Miami': 80.1, 'Austin': 64.8, 'Seattle': 79.5, 'Denver': 65.7, 'Boston': 82.4,
+    'Washington DC': 79.8, 'Houston': 60.2, 'Toronto': 62.3, 'Vancouver': 65.4,
+    'Montreal': 52.1, 'Mexico City': 32.5, 'Cancún': 35.8, 'Panama City': 42.3,
+    'London': 87.5, 'Paris': 46.9, 'Amsterdam': 82.6, 'Berlin': 51.2, 'Munich': 61.5,
+    'Dublin': 72.8, 'Brussels': 50.3, 'Luxembourg City': 68.4, 'Zurich': 122.4,
+    'Geneva': 118.6, 'Edinburgh': 62.1, 'Nice': 52.7, 'Madrid': 38.0, 'Barcelona': 42.1,
+    'Valencia': 33.5, 'Málaga': 31.2, 'Lisbon': 34.7, 'Porto': 30.1, 'Rome': 49.3,
+    'Milan': 57.8, 'Athens': 30.6, 'Split': 31.8, 'Stockholm': 64.3, 'Copenhagen': 85.7,
+    'Helsinki': 58.2, 'Oslo': 78.5, 'Vienna': 48.2, 'Prague': 30.6, 'Budapest': 26.1,
+    'Warsaw': 28.4, 'Krakow': 23.8, 'Bucharest': 22.5, 'Tallinn': 28.9, 'Riga': 25.3,
+    'Istanbul': 23.1, 'Tokyo': 77.3, 'Osaka': 62.8, 'Fukuoka': 51.4, 'Seoul': 68.9,
+    'Hong Kong': 73.6, 'Taipei': 44.8, 'Shanghai': 46.2, 'Beijing': 43.5, 'Shenzhen': 41.9,
+    'Guangzhou': 38.7, 'Singapore': 87.7, 'Bangkok': 37.2, 'Chiang Mai': 22.6,
+    'Phuket': 30.5, 'Kuala Lumpur': 32.8, 'Ho Chi Minh City': 26.4, 'Hanoi': 24.1,
+    'Manila': 26.8, 'Jakarta': 24.5, 'Bali (Denpasar)': 25.3, 'Phnom Penh': 24.8,
+    'Mumbai': 22.3, 'Bangalore': 20.8, 'Delhi': 19.5, 'Chennai': 18.9, 'Sydney': 74.5,
+    'Melbourne': 68.2, 'Perth': 63.5, 'Auckland': 60.8, 'Dubai': 72.4, 'Abu Dhabi': 67.8,
+    'Doha': 69.5, 'Riyadh': 42.6, 'Tel Aviv': 81.3, 'Cape Town': 28.4, 'Nairobi': 24.7,
+    'Lagos': 27.3, 'Cairo': 16.8, 'Marrakech': 19.2, 'Casablanca': 22.1,
+    'São Paulo': 41.8, 'Buenos Aires': 25.6, 'Bogotá': 22.9, 'Lima': 25.8,
+    'Santiago': 33.2, 'Medellín': 20.4, 'Montevideo': 32.5, 'San José (CR)': 31.2,
+    'Playa del Carmen': 30.8
+};
+
+const exchangeRates = {
+    'GBP': 1.0, 'USD': 1.328, 'EUR': 1.126, 'SGD': 1.73, 'JPY': 205.72, 'AED': 4.811,
+    'THB': 41.157, 'AUD': 1.887, 'CAD': 1.798, 'CHF': 1.076, 'CNY': 8.94, 'HKD': 10.4,
+    'INR': 110.5, 'MYR': 5.4, 'NZD': 2.14, 'SEK': 12.09, 'NOK': 13.34, 'DKK': 8.43,
+    'CZK': 30.6, 'HUF': 477, 'PLN': 5.2, 'TRY': 42.5, 'BRL': 6.7, 'MXN': 22.5,
+    'ZAR': 24.2, 'KRW': 1686, 'TWD': 42.0, 'IDR': 20500, 'VND': 33200, 'PHP': 74.5,
+    'ILS': 4.78, 'EGP': 64.8, 'KES': 171.5, 'NGN': 2100, 'MAD': 12.9, 'ARS': 1480,
+    'COP': 5520, 'PEN': 4.92, 'CLP': 1245, 'UYU': 55.8, 'CRC': 672, 'QAR': 4.84,
+    'SAR': 4.98, 'PAB': 1.328, 'RON': 5.62
+};
+
+const cityToCurrency = {
+    'New York': 'USD', 'San Francisco': 'USD', 'Los Angeles': 'USD', 'Chicago': 'USD',
+    'Miami': 'USD', 'Austin': 'USD', 'Seattle': 'USD', 'Denver': 'USD', 'Boston': 'USD',
+    'Washington DC': 'USD', 'Houston': 'USD', 'Toronto': 'CAD', 'Vancouver': 'CAD',
+    'Montreal': 'CAD', 'Mexico City': 'MXN', 'Cancún': 'MXN', 'Panama City': 'USD',
+    'London': 'GBP', 'Edinburgh': 'GBP', 'Paris': 'EUR', 'Amsterdam': 'EUR',
+    'Berlin': 'EUR', 'Munich': 'EUR', 'Dublin': 'EUR', 'Brussels': 'EUR',
+    'Luxembourg City': 'EUR', 'Nice': 'EUR', 'Zurich': 'CHF', 'Geneva': 'CHF',
+    'Madrid': 'EUR', 'Barcelona': 'EUR', 'Valencia': 'EUR', 'Málaga': 'EUR',
+    'Lisbon': 'EUR', 'Porto': 'EUR', 'Rome': 'EUR', 'Milan': 'EUR', 'Athens': 'EUR',
+    'Split': 'EUR', 'Stockholm': 'SEK', 'Copenhagen': 'DKK', 'Helsinki': 'EUR',
+    'Oslo': 'NOK', 'Vienna': 'EUR', 'Prague': 'CZK', 'Budapest': 'HUF', 'Warsaw': 'PLN',
+    'Krakow': 'PLN', 'Bucharest': 'RON', 'Tallinn': 'EUR', 'Riga': 'EUR',
+    'Istanbul': 'TRY', 'Tokyo': 'JPY', 'Osaka': 'JPY', 'Fukuoka': 'JPY', 'Seoul': 'KRW',
+    'Hong Kong': 'HKD', 'Taipei': 'TWD', 'Shanghai': 'CNY', 'Beijing': 'CNY',
+    'Shenzhen': 'CNY', 'Guangzhou': 'CNY', 'Singapore': 'SGD', 'Bangkok': 'THB',
+    'Chiang Mai': 'THB', 'Phuket': 'THB', 'Kuala Lumpur': 'MYR',
+    'Ho Chi Minh City': 'VND', 'Hanoi': 'VND', 'Manila': 'PHP', 'Jakarta': 'IDR',
+    'Bali (Denpasar)': 'IDR', 'Phnom Penh': 'USD', 'Mumbai': 'INR', 'Bangalore': 'INR',
+    'Delhi': 'INR', 'Chennai': 'INR', 'Sydney': 'AUD', 'Melbourne': 'AUD', 'Perth': 'AUD',
+    'Auckland': 'NZD', 'Dubai': 'AED', 'Abu Dhabi': 'AED', 'Doha': 'QAR',
+    'Riyadh': 'SAR', 'Tel Aviv': 'ILS', 'Cape Town': 'ZAR', 'Nairobi': 'KES',
+    'Lagos': 'NGN', 'Cairo': 'EGP', 'Marrakech': 'MAD', 'Casablanca': 'MAD',
+    'São Paulo': 'BRL', 'Buenos Aires': 'ARS', 'Bogotá': 'COP', 'Medellín': 'COP',
+    'Lima': 'PEN', 'Santiago': 'CLP', 'Montevideo': 'UYU', 'San José (CR)': 'CRC',
+    'Playa del Carmen': 'MXN'
+};
+
+// === DOM REFS ===
+const salaryInput = document.getElementById('salary');
+const currentCity = document.getElementById('currentCity');
+const targetCity = document.getElementById('targetCity');
+const currentCurrency = document.getElementById('currentCurrency');
+const currentHint = document.getElementById('currentHint');
+const targetHint = document.getElementById('targetHint');
+const calcBtn = document.getElementById('calcBtn');
+const resultBox = document.getElementById('resultBox');
+const resultAmount = document.getElementById('resultAmount');
+const errorMsg = document.getElementById('errorMsg');
+
+// === INIT ===
+function init() {
+    // Populate city selects
+    const cities = Object.keys(coliData).sort();
+    [currentCity, targetCity].forEach(sel => {
+        cities.forEach(city => {
+            const opt = document.createElement('option');
+            opt.value = city;
+            opt.textContent = city;
+            sel.appendChild(opt);
+        });
+    });
+
+    // Populate currency select
+    Object.keys(exchangeRates).sort().forEach(code => {
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = code;
+        currentCurrency.appendChild(opt);
+    });
+    currentCurrency.value = 'GBP';
+}
+
+// Auto-suggest currency on city change
+function suggestCurrency(city, hintEl) {
+    const currency = cityToCurrency[city];
+    if (currency) {
+        currentCurrency.value = currency;
+        hintEl.textContent = `Currency set to ${currency}`;
+    } else {
+        hintEl.textContent = '';
+    }
+}
+
+currentCity.addEventListener('change', () => {
+    suggestCurrency(currentCity.value, currentHint);
+    targetHint.textContent = '';
+});
+
+targetCity.addEventListener('change', () => {
+    const currency = cityToCurrency[targetCity.value];
+    if (currency) {
+        targetHint.textContent = `Will show result in ${currency}`;
+    } else {
+        targetHint.textContent = '';
+    }
+});
+
+// Salary formatting
+salaryInput.addEventListener('input', () => {
+    let val = salaryInput.value.replace(/[^0-9]/g, '');
+    if (val) {
+        salaryInput.value = parseInt(val).toLocaleString('en-US');
+    }
+});
+
+// Error display
+function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.style.display = 'block';
+    resultBox.style.display = 'none';
+    setTimeout(() => errorMsg.style.display = 'none', 4000);
+}
+
+// === CALCULATE ===
+calcBtn.addEventListener('click', calculate);
+salaryInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') calculate(); });
+
+function calculate() {
+    errorMsg.style.display = 'none';
+
+    const salary = parseFloat(salaryInput.value.replace(/,/g, ''));
+    const fromCity = currentCity.value;
+    const toCity = targetCity.value;
+    const fromCurrency = currentCurrency.value;
+
+    if (!salary || salary <= 0) return showError('Please enter a valid salary');
+    if (!fromCity) return showError('Please select your current city');
+    if (!toCity) return showError('Please select a city to compare');
+    if (fromCity === toCity) return showError('Please select two different cities');
+
+    const fromCOLI = coliData[fromCity];
+    const toCOLI = coliData[toCity];
+    const toCurrency = cityToCurrency[toCity] || fromCurrency;
+
+    // Exchange rate: from → GBP → to
+    const fromRate = exchangeRates[fromCurrency];
+    const toRate = exchangeRates[toCurrency];
+    const xRate = toRate / fromRate;
+
+    // Equivalent salary
+    const equivalent = salary * (toCOLI / fromCOLI) * xRate;
+
+    // Buying power (same salary converted without COL adjustment)
+    const converted = salary * xRate;
+    const buyingPower = ((converted / equivalent) * 100).toFixed(0);
+
+    // Format result
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+    resultAmount.textContent = `${toCurrency} ${formatter.format(Math.round(equivalent))}`;
+
+    // Breakdown
+    document.getElementById('statRate').textContent = `1 ${fromCurrency} = ${xRate < 10 ? xRate.toFixed(3) : xRate.toFixed(1)} ${toCurrency}`;
+    const colRatio = ((toCOLI / fromCOLI) * 100).toFixed(0);
+    document.getElementById('statCOL').textContent = colRatio >= 100 ? `+${colRatio - 100}% higher` : `${100 - colRatio}% lower`;
+    document.getElementById('statPower').textContent = `${buyingPower}%`;
+
+    // Note
+    const diff = ((equivalent - salary * xRate) / (salary * xRate) * 100).toFixed(0);
+    const note = toCOLI > fromCOLI
+        ? `${toCity} costs <strong>${Math.abs(colRatio - 100)}% more</strong> to live in than ${fromCity}`
+        : `${toCity} costs <strong>${Math.abs(colRatio - 100)}% less</strong> to live in than ${fromCity}`;
+    document.getElementById('resultNote').innerHTML = note;
+
+    resultBox.style.display = 'block';
+    resultBox.style.animation = 'none';
+    resultBox.offsetHeight; // trigger reflow
+    resultBox.style.animation = 'slideIn 0.4s ease-out';
+}
+
+init();
+</script>
+
+</body>
+</html>

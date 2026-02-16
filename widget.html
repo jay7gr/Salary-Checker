@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Salary Converter Widget — Free Tool for Your Website</title>
+    <meta name="description" content="Add a free salary comparison widget to your website. Let visitors compare salaries across 100+ cities worldwide.">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            min-height: 100vh;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .page-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1d1d1f;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .page-logo span {
+            color: #2563eb;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-top: 16px;
+            color: #1d1d1f;
+        }
+
+        .page-header p {
+            font-size: 1.05rem;
+            color: #86868b;
+            margin-top: 8px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .preview-section {
+            display: flex;
+            justify-content: center;
+        }
+
+        .preview-section iframe {
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .code-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .code-card h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .code-card p {
+            font-size: 0.85rem;
+            color: #86868b;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .code-block {
+            position: relative;
+            background: #1d1d1f;
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #e8e8ed;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .code-block .tag { color: #ff7b72; }
+        .code-block .attr { color: #79c0ff; }
+        .code-block .val { color: #a5d6ff; }
+
+        .btn-copy {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3a3a3c;
+            color: #e8e8ed;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #4a4a4c;
+        }
+
+        .btn-copy.copied {
+            background: #22c55e;
+            color: white;
+        }
+
+        .customize-section {
+            margin-top: 8px;
+        }
+
+        .customize-section h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #86868b;
+            margin-bottom: 10px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 8px 16px;
+            border: 1.5px solid #d2d2d7;
+            border-radius: 100px;
+            background: white;
+            font-size: 0.8rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1d1d1f;
+        }
+
+        .size-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .size-btn.active {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .feature-item {
+            font-size: 0.8rem;
+            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feature-check {
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .page-footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #d2d2d7;
+        }
+
+        .page-footer a {
+            font-size: 0.85rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 12px;
+        }
+
+        .page-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-section {
+                order: -1;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="page-header">
+            <a href="https://salary-converter.com" class="page-logo">salary<span>:</span>converter</a>
+            <h1>Free Embeddable Widget</h1>
+            <p>Add a salary comparison tool to your website in seconds. Just copy the code and paste it into your HTML.</p>
+        </div>
+
+        <div class="content">
+            <!-- Live Preview -->
+            <div class="preview-section">
+                <iframe id="widgetPreview" src="embed.html" width="420" height="520" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1);"></iframe>
+            </div>
+
+            <!-- Code + Instructions -->
+            <div class="code-section">
+                <div class="code-card">
+                    <h2>Embed Code</h2>
+                    <p>Copy and paste this snippet into your website's HTML.</p>
+                    <div class="code-block">
+                        <button class="btn-copy" id="copyBtn" onclick="copyCode()">Copy</button>
+                        <code id="embedCode"><span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
+  <span class="attr">width</span>=<span class="val">"420"</span>
+  <span class="attr">height</span>=<span class="val">"520"</span>
+  <span class="attr">frameborder</span>=<span class="val">"0"</span>
+  <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span></code>
+                    </div>
+
+                    <div class="customize-section">
+                        <h3>Quick Sizes</h3>
+                        <div class="size-options">
+                            <button class="size-btn" onclick="setSize(360, 520, this)">Compact (360px)</button>
+                            <button class="size-btn active" onclick="setSize(420, 520, this)">Standard (420px)</button>
+                            <button class="size-btn" onclick="setSize(500, 540, this)">Wide (500px)</button>
+                            <button class="size-btn" onclick="setSize('100%', 520, this)">Full Width</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-card">
+                    <h2>What's Included</h2>
+                    <div class="features-list">
+                        <div class="feature-item"><span class="feature-check">✓</span> 100 cities worldwide</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> 43 currencies</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Cost of living data</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Exchange rates</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Responsive design</div>
+                        <div class="feature-item"><span class="feature-check">✓</span> Lightweight (~40KB)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <a href="https://salary-converter.com">Salary Converter Tool</a>
+            <a href="https://blog.salary-converter.com">Blog</a>
+        </div>
+    </div>
+
+<script>
+    function copyCode() {
+        const code = `<iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('copyBtn');
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
+    function setSize(w, h, btn) {
+        const iframe = document.getElementById('widgetPreview');
+        iframe.width = w;
+        iframe.height = h;
+
+        // Update active state
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update embed code display
+        const widthVal = typeof w === 'string' ? w : w;
+        const codeEl = document.getElementById('embedCode');
+        codeEl.innerHTML = `<span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
+  <span class="attr">width</span>=<span class="val">"${widthVal}"</span>
+  <span class="attr">height</span>=<span class="val">"${h}"</span>
+  <span class="attr">frameborder</span>=<span class="val">"0"</span>
+  <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span>`;
+
+        // Update copy function dynamically
+        window._currentCode = `<iframe src="https://salary-converter.com/embed.html" width="${widthVal}" height="${h}" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+    }
+
+    // Override copy to use current size
+    const origCopy = copyCode;
+    copyCode = function() {
+        const code = window._currentCode || `<iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('copyBtn');
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    };
+</script>
+
+</body>
+</html>
