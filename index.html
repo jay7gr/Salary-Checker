@@ -209,7 +209,8 @@
         }
 
         .nav-dropdown a {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 10px 14px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -224,7 +225,11 @@
         }
 
         .nav-dropdown a span {
+            display: inline-flex;
+            width: 20px;
             margin-right: 8px;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .blog-article-card {
@@ -630,6 +635,12 @@
 
             .nav-burger {
                 display: flex;
+                top: -8px;
+                left: 0;
+            }
+
+            .nav-dropdown {
+                left: 0;
             }
 
             .section-subtitle {
