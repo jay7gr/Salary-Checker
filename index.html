@@ -147,6 +147,21 @@
             opacity: 0.7;
         }
 
+        .widget-link {
+            position: absolute;
+            top: 18px;
+            left: 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .widget-link:hover {
+            opacity: 0.7;
+        }
+
         .blog-article-card {
             display: block;
             text-decoration: none;
@@ -547,6 +562,14 @@
                 position: static;
                 display: block;
                 text-align: center;
+                margin-bottom: 4px;
+                font-size: 0.75rem;
+            }
+
+            .widget-link {
+                position: static;
+                display: block;
+                text-align: center;
                 margin-bottom: 12px;
                 font-size: 0.75rem;
             }
@@ -795,6 +818,10 @@
         }
 
         body.dark .blog-link {
+            color: #5b9aff;
+        }
+
+        body.dark .widget-link {
             color: #5b9aff;
         }
 
@@ -1156,6 +1183,7 @@
     <div class="container">
         <div class="header">
             <a href="https://blog.salary-converter.com" class="blog-link">Read our Blog</a>
+            <a href="https://salary-converter.com/widget.html" class="widget-link">Free Widget</a>
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
                 <span id="themeLabel" class="theme-label">Dark Mode</span>
