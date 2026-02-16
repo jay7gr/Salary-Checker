@@ -185,35 +185,6 @@
         }
 
         /* Currency Ticker */
-        .ticker-list {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .ticker-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f5;
-        }
-
-        .ticker-row:last-child {
-            border-bottom: none;
-        }
-
-        .ticker-currency {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #1d1d1f;
-        }
-
-        .ticker-rate {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #86868b;
-            font-variant-numeric: tabular-nums;
-        }
 
         .header {
             text-align: center;
@@ -235,21 +206,79 @@
         }
 
         .blog-link {
-            display: inline-block;
-            margin-top: 14px;
-            font-size: 0.85rem;
-            font-weight: 500;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: #2563eb;
             text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 20px;
+            transition: opacity 0.2s;
+        }
+
+        .blog-link:hover {
+            opacity: 0.7;
+        }
+
+        .blog-article-card {
+            display: block;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 14px;
+            background: #f5f5f7;
+            transition: all 0.2s;
+        }
+
+        .blog-article-card:hover {
+            background: #ededf0;
+            transform: translateY(-2px);
+        }
+
+        .blog-article-tag {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #2563eb;
+            margin-bottom: 6px;
+        }
+
+        .blog-article-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            line-height: 1.35;
+            margin-bottom: 6px;
+        }
+
+        .blog-article-excerpt {
+            font-size: 0.75rem;
+            color: #86868b;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .blog-article-meta {
+            font-size: 0.65rem;
+            color: #aeaeb2;
+        }
+
+        .blog-card-cta {
+            display: block;
+            text-align: center;
+            margin-top: 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+            padding: 9px 16px;
+            border-radius: 10px;
             background: rgba(37, 99, 235, 0.08);
             transition: all 0.2s;
         }
 
-        .blog-link:hover {
+        .blog-card-cta:hover {
             background: rgba(37, 99, 235, 0.15);
-            transform: translateY(-1px);
         }
 
         .form-section {
@@ -542,9 +571,11 @@
             }
 
             .blog-link {
-                font-size: 0.78rem;
-                padding: 7px 16px;
-                margin-top: 10px;
+                position: static;
+                display: block;
+                text-align: center;
+                margin-bottom: 12px;
+                font-size: 0.75rem;
             }
 
             .section-subtitle {
@@ -792,10 +823,38 @@
 
         body.dark .blog-link {
             color: #5b9aff;
+        }
+
+        body.dark .blog-article-card {
+            background: #2c2c2e;
+        }
+
+        body.dark .blog-article-card:hover {
+            background: #3a3a3c;
+        }
+
+        body.dark .blog-article-tag {
+            color: #5b9aff;
+        }
+
+        body.dark .blog-article-title {
+            color: #f5f5f7;
+        }
+
+        body.dark .blog-article-excerpt {
+            color: #98989f;
+        }
+
+        body.dark .blog-article-meta {
+            color: #636366;
+        }
+
+        body.dark .blog-card-cta {
+            color: #5b9aff;
             background: rgba(91, 154, 255, 0.1);
         }
 
-        body.dark .blog-link:hover {
+        body.dark .blog-card-cta:hover {
             background: rgba(91, 154, 255, 0.18);
         }
 
@@ -1030,18 +1089,6 @@
             background: #3b82f6;
         }
 
-        body.dark .ticker-row {
-            border-bottom-color: #38383a;
-        }
-
-        body.dark .ticker-currency {
-            color: #f5f5f7;
-        }
-
-        body.dark .ticker-rate {
-            color: #98989f;
-        }
-
         /* Burger button — hidden on desktop, shown on mobile */
         .sidebar-burger {
             display: none;
@@ -1145,6 +1192,7 @@
     <div class="page-layout">
     <div class="container">
         <div class="header">
+            <a href="https://blog.salary-converter.com" class="blog-link">salary<span style="color: #2563eb;">:</span>converter blog</a>
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
                 <span id="themeLabel" class="theme-label">Dark Mode</span>
@@ -1156,7 +1204,6 @@
                 <div style="width: 40px; height: 3px; background: #2563eb; border-radius: 2px; margin: 10px auto 0;"></div>
             </div>
             <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;">Compare your salary across 100 global cities</p>
-            <a href="https://blog.salary-converter.com" class="blog-link">📝 Read our Blog</a>
         </div>
 
         <div class="error-message" id="error"></div>
@@ -1291,20 +1338,82 @@
             </div>
         </div>
 
-        <div class="sidebar-card" id="currencyTicker">
-            <h3>💱 Exchange Rates <span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 0.7rem; color: #86868b;">vs GBP</span></h3>
-            <div class="ticker-list">
-                <div class="ticker-row"><span class="ticker-currency">USD</span><span class="ticker-rate">1.328</span></div>
-                <div class="ticker-row"><span class="ticker-currency">EUR</span><span class="ticker-rate">1.126</span></div>
-                <div class="ticker-row"><span class="ticker-currency">JPY</span><span class="ticker-rate">206</span></div>
-                <div class="ticker-row"><span class="ticker-currency">CHF</span><span class="ticker-rate">1.076</span></div>
-                <div class="ticker-row"><span class="ticker-currency">AUD</span><span class="ticker-rate">1.887</span></div>
-                <div class="ticker-row"><span class="ticker-currency">CAD</span><span class="ticker-rate">1.798</span></div>
-                <div class="ticker-row"><span class="ticker-currency">SGD</span><span class="ticker-rate">1.730</span></div>
-                <div class="ticker-row"><span class="ticker-currency">AED</span><span class="ticker-rate">4.811</span></div>
-                <div class="ticker-row"><span class="ticker-currency">INR</span><span class="ticker-rate">111</span></div>
-                <div class="ticker-row"><span class="ticker-currency">CNY</span><span class="ticker-rate">8.940</span></div>
+        <div class="sidebar-card">
+            <h3>📝 From the Blog</h3>
+            <div id="blogArticlesList" style="display: flex; flex-direction: column; gap: 10px;">
+                <!-- All 14 articles — JS will randomly show 3 on each page load -->
+                <a href="https://blog.salary-converter.com/articles/how-cost-of-living-affects-your-salary.html" class="blog-article-card" data-blog-article data-tag="Featured" data-title="How Cost of Living Actually Affects Your Salary" data-meta="10 min read · Feb 2026">
+                    <div class="blog-article-tag">Featured</div>
+                    <div class="blog-article-title">How Cost of Living Actually Affects Your Salary</div>
+                    <div class="blog-article-meta">10 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/top-10-cities-for-remote-workers-2026.html" class="blog-article-card" data-blog-article data-tag="Remote Work" data-title="Top 10 Cities for Remote Workers in 2026" data-meta="7 min read · Feb 2026">
+                    <div class="blog-article-tag">Remote Work</div>
+                    <div class="blog-article-title">Top 10 Cities for Remote Workers in 2026</div>
+                    <div class="blog-article-meta">7 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/salary-negotiation-when-relocating-abroad.html" class="blog-article-card" data-blog-article data-tag="Career" data-title="How to Negotiate Your Salary When Relocating Abroad" data-meta="8 min read · Feb 2026">
+                    <div class="blog-article-tag">Career</div>
+                    <div class="blog-article-title">How to Negotiate Your Salary When Relocating Abroad</div>
+                    <div class="blog-article-meta">8 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/london-vs-new-york-true-cost-comparison.html" class="blog-article-card" data-blog-article data-tag="City Guide" data-title="London vs New York: True Cost Comparison" data-meta="9 min read · Feb 2026">
+                    <div class="blog-article-tag">City Guide</div>
+                    <div class="blog-article-title">London vs New York: True Cost Comparison</div>
+                    <div class="blog-article-meta">9 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/most-expensive-cities-in-the-world-2026.html" class="blog-article-card" data-blog-article data-tag="Data" data-title="Most Expensive Cities in the World 2026" data-meta="12 min read · Feb 2026">
+                    <div class="blog-article-tag">Data</div>
+                    <div class="blog-article-title">Most Expensive Cities in the World 2026</div>
+                    <div class="blog-article-meta">12 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/what-is-a-good-salary-by-city-2026.html" class="blog-article-card" data-blog-article data-tag="Guide" data-title="What Is a Good Salary in Your City? 2026 Guide" data-meta="15 min read · Feb 2026">
+                    <div class="blog-article-tag">Guide</div>
+                    <div class="blog-article-title">What Is a Good Salary in Your City? 2026 Guide</div>
+                    <div class="blog-article-meta">15 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/cost-of-living-adjustment-cola-guide-2026.html" class="blog-article-card" data-blog-article data-tag="Finance" data-title="Cost of Living Adjustment (COLA): 2026 Guide" data-meta="10 min read · Feb 2026">
+                    <div class="blog-article-tag">Finance</div>
+                    <div class="blog-article-title">Cost of Living Adjustment (COLA): 2026 Guide</div>
+                    <div class="blog-article-meta">10 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/geographic-pay-differentials-remote-workers-2026.html" class="blog-article-card" data-blog-article data-tag="Remote Work" data-title="Geographic Pay Differentials for Remote Workers" data-meta="9 min read · Feb 2026">
+                    <div class="blog-article-tag">Remote Work</div>
+                    <div class="blog-article-title">Geographic Pay Differentials for Remote Workers</div>
+                    <div class="blog-article-meta">9 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/purchasing-power-parity-explained.html" class="blog-article-card" data-blog-article data-tag="Economics" data-title="Purchasing Power Parity (PPP) Explained" data-meta="11 min read · Feb 2026">
+                    <div class="blog-article-tag">Economics</div>
+                    <div class="blog-article-title">Purchasing Power Parity (PPP) Explained</div>
+                    <div class="blog-article-meta">11 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/affordable-cities-in-europe-for-americans-2026.html" class="blog-article-card" data-blog-article data-tag="Expat Life" data-title="Affordable Cities in Europe for Americans 2026" data-meta="11 min read · Feb 2026">
+                    <div class="blog-article-tag">Expat Life</div>
+                    <div class="blog-article-title">Affordable Cities in Europe for Americans 2026</div>
+                    <div class="blog-article-meta">11 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/tech-salary-comparison-by-city-2026.html" class="blog-article-card" data-blog-article data-tag="Tech" data-title="Tech Salary by City 2026 (Adjusted for Cost of Living)" data-meta="10 min read · Feb 2026">
+                    <div class="blog-article-tag">Tech</div>
+                    <div class="blog-article-title">Tech Salary by City 2026 (Adjusted for Cost of Living)</div>
+                    <div class="blog-article-meta">10 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/dubai-vs-singapore-expat-comparison.html" class="blog-article-card" data-blog-article data-tag="City Guide" data-title="Dubai vs Singapore: Expat Salary &amp; Cost Comparison" data-meta="9 min read · Feb 2026">
+                    <div class="blog-article-tag">City Guide</div>
+                    <div class="blog-article-title">Dubai vs Singapore: Expat Salary &amp; Cost Comparison</div>
+                    <div class="blog-article-meta">9 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/how-to-retire-abroad-cost-of-living-guide.html" class="blog-article-card" data-blog-article data-tag="Retirement" data-title="How to Retire Abroad on a U.S. Salary" data-meta="12 min read · Feb 2026">
+                    <div class="blog-article-tag">Retirement</div>
+                    <div class="blog-article-title">How to Retire Abroad on a U.S. Salary</div>
+                    <div class="blog-article-meta">12 min read · Feb 2026</div>
+                </a>
+                <a href="https://blog.salary-converter.com/articles/average-salary-by-city-2026-global-comparison.html" class="blog-article-card" data-blog-article data-tag="Data" data-title="Average Salary by City 2026: 100-City Comparison" data-meta="14 min read · Feb 2026">
+                    <div class="blog-article-tag">Data</div>
+                    <div class="blog-article-title">Average Salary by City 2026: 100-City Comparison</div>
+                    <div class="blog-article-meta">14 min read · Feb 2026</div>
+                </a>
             </div>
+            <a href="https://blog.salary-converter.com" class="blog-card-cta">View All Articles →</a>
         </div>
     </aside>
     </div>
@@ -2614,6 +2723,19 @@
                 document.getElementById('rankingLeast').style.display = tab.dataset.tab === 'least' ? '' : 'none';
             });
         });
+
+        // === BLOG SIDEBAR: show 3 random articles on each page load ===
+        (function() {
+            const articles = Array.from(document.querySelectorAll('[data-blog-article]'));
+            // Shuffle using Fisher-Yates
+            for (let i = articles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [articles[i], articles[j]] = [articles[j], articles[i]];
+            }
+            // Hide all, then show first 3
+            articles.forEach(a => a.style.display = 'none');
+            articles.slice(0, 3).forEach(a => a.style.display = '');
+        })();
 
         // Initialize
         populateSelects();
