@@ -2666,6 +2666,49 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     # Color for this neighborhood
     nhood_color = '#22c55e' if pct_diff < 0 else '#2563eb' if pct_diff < 15 else '#f59e0b' if pct_diff < 30 else '#ef4444'
 
+    # Build comparison links for this neighborhood
+    nhood_comp_pairs = get_neighborhood_comparison_pairs(city)
+    compare_links_html = ''
+    for cn1, cm1, cn2, cm2 in nhood_comp_pairs:
+        if cn1 == neighborhood or cn2 == neighborhood:
+            cn1_slug = slugify(cn1)
+            cn2_slug = slugify(cn2)
+            other_n = cn2 if cn1 == neighborhood else cn1
+            compare_links_html += f'<a href="/compare/{city_slug}/{cn1_slug}-vs-{cn2_slug}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{neighborhood} vs {other_n}</a>\n'
+
+    # Build city-level comparison links
+    city_comp_links_html = ''
+    # Check which city-vs-city comparisons include this city
+    popular_pairs = [
+        ('London', 'New York'), ('London', 'Dubai'), ('London', 'Singapore'),
+        ('London', 'Paris'), ('New York', 'San Francisco'), ('New York', 'Los Angeles'),
+        ('Dubai', 'Singapore'), ('Singapore', 'Hong Kong'), ('Tokyo', 'Seoul'),
+        ('Paris', 'Berlin'), ('Sydney', 'Melbourne'), ('Bangkok', 'Chiang Mai'),
+    ]
+    for c1, c2 in popular_pairs:
+        if c1 == city or c2 == city:
+            s1 = slugify(c1)
+            s2 = slugify(c2)
+            city_comp_links_html += f'<a href="/compare/{s1}-vs-{s2}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{c1} vs {c2}</a>\n'
+
+    # Build cross-city similar neighborhood links (same cost tier)
+    similar_global_html = ''
+    similar_global = []
+    for other_city, other_nhoods in cityNeighborhoods.items():
+        if other_city == city:
+            continue
+        other_coli = coliData[other_city]
+        for on_name, on_mult in other_nhoods.items():
+            on_abs = other_coli * on_mult
+            if abs(on_abs - nhood_coli) < 5 and abs(on_mult - multiplier) < 0.15:
+                similar_global.append((on_name, other_city, on_abs, on_mult))
+    # Sort by closest COLI match, take top 6
+    similar_global.sort(key=lambda x: abs(x[2] - nhood_coli))
+    for sg_name, sg_city, sg_coli, sg_mult in similar_global[:6]:
+        sg_cs = slugify(sg_city)
+        sg_ns = slugify(sg_name)
+        similar_global_html += f'<a href="/city/{sg_cs}/{sg_ns}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{sg_name}, {sg_city}</a>\n'
+
     # FAQ answers
     if pct_diff > 10:
         expensive_answer = f'Yes, {neighborhood} is one of the more expensive neighborhoods in {city}. It costs about {sign}{pct_diff:.0f}% more than the city average, ranking #{rank_in_city} out of {total_in_city} neighborhoods.'
@@ -2853,6 +2896,28 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </div>
 
+        {f"""<div class="card">
+            <h2>Compare {neighborhood}</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {compare_links_html}
+            </div>
+        </div>""" if compare_links_html else ""}
+
+        {f"""<div class="card">
+            <h2>{city} City Comparisons</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {city_comp_links_html}
+            </div>
+        </div>""" if city_comp_links_html else ""}
+
+        {f"""<div class="card">
+            <h2>Similar Neighborhoods Worldwide</h2>
+            <p style="font-size: 0.85rem; color: #86868b; margin-bottom: 12px;">Neighborhoods with a similar cost of living to {neighborhood}:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {similar_global_html}
+            </div>
+        </div>""" if similar_global_html else ""}
+
         <div class="card">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-item">
@@ -2936,6 +3001,16 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         if on_name != n1 and on_name != n2:
             on_s = slugify(on_name)
             other_links += f'<a href="/city/{city_slug}/{on_s}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{on_name}</a>\n'
+
+    # Related comparison pages (other comparisons in same city)
+    related_comps = get_neighborhood_comparison_pairs(city)
+    related_comp_links = ''
+    for rc_n1, rc_m1, rc_n2, rc_m2 in related_comps:
+        if (rc_n1 == n1 and rc_n2 == n2) or (rc_n1 == n2 and rc_n2 == n1):
+            continue  # Skip self
+        rc_s1 = slugify(rc_n1)
+        rc_s2 = slugify(rc_n2)
+        related_comp_links += f'<a href="/compare/{city_slug}/{rc_s1}-vs-{rc_s2}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{rc_n1} vs {rc_n2}</a>\n'
 
     meta_desc = f'{n1} vs {n2} in {city}: compare cost of living, rent, and salary equivalents. {more_affordable} is {diff_pct:.0f}% more affordable.'
 
@@ -3098,6 +3173,13 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <p>See what you need to earn in {city} to maintain your lifestyle, with neighborhood-level precision.</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </div>
+
+        {f"""<div class="card">
+            <h2>More Comparisons in {city}</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {related_comp_links}
+            </div>
+        </div>""" if related_comp_links else ""}
 
         <div class="card">
             <h2>More Neighborhoods in {city}</h2>
