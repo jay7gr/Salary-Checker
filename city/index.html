@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost of Living by City 2026 — Compare 100 Cities Worldwide | salary:converter</title>
+    <meta name="description" content="Compare cost of living across 100 cities worldwide. See COLI indices, salary equivalents, neighborhood data, and tax rates for every city we track.">
+    <meta name="keywords" content="cost of living by city, city comparison, COLI index, cost of living ranking 2026, cheapest cities, most expensive cities">
+    <meta name="author" content="salary:converter">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/city/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salary-converter.com/city/">
+    <meta property="og:title" content="Cost of Living by City 2026 — 100 Cities Ranked">
+    <meta property="og:description" content="Compare cost of living, salaries, and neighborhoods across 100 cities worldwide.">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Cost of Living by City 2026",
+        "description": "Compare cost of living across 100 cities worldwide",
+        "url": "https://salary-converter.com/city/",
+        "isPartOf": {
+            "@type": "WebSite",
+            "name": "salary:converter",
+            "url": "https://salary-converter.com"
+        }
+    }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            padding: 20px 12px; -webkit-font-smoothing: antialiased;
+        }
+        .page-wrapper { max-width: 960px; margin: 0 auto; }
+        .nav-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }
+        .nav-logo {
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: #1d1d1f; text-decoration: none;
+        }
+        .nav-logo span { color: #2563eb; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            text-decoration: none;
+        }
+        .nav-links a:hover { color: #2563eb; }
+        .hero {
+            background: white; border-radius: 20px; padding: 40px 32px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .hero p { color: #86868b; font-size: 1rem; }
+        .search-box {
+            margin-top: 20px; position: relative; max-width: 400px; margin-left: auto; margin-right: auto;
+        }
+        .search-box input {
+            width: 100%; padding: 12px 16px; border: 2px solid #e5e5ea;
+            border-radius: 12px; font-size: 0.95rem; font-family: inherit;
+            outline: none; transition: border-color 0.2s;
+        }
+        .search-box input:focus { border-color: #2563eb; }
+        .content-card {
+            background: white; border-radius: 20px; padding: 32px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+        }
+        table {
+            width: 100%; border-collapse: collapse; font-size: 0.88rem;
+        }
+        table th {
+            text-align: left; padding: 10px 12px; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            color: #86868b; border-bottom: 2px solid #e5e5ea; font-weight: 600;
+            position: sticky; top: 0; background: white;
+        }
+        table td {
+            padding: 10px 12px; border-bottom: 1px solid #f0f0f2;
+        }
+        table tr:hover td { background: #f9f9fb; }
+        .page-footer {
+            text-align: center; padding: 32px 0 16px; border-top: 1px solid #e5e5ea;
+        }
+        .page-footer a {
+            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+        }
+        .page-footer a:hover { color: #2563eb; }
+        @media (max-width: 768px) {
+            body { padding: 0; background: white; }
+            .page-wrapper { padding: 0 16px; }
+            .hero { border-radius: 0; padding: 32px 16px; box-shadow: none; }
+            .hero h1 { font-size: 1.5rem; }
+            .content-card { border-radius: 16px; padding: 16px; }
+            table { font-size: 0.8rem; }
+            table th, table td { padding: 8px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/blog/">Blog</a>
+                <a href="/widget.html">Widget</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Cost of Living by City 2026</h1>
+            <p>101 cities ranked by cost of living index (New York = 100)</p>
+            <div class="search-box">
+                <input type="text" id="citySearch" placeholder="Search cities..." oninput="filterCities(this.value)">
+            </div>
+        </section>
+
+        <section class="content-card">
+            <table id="cityTable">
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th style="text-align: center;">COLI</th>
+                        <th style="text-align: center;">Currency</th>
+                        <th style="text-align: center;">Neighborhoods</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/zurich.html" style="color: #2563eb; text-decoration: none;">Zurich</a>
+                    </td>
+                    <td>Switzerland</td>
+                    <td style="text-align: center; font-weight: 600;">122.4</td>
+                    <td style="text-align: center;">CHF</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/geneva.html" style="color: #2563eb; text-decoration: none;">Geneva</a>
+                    </td>
+                    <td>Switzerland</td>
+                    <td style="text-align: center; font-weight: 600;">118.6</td>
+                    <td style="text-align: center;">CHF</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/new-york.html" style="color: #2563eb; text-decoration: none;">New York</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">100</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/san-francisco.html" style="color: #2563eb; text-decoration: none;">San Francisco</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">97.6</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/singapore.html" style="color: #2563eb; text-decoration: none;">Singapore</a>
+                    </td>
+                    <td>Singapore</td>
+                    <td style="text-align: center; font-weight: 600;">87.7</td>
+                    <td style="text-align: center;">SGD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/london.html" style="color: #2563eb; text-decoration: none;">London</a>
+                    </td>
+                    <td>United Kingdom</td>
+                    <td style="text-align: center; font-weight: 600;">87.5</td>
+                    <td style="text-align: center;">GBP</td>
+                    <td style="text-align: center;">17</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/copenhagen.html" style="color: #2563eb; text-decoration: none;">Copenhagen</a>
+                    </td>
+                    <td>Denmark</td>
+                    <td style="text-align: center; font-weight: 600;">85.7</td>
+                    <td style="text-align: center;">DKK</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/amsterdam.html" style="color: #2563eb; text-decoration: none;">Amsterdam</a>
+                    </td>
+                    <td>Netherlands</td>
+                    <td style="text-align: center; font-weight: 600;">82.6</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">11</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/boston.html" style="color: #2563eb; text-decoration: none;">Boston</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">82.4</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/tel-aviv.html" style="color: #2563eb; text-decoration: none;">Tel Aviv</a>
+                    </td>
+                    <td>Israel</td>
+                    <td style="text-align: center; font-weight: 600;">81.3</td>
+                    <td style="text-align: center;">ILS</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/miami.html" style="color: #2563eb; text-decoration: none;">Miami</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">80.1</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/washington-dc.html" style="color: #2563eb; text-decoration: none;">Washington DC</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">79.8</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/seattle.html" style="color: #2563eb; text-decoration: none;">Seattle</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">79.5</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/oslo.html" style="color: #2563eb; text-decoration: none;">Oslo</a>
+                    </td>
+                    <td>Norway</td>
+                    <td style="text-align: center; font-weight: 600;">78.5</td>
+                    <td style="text-align: center;">NOK</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/tokyo.html" style="color: #2563eb; text-decoration: none;">Tokyo</a>
+                    </td>
+                    <td>Japan</td>
+                    <td style="text-align: center; font-weight: 600;">77.3</td>
+                    <td style="text-align: center;">JPY</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/los-angeles.html" style="color: #2563eb; text-decoration: none;">Los Angeles</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">76.3</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/sydney.html" style="color: #2563eb; text-decoration: none;">Sydney</a>
+                    </td>
+                    <td>Australia</td>
+                    <td style="text-align: center; font-weight: 600;">74.5</td>
+                    <td style="text-align: center;">AUD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/hong-kong.html" style="color: #2563eb; text-decoration: none;">Hong Kong</a>
+                    </td>
+                    <td>China (SAR)</td>
+                    <td style="text-align: center; font-weight: 600;">73.6</td>
+                    <td style="text-align: center;">HKD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/chicago.html" style="color: #2563eb; text-decoration: none;">Chicago</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">73.2</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/dublin.html" style="color: #2563eb; text-decoration: none;">Dublin</a>
+                    </td>
+                    <td>Ireland</td>
+                    <td style="text-align: center; font-weight: 600;">72.8</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/dubai.html" style="color: #2563eb; text-decoration: none;">Dubai</a>
+                    </td>
+                    <td>UAE</td>
+                    <td style="text-align: center; font-weight: 600;">72.4</td>
+                    <td style="text-align: center;">AED</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/doha.html" style="color: #2563eb; text-decoration: none;">Doha</a>
+                    </td>
+                    <td>Qatar</td>
+                    <td style="text-align: center; font-weight: 600;">69.5</td>
+                    <td style="text-align: center;">QAR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/seoul.html" style="color: #2563eb; text-decoration: none;">Seoul</a>
+                    </td>
+                    <td>South Korea</td>
+                    <td style="text-align: center; font-weight: 600;">68.9</td>
+                    <td style="text-align: center;">KRW</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/luxembourg-city.html" style="color: #2563eb; text-decoration: none;">Luxembourg City</a>
+                    </td>
+                    <td>Luxembourg</td>
+                    <td style="text-align: center; font-weight: 600;">68.4</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/melbourne.html" style="color: #2563eb; text-decoration: none;">Melbourne</a>
+                    </td>
+                    <td>Australia</td>
+                    <td style="text-align: center; font-weight: 600;">68.2</td>
+                    <td style="text-align: center;">AUD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/abu-dhabi.html" style="color: #2563eb; text-decoration: none;">Abu Dhabi</a>
+                    </td>
+                    <td>UAE</td>
+                    <td style="text-align: center; font-weight: 600;">67.8</td>
+                    <td style="text-align: center;">AED</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/denver.html" style="color: #2563eb; text-decoration: none;">Denver</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">65.7</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/vancouver.html" style="color: #2563eb; text-decoration: none;">Vancouver</a>
+                    </td>
+                    <td>Canada</td>
+                    <td style="text-align: center; font-weight: 600;">65.4</td>
+                    <td style="text-align: center;">CAD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/austin.html" style="color: #2563eb; text-decoration: none;">Austin</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">64.8</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/stockholm.html" style="color: #2563eb; text-decoration: none;">Stockholm</a>
+                    </td>
+                    <td>Sweden</td>
+                    <td style="text-align: center; font-weight: 600;">64.3</td>
+                    <td style="text-align: center;">SEK</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/perth.html" style="color: #2563eb; text-decoration: none;">Perth</a>
+                    </td>
+                    <td>Australia</td>
+                    <td style="text-align: center; font-weight: 600;">63.5</td>
+                    <td style="text-align: center;">AUD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/osaka.html" style="color: #2563eb; text-decoration: none;">Osaka</a>
+                    </td>
+                    <td>Japan</td>
+                    <td style="text-align: center; font-weight: 600;">62.8</td>
+                    <td style="text-align: center;">JPY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/toronto.html" style="color: #2563eb; text-decoration: none;">Toronto</a>
+                    </td>
+                    <td>Canada</td>
+                    <td style="text-align: center; font-weight: 600;">62.3</td>
+                    <td style="text-align: center;">CAD</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/edinburgh.html" style="color: #2563eb; text-decoration: none;">Edinburgh</a>
+                    </td>
+                    <td>United Kingdom</td>
+                    <td style="text-align: center; font-weight: 600;">62.1</td>
+                    <td style="text-align: center;">GBP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/munich.html" style="color: #2563eb; text-decoration: none;">Munich</a>
+                    </td>
+                    <td>Germany</td>
+                    <td style="text-align: center; font-weight: 600;">61.5</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/auckland.html" style="color: #2563eb; text-decoration: none;">Auckland</a>
+                    </td>
+                    <td>New Zealand</td>
+                    <td style="text-align: center; font-weight: 600;">60.8</td>
+                    <td style="text-align: center;">NZD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/houston.html" style="color: #2563eb; text-decoration: none;">Houston</a>
+                    </td>
+                    <td>United States</td>
+                    <td style="text-align: center; font-weight: 600;">60.2</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/helsinki.html" style="color: #2563eb; text-decoration: none;">Helsinki</a>
+                    </td>
+                    <td>Finland</td>
+                    <td style="text-align: center; font-weight: 600;">58.2</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/milan.html" style="color: #2563eb; text-decoration: none;">Milan</a>
+                    </td>
+                    <td>Italy</td>
+                    <td style="text-align: center; font-weight: 600;">57.8</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/nice.html" style="color: #2563eb; text-decoration: none;">Nice</a>
+                    </td>
+                    <td>France</td>
+                    <td style="text-align: center; font-weight: 600;">52.7</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/montreal.html" style="color: #2563eb; text-decoration: none;">Montreal</a>
+                    </td>
+                    <td>Canada</td>
+                    <td style="text-align: center; font-weight: 600;">52.1</td>
+                    <td style="text-align: center;">CAD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/fukuoka.html" style="color: #2563eb; text-decoration: none;">Fukuoka</a>
+                    </td>
+                    <td>Japan</td>
+                    <td style="text-align: center; font-weight: 600;">51.4</td>
+                    <td style="text-align: center;">JPY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/berlin.html" style="color: #2563eb; text-decoration: none;">Berlin</a>
+                    </td>
+                    <td>Germany</td>
+                    <td style="text-align: center; font-weight: 600;">51.2</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/brussels.html" style="color: #2563eb; text-decoration: none;">Brussels</a>
+                    </td>
+                    <td>Belgium</td>
+                    <td style="text-align: center; font-weight: 600;">50.3</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/rome.html" style="color: #2563eb; text-decoration: none;">Rome</a>
+                    </td>
+                    <td>Italy</td>
+                    <td style="text-align: center; font-weight: 600;">49.3</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/vienna.html" style="color: #2563eb; text-decoration: none;">Vienna</a>
+                    </td>
+                    <td>Austria</td>
+                    <td style="text-align: center; font-weight: 600;">48.2</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/paris.html" style="color: #2563eb; text-decoration: none;">Paris</a>
+                    </td>
+                    <td>France</td>
+                    <td style="text-align: center; font-weight: 600;">46.9</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/shanghai.html" style="color: #2563eb; text-decoration: none;">Shanghai</a>
+                    </td>
+                    <td>China</td>
+                    <td style="text-align: center; font-weight: 600;">46.2</td>
+                    <td style="text-align: center;">CNY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/taipei.html" style="color: #2563eb; text-decoration: none;">Taipei</a>
+                    </td>
+                    <td>Taiwan</td>
+                    <td style="text-align: center; font-weight: 600;">44.8</td>
+                    <td style="text-align: center;">TWD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/beijing.html" style="color: #2563eb; text-decoration: none;">Beijing</a>
+                    </td>
+                    <td>China</td>
+                    <td style="text-align: center; font-weight: 600;">43.5</td>
+                    <td style="text-align: center;">CNY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/riyadh.html" style="color: #2563eb; text-decoration: none;">Riyadh</a>
+                    </td>
+                    <td>Saudi Arabia</td>
+                    <td style="text-align: center; font-weight: 600;">42.6</td>
+                    <td style="text-align: center;">SAR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/panama-city.html" style="color: #2563eb; text-decoration: none;">Panama City</a>
+                    </td>
+                    <td>Panama</td>
+                    <td style="text-align: center; font-weight: 600;">42.3</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/barcelona.html" style="color: #2563eb; text-decoration: none;">Barcelona</a>
+                    </td>
+                    <td>Spain</td>
+                    <td style="text-align: center; font-weight: 600;">42.1</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">11</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/shenzhen.html" style="color: #2563eb; text-decoration: none;">Shenzhen</a>
+                    </td>
+                    <td>China</td>
+                    <td style="text-align: center; font-weight: 600;">41.9</td>
+                    <td style="text-align: center;">CNY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/sao-paulo.html" style="color: #2563eb; text-decoration: none;">São Paulo</a>
+                    </td>
+                    <td>Brazil</td>
+                    <td style="text-align: center; font-weight: 600;">41.8</td>
+                    <td style="text-align: center;">BRL</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/guangzhou.html" style="color: #2563eb; text-decoration: none;">Guangzhou</a>
+                    </td>
+                    <td>China</td>
+                    <td style="text-align: center; font-weight: 600;">38.7</td>
+                    <td style="text-align: center;">CNY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/madrid.html" style="color: #2563eb; text-decoration: none;">Madrid</a>
+                    </td>
+                    <td>Spain</td>
+                    <td style="text-align: center; font-weight: 600;">38.0</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/bangkok.html" style="color: #2563eb; text-decoration: none;">Bangkok</a>
+                    </td>
+                    <td>Thailand</td>
+                    <td style="text-align: center; font-weight: 600;">37.2</td>
+                    <td style="text-align: center;">THB</td>
+                    <td style="text-align: center;">12</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/cancun.html" style="color: #2563eb; text-decoration: none;">Cancún</a>
+                    </td>
+                    <td>Mexico</td>
+                    <td style="text-align: center; font-weight: 600;">35.8</td>
+                    <td style="text-align: center;">MXN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/lisbon.html" style="color: #2563eb; text-decoration: none;">Lisbon</a>
+                    </td>
+                    <td>Portugal</td>
+                    <td style="text-align: center; font-weight: 600;">34.7</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">11</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/valencia.html" style="color: #2563eb; text-decoration: none;">Valencia</a>
+                    </td>
+                    <td>Spain</td>
+                    <td style="text-align: center; font-weight: 600;">33.5</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/santiago.html" style="color: #2563eb; text-decoration: none;">Santiago</a>
+                    </td>
+                    <td>Chile</td>
+                    <td style="text-align: center; font-weight: 600;">33.2</td>
+                    <td style="text-align: center;">CLP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/kuala-lumpur.html" style="color: #2563eb; text-decoration: none;">Kuala Lumpur</a>
+                    </td>
+                    <td>Malaysia</td>
+                    <td style="text-align: center; font-weight: 600;">32.8</td>
+                    <td style="text-align: center;">MYR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/mexico-city.html" style="color: #2563eb; text-decoration: none;">Mexico City</a>
+                    </td>
+                    <td>Mexico</td>
+                    <td style="text-align: center; font-weight: 600;">32.5</td>
+                    <td style="text-align: center;">MXN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/montevideo.html" style="color: #2563eb; text-decoration: none;">Montevideo</a>
+                    </td>
+                    <td>Uruguay</td>
+                    <td style="text-align: center; font-weight: 600;">32.5</td>
+                    <td style="text-align: center;">UYU</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/split.html" style="color: #2563eb; text-decoration: none;">Split</a>
+                    </td>
+                    <td>Croatia</td>
+                    <td style="text-align: center; font-weight: 600;">31.8</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/malaga.html" style="color: #2563eb; text-decoration: none;">Málaga</a>
+                    </td>
+                    <td>Spain</td>
+                    <td style="text-align: center; font-weight: 600;">31.2</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/san-jose.html" style="color: #2563eb; text-decoration: none;">San José (CR)</a>
+                    </td>
+                    <td>Costa Rica</td>
+                    <td style="text-align: center; font-weight: 600;">31.2</td>
+                    <td style="text-align: center;">CRC</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/playa-del-carmen.html" style="color: #2563eb; text-decoration: none;">Playa del Carmen</a>
+                    </td>
+                    <td>Mexico</td>
+                    <td style="text-align: center; font-weight: 600;">30.8</td>
+                    <td style="text-align: center;">MXN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/athens.html" style="color: #2563eb; text-decoration: none;">Athens</a>
+                    </td>
+                    <td>Greece</td>
+                    <td style="text-align: center; font-weight: 600;">30.6</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/prague.html" style="color: #2563eb; text-decoration: none;">Prague</a>
+                    </td>
+                    <td>Czech Republic</td>
+                    <td style="text-align: center; font-weight: 600;">30.6</td>
+                    <td style="text-align: center;">CZK</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/phuket.html" style="color: #2563eb; text-decoration: none;">Phuket</a>
+                    </td>
+                    <td>Thailand</td>
+                    <td style="text-align: center; font-weight: 600;">30.5</td>
+                    <td style="text-align: center;">THB</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/porto.html" style="color: #2563eb; text-decoration: none;">Porto</a>
+                    </td>
+                    <td>Portugal</td>
+                    <td style="text-align: center; font-weight: 600;">30.1</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/tallinn.html" style="color: #2563eb; text-decoration: none;">Tallinn</a>
+                    </td>
+                    <td>Estonia</td>
+                    <td style="text-align: center; font-weight: 600;">28.9</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/warsaw.html" style="color: #2563eb; text-decoration: none;">Warsaw</a>
+                    </td>
+                    <td>Poland</td>
+                    <td style="text-align: center; font-weight: 600;">28.4</td>
+                    <td style="text-align: center;">PLN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/cape-town.html" style="color: #2563eb; text-decoration: none;">Cape Town</a>
+                    </td>
+                    <td>South Africa</td>
+                    <td style="text-align: center; font-weight: 600;">28.4</td>
+                    <td style="text-align: center;">ZAR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/lagos.html" style="color: #2563eb; text-decoration: none;">Lagos</a>
+                    </td>
+                    <td>Nigeria</td>
+                    <td style="text-align: center; font-weight: 600;">27.3</td>
+                    <td style="text-align: center;">NGN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/manila.html" style="color: #2563eb; text-decoration: none;">Manila</a>
+                    </td>
+                    <td>Philippines</td>
+                    <td style="text-align: center; font-weight: 600;">26.8</td>
+                    <td style="text-align: center;">PHP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/ho-chi-minh-city.html" style="color: #2563eb; text-decoration: none;">Ho Chi Minh City</a>
+                    </td>
+                    <td>Vietnam</td>
+                    <td style="text-align: center; font-weight: 600;">26.4</td>
+                    <td style="text-align: center;">VND</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/budapest.html" style="color: #2563eb; text-decoration: none;">Budapest</a>
+                    </td>
+                    <td>Hungary</td>
+                    <td style="text-align: center; font-weight: 600;">26.1</td>
+                    <td style="text-align: center;">HUF</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/lima.html" style="color: #2563eb; text-decoration: none;">Lima</a>
+                    </td>
+                    <td>Peru</td>
+                    <td style="text-align: center; font-weight: 600;">25.8</td>
+                    <td style="text-align: center;">PEN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/buenos-aires.html" style="color: #2563eb; text-decoration: none;">Buenos Aires</a>
+                    </td>
+                    <td>Argentina</td>
+                    <td style="text-align: center; font-weight: 600;">25.6</td>
+                    <td style="text-align: center;">ARS</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/riga.html" style="color: #2563eb; text-decoration: none;">Riga</a>
+                    </td>
+                    <td>Latvia</td>
+                    <td style="text-align: center; font-weight: 600;">25.3</td>
+                    <td style="text-align: center;">EUR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/bali.html" style="color: #2563eb; text-decoration: none;">Bali (Denpasar)</a>
+                    </td>
+                    <td>Indonesia</td>
+                    <td style="text-align: center; font-weight: 600;">25.3</td>
+                    <td style="text-align: center;">IDR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/phnom-penh.html" style="color: #2563eb; text-decoration: none;">Phnom Penh</a>
+                    </td>
+                    <td>Cambodia</td>
+                    <td style="text-align: center; font-weight: 600;">24.8</td>
+                    <td style="text-align: center;">USD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/nairobi.html" style="color: #2563eb; text-decoration: none;">Nairobi</a>
+                    </td>
+                    <td>Kenya</td>
+                    <td style="text-align: center; font-weight: 600;">24.7</td>
+                    <td style="text-align: center;">KES</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/jakarta.html" style="color: #2563eb; text-decoration: none;">Jakarta</a>
+                    </td>
+                    <td>Indonesia</td>
+                    <td style="text-align: center; font-weight: 600;">24.5</td>
+                    <td style="text-align: center;">IDR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/hanoi.html" style="color: #2563eb; text-decoration: none;">Hanoi</a>
+                    </td>
+                    <td>Vietnam</td>
+                    <td style="text-align: center; font-weight: 600;">24.1</td>
+                    <td style="text-align: center;">VND</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/krakow.html" style="color: #2563eb; text-decoration: none;">Krakow</a>
+                    </td>
+                    <td>Poland</td>
+                    <td style="text-align: center; font-weight: 600;">23.8</td>
+                    <td style="text-align: center;">PLN</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/istanbul.html" style="color: #2563eb; text-decoration: none;">Istanbul</a>
+                    </td>
+                    <td>Turkey</td>
+                    <td style="text-align: center; font-weight: 600;">23.1</td>
+                    <td style="text-align: center;">TRY</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/bogota.html" style="color: #2563eb; text-decoration: none;">Bogotá</a>
+                    </td>
+                    <td>Colombia</td>
+                    <td style="text-align: center; font-weight: 600;">22.9</td>
+                    <td style="text-align: center;">COP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/chiang-mai.html" style="color: #2563eb; text-decoration: none;">Chiang Mai</a>
+                    </td>
+                    <td>Thailand</td>
+                    <td style="text-align: center; font-weight: 600;">22.6</td>
+                    <td style="text-align: center;">THB</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/bucharest.html" style="color: #2563eb; text-decoration: none;">Bucharest</a>
+                    </td>
+                    <td>Romania</td>
+                    <td style="text-align: center; font-weight: 600;">22.5</td>
+                    <td style="text-align: center;">RON</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/mumbai.html" style="color: #2563eb; text-decoration: none;">Mumbai</a>
+                    </td>
+                    <td>India</td>
+                    <td style="text-align: center; font-weight: 600;">22.3</td>
+                    <td style="text-align: center;">INR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/casablanca.html" style="color: #2563eb; text-decoration: none;">Casablanca</a>
+                    </td>
+                    <td>Morocco</td>
+                    <td style="text-align: center; font-weight: 600;">22.1</td>
+                    <td style="text-align: center;">MAD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/bangalore.html" style="color: #2563eb; text-decoration: none;">Bangalore</a>
+                    </td>
+                    <td>India</td>
+                    <td style="text-align: center; font-weight: 600;">20.8</td>
+                    <td style="text-align: center;">INR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/medellin.html" style="color: #2563eb; text-decoration: none;">Medellín</a>
+                    </td>
+                    <td>Colombia</td>
+                    <td style="text-align: center; font-weight: 600;">20.4</td>
+                    <td style="text-align: center;">COP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/delhi.html" style="color: #2563eb; text-decoration: none;">Delhi</a>
+                    </td>
+                    <td>India</td>
+                    <td style="text-align: center; font-weight: 600;">19.5</td>
+                    <td style="text-align: center;">INR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/marrakech.html" style="color: #2563eb; text-decoration: none;">Marrakech</a>
+                    </td>
+                    <td>Morocco</td>
+                    <td style="text-align: center; font-weight: 600;">19.2</td>
+                    <td style="text-align: center;">MAD</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/chennai.html" style="color: #2563eb; text-decoration: none;">Chennai</a>
+                    </td>
+                    <td>India</td>
+                    <td style="text-align: center; font-weight: 600;">18.9</td>
+                    <td style="text-align: center;">INR</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600;">
+                        <a href="/city/cairo.html" style="color: #2563eb; text-decoration: none;">Cairo</a>
+                    </td>
+                    <td>Egypt</td>
+                    <td style="text-align: center; font-weight: 600;">16.8</td>
+                    <td style="text-align: center;">EGP</td>
+                    <td style="text-align: center;">—</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/compare/">Compare Cities</a>
+            <a href="/blog/">Blog</a>
+        </footer>
+    </div>
+
+    <script>
+        function filterCities(query) {
+            const rows = document.querySelectorAll('#cityTable tbody tr');
+            const q = query.toLowerCase();
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(q) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

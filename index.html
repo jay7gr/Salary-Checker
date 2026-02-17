@@ -747,6 +747,25 @@
                 padding: 28px 24px;
             }
 
+            .tax-comparison {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .ranges-list {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-bar-label {
+                width: 80px;
+                font-size: 0.72rem;
+            }
+
+            .chart-bar-fill {
+                font-size: 0.68rem;
+                padding-right: 6px;
+            }
+
             /* Mobile theme toggle: icon-only, sticky bottom-right */
             .theme-toggle {
                 position: fixed !important;
@@ -832,6 +851,206 @@
 
         .step-text strong {
             color: #1d1d1f;
+        }
+
+        /* === TAX ESTIMATION SECTION === */
+        .tax-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5ea;
+        }
+
+        .tax-title, .chart-title, .ranges-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #86868b;
+            margin-bottom: 16px;
+        }
+
+        .tax-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .tax-card {
+            background: #f5f5f7;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .tax-card-city {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #86868b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tax-card-gross {
+            font-size: 0.85rem;
+            color: #86868b;
+            margin-bottom: 4px;
+        }
+
+        .tax-card-rate {
+            font-size: 0.8rem;
+            color: #ff9500;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .tax-card-net {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #22c55e;
+        }
+
+        .tax-card-net-label {
+            font-size: 0.72rem;
+            color: #86868b;
+            margin-top: 2px;
+        }
+
+        .tax-note {
+            font-size: 0.75rem;
+            color: #86868b;
+            text-align: center;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* === VISUAL CHART SECTION === */
+        .chart-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5ea;
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chart-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chart-bar-label {
+            width: 120px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .chart-bar-track {
+            flex: 1;
+            height: 28px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            min-width: 40px;
+            transition: width 0.8s ease-out;
+        }
+
+        .chart-bar-fill.current {
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+        }
+
+        .chart-bar-fill.target {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .chart-bar-fill.tax-current {
+            background: linear-gradient(90deg, #22c55e, #4ade80);
+        }
+
+        .chart-bar-fill.tax-target {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        /* === SALARY RANGES SECTION === */
+        .salary-ranges-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5ea;
+        }
+
+        .ranges-subtitle {
+            font-size: 0.82rem;
+            color: #86868b;
+            margin-top: -12px;
+            margin-bottom: 16px;
+        }
+
+        .ranges-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .range-item {
+            background: #f5f5f7;
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+        .range-item-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 6px;
+        }
+
+        .range-item-bar {
+            height: 6px;
+            background: #e5e5ea;
+            border-radius: 3px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .range-item-bar-fill {
+            position: absolute;
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #2563eb, #8b5cf6);
+        }
+
+        .range-item-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: #86868b;
+        }
+
+        .range-item-mid {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-align: center;
         }
 
         .currency-hint {
@@ -1177,6 +1396,34 @@
             border-color: #5c2020;
         }
 
+        body.dark .tax-section,
+        body.dark .chart-section,
+        body.dark .salary-ranges-section {
+            border-top-color: #3a3a3c;
+        }
+
+        body.dark .tax-card,
+        body.dark .range-item {
+            background: #2c2c2e;
+        }
+
+        body.dark .chart-bar-track {
+            background: #2c2c2e;
+        }
+
+        body.dark .tax-card-city,
+        body.dark .tax-card-gross,
+        body.dark .tax-note,
+        body.dark .ranges-subtitle,
+        body.dark .range-item-values {
+            color: #a1a1a6;
+        }
+
+        body.dark .range-item-title,
+        body.dark .chart-bar-label {
+            color: #f5f5f7;
+        }
+
         body.dark .info-text {
             color: #636366;
         }
@@ -1309,10 +1556,14 @@
     <div class="page-layout">
     <div class="container">
         <div class="header">
-            <a href="/blog" class="blog-link">Read our Blog</a>
-            <a href="https://salary-converter.com/widget.html" class="widget-link">Free Widget</a>
+            <a href="/city/" class="blog-link" style="left: 80px;">Cities</a>
+            <a href="/compare/" class="blog-link" style="left: 150px;">Compare</a>
+            <a href="/blog" class="blog-link" style="left: 235px;">Blog</a>
+            <a href="https://salary-converter.com/widget.html" class="widget-link">Widget</a>
             <button class="nav-burger" id="navBurger" aria-label="Menu">☰</button>
             <div class="nav-dropdown" id="navDropdown">
+                <a href="/city/"><span>🏙️</span>Browse Cities</a>
+                <a href="/compare/"><span>⚖️</span>Compare Cities</a>
                 <a href="/blog"><span>📝</span>Read our Blog</a>
                 <a href="https://salary-converter.com/widget.html"><span>🧩</span>Free Widget</a>
             </div>
@@ -1422,6 +1673,26 @@
                 </div>
             </div>
             <div class="comparison-note" id="comparisonNote"></div>
+
+            <!-- Tax Estimation -->
+            <div class="tax-section" id="taxSection" style="display: none;">
+                <div class="tax-title">Estimated Take-Home Pay</div>
+                <div class="tax-comparison" id="taxComparison"></div>
+            </div>
+
+            <!-- Visual Chart -->
+            <div class="chart-section" id="chartSection" style="display: none;">
+                <div class="chart-title">Visual Comparison</div>
+                <div class="chart-bars" id="chartBars"></div>
+            </div>
+
+            <!-- Salary Ranges by Job Title -->
+            <div class="salary-ranges-section" id="salaryRangesSection" style="display: none;">
+                <div class="ranges-title">Salary Ranges by Role</div>
+                <div class="ranges-subtitle">Adjusted for cost of living in your target city</div>
+                <div class="ranges-list" id="rangesList"></div>
+            </div>
+
             <div class="explanation-section" id="explanationSection"></div>
         </div>
     </div>
@@ -1504,6 +1775,50 @@
             </div>
             <a href="/blog" class="blog-card-cta">View All Articles →</a>
         </div>
+
+        <!-- Salary Submission Card -->
+        <div class="sidebar-card">
+            <h3>📊 Share Your Salary</h3>
+            <p style="font-size: 0.82rem; color: #86868b; margin-bottom: 14px; line-height: 1.5;">
+                Help others by sharing your anonymous salary data. All submissions are private.
+            </p>
+            <form id="salarySubmitForm" style="display: flex; flex-direction: column; gap: 10px;">
+                <select id="submitJobTitle" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;" required>
+                    <option value="">Select your role...</option>
+                </select>
+                <select id="submitCity" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;" required>
+                    <option value="">Select your city...</option>
+                </select>
+                <input type="text" id="submitSalary" placeholder="Annual salary (local currency)" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit;" required>
+                <select id="submitExperience" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;">
+                    <option value="">Years of experience...</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-10">6-10 years</option>
+                    <option value="10+">10+ years</option>
+                </select>
+                <button type="submit" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s;">Submit Anonymously</button>
+            </form>
+            <div id="submitSuccess" style="display: none; text-align: center; padding: 16px 0;">
+                <div style="font-size: 1.5rem; margin-bottom: 8px;">✅</div>
+                <div style="font-size: 0.85rem; font-weight: 600; color: #22c55e;">Thanks for contributing!</div>
+                <div style="font-size: 0.78rem; color: #86868b; margin-top: 4px;">Your data helps others make informed decisions.</div>
+            </div>
+            <div id="communityCount" style="text-align: center; margin-top: 12px; font-size: 0.78rem; color: #86868b;"></div>
+        </div>
+
+        <!-- Quick Links Card -->
+        <div class="sidebar-card">
+            <h3>🏙️ Explore</h3>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <a href="/city/" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f5f5f7; border-radius: 10px; text-decoration: none; color: #1d1d1f; font-size: 0.85rem; font-weight: 500; transition: background 0.2s;">
+                    <span>🌍</span> Browse All 100 Cities
+                </a>
+                <a href="/compare/" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f5f5f7; border-radius: 10px; text-decoration: none; color: #1d1d1f; font-size: 0.85rem; font-weight: 500; transition: background 0.2s;">
+                    <span>⚖️</span> City vs City Comparisons
+                </a>
+            </div>
+        </div>
     </aside>
     </div>
 
@@ -1512,7 +1827,10 @@
         <div class="site-footer-text">Compare salaries across 100 cities and over 1,000 neighborhoods worldwide.</div>
         <div class="site-footer-links">
             <a href="https://salary-converter.com">Salary Tool</a>
+            <a href="/city/">Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog">Blog</a>
+            <a href="/widget.html">Widget</a>
         </div>
     </footer>
 
@@ -1743,6 +2061,79 @@
             'Bogotá': 'COP', 'Medellín': 'COP',
             'Lima': 'PEN', 'Santiago': 'CLP', 'Montevideo': 'UYU',
             'San José (CR)': 'CRC', 'Playa del Carmen': 'MXN'
+        };
+
+        // City to country mapping
+        const cityToCountry = {
+            'New York': 'US', 'San Francisco': 'US', 'Los Angeles': 'US',
+            'Chicago': 'US', 'Miami': 'US', 'Austin': 'US', 'Seattle': 'US',
+            'Denver': 'US', 'Boston': 'US', 'Washington DC': 'US', 'Houston': 'US',
+            'Toronto': 'CA', 'Vancouver': 'CA', 'Montreal': 'CA',
+            'Mexico City': 'MX', 'Cancún': 'MX', 'Panama City': 'PA',
+            'London': 'GB', 'Edinburgh': 'GB',
+            'Paris': 'FR', 'Nice': 'FR',
+            'Amsterdam': 'NL', 'Berlin': 'DE', 'Munich': 'DE',
+            'Dublin': 'IE', 'Brussels': 'BE', 'Luxembourg City': 'LU',
+            'Zurich': 'CH', 'Geneva': 'CH',
+            'Madrid': 'ES', 'Barcelona': 'ES', 'Valencia': 'ES', 'Málaga': 'ES',
+            'Lisbon': 'PT', 'Porto': 'PT', 'Rome': 'IT', 'Milan': 'IT',
+            'Athens': 'GR', 'Split': 'HR',
+            'Stockholm': 'SE', 'Copenhagen': 'DK', 'Helsinki': 'FI', 'Oslo': 'NO', 'Vienna': 'AT',
+            'Prague': 'CZ', 'Budapest': 'HU', 'Warsaw': 'PL', 'Krakow': 'PL',
+            'Bucharest': 'RO', 'Tallinn': 'EE', 'Riga': 'LV', 'Istanbul': 'TR',
+            'Tokyo': 'JP', 'Osaka': 'JP', 'Fukuoka': 'JP',
+            'Seoul': 'KR', 'Hong Kong': 'HK', 'Taipei': 'TW',
+            'Shanghai': 'CN', 'Beijing': 'CN', 'Shenzhen': 'CN', 'Guangzhou': 'CN',
+            'Singapore': 'SG', 'Bangkok': 'TH', 'Chiang Mai': 'TH', 'Phuket': 'TH',
+            'Kuala Lumpur': 'MY', 'Ho Chi Minh City': 'VN', 'Hanoi': 'VN',
+            'Manila': 'PH', 'Jakarta': 'ID', 'Bali (Denpasar)': 'ID', 'Phnom Penh': 'KH',
+            'Mumbai': 'IN', 'Bangalore': 'IN', 'Delhi': 'IN', 'Chennai': 'IN',
+            'Sydney': 'AU', 'Melbourne': 'AU', 'Perth': 'AU', 'Auckland': 'NZ',
+            'Dubai': 'AE', 'Abu Dhabi': 'AE', 'Doha': 'QA', 'Riyadh': 'SA', 'Tel Aviv': 'IL',
+            'Cape Town': 'ZA', 'Nairobi': 'KE', 'Lagos': 'NG', 'Cairo': 'EG',
+            'Marrakech': 'MA', 'Casablanca': 'MA',
+            'São Paulo': 'BR', 'Buenos Aires': 'AR', 'Bogotá': 'CO', 'Medellín': 'CO',
+            'Lima': 'PE', 'Santiago': 'CL', 'Montevideo': 'UY',
+            'San José (CR)': 'CR', 'Playa del Carmen': 'MX'
+        };
+
+        // Approximate effective income tax rates (mid-range earner ~$60-80K equivalent)
+        const countryTaxRates = {
+            'US': 24, 'CA': 26, 'MX': 20, 'PA': 15,
+            'GB': 25, 'FR': 30, 'NL': 37, 'DE': 32, 'IE': 27, 'BE': 40, 'LU': 28,
+            'CH': 18, 'ES': 24, 'PT': 25, 'IT': 31, 'GR': 22, 'HR': 20,
+            'SE': 32, 'DK': 36, 'FI': 31, 'NO': 28, 'AT': 30,
+            'CZ': 15, 'HU': 15, 'PL': 17, 'RO': 10, 'EE': 20, 'LV': 20, 'TR': 15,
+            'JP': 23, 'KR': 19, 'HK': 15, 'TW': 12, 'CN': 20,
+            'SG': 7, 'TH': 15, 'MY': 16, 'VN': 15, 'PH': 20, 'ID': 15, 'KH': 0,
+            'IN': 20, 'AU': 27, 'NZ': 24,
+            'AE': 0, 'QA': 0, 'SA': 0, 'IL': 25,
+            'ZA': 26, 'KE': 20, 'NG': 18, 'EG': 15, 'MA': 20,
+            'BR': 22, 'AR': 21, 'CO': 19, 'PE': 15, 'CL': 13, 'UY': 20, 'CR': 15
+        };
+
+        // Salary ranges by job title (annual USD, global median ranges)
+        const salaryRanges = {
+            'Software Engineer': { low: 45000, mid: 85000, high: 180000 },
+            'Data Scientist': { low: 50000, mid: 95000, high: 170000 },
+            'Product Manager': { low: 55000, mid: 100000, high: 190000 },
+            'UX Designer': { low: 40000, mid: 75000, high: 140000 },
+            'Marketing Manager': { low: 38000, mid: 72000, high: 135000 },
+            'Financial Analyst': { low: 42000, mid: 78000, high: 145000 },
+            'Project Manager': { low: 45000, mid: 80000, high: 150000 },
+            'DevOps Engineer': { low: 50000, mid: 95000, high: 175000 },
+            'Graphic Designer': { low: 30000, mid: 55000, high: 100000 },
+            'Sales Manager': { low: 40000, mid: 80000, high: 160000 },
+            'HR Manager': { low: 38000, mid: 70000, high: 130000 },
+            'Business Analyst': { low: 42000, mid: 75000, high: 140000 },
+            'Accountant': { low: 35000, mid: 62000, high: 110000 },
+            'Teacher': { low: 25000, mid: 48000, high: 85000 },
+            'Nurse': { low: 30000, mid: 58000, high: 100000 },
+            'Mechanical Engineer': { low: 40000, mid: 78000, high: 140000 },
+            'Architect': { low: 38000, mid: 72000, high: 130000 },
+            'Lawyer': { low: 50000, mid: 100000, high: 220000 },
+            'Consultant': { low: 45000, mid: 90000, high: 180000 },
+            'Content Writer': { low: 25000, mid: 50000, high: 90000 }
         };
 
         // Neighborhood data: multipliers relative to city COLI (1.0 = city average)
@@ -2730,6 +3121,158 @@
             `;
             document.getElementById('explanationSection').innerHTML = explanation;
 
+            // === TAX ESTIMATION ===
+            const currentCountry = cityToCountry[currentCity];
+            const targetCountry = cityToCountry[targetCity];
+            const currentTaxRate = countryTaxRates[currentCountry];
+            const targetTaxRate = countryTaxRates[targetCountry];
+            const taxSection = document.getElementById('taxSection');
+
+            if (currentTaxRate !== undefined && targetTaxRate !== undefined) {
+                const grossCurrent = salary;
+                const grossTarget = equivalentSalary;
+                const netCurrent = grossCurrent * (1 - currentTaxRate / 100);
+                const netTarget = grossTarget * (1 - targetTaxRate / 100);
+
+                const fmtNetCurrent = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: currentCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0
+                }).format(netCurrent);
+
+                const fmtNetTarget = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: targetCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0
+                }).format(netTarget);
+
+                document.getElementById('taxComparison').innerHTML = `
+                    <div class="tax-card">
+                        <div class="tax-card-city">${currentLabel}</div>
+                        <div class="tax-card-gross">Gross: ${formattedOriginalCurrent}</div>
+                        <div class="tax-card-rate">Tax: ~${currentTaxRate}%</div>
+                        <div class="tax-card-net">${fmtNetCurrent}</div>
+                        <div class="tax-card-net-label">Est. Take-Home</div>
+                    </div>
+                    <div class="tax-card">
+                        <div class="tax-card-city">${targetLabel}</div>
+                        <div class="tax-card-gross">Gross: ${formattedAmount}</div>
+                        <div class="tax-card-rate">Tax: ~${targetTaxRate}%${targetTaxRate === 0 ? ' (Tax-Free)' : ''}</div>
+                        <div class="tax-card-net">${fmtNetTarget}</div>
+                        <div class="tax-card-net-label">Est. Take-Home</div>
+                    </div>
+                `;
+                taxSection.style.display = '';
+            } else {
+                taxSection.style.display = 'none';
+            }
+
+            // === VISUAL CHART ===
+            const chartSection = document.getElementById('chartSection');
+            const maxSalary = Math.max(salary, equivalentSalary);
+            const currentPct = (salary / maxSalary) * 100;
+            const targetPct = (equivalentSalary / maxSalary) * 100;
+
+            let chartHTML = `
+                <div class="chart-bar-row">
+                    <div class="chart-bar-label">${currentCity}</div>
+                    <div class="chart-bar-track">
+                        <div class="chart-bar-fill current" style="width: ${currentPct}%">${formattedOriginalCurrent}</div>
+                    </div>
+                </div>
+                <div class="chart-bar-row">
+                    <div class="chart-bar-label">${targetCity}</div>
+                    <div class="chart-bar-track">
+                        <div class="chart-bar-fill target" style="width: ${targetPct}%">${formattedAmount}</div>
+                    </div>
+                </div>
+            `;
+
+            if (currentTaxRate !== undefined && targetTaxRate !== undefined) {
+                const netCurrentVal = salary * (1 - currentTaxRate / 100);
+                const netTargetVal = equivalentSalary * (1 - targetTaxRate / 100);
+                const maxNet = Math.max(netCurrentVal, netTargetVal);
+                const netCurrentPct = (netCurrentVal / maxNet) * 100;
+                const netTargetPct = (netTargetVal / maxNet) * 100;
+
+                const fmtNetC = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: currentCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0
+                }).format(netCurrentVal);
+                const fmtNetT = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: targetCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0
+                }).format(netTargetVal);
+
+                chartHTML += `
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e5ea;">
+                        <div style="font-size: 0.75rem; color: #86868b; margin-bottom: 8px; font-weight: 500;">AFTER TAX (ESTIMATED)</div>
+                    </div>
+                    <div class="chart-bar-row">
+                        <div class="chart-bar-label">${currentCity}</div>
+                        <div class="chart-bar-track">
+                            <div class="chart-bar-fill tax-current" style="width: ${netCurrentPct}%">${fmtNetC}</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar-row">
+                        <div class="chart-bar-label">${targetCity}</div>
+                        <div class="chart-bar-track">
+                            <div class="chart-bar-fill tax-target" style="width: ${netTargetPct}%">${fmtNetT}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('chartBars').innerHTML = chartHTML;
+            chartSection.style.display = '';
+
+            // === SALARY RANGES BY JOB TITLE ===
+            const rangesSection = document.getElementById('salaryRangesSection');
+            const rangesList = document.getElementById('rangesList');
+            let rangesHTML = '';
+
+            const targetExRate = exchangeRates[targetCurrency] / exchangeRates['USD'];
+            const targetColiAdj = coliData[targetCity] / 100; // relative to NY
+
+            Object.entries(salaryRanges).forEach(([title, range]) => {
+                const adjLow = range.low * targetColiAdj * targetExRate;
+                const adjMid = range.mid * targetColiAdj * targetExRate;
+                const adjHigh = range.high * targetColiAdj * targetExRate;
+
+                const fmtLow = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: targetCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+                }).format(adjLow);
+                const fmtMid = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: targetCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+                }).format(adjMid);
+                const fmtHigh = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: targetCurrency,
+                    minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+                }).format(adjHigh);
+
+                // Bar position: low-high range within 0-maxHigh
+                const maxHigh = Math.max(...Object.values(salaryRanges).map(r => r.high * targetColiAdj * targetExRate));
+                const barLeft = (adjLow / maxHigh) * 100;
+                const barWidth = ((adjHigh - adjLow) / maxHigh) * 100;
+
+                rangesHTML += `
+                    <div class="range-item">
+                        <div class="range-item-title">${title}</div>
+                        <div class="range-item-bar">
+                            <div class="range-item-bar-fill" style="left: ${barLeft}%; width: ${barWidth}%;"></div>
+                        </div>
+                        <div class="range-item-mid">${fmtMid}</div>
+                        <div class="range-item-values">
+                            <span>${fmtLow}</span>
+                            <span>${fmtHigh}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            rangesList.innerHTML = rangesHTML;
+            rangesSection.style.display = '';
+
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
             resultBox.classList.add('show');
@@ -2750,6 +3293,9 @@
             document.getElementById('currentNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetNeighborhoodGroup').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
+            document.getElementById('taxSection').style.display = 'none';
+            document.getElementById('chartSection').style.display = 'none';
+            document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
         });
@@ -2843,6 +3389,67 @@
         // Initialize
         populateSelects();
         createQuickButtons();
+
+        // === SALARY SUBMISSION FORM ===
+        (function() {
+            // Populate job titles in submit form
+            const submitJobSelect = document.getElementById('submitJobTitle');
+            Object.keys(salaryRanges).sort().forEach(title => {
+                const opt = document.createElement('option');
+                opt.value = title;
+                opt.textContent = title;
+                submitJobSelect.appendChild(opt);
+            });
+
+            // Populate cities in submit form
+            const submitCitySelect = document.getElementById('submitCity');
+            Object.keys(coliData).sort().forEach(city => {
+                const opt = document.createElement('option');
+                opt.value = city;
+                opt.textContent = city;
+                submitCitySelect.appendChild(opt);
+            });
+
+            // Load and display community count
+            const submissions = JSON.parse(localStorage.getItem('salarySubmissions') || '[]');
+            const countEl = document.getElementById('communityCount');
+            if (submissions.length > 0) {
+                countEl.textContent = `${submissions.length} submission${submissions.length > 1 ? 's' : ''} collected`;
+            }
+
+            // Handle form submission
+            document.getElementById('salarySubmitForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const jobTitle = document.getElementById('submitJobTitle').value;
+                const city = document.getElementById('submitCity').value;
+                const salary = document.getElementById('submitSalary').value.replace(/[^0-9.]/g, '');
+                const experience = document.getElementById('submitExperience').value;
+
+                if (!jobTitle || !city || !salary) return;
+
+                const submission = {
+                    jobTitle, city, salary: parseFloat(salary),
+                    experience, currency: cityToCurrency[city] || 'USD',
+                    timestamp: new Date().toISOString()
+                };
+
+                const existing = JSON.parse(localStorage.getItem('salarySubmissions') || '[]');
+                existing.push(submission);
+                localStorage.setItem('salarySubmissions', JSON.stringify(existing));
+
+                // Show success
+                document.getElementById('salarySubmitForm').style.display = 'none';
+                document.getElementById('submitSuccess').style.display = 'block';
+                countEl.textContent = `${existing.length} submission${existing.length > 1 ? 's' : ''} collected`;
+
+                // Reset form after delay
+                setTimeout(() => {
+                    document.getElementById('salarySubmitForm').style.display = '';
+                    document.getElementById('submitSuccess').style.display = 'none';
+                    document.getElementById('salarySubmitForm').reset();
+                }, 3000);
+            });
+        })();
 
     </script>
 </body>

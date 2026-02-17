@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Comparisons — Cost of Living & Salary Side-by-Side 2026</title>
+    <meta name="description" content="Compare cost of living and salaries between popular city pairs. Side-by-side comparison of neighborhoods, tax rates, and purchasing power.">
+    <meta name="author" content="salary:converter">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/compare/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salary-converter.com/compare/">
+    <meta property="og:title" content="City Cost of Living Comparisons 2026">
+    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between popular city pairs.">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            padding: 20px 12px; -webkit-font-smoothing: antialiased;
+        }
+        .page-wrapper { max-width: 900px; margin: 0 auto; }
+        .nav-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }
+        .nav-logo {
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: #1d1d1f; text-decoration: none;
+        }
+        .nav-logo span { color: #2563eb; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            text-decoration: none;
+        }
+        .nav-links a:hover { color: #2563eb; }
+        .hero {
+            background: white; border-radius: 20px; padding: 40px 32px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .hero p { color: #86868b; font-size: 1rem; }
+        .compare-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        .compare-card {
+            background: white; border-radius: 16px; padding: 24px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06); text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s; display: block;
+        }
+        .compare-card:hover {
+            transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .compare-card-cities {
+            font-size: 1rem; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;
+        }
+        .compare-card-cities .vs {
+            color: #2563eb; font-size: 0.8rem; margin: 0 4px;
+        }
+        .compare-card-stats {
+            font-size: 0.8rem; color: #86868b;
+        }
+        .page-footer {
+            text-align: center; padding: 32px 0 16px; margin-top: 24px;
+            border-top: 1px solid #e5e5ea;
+        }
+        .page-footer a {
+            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+        }
+        .page-footer a:hover { color: #2563eb; }
+        @media (max-width: 768px) {
+            body { padding: 0; background: white; }
+            .page-wrapper { padding: 0 16px; }
+            .hero { border-radius: 0; padding: 32px 16px; box-shadow: none; }
+            .hero h1 { font-size: 1.5rem; }
+            .compare-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/blog/">Blog</a>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>City Comparisons</h1>
+            <p>60 popular city-to-city comparisons with salary equivalents</p>
+        </section>
+
+        <div class="compare-grid">
+                <a href="/compare/london-vs-new-york.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> New York</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 100 &middot; 14% difference</div>
+                </a>
+                <a href="/compare/london-vs-dubai.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Dubai</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 72.4 &middot; 17% difference</div>
+                </a>
+                <a href="/compare/london-vs-singapore.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Singapore</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 87.7 &middot; 0% difference</div>
+                </a>
+                <a href="/compare/london-vs-paris.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Paris</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 46.9 &middot; 46% difference</div>
+                </a>
+                <a href="/compare/london-vs-berlin.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Berlin</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 51.2 &middot; 41% difference</div>
+                </a>
+                <a href="/compare/london-vs-amsterdam.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Amsterdam</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 82.6 &middot; 6% difference</div>
+                </a>
+                <a href="/compare/london-vs-sydney.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Sydney</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 74.5 &middot; 15% difference</div>
+                </a>
+                <a href="/compare/london-vs-toronto.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Toronto</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 62.3 &middot; 29% difference</div>
+                </a>
+                <a href="/compare/london-vs-tokyo.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Tokyo</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 77.3 &middot; 12% difference</div>
+                </a>
+                <a href="/compare/london-vs-dublin.html" class="compare-card">
+                    <div class="compare-card-cities">London <span class="vs">vs</span> Dublin</div>
+                    <div class="compare-card-stats">COLI: 87.5 vs 72.8 &middot; 17% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-san-francisco.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> San Francisco</div>
+                    <div class="compare-card-stats">COLI: 100 vs 97.6 &middot; 2% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-los-angeles.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Los Angeles</div>
+                    <div class="compare-card-stats">COLI: 100 vs 76.3 &middot; 24% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-chicago.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Chicago</div>
+                    <div class="compare-card-stats">COLI: 100 vs 73.2 &middot; 27% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-miami.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Miami</div>
+                    <div class="compare-card-stats">COLI: 100 vs 80.1 &middot; 20% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-toronto.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Toronto</div>
+                    <div class="compare-card-stats">COLI: 100 vs 62.3 &middot; 38% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-tokyo.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Tokyo</div>
+                    <div class="compare-card-stats">COLI: 100 vs 77.3 &middot; 23% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-singapore.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Singapore</div>
+                    <div class="compare-card-stats">COLI: 100 vs 87.7 &middot; 12% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-dubai.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Dubai</div>
+                    <div class="compare-card-stats">COLI: 100 vs 72.4 &middot; 28% difference</div>
+                </a>
+                <a href="/compare/new-york-vs-berlin.html" class="compare-card">
+                    <div class="compare-card-cities">New York <span class="vs">vs</span> Berlin</div>
+                    <div class="compare-card-stats">COLI: 100 vs 51.2 &middot; 49% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-singapore.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Singapore</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 87.7 &middot; 21% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-abu-dhabi.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Abu Dhabi</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 67.8 &middot; 6% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-doha.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Doha</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 69.5 &middot; 4% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-bangkok.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Bangkok</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 37.2 &middot; 49% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-sydney.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Sydney</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 74.5 &middot; 3% difference</div>
+                </a>
+                <a href="/compare/singapore-vs-hong-kong.html" class="compare-card">
+                    <div class="compare-card-cities">Singapore <span class="vs">vs</span> Hong Kong</div>
+                    <div class="compare-card-stats">COLI: 87.7 vs 73.6 &middot; 16% difference</div>
+                </a>
+                <a href="/compare/singapore-vs-bangkok.html" class="compare-card">
+                    <div class="compare-card-cities">Singapore <span class="vs">vs</span> Bangkok</div>
+                    <div class="compare-card-stats">COLI: 87.7 vs 37.2 &middot; 58% difference</div>
+                </a>
+                <a href="/compare/singapore-vs-tokyo.html" class="compare-card">
+                    <div class="compare-card-cities">Singapore <span class="vs">vs</span> Tokyo</div>
+                    <div class="compare-card-stats">COLI: 87.7 vs 77.3 &middot; 12% difference</div>
+                </a>
+                <a href="/compare/singapore-vs-sydney.html" class="compare-card">
+                    <div class="compare-card-cities">Singapore <span class="vs">vs</span> Sydney</div>
+                    <div class="compare-card-stats">COLI: 87.7 vs 74.5 &middot; 15% difference</div>
+                </a>
+                <a href="/compare/singapore-vs-kuala-lumpur.html" class="compare-card">
+                    <div class="compare-card-cities">Singapore <span class="vs">vs</span> Kuala Lumpur</div>
+                    <div class="compare-card-stats">COLI: 87.7 vs 32.8 &middot; 63% difference</div>
+                </a>
+                <a href="/compare/tokyo-vs-seoul.html" class="compare-card">
+                    <div class="compare-card-cities">Tokyo <span class="vs">vs</span> Seoul</div>
+                    <div class="compare-card-stats">COLI: 77.3 vs 68.9 &middot; 11% difference</div>
+                </a>
+                <a href="/compare/tokyo-vs-osaka.html" class="compare-card">
+                    <div class="compare-card-cities">Tokyo <span class="vs">vs</span> Osaka</div>
+                    <div class="compare-card-stats">COLI: 77.3 vs 62.8 &middot; 19% difference</div>
+                </a>
+                <a href="/compare/tokyo-vs-sydney.html" class="compare-card">
+                    <div class="compare-card-cities">Tokyo <span class="vs">vs</span> Sydney</div>
+                    <div class="compare-card-stats">COLI: 77.3 vs 74.5 &middot; 4% difference</div>
+                </a>
+                <a href="/compare/paris-vs-berlin.html" class="compare-card">
+                    <div class="compare-card-cities">Paris <span class="vs">vs</span> Berlin</div>
+                    <div class="compare-card-stats">COLI: 46.9 vs 51.2 &middot; 9% difference</div>
+                </a>
+                <a href="/compare/paris-vs-amsterdam.html" class="compare-card">
+                    <div class="compare-card-cities">Paris <span class="vs">vs</span> Amsterdam</div>
+                    <div class="compare-card-stats">COLI: 46.9 vs 82.6 &middot; 76% difference</div>
+                </a>
+                <a href="/compare/paris-vs-barcelona.html" class="compare-card">
+                    <div class="compare-card-cities">Paris <span class="vs">vs</span> Barcelona</div>
+                    <div class="compare-card-stats">COLI: 46.9 vs 42.1 &middot; 10% difference</div>
+                </a>
+                <a href="/compare/paris-vs-rome.html" class="compare-card">
+                    <div class="compare-card-cities">Paris <span class="vs">vs</span> Rome</div>
+                    <div class="compare-card-stats">COLI: 46.9 vs 49.3 &middot; 5% difference</div>
+                </a>
+                <a href="/compare/berlin-vs-munich.html" class="compare-card">
+                    <div class="compare-card-cities">Berlin <span class="vs">vs</span> Munich</div>
+                    <div class="compare-card-stats">COLI: 51.2 vs 61.5 &middot; 20% difference</div>
+                </a>
+                <a href="/compare/berlin-vs-amsterdam.html" class="compare-card">
+                    <div class="compare-card-cities">Berlin <span class="vs">vs</span> Amsterdam</div>
+                    <div class="compare-card-stats">COLI: 51.2 vs 82.6 &middot; 61% difference</div>
+                </a>
+                <a href="/compare/berlin-vs-prague.html" class="compare-card">
+                    <div class="compare-card-cities">Berlin <span class="vs">vs</span> Prague</div>
+                    <div class="compare-card-stats">COLI: 51.2 vs 30.6 &middot; 40% difference</div>
+                </a>
+                <a href="/compare/berlin-vs-vienna.html" class="compare-card">
+                    <div class="compare-card-cities">Berlin <span class="vs">vs</span> Vienna</div>
+                    <div class="compare-card-stats">COLI: 51.2 vs 48.2 &middot; 6% difference</div>
+                </a>
+                <a href="/compare/lisbon-vs-barcelona.html" class="compare-card">
+                    <div class="compare-card-cities">Lisbon <span class="vs">vs</span> Barcelona</div>
+                    <div class="compare-card-stats">COLI: 34.7 vs 42.1 &middot; 21% difference</div>
+                </a>
+                <a href="/compare/lisbon-vs-madrid.html" class="compare-card">
+                    <div class="compare-card-cities">Lisbon <span class="vs">vs</span> Madrid</div>
+                    <div class="compare-card-stats">COLI: 34.7 vs 38.0 &middot; 10% difference</div>
+                </a>
+                <a href="/compare/lisbon-vs-porto.html" class="compare-card">
+                    <div class="compare-card-cities">Lisbon <span class="vs">vs</span> Porto</div>
+                    <div class="compare-card-stats">COLI: 34.7 vs 30.1 &middot; 13% difference</div>
+                </a>
+                <a href="/compare/sydney-vs-melbourne.html" class="compare-card">
+                    <div class="compare-card-cities">Sydney <span class="vs">vs</span> Melbourne</div>
+                    <div class="compare-card-stats">COLI: 74.5 vs 68.2 &middot; 8% difference</div>
+                </a>
+                <a href="/compare/sydney-vs-auckland.html" class="compare-card">
+                    <div class="compare-card-cities">Sydney <span class="vs">vs</span> Auckland</div>
+                    <div class="compare-card-stats">COLI: 74.5 vs 60.8 &middot; 18% difference</div>
+                </a>
+                <a href="/compare/san-francisco-vs-austin.html" class="compare-card">
+                    <div class="compare-card-cities">San Francisco <span class="vs">vs</span> Austin</div>
+                    <div class="compare-card-stats">COLI: 97.6 vs 64.8 &middot; 34% difference</div>
+                </a>
+                <a href="/compare/san-francisco-vs-seattle.html" class="compare-card">
+                    <div class="compare-card-cities">San Francisco <span class="vs">vs</span> Seattle</div>
+                    <div class="compare-card-stats">COLI: 97.6 vs 79.5 &middot; 19% difference</div>
+                </a>
+                <a href="/compare/boston-vs-washington-dc.html" class="compare-card">
+                    <div class="compare-card-cities">Boston <span class="vs">vs</span> Washington DC</div>
+                    <div class="compare-card-stats">COLI: 82.4 vs 79.8 &middot; 3% difference</div>
+                </a>
+                <a href="/compare/bangkok-vs-bali.html" class="compare-card">
+                    <div class="compare-card-cities">Bangkok <span class="vs">vs</span> Bali (Denpasar)</div>
+                    <div class="compare-card-stats">COLI: 37.2 vs 25.3 &middot; 32% difference</div>
+                </a>
+                <a href="/compare/bangkok-vs-ho-chi-minh-city.html" class="compare-card">
+                    <div class="compare-card-cities">Bangkok <span class="vs">vs</span> Ho Chi Minh City</div>
+                    <div class="compare-card-stats">COLI: 37.2 vs 26.4 &middot; 29% difference</div>
+                </a>
+                <a href="/compare/bangkok-vs-chiang-mai.html" class="compare-card">
+                    <div class="compare-card-cities">Bangkok <span class="vs">vs</span> Chiang Mai</div>
+                    <div class="compare-card-stats">COLI: 37.2 vs 22.6 &middot; 39% difference</div>
+                </a>
+                <a href="/compare/mexico-city-vs-bogota.html" class="compare-card">
+                    <div class="compare-card-cities">Mexico City <span class="vs">vs</span> Bogotá</div>
+                    <div class="compare-card-stats">COLI: 32.5 vs 22.9 &middot; 30% difference</div>
+                </a>
+                <a href="/compare/mexico-city-vs-medellin.html" class="compare-card">
+                    <div class="compare-card-cities">Mexico City <span class="vs">vs</span> Medellín</div>
+                    <div class="compare-card-stats">COLI: 32.5 vs 20.4 &middot; 37% difference</div>
+                </a>
+                <a href="/compare/buenos-aires-vs-sao-paulo.html" class="compare-card">
+                    <div class="compare-card-cities">Buenos Aires <span class="vs">vs</span> São Paulo</div>
+                    <div class="compare-card-stats">COLI: 25.6 vs 41.8 &middot; 63% difference</div>
+                </a>
+                <a href="/compare/buenos-aires-vs-santiago.html" class="compare-card">
+                    <div class="compare-card-cities">Buenos Aires <span class="vs">vs</span> Santiago</div>
+                    <div class="compare-card-stats">COLI: 25.6 vs 33.2 &middot; 30% difference</div>
+                </a>
+                <a href="/compare/dubai-vs-tel-aviv.html" class="compare-card">
+                    <div class="compare-card-cities">Dubai <span class="vs">vs</span> Tel Aviv</div>
+                    <div class="compare-card-stats">COLI: 72.4 vs 81.3 &middot; 12% difference</div>
+                </a>
+                <a href="/compare/zurich-vs-geneva.html" class="compare-card">
+                    <div class="compare-card-cities">Zurich <span class="vs">vs</span> Geneva</div>
+                    <div class="compare-card-stats">COLI: 122.4 vs 118.6 &middot; 3% difference</div>
+                </a>
+                <a href="/compare/stockholm-vs-copenhagen.html" class="compare-card">
+                    <div class="compare-card-cities">Stockholm <span class="vs">vs</span> Copenhagen</div>
+                    <div class="compare-card-stats">COLI: 64.3 vs 85.7 &middot; 33% difference</div>
+                </a>
+                <a href="/compare/mumbai-vs-bangalore.html" class="compare-card">
+                    <div class="compare-card-cities">Mumbai <span class="vs">vs</span> Bangalore</div>
+                    <div class="compare-card-stats">COLI: 22.3 vs 20.8 &middot; 7% difference</div>
+                </a>
+                <a href="/compare/hong-kong-vs-taipei.html" class="compare-card">
+                    <div class="compare-card-cities">Hong Kong <span class="vs">vs</span> Taipei</div>
+                    <div class="compare-card-stats">COLI: 73.6 vs 44.8 &middot; 39% difference</div>
+                </a>
+        </div>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/city/">All Cities</a>
+            <a href="/blog/">Blog</a>
+        </footer>
+    </div>
+</body>
+</html>
