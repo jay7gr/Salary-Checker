@@ -193,6 +193,7 @@
         }
 
         .blog-link {
+            display: none;
             position: absolute;
             top: 0;
             left: -10px;
@@ -208,6 +209,7 @@
         }
 
         .widget-link {
+            display: none;
             position: absolute;
             top: 18px;
             left: -10px;
@@ -222,9 +224,9 @@
             opacity: 0.7;
         }
 
-        /* Nav burger menu — hidden on desktop, shown on mobile */
+        /* Nav burger menu — visible on all screen sizes */
         .nav-burger {
-            display: none;
+            display: flex;
             position: absolute;
             top: 0;
             left: -10px;
@@ -695,13 +697,7 @@
                 font-size: 1rem;
             }
 
-            .blog-link,
-            .widget-link {
-                display: none;
-            }
-
             .nav-burger {
-                display: flex;
                 position: fixed;
                 top: 16px;
                 left: 16px;
