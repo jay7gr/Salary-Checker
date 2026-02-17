@@ -295,7 +295,100 @@ cityRent1BR = {
     'San José (CR)': 550, 'Playa del Carmen': 500
 }
 
+# Salary ranges by job title (USD, global baseline)
+salaryRanges = {
+    'Software Engineer': {'low': 45000, 'mid': 85000, 'high': 180000},
+    'Data Scientist': {'low': 50000, 'mid': 95000, 'high': 170000},
+    'Product Manager': {'low': 55000, 'mid': 100000, 'high': 190000},
+    'UX Designer': {'low': 40000, 'mid': 75000, 'high': 140000},
+    'Marketing Manager': {'low': 38000, 'mid': 72000, 'high': 135000},
+    'Financial Analyst': {'low': 42000, 'mid': 78000, 'high': 145000},
+    'Project Manager': {'low': 45000, 'mid': 80000, 'high': 150000},
+    'DevOps Engineer': {'low': 50000, 'mid': 95000, 'high': 175000},
+    'Graphic Designer': {'low': 30000, 'mid': 55000, 'high': 100000},
+    'Sales Manager': {'low': 40000, 'mid': 80000, 'high': 160000},
+    'HR Manager': {'low': 38000, 'mid': 70000, 'high': 130000},
+    'Business Analyst': {'low': 42000, 'mid': 75000, 'high': 140000},
+    'Accountant': {'low': 35000, 'mid': 62000, 'high': 110000},
+    'Teacher': {'low': 25000, 'mid': 48000, 'high': 85000},
+    'Nurse': {'low': 30000, 'mid': 58000, 'high': 100000},
+    'Mechanical Engineer': {'low': 40000, 'mid': 78000, 'high': 140000},
+    'Architect': {'low': 38000, 'mid': 72000, 'high': 130000},
+    'Lawyer': {'low': 50000, 'mid': 100000, 'high': 220000},
+    'Consultant': {'low': 45000, 'mid': 90000, 'high': 180000},
+    'Content Writer': {'low': 25000, 'mid': 50000, 'high': 90000},
+}
+
+CURRENT_YEAR = date.today().year
+
+# Map cities to relevant blog articles for cross-linking
+cityBlogLinks = {
+    'London': [
+        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison.html', 'title': 'London vs New York: The True Cost Comparison'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+    ],
+    'New York': [
+        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison.html', 'title': 'London vs New York: The True Cost Comparison'},
+        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison.html', 'title': 'Average Salary by City: Global Comparison'},
+    ],
+    'Dubai': [
+        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison.html', 'title': 'Dubai vs Singapore: Expat Comparison'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+    ],
+    'Singapore': [
+        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison.html', 'title': 'Dubai vs Singapore: Expat Comparison'},
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+    ],
+    'Bangkok': [
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+    ],
+    'Chiang Mai': [
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+    ],
+    'Ho Chi Minh City': [
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+    ],
+    'Lisbon': [
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+    ],
+    'Barcelona': [
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+    ],
+    'Prague': [
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+    ],
+    'Budapest': [
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+    ],
+    'San Francisco': [
+        {'url': '/blog/articles/tech-salary-comparison-by-city-2026.html', 'title': 'Tech Salary Comparison by City'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+    ],
+    'Tokyo': [
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison.html', 'title': 'Average Salary by City: Global Comparison'},
+    ],
+    'Berlin': [
+        {'url': '/blog/articles/tech-salary-comparison-by-city-2026.html', 'title': 'Tech Salary Comparison by City'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+    ],
+    'Zurich': [
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+    ],
+    '_default': [
+        {'url': '/blog/articles/how-cost-of-living-affects-your-salary.html', 'title': 'How Cost of Living Affects Your Salary'},
+        {'url': '/blog/articles/salary-negotiation-when-relocating-abroad.html', 'title': 'Salary Negotiation When Relocating Abroad'},
+    ],
+}
+
 TODAY = date.today().isoformat()
+
+# ============================================================
+# HELPER FUNCTIONS
+# ============================================================
 
 def slugify(name):
     """Convert city name to URL-safe slug"""
@@ -349,11 +442,53 @@ def get_equivalent_salary(salary_usd, from_city, to_city):
     coli_to = coliData[to_city]
     return salary_usd * (coli_to / coli_from)
 
+def get_expense_breakdown(city):
+    """Return estimated expense percentages based on city COLI and rent data"""
+    coli = coliData[city]
+    rent = cityRent1BR.get(city, 0)
+    country = cityCountry.get(city, '')
+    tax = countryTaxRates.get(country, 20)
+    mid_salary_annual = 75000 * (coli / 100)
+    monthly_after_tax = (mid_salary_annual * (1 - tax / 100)) / 12
+    if monthly_after_tax > 0:
+        housing_pct = min(45, max(20, round((rent / monthly_after_tax) * 100)))
+    else:
+        housing_pct = 30
+    remaining = 100 - housing_pct
+    food_pct = round(remaining * 0.28)
+    transport_pct = round(remaining * 0.15)
+    utilities_pct = round(remaining * 0.10)
+    healthcare_pct = round(remaining * 0.08)
+    savings_pct = 100 - housing_pct - food_pct - transport_pct - utilities_pct - healthcare_pct
+    return {
+        'housing': housing_pct,
+        'food': food_pct,
+        'transport': transport_pct,
+        'utilities': utilities_pct,
+        'healthcare': healthcare_pct,
+        'other_savings': savings_pct,
+    }
+
+def get_city_comparisons(city, comparison_pairs):
+    """Return list of comparison info for a city"""
+    results = []
+    for c1, c2 in comparison_pairs:
+        if c1 == city or c2 == city:
+            slug1 = slugify(c1)
+            slug2 = slugify(c2)
+            other = c2 if c1 == city else c1
+            results.append({
+                'url': f'/compare/{slug1}-vs-{slug2}.html',
+                'other_city': other,
+            })
+    return results
+
+
 # ============================================================
 # CITY PAGE TEMPLATE
 # ============================================================
 
-def generate_city_page(city):
+def generate_city_page(city, comparison_pairs):
     slug = slugify(city)
     country = cityCountry.get(city, '')
     currency = cityToCurrency.get(city, 'USD')
@@ -415,11 +550,15 @@ def generate_city_page(city):
         diff = comp['diff_pct']
         color = '#22c55e' if diff < 0 else '#ef4444'
         sign = '+' if diff > 0 else ''
+        comp_slug = comp['slug']
+        comp_city_name = comp['city']
+        comp_coli_val = comp['coli']
+        comp_equiv = comp['equivalent']
         comparison_rows += f'''
                         <tr>
-                            <td><a href="/city/{comp['slug']}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{comp['city']}</a></td>
-                            <td style="text-align: center;">{comp['coli']}</td>
-                            <td style="text-align: center;">{comp['equivalent']}</td>
+                            <td><a href="/city/{comp_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{comp_city_name}</a></td>
+                            <td style="text-align: center;">{comp_coli_val}</td>
+                            <td style="text-align: center;">{comp_equiv}</td>
                             <td style="text-align: right;">
                                 <span style="color: {color}; font-weight: 600;">{sign}{diff:.0f}%</span>
                             </td>
@@ -430,7 +569,8 @@ def generate_city_page(city):
     region_cities.sort(key=lambda c: abs(coliData[c] - coli))
     similar_links = ''
     for sc in region_cities[:6]:
-        similar_links += f'<a href="/city/{slugify(sc)}.html" class="similar-city-link">{sc}</a>\n'
+        sc_slug = slugify(sc)
+        similar_links += f'<a href="/city/{sc_slug}.html" class="similar-city-link">{sc}</a>\n'
 
     # Calculate what $75K in this city buys vs NY
     purchasing_power_vs_ny = (100 / coli) * 100  # percentage of NY purchasing power
@@ -447,33 +587,189 @@ def generate_city_page(city):
     else:
         coli_desc = 'very low'
 
+    # Expense breakdown
+    expenses = get_expense_breakdown(city)
+
+    # Salary ranges for this city
+    salary_rows = ''
+    job_titles_list = list(salaryRanges.keys())
+    for title in job_titles_list:
+        ranges = salaryRanges[title]
+        local_low = ranges['low'] * (coli / 100) * rate_to_local
+        local_mid = ranges['mid'] * (coli / 100) * rate_to_local
+        local_high = ranges['high'] * (coli / 100) * rate_to_local
+        fmt_low = format_currency_amount(local_low, currency)
+        fmt_mid = format_currency_amount(local_mid, currency)
+        fmt_high = format_currency_amount(local_high, currency)
+        salary_rows += f'''
+                        <tr>
+                            <td style="font-weight: 500;">{title}</td>
+                            <td style="text-align: center;">{fmt_low}</td>
+                            <td style="text-align: center; font-weight: 600;">{fmt_mid}</td>
+                            <td style="text-align: right;">{fmt_high}</td>
+                        </tr>'''
+
+    # How much do you need section
+    annual_rent = rent * 12
+    mid_salary_local = 75000 * (coli / 100) * rate_to_local
+    monthly_salary_after_tax = (mid_salary_local * (1 - tax_rate / 100)) / 12
+    fmt_annual_rent = format_currency_amount(annual_rent * rate_to_local, currency)
+    fmt_monthly_salary = format_currency_amount(monthly_salary_after_tax, currency)
+    fmt_mid_salary_local = format_currency_amount(mid_salary_local, currency)
+
+    # City comparisons links
+    city_comps = get_city_comparisons(city, comparison_pairs)
+    comp_links_html = ''
+    for cc in city_comps:
+        other = cc['other_city']
+        cc_url = cc['url']
+        comp_links_html += f'<a href="{cc_url}" class="similar-city-link">{city} vs {other}</a>\n'
+
+    # FAQ items - build outside f-string
+    tax_note = 'a tax-free jurisdiction' if tax_rate == 0 else f'approximately {tax_rate}%'
+    neigh_names = [n for n, m in sorted_neighborhoods[-3:]] if sorted_neighborhoods else []
+    neigh_answer = ('The most affordable neighborhoods include ' + ', '.join(neigh_names) + '.') if neigh_names else 'Neighborhood-level data is not yet available for this city.'
+    expensive_neigh_names = [n for n, m in sorted_neighborhoods[:3]] if sorted_neighborhoods else []
+    expensive_neigh_answer = ('The most expensive neighborhoods are ' + ', '.join(expensive_neigh_names) + '.') if expensive_neigh_names else 'Neighborhood-level data is not yet available for this city.'
+
+    equiv_salary_in_city = get_equivalent_salary(75000, 'New York', city) * rate_to_local
+    fmt_equiv = format_currency_amount(equiv_salary_in_city, currency)
+
+    faq_items = [
+        {
+            'q': f'What is the cost of living index for {city}?',
+            'a': f'The cost of living index (COLI) for {city} is {coli}, which ranks #{rank} out of {total_cities} cities globally. New York is the baseline at 100.'
+        },
+        {
+            'q': f'How much salary do I need in {city} to match $75,000 in New York?',
+            'a': f'To maintain the same purchasing power as $75,000 USD in New York, you would need approximately {fmt_equiv} in {city}.'
+        },
+        {
+            'q': f'What is the average rent in {city}?',
+            'a': f'The average monthly rent for a one-bedroom apartment in the city center of {city} is approximately ${rent:,} USD.'
+        },
+        {
+            'q': f'What is the income tax rate in {country}?',
+            'a': f'The approximate effective income tax rate for a mid-range earner in {country} is {tax_note}.'
+        },
+        {
+            'q': f'What are the cheapest neighborhoods in {city}?',
+            'a': neigh_answer
+        },
+        {
+            'q': f'What are the most expensive areas in {city}?',
+            'a': expensive_neigh_answer
+        },
+    ]
+
+    # Build FAQ schema JSON items
+    faq_schema_items = []
+    for item in faq_items:
+        q_escaped = item['q'].replace('"', '&quot;')
+        a_escaped = item['a'].replace('"', '&quot;')
+        faq_schema_items.append(
+            '{"@type": "Question", "name": "' + q_escaped + '", "acceptedAnswer": {"@type": "Answer", "text": "' + a_escaped + '"}}'
+        )
+    faq_schema_list = ', '.join(faq_schema_items)
+
+    # Build FAQ HTML
+    faq_html = ''
+    for item in faq_items:
+        faq_html += '<div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;">'
+        faq_html += '<h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">' + item['q'] + '</h3>'
+        faq_html += '<p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">' + item['a'] + '</p>'
+        faq_html += '</div>'
+
+    # Blog links
+    blog_links = cityBlogLinks.get(city, cityBlogLinks['_default'])
+    blog_links_html = ''
+    for bl in blog_links:
+        bl_url = bl['url']
+        bl_title = bl['title']
+        blog_links_html += f'<a href="{bl_url}" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">{bl_title}</a>\n'
+
+    # About section tax paragraph
+    if tax_rate == 0:
+        tax_paragraph = '<p>The approximate average effective income tax rate in ' + country + ' is <strong>0%</strong>. This is a tax-free jurisdiction.</p>'
+    elif tax_rate is not None:
+        tax_paragraph = '<p>The approximate average effective income tax rate in ' + country + ' is <strong>' + str(tax_rate) + '%</strong> for a mid-range earner.</p>'
+    else:
+        tax_paragraph = ''
+
+    # Neighborhood section
+    if neighborhoods:
+        neigh_count = str(len(neighborhoods))
+        neigh_section = '<section class="content-card"><h2>Neighborhoods in ' + city + '</h2><p>' + neigh_count + ' neighborhoods tracked with cost multipliers relative to the city average. This neighborhood-level data helps you understand exactly how costs vary within ' + city + '.</p><table><thead><tr><th>Neighborhood</th><th style="text-align:center;">Multiplier</th><th style="text-align:right;">vs City Avg</th></tr></thead><tbody>' + neighborhood_rows + '</tbody></table></section>'
+    else:
+        neigh_section = ''
+
+    # Expense breakdown rows
+    expense_colors = {
+        'housing': '#2563eb',
+        'food': '#f59e0b',
+        'transport': '#8b5cf6',
+        'utilities': '#06b6d4',
+        'healthcare': '#22c55e',
+        'other_savings': '#6b7280',
+    }
+    expense_labels = {
+        'housing': 'Housing',
+        'food': 'Food & Groceries',
+        'transport': 'Transportation',
+        'utilities': 'Utilities',
+        'healthcare': 'Healthcare',
+        'other_savings': 'Other & Savings',
+    }
+    expense_rows = ''
+    for key in ['housing', 'food', 'transport', 'utilities', 'healthcare', 'other_savings']:
+        pct = expenses[key]
+        label = expense_labels[key]
+        ecolor = expense_colors[key]
+        expense_rows += '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">'
+        expense_rows += '<div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">' + label + '</div>'
+        expense_rows += '<div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;">'
+        expense_rows += '<div style="width: ' + str(pct) + '%; height: 100%; background: ' + ecolor + '; border-radius: 6px;"></div>'
+        expense_rows += '</div>'
+        expense_rows += '<div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">' + str(pct) + '%</div>'
+        expense_rows += '</div>'
+
+    # Compare with other cities section
+    comp_section = ''
+    if city_comps:
+        comp_section = '<section class="content-card"><h2>Compare ' + city + ' With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities">' + comp_links_html + '</div></section>'
+
+    # Related articles section
+    related_section = ''
+    if blog_links_html:
+        related_section = '<section class="content-card"><h2>Related Articles</h2>' + blog_links_html + '</section>'
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost of Living in {city}, {country} — Salary Comparison & Neighborhood Guide 2026</title>
+    <title>Cost of Living in {city}, {country} — Salary Comparison & Neighborhood Guide {CURRENT_YEAR}</title>
     <meta name="description" content="Compare salaries and cost of living in {city}. COLI index: {coli} (rank #{rank}/{total_cities}). Explore {len(neighborhoods)} neighborhoods, tax rates, and equivalent salaries across cities.">
-    <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices 2026">
+    <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/city/{slug}.html">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/city/{slug}.html">
-    <meta property="og:title" content="Cost of Living in {city} — Salary & Neighborhood Guide 2026">
+    <meta property="og:title" content="Cost of Living in {city} — Salary & Neighborhood Guide {CURRENT_YEAR}">
     <meta property="og:description" content="COLI index: {coli} (#{rank}/{total_cities}). Compare salaries, explore {len(neighborhoods)} neighborhoods, and see what your salary is worth in {city}.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cost of Living in {city} — Salary & Neighborhood Guide 2026">
+    <meta name="twitter:title" content="Cost of Living in {city} — Salary & Neighborhood Guide {CURRENT_YEAR}">
     <meta name="twitter:description" content="COLI index: {coli} (#{rank}/{total_cities}). Compare salaries, explore neighborhoods, and plan your move to {city}.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "Cost of Living in {city}, {country} — 2026 Guide",
+        "headline": "Cost of Living in {city}, {country} — {CURRENT_YEAR} Guide",
         "description": "Comprehensive cost of living guide for {city} with neighborhood data, salary comparisons, and tax information.",
         "url": "https://salary-converter.com/city/{slug}.html",
         "datePublished": "{TODAY}",
@@ -483,6 +779,24 @@ def generate_city_page(city):
             "name": "salary:converter",
             "url": "https://salary-converter.com"
         }}
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
+            {{"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"}},
+            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{slug}.html"}}
+        ]
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{faq_schema_list}]
     }}
     </script>
     <style>
@@ -626,8 +940,9 @@ def generate_city_page(city):
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -666,13 +981,56 @@ def generate_city_page(city):
             </p>
             <p>
                 The local currency is <strong>{currency}</strong>. A salary of <strong>$75,000 USD</strong> in New York
-                would need to be approximately <strong>{format_currency_amount(get_equivalent_salary(75000, 'New York', city) * (exchangeRates[currency] / exchangeRates['USD']), currency)}</strong>
+                would need to be approximately <strong>{fmt_equiv}</strong>
                 in {city} to maintain the same purchasing power.
             </p>
-            {'<p>The approximate average effective income tax rate in ' + country + ' is <strong>' + str(tax_rate) + '%</strong> for a mid-range earner.' + (' This is a tax-free jurisdiction.' if tax_rate == 0 else '') + '</p>' if tax_rate is not None else ''}
+            {tax_paragraph}
         </section>
 
-        {'<section class="content-card"><h2>Neighborhoods in ' + city + '</h2><p>' + str(len(neighborhoods)) + ' neighborhoods tracked with cost multipliers relative to the city average. This neighborhood-level data helps you understand exactly how costs vary within ' + city + '.</p><table><thead><tr><th>Neighborhood</th><th style="text-align:center;">Multiplier</th><th style="text-align:right;">vs City Avg</th></tr></thead><tbody>' + neighborhood_rows + '</tbody></table></section>' if neighborhoods else ''}
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in {city}</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in {city}. Housing costs are based on average one-bedroom rent in the city center (${rent:,}/month), with other categories adjusted for the local cost of living index.</p>
+            {expense_rows}
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for {city}'s COLI of {coli} and {country}'s effective tax rate of {tax_rate}%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in {city} ({CURRENT_YEAR})</h2>
+            <p>Estimated annual salaries in {city} ({currency}) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>{salary_rows}
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by {city}'s COLI ({coli}) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in {city}?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to {city}. With an effective tax rate of <strong>{tax_rate}%</strong> in {country} and average one-bedroom rent of <strong>${rent:,}/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">{fmt_mid_salary_local}</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">{fmt_monthly_salary}</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in {city} takes home approximately <strong>{fmt_monthly_salary}</strong> per month. With housing consuming roughly <strong>{expenses['housing']}%</strong> of after-tax income, careful budgeting is essential in this <strong>{coli_desc}</strong> cost city. Your purchasing power in {city} is <strong>{purchasing_power_vs_ny:.0f}%</strong> of what it would be in New York for the same nominal salary.</p>
+        </section>
+
+        {neigh_section}
 
         <section class="content-card">
             <h2>Salary Comparison: {city} vs Other Cities</h2>
@@ -691,10 +1049,23 @@ def generate_city_page(city):
             </table>
         </section>
 
+        {comp_section}
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            {faq_html}
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: {TODAY}. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -705,11 +1076,13 @@ def generate_city_page(city):
             </div>
         </section>
 
+        {related_section}
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>
@@ -789,12 +1162,103 @@ def generate_comparison_page(city1, city2):
             '<tbody>' + neigh_rows_2 + '</tbody></table></div></div></section>'
         )
 
+    # Key Takeaways narrative
+    more_expensive_city = city2 if coli2 > coli1 else city1
+    less_expensive_city = city1 if coli1 < coli2 else city2
+    rent_diff_pct = abs(((rent2 / rent1) - 1) * 100) if rent1 > 0 else 0
+    rent_cheaper_city = city1 if rent1 < rent2 else city2
+    rent_more_city = city1 if rent1 >= rent2 else city2
+
+    # Tax comparison text
+    if tax1 == tax2:
+        tax_compare_text = f'Both cities have the same effective tax rate of {tax1}%.'
+    elif tax1 < tax2:
+        tax_compare_text = f'{city1} has a lower effective tax rate ({tax1}%) compared to {city2} ({tax2}%), meaning you keep more of your gross salary in {city1}.'
+    else:
+        tax_compare_text = f'{city2} has a lower effective tax rate ({tax2}%) compared to {city1} ({tax1}%), meaning you keep more of your gross salary in {city2}.'
+
+    # Tax-free note
+    if tax1 == 0:
+        tax_free_note_1 = f' {country1} is a tax-free jurisdiction, which is a significant financial advantage.'
+    else:
+        tax_free_note_1 = ''
+    if tax2 == 0:
+        tax_free_note_2 = f' {country2} is a tax-free jurisdiction, which is a significant financial advantage.'
+    else:
+        tax_free_note_2 = ''
+
+    # Salary comparison by job title (6 popular jobs)
+    job_compare_titles = ['Software Engineer', 'Product Manager', 'Data Scientist', 'Marketing Manager', 'Teacher', 'Nurse']
+    job_compare_rows = ''
+    for title in job_compare_titles:
+        ranges = salaryRanges[title]
+        mid_usd = ranges['mid']
+        local_1 = mid_usd * (coli1 / 100) * rate1
+        local_2 = mid_usd * (coli2 / 100) * rate2
+        fmt_1 = format_currency_amount(local_1, currency1)
+        fmt_2 = format_currency_amount(local_2, currency2)
+        job_compare_rows += f'''
+                        <tr>
+                            <td style="font-weight: 500;">{title}</td>
+                            <td style="text-align: center;">{fmt_1}</td>
+                            <td style="text-align: center;">{fmt_2}</td>
+                        </tr>'''
+
+    # FAQ items for comparison
+    fmt_salary_city1 = format_currency_amount(salary_in_city1, currency1)
+    fmt_equiv_city2 = format_currency_amount(equiv_in_city2, currency2)
+
+    comp_faq_items = [
+        {
+            'q': f'Is {city1} or {city2} more expensive?',
+            'a': f'{more_expensive_city} is more expensive overall. {city1} has a COLI of {coli1} while {city2} has a COLI of {coli2}, making {less_expensive_city} approximately {pct_cheaper:.0f}% cheaper.'
+        },
+        {
+            'q': f'What salary in {city2} equals {fmt_salary_city1} in {city1}?',
+            'a': f'To maintain the same standard of living as {fmt_salary_city1} in {city1}, you would need approximately {fmt_equiv_city2} in {city2}.'
+        },
+        {
+            'q': f'Is rent cheaper in {city1} or {city2}?',
+            'a': f'Average one-bedroom rent in {city1} is ${rent1:,}/month compared to ${rent2:,}/month in {city2}. {rent_cheaper_city} has lower rent by approximately {rent_diff_pct:.0f}%.'
+        },
+        {
+            'q': f'Which city has lower taxes, {city1} or {city2}?',
+            'a': tax_compare_text + tax_free_note_1 + tax_free_note_2
+        },
+    ]
+
+    # Build FAQ schema
+    comp_faq_schema_items = []
+    for item in comp_faq_items:
+        q_escaped = item['q'].replace('"', '&quot;')
+        a_escaped = item['a'].replace('"', '&quot;')
+        comp_faq_schema_items.append(
+            '{"@type": "Question", "name": "' + q_escaped + '", "acceptedAnswer": {"@type": "Answer", "text": "' + a_escaped + '"}}'
+        )
+    comp_faq_schema_list = ', '.join(comp_faq_schema_items)
+
+    # Build FAQ HTML
+    comp_faq_html = ''
+    for item in comp_faq_items:
+        comp_faq_html += '<div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;">'
+        comp_faq_html += '<h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">' + item['q'] + '</h3>'
+        comp_faq_html += '<p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">' + item['a'] + '</p>'
+        comp_faq_html += '</div>'
+
+    # Winner class helpers
+    coli1_winner = 'winner' if coli1 <= coli2 else ''
+    coli2_winner = 'winner' if coli2 <= coli1 else ''
+    rent1_winner = 'winner' if rent1 <= rent2 else ''
+    rent2_winner = 'winner' if rent2 <= rent1 else ''
+    tax1_winner = 'winner' if tax1 <= tax2 else ''
+    tax2_winner = 'winner' if tax2 <= tax1 else ''
+
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{city1} vs {city2}: Cost of Living & Salary Comparison 2026</title>
+    <title>{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}</title>
     <meta name="description" content="Compare cost of living between {city1} (COLI: {coli1}) and {city2} (COLI: {coli2}). {cheaper_city} is {pct_cheaper:.0f}% cheaper. See salary equivalents, neighborhoods, and tax rates.">
     <meta name="keywords" content="{city1} vs {city2}, cost of living comparison, salary comparison, {city1} {city2} relocation, {city1} or {city2}">
     <meta name="author" content="salary:converter">
@@ -803,19 +1267,19 @@ def generate_comparison_page(city1, city2):
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/compare/{slug1}-vs-{slug2}.html">
-    <meta property="og:title" content="{city1} vs {city2}: Cost of Living & Salary Comparison 2026">
+    <meta property="og:title" content="{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}">
     <meta property="og:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper. Compare salaries, neighborhoods, tax rates, and more.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{city1} vs {city2}: Salary & Cost of Living 2026">
+    <meta name="twitter:title" content="{city1} vs {city2}: Salary & Cost of Living {CURRENT_YEAR}">
     <meta name="twitter:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper. Full comparison with neighborhood data.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "{city1} vs {city2}: Cost of Living & Salary Comparison 2026",
+        "headline": "{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}",
         "description": "Detailed comparison of cost of living, salaries, neighborhoods, and tax rates between {city1} and {city2}.",
         "url": "https://salary-converter.com/compare/{slug1}-vs-{slug2}.html",
         "datePublished": "{TODAY}",
@@ -825,6 +1289,24 @@ def generate_comparison_page(city1, city2):
             "name": "salary:converter",
             "url": "https://salary-converter.com"
         }}
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
+            {{"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"}},
+            {{"@type": "ListItem", "position": 3, "name": "{city1} vs {city2}", "item": "https://salary-converter.com/compare/{slug1}-vs-{slug2}.html"}}
+        ]
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{comp_faq_schema_list}]
     }}
     </script>
     <style>
@@ -922,6 +1404,17 @@ def generate_comparison_page(city1, city2):
         .metric-value {{ font-weight: 600; text-align: center; }}
         .winner {{ color: #22c55e; }}
         .two-col {{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }}
+        .similar-cities {{
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+        }}
+        .similar-city-link {{
+            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+        }}
+        .similar-city-link:hover {{
+            background: #2563eb; color: white;
+        }}
         .cta-section {{
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -963,8 +1456,9 @@ def generate_comparison_page(city1, city2):
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -974,7 +1468,7 @@ def generate_comparison_page(city1, city2):
 
         <section class="hero">
             <h1>{city1} <span class="vs-badge">VS</span> {city2}</h1>
-            <p class="subtitle">Cost of Living & Salary Comparison 2026</p>
+            <p class="subtitle">Cost of Living & Salary Comparison {CURRENT_YEAR}</p>
 
             <div class="compare-grid">
                 <div class="compare-col">
@@ -1016,23 +1510,30 @@ def generate_comparison_page(city1, city2):
             <h2>Key Differences</h2>
             <div class="metric-row">
                 <div class="metric-label">Cost of Living</div>
-                <div class="metric-value {'winner' if coli1 <= coli2 else ''}">{coli1}</div>
-                <div class="metric-value {'winner' if coli2 <= coli1 else ''}">{coli2}</div>
+                <div class="metric-value {coli1_winner}">{coli1}</div>
+                <div class="metric-value {coli2_winner}">{coli2}</div>
             </div>
             <div class="metric-row">
                 <div class="metric-label">1BR Rent (USD/mo)</div>
-                <div class="metric-value {'winner' if rent1 <= rent2 else ''}">${rent1:,}</div>
-                <div class="metric-value {'winner' if rent2 <= rent1 else ''}">${rent2:,}</div>
+                <div class="metric-value {rent1_winner}">${rent1:,}</div>
+                <div class="metric-value {rent2_winner}">${rent2:,}</div>
             </div>
             <div class="metric-row">
                 <div class="metric-label">Income Tax Rate</div>
-                <div class="metric-value {'winner' if tax1 <= tax2 else ''}">{tax1}%</div>
-                <div class="metric-value {'winner' if tax2 <= tax1 else ''}">{tax2}%</div>
+                <div class="metric-value {tax1_winner}">{tax1}%</div>
+                <div class="metric-value {tax2_winner}">{tax2}%</div>
             </div>
             <div class="metric-row">
                 <div class="metric-label">Exchange Rate</div>
                 <div class="metric-value" colspan="2" style="grid-column: span 2; text-align: center;">1 {currency1} = {cross_rate:.4f} {currency2}</div>
             </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Key Takeaways: {city1} vs {city2}</h2>
+            <p>Overall, <strong>{less_expensive_city}</strong> is approximately <strong>{pct_cheaper:.0f}% cheaper</strong> than {more_expensive_city} based on our cost of living index. {city1} has a COLI of {coli1} (ranked #{rank1} of {total_cities} cities), while {city2} has a COLI of {coli2} (ranked #{rank2}).</p>
+            <p>When it comes to housing, one-bedroom apartment rent in {city1} averages <strong>${rent1:,}/month</strong> compared to <strong>${rent2:,}/month</strong> in {city2}. That makes {rent_cheaper_city} approximately <strong>{rent_diff_pct:.0f}% cheaper</strong> for rent alone.</p>
+            <p>{tax_compare_text}{tax_free_note_1}{tax_free_note_2} When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
         </section>
 
         <section class="content-card">
@@ -1045,6 +1546,25 @@ def generate_comparison_page(city1, city2):
             </p>
         </section>
 
+        <section class="content-card">
+            <h2>Salary Comparison by Job Title</h2>
+            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">{city1} ({currency1})</th>
+                        <th style="text-align: center;">{city2} ({currency2})</th>
+                    </tr>
+                </thead>
+                <tbody>{job_compare_rows}
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
+        </section>
+
         {neigh_section}
 
         <section class="cta-section">
@@ -1053,10 +1573,30 @@ def generate_comparison_page(city1, city2):
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </section>
 
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            {comp_faq_html}
+        </section>
+
+        <section class="content-card">
+            <h2>Explore Each City</h2>
+            <div class="similar-cities">
+                <a href="/city/{slug1}.html" class="similar-city-link">{city1} Cost of Living Guide</a>
+                <a href="/city/{slug2}.html" class="similar-city-link">{city2} Cost of Living Guide</a>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources</h2>
+            <p>Cost of living data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. New York City is the baseline (COLI = 100). Tax rates represent approximate effective rates for mid-range earners. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: {TODAY}</p>
+        </section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/{slug1}.html">{city1}</a>
             <a href="/city/{slug2}.html">{city2}</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>
@@ -1089,7 +1629,7 @@ def generate_city_index():
                     <td>{country}</td>
                     <td style="text-align: center; font-weight: 600;">{coli}</td>
                     <td style="text-align: center;">{currency}</td>
-                    <td style="text-align: center;">{num_neighborhoods or '—'}</td>
+                    <td style="text-align: center;">{num_neighborhoods or "—"}</td>
                 </tr>'''
 
     html = f'''<!DOCTYPE html>
@@ -1097,25 +1637,25 @@ def generate_city_index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost of Living by City 2026 — Compare 100 Cities Worldwide | salary:converter</title>
-    <meta name="description" content="Compare cost of living across 100 cities worldwide. See COLI indices, salary equivalents, neighborhood data, and tax rates for every city we track.">
-    <meta name="keywords" content="cost of living by city, city comparison, COLI index, cost of living ranking 2026, cheapest cities, most expensive cities">
+    <title>Cost of Living by City {CURRENT_YEAR} — Compare {len(coliData)} Cities Worldwide | salary:converter</title>
+    <meta name="description" content="Compare cost of living across {len(coliData)} cities worldwide. See COLI indices, salary equivalents, neighborhood data, and tax rates for every city we track.">
+    <meta name="keywords" content="cost of living by city, city comparison, COLI index, cost of living ranking {CURRENT_YEAR}, cheapest cities, most expensive cities">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/city/">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/city/">
-    <meta property="og:title" content="Cost of Living by City 2026 — 100 Cities Ranked">
-    <meta property="og:description" content="Compare cost of living, salaries, and neighborhoods across 100 cities worldwide.">
+    <meta property="og:title" content="Cost of Living by City {CURRENT_YEAR} — {len(coliData)} Cities Ranked">
+    <meta property="og:description" content="Compare cost of living, salaries, and neighborhoods across {len(coliData)} cities worldwide.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "Cost of Living by City 2026",
-        "description": "Compare cost of living across 100 cities worldwide",
+        "name": "Cost of Living by City {CURRENT_YEAR}",
+        "description": "Compare cost of living across {len(coliData)} cities worldwide",
         "url": "https://salary-converter.com/city/",
         "isPartOf": {{
             "@type": "WebSite",
@@ -1204,13 +1744,14 @@ def generate_city_index():
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
         <section class="hero">
-            <h1>Cost of Living by City 2026</h1>
+            <h1>Cost of Living by City {CURRENT_YEAR}</h1>
             <p>{len(coliData)} cities ranked by cost of living index (New York = 100)</p>
             <div class="search-box">
                 <input type="text" id="citySearch" placeholder="Search cities..." oninput="filterCities(this.value)">
@@ -1279,7 +1820,7 @@ def generate_compare_index(comparison_pairs):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Comparisons — Cost of Living & Salary Side-by-Side 2026</title>
+    <title>City Comparisons — Cost of Living & Salary Side-by-Side {CURRENT_YEAR}</title>
     <meta name="description" content="Compare cost of living and salaries between popular city pairs. Side-by-side comparison of neighborhoods, tax rates, and purchasing power.">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -1287,7 +1828,7 @@ def generate_compare_index(comparison_pairs):
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/compare/">
-    <meta property="og:title" content="City Cost of Living Comparisons 2026">
+    <meta property="og:title" content="City Cost of Living Comparisons {CURRENT_YEAR}">
     <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between popular city pairs.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
@@ -1365,6 +1906,7 @@ def generate_compare_index(comparison_pairs):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
@@ -1390,6 +1932,49 @@ def generate_compare_index(comparison_pairs):
 
 
 # ============================================================
+# SITEMAP GENERATION
+# ============================================================
+
+def generate_sitemap(comparison_pairs):
+    """Generate sitemap.xml for all pages"""
+    urls = []
+    # Main pages
+    urls.append('https://salary-converter.com/')
+    urls.append('https://salary-converter.com/widget.html')
+    urls.append('https://salary-converter.com/city/')
+    urls.append('https://salary-converter.com/compare/')
+    urls.append('https://salary-converter.com/blog/')
+
+    # Blog articles
+    blog_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blog', 'articles')
+    if os.path.isdir(blog_dir):
+        for fname in sorted(os.listdir(blog_dir)):
+            if fname.endswith('.html'):
+                urls.append(f'https://salary-converter.com/blog/articles/{fname}')
+
+    # City pages
+    for city in coliData:
+        slug = slugify(city)
+        urls.append(f'https://salary-converter.com/city/{slug}.html')
+
+    # Comparison pages
+    for city1, city2 in comparison_pairs:
+        slug1 = slugify(city1)
+        slug2 = slugify(city2)
+        urls.append(f'https://salary-converter.com/compare/{slug1}-vs-{slug2}.html')
+
+    xml_entries = ''
+    for url in urls:
+        xml_entries += f'  <url><loc>{url}</loc><lastmod>{TODAY}</lastmod></url>\n'
+
+    sitemap = f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{xml_entries}</urlset>
+'''
+    return sitemap
+
+
+# ============================================================
 # MAIN GENERATION LOGIC
 # ============================================================
 
@@ -1400,22 +1985,6 @@ if __name__ == '__main__':
 
     os.makedirs(city_dir, exist_ok=True)
     os.makedirs(compare_dir, exist_ok=True)
-
-    # Generate all city pages
-    print(f"Generating {len(coliData)} city pages...")
-    for city in coliData:
-        slug = slugify(city)
-        filepath = os.path.join(city_dir, f'{slug}.html')
-        html = generate_city_page(city)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(html)
-    print(f"  Done: {len(coliData)} city pages created in /city/")
-
-    # Generate city index page
-    index_path = os.path.join(city_dir, 'index.html')
-    with open(index_path, 'w', encoding='utf-8') as f:
-        f.write(generate_city_index())
-    print("  Done: City index page created at /city/index.html")
 
     # Define popular comparison pairs (high-traffic searches)
     comparison_pairs = [
@@ -1481,6 +2050,22 @@ if __name__ == '__main__':
         ('Hong Kong', 'Taipei'),
     ]
 
+    # Generate all city pages
+    print(f"Generating {len(coliData)} city pages...")
+    for city in coliData:
+        slug = slugify(city)
+        filepath = os.path.join(city_dir, f'{slug}.html')
+        html = generate_city_page(city, comparison_pairs)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(html)
+    print(f"  Done: {len(coliData)} city pages created in /city/")
+
+    # Generate city index page
+    index_path = os.path.join(city_dir, 'index.html')
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(generate_city_index())
+    print("  Done: City index page created at /city/index.html")
+
     # Generate comparison pages
     print(f"Generating {len(comparison_pairs)} comparison pages...")
     for city1, city2 in comparison_pairs:
@@ -1498,10 +2083,12 @@ if __name__ == '__main__':
         f.write(generate_compare_index(comparison_pairs))
     print("  Done: Compare index page at /compare/index.html")
 
-    # Generate sitemap entries
-    print("\nSitemap entries to add:")
-    print("  City index: https://salary-converter.com/city/")
-    print("  Compare index: https://salary-converter.com/compare/")
-    print(f"  {len(coliData)} city pages")
-    print(f"  {len(comparison_pairs)} comparison pages")
+    # Generate sitemap
+    sitemap_path = os.path.join(base_dir, 'sitemap.xml')
+    with open(sitemap_path, 'w', encoding='utf-8') as f:
+        f.write(generate_sitemap(comparison_pairs))
+    print("  Done: Sitemap generated at /sitemap.xml")
+
+    # Summary
     print(f"\nTotal new pages: {len(coliData) + len(comparison_pairs) + 2}")
+    print(f"Sitemap entries: {len(coliData) + len(comparison_pairs) + 4}")

@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": "Porto", "item": "https://salary-converter.com/city/porto.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Porto?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Porto is 30.1, which ranks #73 out of 101 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Porto to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €19,141 in Porto."}}, {"@type": "Question", "name": "What is the average rent in Porto?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Porto is approximately $800 USD."}}, {"@type": "Question", "name": "What is the income tax rate in Portugal?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in Portugal is approximately 25%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Porto?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}, {"@type": "Question", "name": "What are the most expensive areas in Porto?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -177,8 +195,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -221,6 +240,169 @@
                 in Porto to maintain the same purchasing power.
             </p>
             <p>The approximate average effective income tax rate in Portugal is <strong>25%</strong> for a mid-range earner.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in Porto</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in Porto. Housing costs are based on average one-bedroom rent in the city center ($800/month), with other categories adjusted for the local cost of living index.</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Housing</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 45%; height: 100%; background: #2563eb; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">45%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Food & Groceries</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 15%; height: 100%; background: #f59e0b; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">15%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Transportation</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 8%; height: 100%; background: #8b5cf6; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">8%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Utilities</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 6%; height: 100%; background: #06b6d4; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">6%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Healthcare</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 4%; height: 100%; background: #22c55e; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">4%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Other & Savings</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 22%; height: 100%; background: #6b7280; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">22%</div></div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for Porto's COLI of 30.1 and Portugal's effective tax rate of 25%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in Porto (2026)</h2>
+            <p>Estimated annual salaries in Porto (EUR) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">€11,485</td>
+                            <td style="text-align: center; font-weight: 600;">€21,693</td>
+                            <td style="text-align: right;">€45,939</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">€12,761</td>
+                            <td style="text-align: center; font-weight: 600;">€24,245</td>
+                            <td style="text-align: right;">€43,387</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">€14,037</td>
+                            <td style="text-align: center; font-weight: 600;">€25,522</td>
+                            <td style="text-align: right;">€48,491</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">UX Designer</td>
+                            <td style="text-align: center;">€10,209</td>
+                            <td style="text-align: center; font-weight: 600;">€19,141</td>
+                            <td style="text-align: right;">€35,730</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">€9,698</td>
+                            <td style="text-align: center; font-weight: 600;">€18,376</td>
+                            <td style="text-align: right;">€34,454</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Financial Analyst</td>
+                            <td style="text-align: center;">€10,719</td>
+                            <td style="text-align: center; font-weight: 600;">€19,907</td>
+                            <td style="text-align: right;">€37,006</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Project Manager</td>
+                            <td style="text-align: center;">€11,485</td>
+                            <td style="text-align: center; font-weight: 600;">€20,417</td>
+                            <td style="text-align: right;">€38,282</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">DevOps Engineer</td>
+                            <td style="text-align: center;">€12,761</td>
+                            <td style="text-align: center; font-weight: 600;">€24,245</td>
+                            <td style="text-align: right;">€44,663</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Graphic Designer</td>
+                            <td style="text-align: center;">€7,656</td>
+                            <td style="text-align: center; font-weight: 600;">€14,037</td>
+                            <td style="text-align: right;">€25,522</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Sales Manager</td>
+                            <td style="text-align: center;">€10,209</td>
+                            <td style="text-align: center; font-weight: 600;">€20,417</td>
+                            <td style="text-align: right;">€40,834</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">HR Manager</td>
+                            <td style="text-align: center;">€9,698</td>
+                            <td style="text-align: center; font-weight: 600;">€17,865</td>
+                            <td style="text-align: right;">€33,178</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Business Analyst</td>
+                            <td style="text-align: center;">€10,719</td>
+                            <td style="text-align: center; font-weight: 600;">€19,141</td>
+                            <td style="text-align: right;">€35,730</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Accountant</td>
+                            <td style="text-align: center;">€8,933</td>
+                            <td style="text-align: center; font-weight: 600;">€15,823</td>
+                            <td style="text-align: right;">€28,074</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">€6,380</td>
+                            <td style="text-align: center; font-weight: 600;">€12,250</td>
+                            <td style="text-align: right;">€21,693</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">€7,656</td>
+                            <td style="text-align: center; font-weight: 600;">€14,802</td>
+                            <td style="text-align: right;">€25,522</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Mechanical Engineer</td>
+                            <td style="text-align: center;">€10,209</td>
+                            <td style="text-align: center; font-weight: 600;">€19,907</td>
+                            <td style="text-align: right;">€35,730</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Architect</td>
+                            <td style="text-align: center;">€9,698</td>
+                            <td style="text-align: center; font-weight: 600;">€18,376</td>
+                            <td style="text-align: right;">€33,178</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Lawyer</td>
+                            <td style="text-align: center;">€12,761</td>
+                            <td style="text-align: center; font-weight: 600;">€25,522</td>
+                            <td style="text-align: right;">€56,147</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Consultant</td>
+                            <td style="text-align: center;">€11,485</td>
+                            <td style="text-align: center; font-weight: 600;">€22,969</td>
+                            <td style="text-align: right;">€45,939</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Content Writer</td>
+                            <td style="text-align: center;">€6,380</td>
+                            <td style="text-align: center; font-weight: 600;">€12,761</td>
+                            <td style="text-align: right;">€22,969</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by Porto's COLI (30.1) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in Porto?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to Porto. With an effective tax rate of <strong>25%</strong> in Portugal and average one-bedroom rent of <strong>$800/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€19,141</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€1,196</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in Porto takes home approximately <strong>€1,196</strong> per month. With housing consuming roughly <strong>45%</strong> of after-tax income, careful budgeting is essential in this <strong>low</strong> cost city. Your purchasing power in Porto is <strong>332%</strong> of what it would be in New York for the same nominal salary.</p>
         </section>
 
         
@@ -306,10 +488,24 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Porto With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/lisbon-vs-porto.html" class="similar-city-link">Porto vs Lisbon</a>
+</div></section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Porto?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Porto is 30.1, which ranks #73 out of 101 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Porto to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €19,141 in Porto.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Porto?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Porto is approximately $800 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the income tax rate in Portugal?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in Portugal is approximately 25%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Porto?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Porto?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -326,11 +522,15 @@
             </div>
         </section>
 
+        <section class="content-card"><h2>Related Articles</h2><a href="/blog/articles/how-cost-of-living-affects-your-salary.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">How Cost of Living Affects Your Salary</a>
+<a href="/blog/articles/salary-negotiation-when-relocating-abroad.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Salary Negotiation When Relocating Abroad</a>
+</section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>

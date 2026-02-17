@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": "Vienna", "item": "https://salary-converter.com/city/vienna.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Vienna?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Vienna is 48.2, which ranks #46 out of 101 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Vienna to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €30,651 in Vienna."}}, {"@type": "Question", "name": "What is the average rent in Vienna?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Vienna is approximately $1,000 USD."}}, {"@type": "Question", "name": "What is the income tax rate in Austria?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in Austria is approximately 30%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Vienna?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}, {"@type": "Question", "name": "What are the most expensive areas in Vienna?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -177,8 +195,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -221,6 +240,169 @@
                 in Vienna to maintain the same purchasing power.
             </p>
             <p>The approximate average effective income tax rate in Austria is <strong>30%</strong> for a mid-range earner.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in Vienna</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in Vienna. Housing costs are based on average one-bedroom rent in the city center ($1,000/month), with other categories adjusted for the local cost of living index.</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Housing</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 45%; height: 100%; background: #2563eb; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">45%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Food & Groceries</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 15%; height: 100%; background: #f59e0b; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">15%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Transportation</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 8%; height: 100%; background: #8b5cf6; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">8%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Utilities</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 6%; height: 100%; background: #06b6d4; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">6%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Healthcare</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 4%; height: 100%; background: #22c55e; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">4%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Other & Savings</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 22%; height: 100%; background: #6b7280; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">22%</div></div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for Vienna's COLI of 48.2 and Austria's effective tax rate of 30%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in Vienna (2026)</h2>
+            <p>Estimated annual salaries in Vienna (EUR) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">€18,391</td>
+                            <td style="text-align: center; font-weight: 600;">€34,738</td>
+                            <td style="text-align: right;">€73,563</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">€20,434</td>
+                            <td style="text-align: center; font-weight: 600;">€38,825</td>
+                            <td style="text-align: right;">€69,476</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">€22,478</td>
+                            <td style="text-align: center; font-weight: 600;">€40,868</td>
+                            <td style="text-align: right;">€77,650</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">UX Designer</td>
+                            <td style="text-align: center;">€16,347</td>
+                            <td style="text-align: center; font-weight: 600;">€30,651</td>
+                            <td style="text-align: right;">€57,216</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">€15,530</td>
+                            <td style="text-align: center; font-weight: 600;">€29,425</td>
+                            <td style="text-align: right;">€55,172</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Financial Analyst</td>
+                            <td style="text-align: center;">€17,165</td>
+                            <td style="text-align: center; font-weight: 600;">€31,877</td>
+                            <td style="text-align: right;">€59,259</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Project Manager</td>
+                            <td style="text-align: center;">€18,391</td>
+                            <td style="text-align: center; font-weight: 600;">€32,695</td>
+                            <td style="text-align: right;">€61,303</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">DevOps Engineer</td>
+                            <td style="text-align: center;">€20,434</td>
+                            <td style="text-align: center; font-weight: 600;">€38,825</td>
+                            <td style="text-align: right;">€71,520</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Graphic Designer</td>
+                            <td style="text-align: center;">€12,261</td>
+                            <td style="text-align: center; font-weight: 600;">€22,478</td>
+                            <td style="text-align: right;">€40,868</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Sales Manager</td>
+                            <td style="text-align: center;">€16,347</td>
+                            <td style="text-align: center; font-weight: 600;">€32,695</td>
+                            <td style="text-align: right;">€65,389</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">HR Manager</td>
+                            <td style="text-align: center;">€15,530</td>
+                            <td style="text-align: center; font-weight: 600;">€28,608</td>
+                            <td style="text-align: right;">€53,129</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Business Analyst</td>
+                            <td style="text-align: center;">€17,165</td>
+                            <td style="text-align: center; font-weight: 600;">€30,651</td>
+                            <td style="text-align: right;">€57,216</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Accountant</td>
+                            <td style="text-align: center;">€14,304</td>
+                            <td style="text-align: center; font-weight: 600;">€25,338</td>
+                            <td style="text-align: right;">€44,955</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">€10,217</td>
+                            <td style="text-align: center; font-weight: 600;">€19,617</td>
+                            <td style="text-align: right;">€34,738</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">€12,261</td>
+                            <td style="text-align: center; font-weight: 600;">€23,704</td>
+                            <td style="text-align: right;">€40,868</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Mechanical Engineer</td>
+                            <td style="text-align: center;">€16,347</td>
+                            <td style="text-align: center; font-weight: 600;">€31,877</td>
+                            <td style="text-align: right;">€57,216</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Architect</td>
+                            <td style="text-align: center;">€15,530</td>
+                            <td style="text-align: center; font-weight: 600;">€29,425</td>
+                            <td style="text-align: right;">€53,129</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Lawyer</td>
+                            <td style="text-align: center;">€20,434</td>
+                            <td style="text-align: center; font-weight: 600;">€40,868</td>
+                            <td style="text-align: right;">€89,910</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Consultant</td>
+                            <td style="text-align: center;">€18,391</td>
+                            <td style="text-align: center; font-weight: 600;">€36,782</td>
+                            <td style="text-align: right;">€73,563</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Content Writer</td>
+                            <td style="text-align: center;">€10,217</td>
+                            <td style="text-align: center; font-weight: 600;">€20,434</td>
+                            <td style="text-align: right;">€36,782</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by Vienna's COLI (48.2) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in Vienna?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to Vienna. With an effective tax rate of <strong>30%</strong> in Austria and average one-bedroom rent of <strong>$1,000/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€30,651</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€1,788</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in Vienna takes home approximately <strong>€1,788</strong> per month. With housing consuming roughly <strong>45%</strong> of after-tax income, careful budgeting is essential in this <strong>low</strong> cost city. Your purchasing power in Vienna is <strong>207%</strong> of what it would be in New York for the same nominal salary.</p>
         </section>
 
         
@@ -306,10 +488,24 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Vienna With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/berlin-vs-vienna.html" class="similar-city-link">Vienna vs Berlin</a>
+</div></section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Vienna?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Vienna is 48.2, which ranks #46 out of 101 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Vienna to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €30,651 in Vienna.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Vienna?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Vienna is approximately $1,000 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the income tax rate in Austria?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in Austria is approximately 30%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Vienna?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Vienna?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -324,11 +520,15 @@
             </div>
         </section>
 
+        <section class="content-card"><h2>Related Articles</h2><a href="/blog/articles/how-cost-of-living-affects-your-salary.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">How Cost of Living Affects Your Salary</a>
+<a href="/blog/articles/salary-negotiation-when-relocating-abroad.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Salary Negotiation When Relocating Abroad</a>
+</section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>

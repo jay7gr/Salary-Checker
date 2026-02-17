@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"},
+            {"@type": "ListItem", "position": 3, "name": "Paris vs Berlin", "item": "https://salary-converter.com/compare/paris-vs-berlin.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "Is Paris or Berlin more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Berlin is more expensive overall. Paris has a COLI of 46.9 while Berlin has a COLI of 51.2, making Paris approximately 9% cheaper."}}, {"@type": "Question", "name": "What salary in Berlin equals €63,592 in Paris?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as €63,592 in Paris, you would need approximately €69,422 in Berlin."}}, {"@type": "Question", "name": "Is rent cheaper in Paris or Berlin?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in Paris is $1,400/month compared to $1,200/month in Berlin. Berlin has lower rent by approximately 14%."}}, {"@type": "Question", "name": "Which city has lower taxes, Paris or Berlin?", "acceptedAnswer": {"@type": "Answer", "text": "Paris has a lower effective tax rate (30%) compared to Berlin (32%), meaning you keep more of your gross salary in Paris."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -131,6 +149,17 @@
         .metric-value { font-weight: 600; text-align: center; }
         .winner { color: #22c55e; }
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .similar-cities {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+        }
+        .similar-city-link {
+            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+        }
+        .similar-city-link:hover {
+            background: #2563eb; color: white;
+        }
         .cta-section {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -172,8 +201,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -245,6 +275,13 @@
         </section>
 
         <section class="content-card">
+            <h2>Key Takeaways: Paris vs Berlin</h2>
+            <p>Overall, <strong>Paris</strong> is approximately <strong>9% cheaper</strong> than Berlin based on our cost of living index. Paris has a COLI of 46.9 (ranked #47 of 101 cities), while Berlin has a COLI of 51.2 (ranked #43).</p>
+            <p>When it comes to housing, one-bedroom apartment rent in Paris averages <strong>$1,400/month</strong> compared to <strong>$1,200/month</strong> in Berlin. That makes Berlin approximately <strong>14% cheaper</strong> for rent alone.</p>
+            <p>Paris has a lower effective tax rate (30%) compared to Berlin (32%), meaning you keep more of your gross salary in Paris. When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
+        </section>
+
+        <section class="content-card">
             <h2>Salary Equivalent</h2>
             <p>
                 If you earn <strong>€63,592</strong> in Paris,
@@ -252,6 +289,55 @@
                 to maintain the same purchasing power.
                 That is <strong>9%</strong> more due to higher cost of living.
             </p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Comparison by Job Title</h2>
+            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Paris (EUR)</th>
+                        <th style="text-align: center;">Berlin (EUR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">€33,801</td>
+                            <td style="text-align: center;">€36,900</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">€39,766</td>
+                            <td style="text-align: center;">€43,412</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">€37,778</td>
+                            <td style="text-align: center;">€41,241</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">€28,632</td>
+                            <td style="text-align: center;">€31,257</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">€19,088</td>
+                            <td style="text-align: center;">€20,838</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">€23,064</td>
+                            <td style="text-align: center;">€25,179</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
         </section>
 
         <section class="content-card"><h2>Neighborhoods</h2><div class="two-col"><div><h3 style="font-size:0.95rem; margin-bottom:12px;">Paris (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Champs-Élysées (8th)</td><td style="text-align:right;">1.40x (+40%)</td></tr><tr><td>Saint-Germain (6th)</td><td style="text-align:right;">1.35x (+35%)</td></tr><tr><td>Le Marais (3rd/4th)</td><td style="text-align:right;">1.30x (+30%)</td></tr><tr><td>La Défense</td><td style="text-align:right;">1.10x (+10%)</td></tr><tr><td>Boulogne-Billancourt</td><td style="text-align:right;">1.08x (+8%)</td></tr></tbody></table></div><div><h3 style="font-size:0.95rem; margin-bottom:12px;">Berlin (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Grunewald</td><td style="text-align:right;">1.30x (+30%)</td></tr><tr><td>Mitte</td><td style="text-align:right;">1.22x (+22%)</td></tr><tr><td>Charlottenburg</td><td style="text-align:right;">1.15x (+15%)</td></tr><tr><td>Prenzlauer Berg</td><td style="text-align:right;">1.12x (+12%)</td></tr><tr><td>Kreuzberg</td><td style="text-align:right;">1.08x (+8%)</td></tr></tbody></table></div></div></section>
@@ -262,10 +348,30 @@
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </section>
 
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is Paris or Berlin more expensive?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Berlin is more expensive overall. Paris has a COLI of 46.9 while Berlin has a COLI of 51.2, making Paris approximately 9% cheaper.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What salary in Berlin equals €63,592 in Paris?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same standard of living as €63,592 in Paris, you would need approximately €69,422 in Berlin.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is rent cheaper in Paris or Berlin?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Average one-bedroom rent in Paris is $1,400/month compared to $1,200/month in Berlin. Berlin has lower rent by approximately 14%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Which city has lower taxes, Paris or Berlin?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Paris has a lower effective tax rate (30%) compared to Berlin (32%), meaning you keep more of your gross salary in Paris.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Explore Each City</h2>
+            <div class="similar-cities">
+                <a href="/city/paris.html" class="similar-city-link">Paris Cost of Living Guide</a>
+                <a href="/city/berlin.html" class="similar-city-link">Berlin Cost of Living Guide</a>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources</h2>
+            <p>Cost of living data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. New York City is the baseline (COLI = 100). Tax rates represent approximate effective rates for mid-range earners. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17</p>
+        </section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/paris.html">Paris</a>
             <a href="/city/berlin.html">Berlin</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>

@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"},
+            {"@type": "ListItem", "position": 3, "name": "Lisbon vs Barcelona", "item": "https://salary-converter.com/compare/lisbon-vs-barcelona.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "Is Lisbon or Barcelona more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Barcelona is more expensive overall. Lisbon has a COLI of 34.7 while Barcelona has a COLI of 42.1, making Lisbon approximately 21% cheaper."}}, {"@type": "Question", "name": "What salary in Barcelona equals €63,592 in Lisbon?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as €63,592 in Lisbon, you would need approximately €77,153 in Barcelona."}}, {"@type": "Question", "name": "Is rent cheaper in Lisbon or Barcelona?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in Lisbon is $1,000/month compared to $1,200/month in Barcelona. Lisbon has lower rent by approximately 20%."}}, {"@type": "Question", "name": "Which city has lower taxes, Lisbon or Barcelona?", "acceptedAnswer": {"@type": "Answer", "text": "Barcelona has a lower effective tax rate (24%) compared to Lisbon (25%), meaning you keep more of your gross salary in Barcelona."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -131,6 +149,17 @@
         .metric-value { font-weight: 600; text-align: center; }
         .winner { color: #22c55e; }
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .similar-cities {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+        }
+        .similar-city-link {
+            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+        }
+        .similar-city-link:hover {
+            background: #2563eb; color: white;
+        }
         .cta-section {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -172,8 +201,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -245,6 +275,13 @@
         </section>
 
         <section class="content-card">
+            <h2>Key Takeaways: Lisbon vs Barcelona</h2>
+            <p>Overall, <strong>Lisbon</strong> is approximately <strong>21% cheaper</strong> than Barcelona based on our cost of living index. Lisbon has a COLI of 34.7 (ranked #60 of 101 cities), while Barcelona has a COLI of 42.1 (ranked #53).</p>
+            <p>When it comes to housing, one-bedroom apartment rent in Lisbon averages <strong>$1,000/month</strong> compared to <strong>$1,200/month</strong> in Barcelona. That makes Lisbon approximately <strong>20% cheaper</strong> for rent alone.</p>
+            <p>Barcelona has a lower effective tax rate (24%) compared to Lisbon (25%), meaning you keep more of your gross salary in Barcelona. When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
+        </section>
+
+        <section class="content-card">
             <h2>Salary Equivalent</h2>
             <p>
                 If you earn <strong>€63,592</strong> in Lisbon,
@@ -252,6 +289,55 @@
                 to maintain the same purchasing power.
                 That is <strong>21%</strong> more due to higher cost of living.
             </p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Comparison by Job Title</h2>
+            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Lisbon (EUR)</th>
+                        <th style="text-align: center;">Barcelona (EUR)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">€25,009</td>
+                            <td style="text-align: center;">€30,342</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">€29,422</td>
+                            <td style="text-align: center;">€35,696</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">€27,951</td>
+                            <td style="text-align: center;">€33,911</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">€21,184</td>
+                            <td style="text-align: center;">€25,701</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">€14,122</td>
+                            <td style="text-align: center;">€17,134</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">€17,065</td>
+                            <td style="text-align: center;">€20,704</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
         </section>
 
         <section class="content-card"><h2>Neighborhoods</h2><div class="two-col"><div><h3 style="font-size:0.95rem; margin-bottom:12px;">Lisbon (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Chiado</td><td style="text-align:right;">1.28x (+28%)</td></tr><tr><td>Príncipe Real</td><td style="text-align:right;">1.25x (+25%)</td></tr><tr><td>Bairro Alto</td><td style="text-align:right;">1.15x (+15%)</td></tr><tr><td>Estrela / Lapa</td><td style="text-align:right;">1.12x (+12%)</td></tr><tr><td>Alfama</td><td style="text-align:right;">1.10x (+10%)</td></tr></tbody></table></div><div><h3 style="font-size:0.95rem; margin-bottom:12px;">Barcelona (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Sarrià-Sant Gervasi</td><td style="text-align:right;">1.25x (+25%)</td></tr><tr><td>Born / El Born</td><td style="text-align:right;">1.20x (+20%)</td></tr><tr><td>Gothic Quarter</td><td style="text-align:right;">1.18x (+18%)</td></tr><tr><td>Eixample</td><td style="text-align:right;">1.15x (+15%)</td></tr><tr><td>Barceloneta</td><td style="text-align:right;">1.10x (+10%)</td></tr></tbody></table></div></div></section>
@@ -262,10 +348,30 @@
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </section>
 
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is Lisbon or Barcelona more expensive?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Barcelona is more expensive overall. Lisbon has a COLI of 34.7 while Barcelona has a COLI of 42.1, making Lisbon approximately 21% cheaper.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What salary in Barcelona equals €63,592 in Lisbon?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same standard of living as €63,592 in Lisbon, you would need approximately €77,153 in Barcelona.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is rent cheaper in Lisbon or Barcelona?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Average one-bedroom rent in Lisbon is $1,000/month compared to $1,200/month in Barcelona. Lisbon has lower rent by approximately 20%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Which city has lower taxes, Lisbon or Barcelona?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Barcelona has a lower effective tax rate (24%) compared to Lisbon (25%), meaning you keep more of your gross salary in Barcelona.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Explore Each City</h2>
+            <div class="similar-cities">
+                <a href="/city/lisbon.html" class="similar-city-link">Lisbon Cost of Living Guide</a>
+                <a href="/city/barcelona.html" class="similar-city-link">Barcelona Cost of Living Guide</a>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources</h2>
+            <p>Cost of living data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. New York City is the baseline (COLI = 100). Tax rates represent approximate effective rates for mid-range earners. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17</p>
+        </section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/lisbon.html">Lisbon</a>
             <a href="/city/barcelona.html">Barcelona</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>

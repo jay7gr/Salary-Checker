@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"},
+            {"@type": "ListItem", "position": 3, "name": "London vs Sydney", "item": "https://salary-converter.com/compare/london-vs-sydney.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "Is London or Sydney more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "London is more expensive overall. London has a COLI of 87.5 while Sydney has a COLI of 74.5, making Sydney approximately 15% cheaper."}}, {"@type": "Question", "name": "What salary in Sydney equals £56,476 in London?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as £56,476 in London, you would need approximately A$90,737 in Sydney."}}, {"@type": "Question", "name": "Is rent cheaper in London or Sydney?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in London is $2,500/month compared to $2,200/month in Sydney. Sydney has lower rent by approximately 12%."}}, {"@type": "Question", "name": "Which city has lower taxes, London or Sydney?", "acceptedAnswer": {"@type": "Answer", "text": "London has a lower effective tax rate (25%) compared to Sydney (27%), meaning you keep more of your gross salary in London."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -131,6 +149,17 @@
         .metric-value { font-weight: 600; text-align: center; }
         .winner { color: #22c55e; }
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .similar-cities {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+        }
+        .similar-city-link {
+            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+        }
+        .similar-city-link:hover {
+            background: #2563eb; color: white;
+        }
         .cta-section {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -172,8 +201,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -245,6 +275,13 @@
         </section>
 
         <section class="content-card">
+            <h2>Key Takeaways: London vs Sydney</h2>
+            <p>Overall, <strong>Sydney</strong> is approximately <strong>15% cheaper</strong> than London based on our cost of living index. London has a COLI of 87.5 (ranked #6 of 101 cities), while Sydney has a COLI of 74.5 (ranked #17).</p>
+            <p>When it comes to housing, one-bedroom apartment rent in London averages <strong>$2,500/month</strong> compared to <strong>$2,200/month</strong> in Sydney. That makes Sydney approximately <strong>12% cheaper</strong> for rent alone.</p>
+            <p>London has a lower effective tax rate (25%) compared to Sydney (27%), meaning you keep more of your gross salary in London. When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
+        </section>
+
+        <section class="content-card">
             <h2>Salary Equivalent</h2>
             <p>
                 If you earn <strong>£56,476</strong> in London,
@@ -252,6 +289,55 @@
                 to maintain the same purchasing power.
                 That is <strong>15%</strong> less thanks to lower cost of living.
             </p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Comparison by Job Title</h2>
+            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">London (GBP)</th>
+                        <th style="text-align: center;">Sydney (AUD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">£56,005</td>
+                            <td style="text-align: center;">A$89,981</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">£65,889</td>
+                            <td style="text-align: center;">A$105,860</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">£62,594</td>
+                            <td style="text-align: center;">A$100,567</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">£47,440</td>
+                            <td style="text-align: center;">A$76,219</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">£31,627</td>
+                            <td style="text-align: center;">A$50,813</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">£38,215</td>
+                            <td style="text-align: center;">A$61,399</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
         </section>
 
         <section class="content-card"><h2>Neighborhoods</h2><div class="two-col"><div><h3 style="font-size:0.95rem; margin-bottom:12px;">London (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Mayfair</td><td style="text-align:right;">1.45x (+45%)</td></tr><tr><td>Chelsea</td><td style="text-align:right;">1.38x (+38%)</td></tr><tr><td>Kensington</td><td style="text-align:right;">1.35x (+35%)</td></tr><tr><td>Marylebone</td><td style="text-align:right;">1.32x (+32%)</td></tr><tr><td>Hampstead</td><td style="text-align:right;">1.30x (+30%)</td></tr></tbody></table></div><div><h3 style="font-size:0.95rem; margin-bottom:12px;">Sydney (Top 5)</h3><table><thead><tr><th>Neighborhood</th><th style="text-align:right;">Multiplier</th></tr></thead><tbody><tr><td>Mosman</td><td style="text-align:right;">1.28x (+28%)</td></tr><tr><td>CBD</td><td style="text-align:right;">1.25x (+25%)</td></tr><tr><td>Bondi</td><td style="text-align:right;">1.22x (+22%)</td></tr><tr><td>Pyrmont</td><td style="text-align:right;">1.18x (+18%)</td></tr><tr><td>Surry Hills</td><td style="text-align:right;">1.15x (+15%)</td></tr></tbody></table></div></div></section>
@@ -262,10 +348,30 @@
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </section>
 
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is London or Sydney more expensive?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">London is more expensive overall. London has a COLI of 87.5 while Sydney has a COLI of 74.5, making Sydney approximately 15% cheaper.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What salary in Sydney equals £56,476 in London?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same standard of living as £56,476 in London, you would need approximately A$90,737 in Sydney.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is rent cheaper in London or Sydney?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Average one-bedroom rent in London is $2,500/month compared to $2,200/month in Sydney. Sydney has lower rent by approximately 12%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Which city has lower taxes, London or Sydney?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">London has a lower effective tax rate (25%) compared to Sydney (27%), meaning you keep more of your gross salary in London.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Explore Each City</h2>
+            <div class="similar-cities">
+                <a href="/city/london.html" class="similar-city-link">London Cost of Living Guide</a>
+                <a href="/city/sydney.html" class="similar-city-link">Sydney Cost of Living Guide</a>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources</h2>
+            <p>Cost of living data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. New York City is the baseline (COLI = 100). Tax rates represent approximate effective rates for mid-range earners. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17</p>
+        </section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/london.html">London</a>
             <a href="/city/sydney.html">Sydney</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>

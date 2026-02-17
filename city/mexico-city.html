@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": "Mexico City", "item": "https://salary-converter.com/city/mexico-city.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Mexico City?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Mexico City is 32.5, which ranks #64 out of 101 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Mexico City to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately MX$412,980 in Mexico City."}}, {"@type": "Question", "name": "What is the average rent in Mexico City?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Mexico City is approximately $700 USD."}}, {"@type": "Question", "name": "What is the income tax rate in Mexico?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in Mexico is approximately 20%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Mexico City?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}, {"@type": "Question", "name": "What are the most expensive areas in Mexico City?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -177,8 +195,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -221,6 +240,169 @@
                 in Mexico City to maintain the same purchasing power.
             </p>
             <p>The approximate average effective income tax rate in Mexico is <strong>20%</strong> for a mid-range earner.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in Mexico City</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in Mexico City. Housing costs are based on average one-bedroom rent in the city center ($700/month), with other categories adjusted for the local cost of living index.</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Housing</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 43%; height: 100%; background: #2563eb; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">43%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Food & Groceries</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 16%; height: 100%; background: #f59e0b; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">16%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Transportation</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 9%; height: 100%; background: #8b5cf6; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">9%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Utilities</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 6%; height: 100%; background: #06b6d4; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">6%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Healthcare</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 5%; height: 100%; background: #22c55e; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">5%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Other & Savings</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 21%; height: 100%; background: #6b7280; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">21%</div></div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for Mexico City's COLI of 32.5 and Mexico's effective tax rate of 20%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in Mexico City (2026)</h2>
+            <p>Estimated annual salaries in Mexico City (MXN) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">MX$247,788</td>
+                            <td style="text-align: center; font-weight: 600;">MX$468,044</td>
+                            <td style="text-align: right;">MX$991,152</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">MX$275,320</td>
+                            <td style="text-align: center; font-weight: 600;">MX$523,108</td>
+                            <td style="text-align: right;">MX$936,088</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">MX$302,852</td>
+                            <td style="text-align: center; font-weight: 600;">MX$550,640</td>
+                            <td style="text-align: right;">MX$1,046,216</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">UX Designer</td>
+                            <td style="text-align: center;">MX$220,256</td>
+                            <td style="text-align: center; font-weight: 600;">MX$412,980</td>
+                            <td style="text-align: right;">MX$770,896</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">MX$209,243</td>
+                            <td style="text-align: center; font-weight: 600;">MX$396,461</td>
+                            <td style="text-align: right;">MX$743,364</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Financial Analyst</td>
+                            <td style="text-align: center;">MX$231,269</td>
+                            <td style="text-align: center; font-weight: 600;">MX$429,499</td>
+                            <td style="text-align: right;">MX$798,428</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Project Manager</td>
+                            <td style="text-align: center;">MX$247,788</td>
+                            <td style="text-align: center; font-weight: 600;">MX$440,512</td>
+                            <td style="text-align: right;">MX$825,960</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">DevOps Engineer</td>
+                            <td style="text-align: center;">MX$275,320</td>
+                            <td style="text-align: center; font-weight: 600;">MX$523,108</td>
+                            <td style="text-align: right;">MX$963,620</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Graphic Designer</td>
+                            <td style="text-align: center;">MX$165,192</td>
+                            <td style="text-align: center; font-weight: 600;">MX$302,852</td>
+                            <td style="text-align: right;">MX$550,640</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Sales Manager</td>
+                            <td style="text-align: center;">MX$220,256</td>
+                            <td style="text-align: center; font-weight: 600;">MX$440,512</td>
+                            <td style="text-align: right;">MX$881,024</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">HR Manager</td>
+                            <td style="text-align: center;">MX$209,243</td>
+                            <td style="text-align: center; font-weight: 600;">MX$385,448</td>
+                            <td style="text-align: right;">MX$715,832</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Business Analyst</td>
+                            <td style="text-align: center;">MX$231,269</td>
+                            <td style="text-align: center; font-weight: 600;">MX$412,980</td>
+                            <td style="text-align: right;">MX$770,896</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Accountant</td>
+                            <td style="text-align: center;">MX$192,724</td>
+                            <td style="text-align: center; font-weight: 600;">MX$341,397</td>
+                            <td style="text-align: right;">MX$605,704</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">MX$137,660</td>
+                            <td style="text-align: center; font-weight: 600;">MX$264,307</td>
+                            <td style="text-align: right;">MX$468,044</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">MX$165,192</td>
+                            <td style="text-align: center; font-weight: 600;">MX$319,371</td>
+                            <td style="text-align: right;">MX$550,640</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Mechanical Engineer</td>
+                            <td style="text-align: center;">MX$220,256</td>
+                            <td style="text-align: center; font-weight: 600;">MX$429,499</td>
+                            <td style="text-align: right;">MX$770,896</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Architect</td>
+                            <td style="text-align: center;">MX$209,243</td>
+                            <td style="text-align: center; font-weight: 600;">MX$396,461</td>
+                            <td style="text-align: right;">MX$715,832</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Lawyer</td>
+                            <td style="text-align: center;">MX$275,320</td>
+                            <td style="text-align: center; font-weight: 600;">MX$550,640</td>
+                            <td style="text-align: right;">MX$1,211,408</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Consultant</td>
+                            <td style="text-align: center;">MX$247,788</td>
+                            <td style="text-align: center; font-weight: 600;">MX$495,576</td>
+                            <td style="text-align: right;">MX$991,152</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Content Writer</td>
+                            <td style="text-align: center;">MX$137,660</td>
+                            <td style="text-align: center; font-weight: 600;">MX$275,320</td>
+                            <td style="text-align: right;">MX$495,576</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by Mexico City's COLI (32.5) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in Mexico City?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to Mexico City. With an effective tax rate of <strong>20%</strong> in Mexico and average one-bedroom rent of <strong>$700/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">MX$412,980</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">MX$27,532</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in Mexico City takes home approximately <strong>MX$27,532</strong> per month. With housing consuming roughly <strong>43%</strong> of after-tax income, careful budgeting is essential in this <strong>low</strong> cost city. Your purchasing power in Mexico City is <strong>308%</strong> of what it would be in New York for the same nominal salary.</p>
         </section>
 
         
@@ -306,10 +488,25 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Mexico City With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/mexico-city-vs-bogota.html" class="similar-city-link">Mexico City vs Bogotá</a>
+<a href="/compare/mexico-city-vs-medellin.html" class="similar-city-link">Mexico City vs Medellín</a>
+</div></section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Mexico City?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Mexico City is 32.5, which ranks #64 out of 101 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Mexico City to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately MX$412,980 in Mexico City.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Mexico City?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Mexico City is approximately $700 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the income tax rate in Mexico?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in Mexico is approximately 20%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Mexico City?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Mexico City?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -326,11 +523,15 @@
             </div>
         </section>
 
+        <section class="content-card"><h2>Related Articles</h2><a href="/blog/articles/how-cost-of-living-affects-your-salary.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">How Cost of Living Affects Your Salary</a>
+<a href="/blog/articles/salary-negotiation-when-relocating-abroad.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Salary Negotiation When Relocating Abroad</a>
+</section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>

@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": "Lisbon", "item": "https://salary-converter.com/city/lisbon.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Lisbon?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Lisbon is 34.7, which ranks #60 out of 101 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Lisbon to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €22,066 in Lisbon."}}, {"@type": "Question", "name": "What is the average rent in Lisbon?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Lisbon is approximately $1,000 USD."}}, {"@type": "Question", "name": "What is the income tax rate in Portugal?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in Portugal is approximately 25%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Lisbon?", "acceptedAnswer": {"@type": "Answer", "text": "The most affordable neighborhoods include Alcântara, Benfica, Amadora."}}, {"@type": "Question", "name": "What are the most expensive areas in Lisbon?", "acceptedAnswer": {"@type": "Answer", "text": "The most expensive neighborhoods are Chiado, Príncipe Real, Bairro Alto."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -177,8 +195,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -221,6 +240,169 @@
                 in Lisbon to maintain the same purchasing power.
             </p>
             <p>The approximate average effective income tax rate in Portugal is <strong>25%</strong> for a mid-range earner.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in Lisbon</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in Lisbon. Housing costs are based on average one-bedroom rent in the city center ($1,000/month), with other categories adjusted for the local cost of living index.</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Housing</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 45%; height: 100%; background: #2563eb; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">45%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Food & Groceries</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 15%; height: 100%; background: #f59e0b; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">15%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Transportation</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 8%; height: 100%; background: #8b5cf6; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">8%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Utilities</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 6%; height: 100%; background: #06b6d4; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">6%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Healthcare</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 4%; height: 100%; background: #22c55e; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">4%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Other & Savings</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 22%; height: 100%; background: #6b7280; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">22%</div></div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for Lisbon's COLI of 34.7 and Portugal's effective tax rate of 25%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in Lisbon (2026)</h2>
+            <p>Estimated annual salaries in Lisbon (EUR) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">€13,240</td>
+                            <td style="text-align: center; font-weight: 600;">€25,009</td>
+                            <td style="text-align: right;">€52,959</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">€14,711</td>
+                            <td style="text-align: center; font-weight: 600;">€27,951</td>
+                            <td style="text-align: right;">€50,017</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">€16,182</td>
+                            <td style="text-align: center; font-weight: 600;">€29,422</td>
+                            <td style="text-align: right;">€55,901</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">UX Designer</td>
+                            <td style="text-align: center;">€11,769</td>
+                            <td style="text-align: center; font-weight: 600;">€22,066</td>
+                            <td style="text-align: right;">€41,191</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">€11,180</td>
+                            <td style="text-align: center; font-weight: 600;">€21,184</td>
+                            <td style="text-align: right;">€39,719</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Financial Analyst</td>
+                            <td style="text-align: center;">€12,357</td>
+                            <td style="text-align: center; font-weight: 600;">€22,949</td>
+                            <td style="text-align: right;">€42,662</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Project Manager</td>
+                            <td style="text-align: center;">€13,240</td>
+                            <td style="text-align: center; font-weight: 600;">€23,537</td>
+                            <td style="text-align: right;">€44,133</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">DevOps Engineer</td>
+                            <td style="text-align: center;">€14,711</td>
+                            <td style="text-align: center; font-weight: 600;">€27,951</td>
+                            <td style="text-align: right;">€51,488</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Graphic Designer</td>
+                            <td style="text-align: center;">€8,827</td>
+                            <td style="text-align: center; font-weight: 600;">€16,182</td>
+                            <td style="text-align: right;">€29,422</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Sales Manager</td>
+                            <td style="text-align: center;">€11,769</td>
+                            <td style="text-align: center; font-weight: 600;">€23,537</td>
+                            <td style="text-align: right;">€47,075</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">HR Manager</td>
+                            <td style="text-align: center;">€11,180</td>
+                            <td style="text-align: center; font-weight: 600;">€20,595</td>
+                            <td style="text-align: right;">€38,248</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Business Analyst</td>
+                            <td style="text-align: center;">€12,357</td>
+                            <td style="text-align: center; font-weight: 600;">€22,066</td>
+                            <td style="text-align: right;">€41,191</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Accountant</td>
+                            <td style="text-align: center;">€10,298</td>
+                            <td style="text-align: center; font-weight: 600;">€18,242</td>
+                            <td style="text-align: right;">€32,364</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">€7,355</td>
+                            <td style="text-align: center; font-weight: 600;">€14,122</td>
+                            <td style="text-align: right;">€25,009</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">€8,827</td>
+                            <td style="text-align: center; font-weight: 600;">€17,065</td>
+                            <td style="text-align: right;">€29,422</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Mechanical Engineer</td>
+                            <td style="text-align: center;">€11,769</td>
+                            <td style="text-align: center; font-weight: 600;">€22,949</td>
+                            <td style="text-align: right;">€41,191</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Architect</td>
+                            <td style="text-align: center;">€11,180</td>
+                            <td style="text-align: center; font-weight: 600;">€21,184</td>
+                            <td style="text-align: right;">€38,248</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Lawyer</td>
+                            <td style="text-align: center;">€14,711</td>
+                            <td style="text-align: center; font-weight: 600;">€29,422</td>
+                            <td style="text-align: right;">€64,728</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Consultant</td>
+                            <td style="text-align: center;">€13,240</td>
+                            <td style="text-align: center; font-weight: 600;">€26,480</td>
+                            <td style="text-align: right;">€52,959</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Content Writer</td>
+                            <td style="text-align: center;">€7,355</td>
+                            <td style="text-align: center; font-weight: 600;">€14,711</td>
+                            <td style="text-align: right;">€26,480</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by Lisbon's COLI (34.7) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in Lisbon?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to Lisbon. With an effective tax rate of <strong>25%</strong> in Portugal and average one-bedroom rent of <strong>$1,000/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€22,066</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">€1,379</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in Lisbon takes home approximately <strong>€1,379</strong> per month. With housing consuming roughly <strong>45%</strong> of after-tax income, careful budgeting is essential in this <strong>low</strong> cost city. Your purchasing power in Lisbon is <strong>288%</strong> of what it would be in New York for the same nominal salary.</p>
         </section>
 
         <section class="content-card"><h2>Neighborhoods in Lisbon</h2><p>11 neighborhoods tracked with cost multipliers relative to the city average. This neighborhood-level data helps you understand exactly how costs vary within Lisbon.</p><table><thead><tr><th>Neighborhood</th><th style="text-align:center;">Multiplier</th><th style="text-align:right;">vs City Avg</th></tr></thead><tbody>
@@ -383,10 +565,26 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Lisbon With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/lisbon-vs-barcelona.html" class="similar-city-link">Lisbon vs Barcelona</a>
+<a href="/compare/lisbon-vs-madrid.html" class="similar-city-link">Lisbon vs Madrid</a>
+<a href="/compare/lisbon-vs-porto.html" class="similar-city-link">Lisbon vs Porto</a>
+</div></section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Lisbon?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Lisbon is 34.7, which ranks #60 out of 101 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Lisbon to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately €22,066 in Lisbon.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Lisbon?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Lisbon is approximately $1,000 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the income tax rate in Portugal?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in Portugal is approximately 25%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Lisbon?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most affordable neighborhoods include Alcântara, Benfica, Amadora.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Lisbon?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most expensive neighborhoods are Chiado, Príncipe Real, Bairro Alto.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -403,11 +601,15 @@
             </div>
         </section>
 
+        <section class="content-card"><h2>Related Articles</h2><a href="/blog/articles/affordable-cities-in-europe-for-americans-2026.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Affordable Cities in Europe for Americans</a>
+<a href="/blog/articles/top-10-cities-for-remote-workers-2026.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Top 10 Cities for Remote Workers</a>
+</section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>

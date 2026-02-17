@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": "Kuala Lumpur", "item": "https://salary-converter.com/city/kuala-lumpur.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Kuala Lumpur?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Kuala Lumpur is 32.8, which ranks #63 out of 101 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Kuala Lumpur to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately RM 100,030 in Kuala Lumpur."}}, {"@type": "Question", "name": "What is the average rent in Kuala Lumpur?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Kuala Lumpur is approximately $550 USD."}}, {"@type": "Question", "name": "What is the income tax rate in Malaysia?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in Malaysia is approximately 16%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Kuala Lumpur?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}, {"@type": "Question", "name": "What are the most expensive areas in Kuala Lumpur?", "acceptedAnswer": {"@type": "Answer", "text": "Neighborhood-level data is not yet available for this city."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -177,8 +195,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -221,6 +240,169 @@
                 in Kuala Lumpur to maintain the same purchasing power.
             </p>
             <p>The approximate average effective income tax rate in Malaysia is <strong>16%</strong> for a mid-range earner.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown in Kuala Lumpur</h2>
+            <p>Estimated monthly expense allocation for a mid-range earner living in Kuala Lumpur. Housing costs are based on average one-bedroom rent in the city center ($550/month), with other categories adjusted for the local cost of living index.</p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Housing</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 32%; height: 100%; background: #2563eb; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">32%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Food & Groceries</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 19%; height: 100%; background: #f59e0b; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">19%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Transportation</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 10%; height: 100%; background: #8b5cf6; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">10%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Utilities</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 7%; height: 100%; background: #06b6d4; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">7%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Healthcare</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 5%; height: 100%; background: #22c55e; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">5%</div></div><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;"><div style="width: 130px; font-size: 0.85rem; font-weight: 500; color: #4a4a4c;">Other & Savings</div><div style="flex: 1; background: #f0f0f2; border-radius: 6px; height: 12px; overflow: hidden;"><div style="width: 27%; height: 100%; background: #6b7280; border-radius: 6px;"></div></div><div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">27%</div></div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for Kuala Lumpur's COLI of 32.8 and Malaysia's effective tax rate of 16%. Individual expenses will vary.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Ranges by Job Title in Kuala Lumpur (2026)</h2>
+            <p>Estimated annual salaries in Kuala Lumpur (MYR) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Entry Level</th>
+                        <th style="text-align: center;">Mid Level</th>
+                        <th style="text-align: right;">Senior Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">RM 60,018</td>
+                            <td style="text-align: center; font-weight: 600;">RM 113,367</td>
+                            <td style="text-align: right;">RM 240,072</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">RM 66,687</td>
+                            <td style="text-align: center; font-weight: 600;">RM 126,705</td>
+                            <td style="text-align: right;">RM 226,735</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">RM 73,355</td>
+                            <td style="text-align: center; font-weight: 600;">RM 133,373</td>
+                            <td style="text-align: right;">RM 253,410</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">UX Designer</td>
+                            <td style="text-align: center;">RM 53,349</td>
+                            <td style="text-align: center; font-weight: 600;">RM 100,030</td>
+                            <td style="text-align: right;">RM 186,723</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">RM 50,682</td>
+                            <td style="text-align: center; font-weight: 600;">RM 96,029</td>
+                            <td style="text-align: right;">RM 180,054</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Financial Analyst</td>
+                            <td style="text-align: center;">RM 56,017</td>
+                            <td style="text-align: center; font-weight: 600;">RM 104,031</td>
+                            <td style="text-align: right;">RM 193,392</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Project Manager</td>
+                            <td style="text-align: center;">RM 60,018</td>
+                            <td style="text-align: center; font-weight: 600;">RM 106,699</td>
+                            <td style="text-align: right;">RM 200,060</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">DevOps Engineer</td>
+                            <td style="text-align: center;">RM 66,687</td>
+                            <td style="text-align: center; font-weight: 600;">RM 126,705</td>
+                            <td style="text-align: right;">RM 233,404</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Graphic Designer</td>
+                            <td style="text-align: center;">RM 40,012</td>
+                            <td style="text-align: center; font-weight: 600;">RM 73,355</td>
+                            <td style="text-align: right;">RM 133,373</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Sales Manager</td>
+                            <td style="text-align: center;">RM 53,349</td>
+                            <td style="text-align: center; font-weight: 600;">RM 106,699</td>
+                            <td style="text-align: right;">RM 213,398</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">HR Manager</td>
+                            <td style="text-align: center;">RM 50,682</td>
+                            <td style="text-align: center; font-weight: 600;">RM 93,361</td>
+                            <td style="text-align: right;">RM 173,386</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Business Analyst</td>
+                            <td style="text-align: center;">RM 56,017</td>
+                            <td style="text-align: center; font-weight: 600;">RM 100,030</td>
+                            <td style="text-align: right;">RM 186,723</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Accountant</td>
+                            <td style="text-align: center;">RM 46,681</td>
+                            <td style="text-align: center; font-weight: 600;">RM 82,692</td>
+                            <td style="text-align: right;">RM 146,711</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">RM 33,343</td>
+                            <td style="text-align: center; font-weight: 600;">RM 64,019</td>
+                            <td style="text-align: right;">RM 113,367</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">RM 40,012</td>
+                            <td style="text-align: center; font-weight: 600;">RM 77,357</td>
+                            <td style="text-align: right;">RM 133,373</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Mechanical Engineer</td>
+                            <td style="text-align: center;">RM 53,349</td>
+                            <td style="text-align: center; font-weight: 600;">RM 104,031</td>
+                            <td style="text-align: right;">RM 186,723</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Architect</td>
+                            <td style="text-align: center;">RM 50,682</td>
+                            <td style="text-align: center; font-weight: 600;">RM 96,029</td>
+                            <td style="text-align: right;">RM 173,386</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Lawyer</td>
+                            <td style="text-align: center;">RM 66,687</td>
+                            <td style="text-align: center; font-weight: 600;">RM 133,373</td>
+                            <td style="text-align: right;">RM 293,422</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Consultant</td>
+                            <td style="text-align: center;">RM 60,018</td>
+                            <td style="text-align: center; font-weight: 600;">RM 120,036</td>
+                            <td style="text-align: right;">RM 240,072</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Content Writer</td>
+                            <td style="text-align: center;">RM 33,343</td>
+                            <td style="text-align: center; font-weight: 600;">RM 66,687</td>
+                            <td style="text-align: right;">RM 120,036</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary ranges are estimates adjusted by Kuala Lumpur's COLI (32.8) relative to the New York baseline (100). Actual salaries depend on experience, company, and industry.</p>
+        </section>
+
+        <section class="content-card">
+            <h2>How Much Do You Need to Earn in Kuala Lumpur?</h2>
+            <p>Understanding your take-home pay is critical when evaluating a move to Kuala Lumpur. With an effective tax rate of <strong>16%</strong> in Malaysia and average one-bedroom rent of <strong>$550/month</strong>, here is what a mid-range salary looks like:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">RM 100,030</div>
+                    <div class="stat-label">Gross Annual (Mid-Range)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="font-size: 1.2rem;">RM 7,002</div>
+                    <div class="stat-label">Monthly After Tax</div>
+                </div>
+            </div>
+            <p>After taxes, a mid-range earner in Kuala Lumpur takes home approximately <strong>RM 7,002</strong> per month. With housing consuming roughly <strong>32%</strong> of after-tax income, careful budgeting is essential in this <strong>low</strong> cost city. Your purchasing power in Kuala Lumpur is <strong>305%</strong> of what it would be in New York for the same nominal salary.</p>
         </section>
 
         
@@ -306,10 +488,24 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Kuala Lumpur With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/singapore-vs-kuala-lumpur.html" class="similar-city-link">Kuala Lumpur vs Singapore</a>
+</div></section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with 1,000+ neighborhood adjustments</p>
             <a href="/" class="cta-btn">Open Salary Converter</a>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Kuala Lumpur?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Kuala Lumpur is 32.8, which ranks #63 out of 101 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Kuala Lumpur to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately RM 100,030 in Kuala Lumpur.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Kuala Lumpur?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Kuala Lumpur is approximately $550 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the income tax rate in Malaysia?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in Malaysia is approximately 16%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Kuala Lumpur?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Kuala Lumpur?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Neighborhood-level data is not yet available for this city.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources &amp; Methodology</h2>
+            <p>Our cost of living index uses New York City as the baseline (COLI = 100). Data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. Salary ranges are estimated by adjusting global baseline figures by each city's COLI. Tax rates represent approximate effective rates for mid-range earners and do not constitute tax advice. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17. Data is refreshed periodically and may not reflect very recent changes.</p>
         </section>
 
         <section class="content-card">
@@ -326,11 +522,15 @@
             </div>
         </section>
 
+        <section class="content-card"><h2>Related Articles</h2><a href="/blog/articles/how-cost-of-living-affects-your-salary.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">How Cost of Living Affects Your Salary</a>
+<a href="/blog/articles/salary-negotiation-when-relocating-abroad.html" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Salary Negotiation When Relocating Abroad</a>
+</section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
-            <a href="/widget.html">Widget</a>
         </footer>
     </div>
 </body>

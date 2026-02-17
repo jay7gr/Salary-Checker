@@ -36,6 +36,24 @@
         }
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"},
+            {"@type": "ListItem", "position": 3, "name": "Zurich vs Geneva", "item": "https://salary-converter.com/compare/zurich-vs-geneva.html"}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": "Is Zurich or Geneva more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Zurich is more expensive overall. Zurich has a COLI of 122.4 while Geneva has a COLI of 118.6, making Geneva approximately 3% cheaper."}}, {"@type": "Question", "name": "What salary in Geneva equals CHF 60,768 in Zurich?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as CHF 60,768 in Zurich, you would need approximately CHF 58,881 in Geneva."}}, {"@type": "Question", "name": "Is rent cheaper in Zurich or Geneva?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in Zurich is $2,800/month compared to $2,600/month in Geneva. Geneva has lower rent by approximately 7%."}}, {"@type": "Question", "name": "Which city has lower taxes, Zurich or Geneva?", "acceptedAnswer": {"@type": "Answer", "text": "Both cities have the same effective tax rate of 18%."}}]
+    }
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -131,6 +149,17 @@
         .metric-value { font-weight: 600; text-align: center; }
         .winner { color: #22c55e; }
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .similar-cities {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
+        }
+        .similar-city-link {
+            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            border-radius: 100px; font-size: 0.82rem; font-weight: 500;
+            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+        }
+        .similar-city-link:hover {
+            background: #2563eb; color: white;
+        }
         .cta-section {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -172,8 +201,9 @@
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
                 <a href="/blog/">Blog</a>
-                <a href="/widget.html">Widget</a>
             </div>
         </nav>
 
@@ -245,6 +275,13 @@
         </section>
 
         <section class="content-card">
+            <h2>Key Takeaways: Zurich vs Geneva</h2>
+            <p>Overall, <strong>Geneva</strong> is approximately <strong>3% cheaper</strong> than Zurich based on our cost of living index. Zurich has a COLI of 122.4 (ranked #1 of 101 cities), while Geneva has a COLI of 118.6 (ranked #2).</p>
+            <p>When it comes to housing, one-bedroom apartment rent in Zurich averages <strong>$2,800/month</strong> compared to <strong>$2,600/month</strong> in Geneva. That makes Geneva approximately <strong>7% cheaper</strong> for rent alone.</p>
+            <p>Both cities have the same effective tax rate of 18%. When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
+        </section>
+
+        <section class="content-card">
             <h2>Salary Equivalent</h2>
             <p>
                 If you earn <strong>CHF 60,768</strong> in Zurich,
@@ -252,6 +289,55 @@
                 to maintain the same purchasing power.
                 That is <strong>3%</strong> less thanks to lower cost of living.
             </p>
+        </section>
+
+        <section class="content-card">
+            <h2>Salary Comparison by Job Title</h2>
+            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th style="text-align: center;">Zurich (CHF)</th>
+                        <th style="text-align: center;">Geneva (CHF)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="font-weight: 500;">Software Engineer</td>
+                            <td style="text-align: center;">CHF 84,297</td>
+                            <td style="text-align: center;">CHF 81,680</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Product Manager</td>
+                            <td style="text-align: center;">CHF 99,173</td>
+                            <td style="text-align: center;">CHF 96,095</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Data Scientist</td>
+                            <td style="text-align: center;">CHF 94,215</td>
+                            <td style="text-align: center;">CHF 91,290</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Marketing Manager</td>
+                            <td style="text-align: center;">CHF 71,405</td>
+                            <td style="text-align: center;">CHF 69,188</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Teacher</td>
+                            <td style="text-align: center;">CHF 47,603</td>
+                            <td style="text-align: center;">CHF 46,125</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 500;">Nurse</td>
+                            <td style="text-align: center;">CHF 57,521</td>
+                            <td style="text-align: center;">CHF 55,735</td>
+                        </tr>
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
         </section>
 
         
@@ -262,10 +348,30 @@
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </section>
 
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is Zurich or Geneva more expensive?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Zurich is more expensive overall. Zurich has a COLI of 122.4 while Geneva has a COLI of 118.6, making Geneva approximately 3% cheaper.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What salary in Geneva equals CHF 60,768 in Zurich?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same standard of living as CHF 60,768 in Zurich, you would need approximately CHF 58,881 in Geneva.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Is rent cheaper in Zurich or Geneva?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Average one-bedroom rent in Zurich is $2,800/month compared to $2,600/month in Geneva. Geneva has lower rent by approximately 7%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Which city has lower taxes, Zurich or Geneva?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">Both cities have the same effective tax rate of 18%.</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Explore Each City</h2>
+            <div class="similar-cities">
+                <a href="/city/zurich.html" class="similar-city-link">Zurich Cost of Living Guide</a>
+                <a href="/city/geneva.html" class="similar-city-link">Geneva Cost of Living Guide</a>
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Data Sources</h2>
+            <p>Cost of living data is compiled from Numbeo, Expatistan, government statistics, and proprietary surveys. New York City is the baseline (COLI = 100). Tax rates represent approximate effective rates for mid-range earners. Rent figures reflect average one-bedroom apartments in the city center.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-17</p>
+        </section>
+
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/zurich.html">Zurich</a>
             <a href="/city/geneva.html">Geneva</a>
+            <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>
