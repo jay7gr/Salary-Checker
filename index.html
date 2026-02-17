@@ -1772,37 +1772,6 @@
             <a href="/blog" class="blog-card-cta">View All Articles →</a>
         </div>
 
-        <!-- Salary Submission Card -->
-        <div class="sidebar-card">
-            <h3>📊 Share Your Salary</h3>
-            <p style="font-size: 0.82rem; color: #86868b; margin-bottom: 14px; line-height: 1.5;">
-                Help others by sharing your anonymous salary data. All submissions are private.
-            </p>
-            <form id="salarySubmitForm" style="display: flex; flex-direction: column; gap: 10px;">
-                <select id="submitJobTitle" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;" required>
-                    <option value="">Select your role...</option>
-                </select>
-                <select id="submitCity" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;" required>
-                    <option value="">Select your city...</option>
-                </select>
-                <input type="text" id="submitSalary" placeholder="Annual salary (local currency)" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit;" required>
-                <select id="submitExperience" style="padding: 10px 12px; border: 1.5px solid #e5e5ea; border-radius: 10px; font-size: 0.85rem; font-family: inherit; background: white; color: #1d1d1f;">
-                    <option value="">Years of experience...</option>
-                    <option value="0-2">0-2 years</option>
-                    <option value="3-5">3-5 years</option>
-                    <option value="6-10">6-10 years</option>
-                    <option value="10+">10+ years</option>
-                </select>
-                <button type="submit" style="padding: 10px; background: #2563eb; color: white; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s;">Submit Anonymously</button>
-            </form>
-            <div id="submitSuccess" style="display: none; text-align: center; padding: 16px 0;">
-                <div style="font-size: 1.5rem; margin-bottom: 8px;">✅</div>
-                <div style="font-size: 0.85rem; font-weight: 600; color: #22c55e;">Thanks for contributing!</div>
-                <div style="font-size: 0.78rem; color: #86868b; margin-top: 4px;">Your data helps others make informed decisions.</div>
-            </div>
-            <div id="communityCount" style="text-align: center; margin-top: 12px; font-size: 0.78rem; color: #86868b;"></div>
-        </div>
-
         <!-- Quick Links Card -->
         <div class="sidebar-card">
             <h3>🏙️ Explore</h3>
@@ -3386,66 +3355,6 @@
         populateSelects();
         createQuickButtons();
 
-        // === SALARY SUBMISSION FORM ===
-        (function() {
-            // Populate job titles in submit form
-            const submitJobSelect = document.getElementById('submitJobTitle');
-            Object.keys(salaryRanges).sort().forEach(title => {
-                const opt = document.createElement('option');
-                opt.value = title;
-                opt.textContent = title;
-                submitJobSelect.appendChild(opt);
-            });
-
-            // Populate cities in submit form
-            const submitCitySelect = document.getElementById('submitCity');
-            Object.keys(coliData).sort().forEach(city => {
-                const opt = document.createElement('option');
-                opt.value = city;
-                opt.textContent = city;
-                submitCitySelect.appendChild(opt);
-            });
-
-            // Load and display community count
-            const submissions = JSON.parse(localStorage.getItem('salarySubmissions') || '[]');
-            const countEl = document.getElementById('communityCount');
-            if (submissions.length > 0) {
-                countEl.textContent = `${submissions.length} submission${submissions.length > 1 ? 's' : ''} collected`;
-            }
-
-            // Handle form submission
-            document.getElementById('salarySubmitForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const jobTitle = document.getElementById('submitJobTitle').value;
-                const city = document.getElementById('submitCity').value;
-                const salary = document.getElementById('submitSalary').value.replace(/[^0-9.]/g, '');
-                const experience = document.getElementById('submitExperience').value;
-
-                if (!jobTitle || !city || !salary) return;
-
-                const submission = {
-                    jobTitle, city, salary: parseFloat(salary),
-                    experience, currency: cityToCurrency[city] || 'USD',
-                    timestamp: new Date().toISOString()
-                };
-
-                const existing = JSON.parse(localStorage.getItem('salarySubmissions') || '[]');
-                existing.push(submission);
-                localStorage.setItem('salarySubmissions', JSON.stringify(existing));
-
-                // Show success
-                document.getElementById('salarySubmitForm').style.display = 'none';
-                document.getElementById('submitSuccess').style.display = 'block';
-                countEl.textContent = `${existing.length} submission${existing.length > 1 ? 's' : ''} collected`;
-
-                // Reset form after delay
-                setTimeout(() => {
-                    document.getElementById('salarySubmitForm').style.display = '';
-                    document.getElementById('submitSuccess').style.display = 'none';
-                    document.getElementById('salarySubmitForm').reset();
-                }, 3000);
-            });
-        })();
 
     </script>
 </body>
