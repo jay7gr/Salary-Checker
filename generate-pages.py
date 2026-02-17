@@ -935,26 +935,51 @@ cityRent1BR = {
 
 # Salary ranges by job title (USD, global baseline)
 salaryRanges = {
-    'Software Engineer': {'low': 45000, 'mid': 85000, 'high': 180000},
-    'Data Scientist': {'low': 50000, 'mid': 95000, 'high': 170000},
-    'Product Manager': {'low': 55000, 'mid': 100000, 'high': 190000},
-    'UX Designer': {'low': 40000, 'mid': 75000, 'high': 140000},
-    'Marketing Manager': {'low': 38000, 'mid': 72000, 'high': 135000},
-    'Financial Analyst': {'low': 42000, 'mid': 78000, 'high': 145000},
-    'Project Manager': {'low': 45000, 'mid': 80000, 'high': 150000},
-    'DevOps Engineer': {'low': 50000, 'mid': 95000, 'high': 175000},
-    'Graphic Designer': {'low': 30000, 'mid': 55000, 'high': 100000},
-    'Sales Manager': {'low': 40000, 'mid': 80000, 'high': 160000},
-    'HR Manager': {'low': 38000, 'mid': 70000, 'high': 130000},
-    'Business Analyst': {'low': 42000, 'mid': 75000, 'high': 140000},
-    'Accountant': {'low': 35000, 'mid': 62000, 'high': 110000},
-    'Teacher': {'low': 25000, 'mid': 48000, 'high': 85000},
+    # Healthcare
+    'Doctor (General)': {'low': 80000, 'mid': 180000, 'high': 350000},
+    'Surgeon': {'low': 120000, 'mid': 280000, 'high': 500000},
+    'Dentist': {'low': 70000, 'mid': 160000, 'high': 300000},
+    'Pharmacist': {'low': 60000, 'mid': 125000, 'high': 200000},
     'Nurse': {'low': 30000, 'mid': 58000, 'high': 100000},
+    'Psychologist': {'low': 45000, 'mid': 85000, 'high': 150000},
+    # Engineering & Tech
+    'Software Engineer': {'low': 45000, 'mid': 85000, 'high': 180000},
+    'DevOps Engineer': {'low': 50000, 'mid': 95000, 'high': 175000},
+    'Data Scientist': {'low': 50000, 'mid': 95000, 'high': 170000},
     'Mechanical Engineer': {'low': 40000, 'mid': 78000, 'high': 140000},
+    'Civil Engineer': {'low': 38000, 'mid': 72000, 'high': 135000},
+    'Electrical Engineer': {'low': 42000, 'mid': 80000, 'high': 145000},
     'Architect': {'low': 38000, 'mid': 72000, 'high': 130000},
-    'Lawyer': {'low': 50000, 'mid': 100000, 'high': 220000},
+    'UX Designer': {'low': 40000, 'mid': 75000, 'high': 140000},
+    # Business & Finance
+    'Product Manager': {'low': 55000, 'mid': 100000, 'high': 190000},
+    'Project Manager': {'low': 45000, 'mid': 80000, 'high': 150000},
+    'Financial Analyst': {'low': 42000, 'mid': 78000, 'high': 145000},
+    'Accountant': {'low': 35000, 'mid': 62000, 'high': 110000},
+    'Business Analyst': {'low': 42000, 'mid': 75000, 'high': 140000},
     'Consultant': {'low': 45000, 'mid': 90000, 'high': 180000},
+    'Investment Banker': {'low': 80000, 'mid': 150000, 'high': 350000},
+    'Actuary': {'low': 60000, 'mid': 110000, 'high': 200000},
+    # Legal
+    'Lawyer': {'low': 50000, 'mid': 100000, 'high': 220000},
+    'Paralegal': {'low': 30000, 'mid': 52000, 'high': 85000},
+    # Marketing & Sales
+    'Marketing Manager': {'low': 38000, 'mid': 72000, 'high': 135000},
+    'Sales Manager': {'low': 40000, 'mid': 80000, 'high': 160000},
+    'Graphic Designer': {'low': 30000, 'mid': 55000, 'high': 100000},
     'Content Writer': {'low': 25000, 'mid': 50000, 'high': 90000},
+    # Management & HR
+    'HR Manager': {'low': 38000, 'mid': 70000, 'high': 130000},
+    'Operations Manager': {'low': 45000, 'mid': 82000, 'high': 150000},
+    'CEO / Executive': {'low': 100000, 'mid': 220000, 'high': 500000},
+    # Education & Research
+    'Teacher': {'low': 25000, 'mid': 48000, 'high': 85000},
+    'Professor': {'low': 50000, 'mid': 95000, 'high': 180000},
+    'Research Scientist': {'low': 45000, 'mid': 85000, 'high': 155000},
+    # Skilled Trades & Other
+    'Pilot': {'low': 50000, 'mid': 120000, 'high': 250000},
+    'Chef': {'low': 25000, 'mid': 50000, 'high': 100000},
+    'Journalist': {'low': 25000, 'mid': 52000, 'high': 95000},
 }
 
 CURRENT_YEAR = date.today().year
@@ -1830,7 +1855,7 @@ def generate_comparison_page(city1, city2):
         tax_free_note_2 = ''
 
     # Salary comparison by job title (6 popular jobs)
-    job_compare_titles = ['Software Engineer', 'Product Manager', 'Data Scientist', 'Marketing Manager', 'Teacher', 'Nurse']
+    job_compare_titles = ['Doctor (General)', 'Software Engineer', 'Product Manager', 'Lawyer', 'Data Scientist', 'Marketing Manager', 'Teacher', 'Nurse']
     job_compare_rows = ''
     for title in job_compare_titles:
         ranges = salaryRanges[title]
