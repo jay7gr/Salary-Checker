@@ -1062,11 +1062,21 @@ salaryInput.addEventListener('input', () => {
     }
 });
 
-// Error display
-function showError(msg) {
+// Error display with scroll-to and field highlight
+function showError(msg, field) {
     errorMsg.textContent = msg;
     errorMsg.style.display = 'block';
     resultBox.style.display = 'none';
+    if (field) {
+        field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        field.style.borderColor = '#dc2626';
+        field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.15)';
+        field.focus();
+        setTimeout(() => {
+            field.style.borderColor = '';
+            field.style.boxShadow = '';
+        }, 3000);
+    }
     setTimeout(() => errorMsg.style.display = 'none', 4000);
 }
 
@@ -1082,10 +1092,10 @@ function calculate() {
     const toCity = targetCity.value;
     const fromCurrency = currentCurrency.value;
 
-    if (!salary || salary <= 0) return showError('Please enter a valid salary');
-    if (!fromCity) return showError('Please select your current city');
-    if (!toCity) return showError('Please select a city to compare');
-    if (fromCity === toCity && currentNeighborhood.value === targetNeighborhood.value) return showError('Please select two different locations');
+    if (!salary || salary <= 0) return showError('Please enter your salary', salaryInput);
+    if (!fromCity) return showError('Please select your current city', currentCity);
+    if (!toCity) return showError('Please select a city to compare', targetCity);
+    if (fromCity === toCity && currentNeighborhood.value === targetNeighborhood.value) return showError('Please select two different locations', targetCity);
 
     let fromCOLI = coliData[fromCity];
     let toCOLI = coliData[toCity];

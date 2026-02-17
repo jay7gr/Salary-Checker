@@ -2970,11 +2970,24 @@
             });
         }
 
-        // Show/hide error
-        function showError(message) {
+        // Show/hide error with scroll-to and field highlight
+        function showError(message, fieldId) {
             const errorDiv = document.getElementById('error');
             errorDiv.textContent = message;
             errorDiv.classList.add('show');
+            if (fieldId) {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    field.style.borderColor = '#dc2626';
+                    field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.15)';
+                    field.focus();
+                    setTimeout(() => {
+                        field.style.borderColor = '';
+                        field.style.boxShadow = '';
+                    }, 3000);
+                }
+            }
             setTimeout(() => {
                 errorDiv.classList.remove('show');
             }, 5000);
@@ -3025,23 +3038,23 @@
             const targetNeighborhood = document.getElementById('targetNeighborhood').value;
 
             if (!salary || salary <= 0) {
-                showError('Please enter a valid salary amount');
+                showError('Please enter your salary', 'salary');
                 return;
             }
             if (!currentCity) {
-                showError('Please select your current city');
+                showError('Please select your current city', 'currentCity');
                 return;
             }
             if (!currentCurrency) {
-                showError('Please select your current currency');
+                showError('Please select your current currency', 'currentCurrency');
                 return;
             }
             if (!targetCity) {
-                showError('Please select a comparable city');
+                showError('Please select a comparable city', 'targetCity');
                 return;
             }
             if (!targetCurrency) {
-                showError('Please select a target currency');
+                showError('Please select a target currency', 'targetCurrency');
                 return;
             }
 
