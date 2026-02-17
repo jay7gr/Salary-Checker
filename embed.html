@@ -269,6 +269,166 @@
         .widget-footer-links a:hover {
             color: #2563eb;
         }
+
+        /* === TAX SECTION === */
+        .tax-section {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .section-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #86868b;
+            margin-bottom: 10px;
+        }
+
+        .tax-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .tax-card {
+            background: #ffffff;
+            border: 1px solid #e8e8ed;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tax-card-city {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+
+        .tax-card-gross, .tax-card-rate {
+            font-size: 0.65rem;
+            color: #86868b;
+        }
+
+        .tax-card-net {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-top: 4px;
+        }
+
+        .tax-card-label {
+            font-size: 0.6rem;
+            color: #86868b;
+        }
+
+        /* === CHART SECTION === */
+        .chart-section {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .chart-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .chart-bar-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #86868b;
+            width: 70px;
+            text-align: right;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chart-bar-track {
+            flex: 1;
+            height: 22px;
+            background: #e8e8ed;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: white;
+            min-width: 60px;
+            transition: width 0.5s ease;
+        }
+
+        .chart-bar-fill.current {
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+        }
+
+        .chart-bar-fill.target {
+            background: linear-gradient(90deg, #8b5cf6, #c084fc);
+        }
+
+        .chart-bar-fill.tax-current {
+            background: linear-gradient(90deg, #059669, #34d399);
+        }
+
+        .chart-bar-fill.tax-target {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        /* === EXPLANATION SECTION === */
+        .explanation-section {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .explanation-step {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: #48484a;
+        }
+
+        .explanation-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .step-text strong {
+            color: #1d1d1f;
+        }
     </style>
 </head>
 <body>
@@ -337,6 +497,24 @@
             </div>
         </div>
         <div class="result-note" id="resultNote"></div>
+
+        <!-- Tax Estimation -->
+        <div class="tax-section" id="taxSection">
+            <div class="section-title">Estimated Take-Home Pay</div>
+            <div class="tax-grid" id="taxGrid"></div>
+        </div>
+
+        <!-- Visual Chart -->
+        <div class="chart-section" id="chartSection">
+            <div class="section-title">Visual Comparison</div>
+            <div id="chartBars"></div>
+        </div>
+
+        <!-- How we calculated this -->
+        <div class="explanation-section" id="explanationSection">
+            <div class="section-title">How we calculated this</div>
+            <div id="explanationSteps"></div>
+        </div>
     </div>
 
     <div class="widget-footer">
@@ -974,6 +1152,53 @@ const cityNeighborhoods = {
     }
 };
 
+const cityToCountry = {
+    'New York': 'US', 'San Francisco': 'US', 'Los Angeles': 'US',
+    'Chicago': 'US', 'Miami': 'US', 'Austin': 'US', 'Seattle': 'US',
+    'Denver': 'US', 'Boston': 'US', 'Washington DC': 'US', 'Houston': 'US',
+    'Toronto': 'CA', 'Vancouver': 'CA', 'Montreal': 'CA',
+    'Mexico City': 'MX', 'Cancún': 'MX', 'Panama City': 'PA',
+    'London': 'GB', 'Edinburgh': 'GB',
+    'Paris': 'FR', 'Nice': 'FR',
+    'Amsterdam': 'NL', 'Berlin': 'DE', 'Munich': 'DE',
+    'Dublin': 'IE', 'Brussels': 'BE', 'Luxembourg City': 'LU',
+    'Zurich': 'CH', 'Geneva': 'CH',
+    'Madrid': 'ES', 'Barcelona': 'ES', 'Valencia': 'ES', 'Málaga': 'ES',
+    'Lisbon': 'PT', 'Porto': 'PT', 'Rome': 'IT', 'Milan': 'IT',
+    'Athens': 'GR', 'Split': 'HR',
+    'Stockholm': 'SE', 'Copenhagen': 'DK', 'Helsinki': 'FI', 'Oslo': 'NO', 'Vienna': 'AT',
+    'Prague': 'CZ', 'Budapest': 'HU', 'Warsaw': 'PL', 'Krakow': 'PL',
+    'Bucharest': 'RO', 'Tallinn': 'EE', 'Riga': 'LV', 'Istanbul': 'TR',
+    'Tokyo': 'JP', 'Osaka': 'JP', 'Fukuoka': 'JP',
+    'Seoul': 'KR', 'Hong Kong': 'HK', 'Taipei': 'TW',
+    'Shanghai': 'CN', 'Beijing': 'CN', 'Shenzhen': 'CN', 'Guangzhou': 'CN',
+    'Singapore': 'SG', 'Bangkok': 'TH', 'Chiang Mai': 'TH', 'Phuket': 'TH',
+    'Kuala Lumpur': 'MY', 'Ho Chi Minh City': 'VN', 'Hanoi': 'VN',
+    'Manila': 'PH', 'Jakarta': 'ID', 'Bali (Denpasar)': 'ID', 'Phnom Penh': 'KH',
+    'Mumbai': 'IN', 'Bangalore': 'IN', 'Delhi': 'IN', 'Chennai': 'IN',
+    'Sydney': 'AU', 'Melbourne': 'AU', 'Perth': 'AU', 'Auckland': 'NZ',
+    'Dubai': 'AE', 'Abu Dhabi': 'AE', 'Doha': 'QA', 'Riyadh': 'SA', 'Tel Aviv': 'IL',
+    'Cape Town': 'ZA', 'Nairobi': 'KE', 'Lagos': 'NG', 'Cairo': 'EG',
+    'Marrakech': 'MA', 'Casablanca': 'MA',
+    'São Paulo': 'BR', 'Buenos Aires': 'AR', 'Bogotá': 'CO', 'Medellín': 'CO',
+    'Lima': 'PE', 'Santiago': 'CL', 'Montevideo': 'UY',
+    'San José (CR)': 'CR', 'Playa del Carmen': 'MX'
+};
+
+const countryTaxRates = {
+    'US': 24, 'CA': 26, 'MX': 20, 'PA': 15,
+    'GB': 25, 'FR': 30, 'NL': 37, 'DE': 32, 'IE': 27, 'BE': 40, 'LU': 28,
+    'CH': 18, 'ES': 24, 'PT': 25, 'IT': 31, 'GR': 22, 'HR': 20,
+    'SE': 32, 'DK': 36, 'FI': 31, 'NO': 28, 'AT': 30,
+    'CZ': 15, 'HU': 15, 'PL': 17, 'RO': 10, 'EE': 20, 'LV': 20, 'TR': 15,
+    'JP': 23, 'KR': 19, 'HK': 15, 'TW': 12, 'CN': 20,
+    'SG': 7, 'TH': 15, 'MY': 16, 'VN': 15, 'PH': 20, 'ID': 15, 'KH': 0,
+    'IN': 20, 'AU': 27, 'NZ': 24,
+    'AE': 0, 'QA': 0, 'SA': 0, 'IL': 25,
+    'ZA': 26, 'KE': 20, 'NG': 18, 'EG': 15, 'MA': 20,
+    'BR': 22, 'AR': 21, 'CO': 19, 'PE': 15, 'CL': 13, 'UY': 20, 'CR': 15
+};
+
 // === DOM REFS ===
 const salaryInput = document.getElementById('salary');
 const currentCity = document.getElementById('currentCity');
@@ -1145,6 +1370,149 @@ function calculate() {
         ? `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% more</strong> to live in than ${fromLabel}`
         : `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% less</strong> to live in than ${fromLabel}`;
     document.getElementById('resultNote').innerHTML = note;
+
+    // Currency formatter helper
+    const fmtCur = (amount, cur) => new Intl.NumberFormat('en-US', {
+        style: 'currency', currency: cur,
+        minimumFractionDigits: 0, maximumFractionDigits: 0
+    }).format(amount);
+
+    const fmtSalaryFrom = fmtCur(salary, fromCurrency);
+    const fmtSalaryTo = fmtCur(Math.round(equivalent), toCurrency);
+
+    // === TAX ESTIMATION ===
+    const fromCountry = cityToCountry[fromCity];
+    const toCountry = cityToCountry[toCity];
+    const fromTax = countryTaxRates[fromCountry];
+    const toTax = countryTaxRates[toCountry];
+    const taxSection = document.getElementById('taxSection');
+
+    if (fromTax !== undefined && toTax !== undefined) {
+        const netFrom = salary * (1 - fromTax / 100);
+        const netTo = equivalent * (1 - toTax / 100);
+        const fmtNetFrom = fmtCur(netFrom, fromCurrency);
+        const fmtNetTo = fmtCur(netTo, toCurrency);
+
+        document.getElementById('taxGrid').innerHTML = `
+            <div class="tax-card">
+                <div class="tax-card-city">${fromLabel}</div>
+                <div class="tax-card-gross">Gross: ${fmtSalaryFrom}</div>
+                <div class="tax-card-rate">Tax: ~${fromTax}%${fromTax === 0 ? ' (Tax-Free)' : ''}</div>
+                <div class="tax-card-net">${fmtNetFrom}</div>
+                <div class="tax-card-label">Est. Take-Home</div>
+            </div>
+            <div class="tax-card">
+                <div class="tax-card-city">${toLabel}</div>
+                <div class="tax-card-gross">Gross: ${fmtSalaryTo}</div>
+                <div class="tax-card-rate">Tax: ~${toTax}%${toTax === 0 ? ' (Tax-Free)' : ''}</div>
+                <div class="tax-card-net">${fmtNetTo}</div>
+                <div class="tax-card-label">Est. Take-Home</div>
+            </div>
+        `;
+        taxSection.style.display = 'block';
+    } else {
+        taxSection.style.display = 'none';
+    }
+
+    // === VISUAL CHART ===
+    const chartSection = document.getElementById('chartSection');
+    const maxSal = Math.max(salary, equivalent);
+    const fromPct = (salary / maxSal) * 100;
+    const toPct = (equivalent / maxSal) * 100;
+
+    let chartHTML = `
+        <div class="chart-bar-row">
+            <div class="chart-bar-label">${fromCity}</div>
+            <div class="chart-bar-track">
+                <div class="chart-bar-fill current" style="width: ${fromPct}%">${fmtSalaryFrom}</div>
+            </div>
+        </div>
+        <div class="chart-bar-row">
+            <div class="chart-bar-label">${toCity}</div>
+            <div class="chart-bar-track">
+                <div class="chart-bar-fill target" style="width: ${toPct}%">${fmtSalaryTo}</div>
+            </div>
+        </div>
+    `;
+
+    if (fromTax !== undefined && toTax !== undefined) {
+        const netFromVal = salary * (1 - fromTax / 100);
+        const netToVal = equivalent * (1 - toTax / 100);
+        const maxNet = Math.max(netFromVal, netToVal);
+        const netFromPct = (netFromVal / maxNet) * 100;
+        const netToPct = (netToVal / maxNet) * 100;
+        chartHTML += `
+            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #e8e8ed;">
+                <div style="font-size: 0.6rem; color: #86868b; margin-bottom: 6px; font-weight: 500;">AFTER TAX (ESTIMATED)</div>
+            </div>
+            <div class="chart-bar-row">
+                <div class="chart-bar-label">${fromCity}</div>
+                <div class="chart-bar-track">
+                    <div class="chart-bar-fill tax-current" style="width: ${netFromPct}%">${fmtCur(netFromVal, fromCurrency)}</div>
+                </div>
+            </div>
+            <div class="chart-bar-row">
+                <div class="chart-bar-label">${toCity}</div>
+                <div class="chart-bar-track">
+                    <div class="chart-bar-fill tax-target" style="width: ${netToPct}%">${fmtCur(netToVal, toCurrency)}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    document.getElementById('chartBars').innerHTML = chartHTML;
+    chartSection.style.display = 'block';
+
+    // === HOW WE CALCULATED THIS ===
+    const baseCOLIFrom = coliData[fromCity];
+    const baseCOLITo = coliData[toCity];
+    const fmtConverted = fmtCur(salary * xRate, toCurrency);
+    const colRatioVal = toCOLI / fromCOLI;
+
+    let stepNum = 1;
+    let stepsHTML = '';
+
+    // Step 1: Your salary
+    stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text"><strong>Your salary:</strong> ${fmtSalaryFrom} in ${fromLabel} (${fromCurrency})</div></div>`;
+
+    // Step 2: Currency conversion
+    stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text"><strong>Currency conversion:</strong> ${fmtSalaryFrom} → ${fmtConverted} at a rate of 1 ${fromCurrency} = ${xRate.toFixed(4)} ${toCurrency}</div></div>`;
+
+    // Step 3: City cost of living
+    const colRatioText = (!fromNhood && !toNhood) ? ` The ratio is <strong>${colRatioVal.toFixed(2)}x</strong>.` : '';
+    stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text"><strong>City cost of living:</strong> ${fromCity} has a base cost index of <strong>${baseCOLIFrom}</strong> and ${toCity} has <strong>${baseCOLITo}</strong> (New York = 100 baseline).${colRatioText}</div></div>`;
+
+    // Step 4: Neighborhood adjustments (if applicable)
+    if (fromNhood || toNhood) {
+        let nhoodText = '<strong>Neighborhood adjustment:</strong> ';
+        const parts = [];
+        if (fromNhood && cityNeighborhoods[fromCity] && cityNeighborhoods[fromCity][fromNhood]) {
+            const m = cityNeighborhoods[fromCity][fromNhood];
+            const pct = ((m - 1) * 100).toFixed(0);
+            const sign = pct >= 0 ? '+' : '';
+            parts.push(`${fromNhood} in ${fromCity} is ${sign}${pct}% vs the city average (adjusted COLI: ${(baseCOLIFrom * m).toFixed(1)})`);
+        }
+        if (toNhood && cityNeighborhoods[toCity] && cityNeighborhoods[toCity][toNhood]) {
+            const m = cityNeighborhoods[toCity][toNhood];
+            const pct = ((m - 1) * 100).toFixed(0);
+            const sign = pct >= 0 ? '+' : '';
+            parts.push(`${toNhood} in ${toCity} is ${sign}${pct}% vs the city average (adjusted COLI: ${(baseCOLITo * m).toFixed(1)})`);
+        }
+        nhoodText += parts.join('. ') + '.';
+        stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text">${nhoodText}</div></div>`;
+    }
+
+    // Step N: Final formula
+    let formulaText = `${fmtSalaryFrom} × ${colRatioVal.toFixed(2)} (cost of living`;
+    if (fromNhood || toNhood) formulaText += ', incl. neighborhood';
+    formulaText += `) × ${xRate.toFixed(2)} (exchange rate) = <strong>${fmtSalaryTo}</strong>`;
+    stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text"><strong>Final formula:</strong> ${formulaText}</div></div>`;
+
+    // Step N+1: What this means
+    stepsHTML += `<div class="explanation-step"><div class="step-num">${stepNum++}</div><div class="step-text"><strong>What this means:</strong> To maintain the same purchasing power you have with ${fmtSalaryFrom} in ${fromLabel}, you would need ${fmtSalaryTo} in ${toLabel}.</div></div>`;
+
+    document.getElementById('explanationSteps').innerHTML = stepsHTML;
+    document.getElementById('explanationSection').style.display = 'block';
 
     resultBox.style.display = 'block';
     resultBox.style.animation = 'none';
