@@ -252,6 +252,23 @@
         .widget-footer a strong span {
             color: #2563eb;
         }
+
+        .widget-footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .widget-footer-links a {
+            font-size: 0.65rem;
+            color: #aeaeb2;
+            text-decoration: none;
+        }
+
+        .widget-footer-links a:hover {
+            color: #2563eb;
+        }
     </style>
 </head>
 <body>
@@ -322,6 +339,11 @@
 
     <div class="widget-footer">
         <a href="https://salary-converter.com" target="_blank" rel="noopener">Powered by <strong>salary<span>:</span>converter</strong></a>
+        <div class="widget-footer-links">
+            <a href="https://salary-converter.com/city/" target="_blank" rel="noopener">101 Cities</a>
+            <a href="https://salary-converter.com/compare/" target="_blank" rel="noopener">Compare</a>
+            <a href="https://salary-converter.com/blog/" target="_blank" rel="noopener">Blog</a>
+        </div>
     </div>
 
 <script>
