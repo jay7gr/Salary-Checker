@@ -2411,7 +2411,6 @@ def generate_city_index():
             <a href="/" class="nav-logo">salary<span>:</span>converter</a>
             <div class="nav-links">
                 <a href="/">Converter</a>
-                <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
@@ -2628,7 +2627,6 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
-                <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
