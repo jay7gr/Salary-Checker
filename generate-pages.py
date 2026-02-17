@@ -2443,37 +2443,71 @@ def generate_city_index():
 # COMPARE INDEX PAGE
 # ============================================================
 
-def generate_compare_index(comparison_pairs):
-    pair_links = ''
+def generate_compare_index(comparison_pairs, featured_pairs=None):
+    if featured_pairs is None:
+        featured_pairs = set()
+
+    # Build featured section
+    featured_html = ''
     for city1, city2 in comparison_pairs:
+        if (city1, city2) in featured_pairs or (city2, city1) in featured_pairs:
+            slug1 = slugify(city1)
+            slug2 = slugify(city2)
+            coli1 = coliData[city1]
+            coli2 = coliData[city2]
+            diff = abs(((coli2/coli1) - 1) * 100)
+            featured_html += f'''
+                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card" data-cities="{city1.lower()} {city2.lower()}">
+                    <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
+                    <div class="compare-card-stats">COLI: {coli1} vs {coli2} &middot; {diff:.0f}% difference</div>
+                </a>'''
+
+    # Build all pairs section
+    all_pairs_html = ''
+    for city1, city2 in comparison_pairs:
+        if (city1, city2) in featured_pairs or (city2, city1) in featured_pairs:
+            continue
         slug1 = slugify(city1)
         slug2 = slugify(city2)
         coli1 = coliData[city1]
         coli2 = coliData[city2]
         diff = abs(((coli2/coli1) - 1) * 100)
-        pair_links += f'''
-                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card">
+        all_pairs_html += f'''
+                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card" data-cities="{city1.lower()} {city2.lower()}">
                     <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
                     <div class="compare-card-stats">COLI: {coli1} vs {coli2} &middot; {diff:.0f}% difference</div>
                 </a>'''
+
+    total = len(comparison_pairs)
+    featured_count = len(featured_pairs)
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>City Comparisons — Cost of Living & Salary Side-by-Side {CURRENT_YEAR}</title>
-    <meta name="description" content="Compare cost of living and salaries between popular city pairs. Side-by-side comparison of neighborhoods, tax rates, and purchasing power.">
+    <title>City Comparisons — {total:,} Cost of Living & Salary Comparisons {CURRENT_YEAR}</title>
+    <meta name="description" content="Compare cost of living and salaries between any two cities. {total:,} city-to-city comparisons with neighborhoods, tax rates, and purchasing power.">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/compare/">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/compare/">
-    <meta property="og:title" content="City Cost of Living Comparisons {CURRENT_YEAR}">
-    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between popular city pairs.">
+    <meta property="og:title" content="{total:,} City Cost of Living Comparisons {CURRENT_YEAR}">
+    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between any two of 101 cities worldwide.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "City Cost of Living Comparisons",
+        "description": "{total:,} city-to-city comparisons across 101 cities worldwide",
+        "url": "https://salary-converter.com/compare/",
+        "numberOfItems": {total}
+    }}
+    </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         body {{
@@ -2503,26 +2537,47 @@ def generate_compare_index(comparison_pairs):
             text-align: center;
         }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; margin-bottom: 8px; }}
-        .hero p {{ color: #86868b; font-size: 1rem; }}
+        .hero p {{ color: #86868b; font-size: 1rem; margin-bottom: 20px; }}
+        .search-box {{
+            max-width: 500px; margin: 0 auto; position: relative;
+        }}
+        .search-box input {{
+            width: 100%; padding: 14px 20px 14px 44px; border: 2px solid #e8e8ed;
+            border-radius: 100px; font-size: 0.95rem; font-family: inherit;
+            outline: none; transition: border-color 0.2s; background: #f5f5f7;
+        }}
+        .search-box input:focus {{ border-color: #2563eb; background: white; }}
+        .search-box svg {{
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            width: 18px; height: 18px; color: #86868b;
+        }}
+        .search-count {{
+            text-align: center; font-size: 0.8rem; color: #86868b; margin: 16px 0;
+        }}
+        .section-title {{
+            font-size: 1.1rem; font-weight: 700; margin: 32px 0 16px;
+            letter-spacing: -0.3px;
+        }}
         .compare-grid {{
-            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }}
         .compare-card {{
-            background: white; border-radius: 16px; padding: 24px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); text-decoration: none;
+            background: white; border-radius: 14px; padding: 18px;
+            box-shadow: 0 1px 12px rgba(0,0,0,0.05); text-decoration: none;
             transition: transform 0.2s, box-shadow 0.2s; display: block;
         }}
         .compare-card:hover {{
-            transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1);
         }}
+        .compare-card.hidden {{ display: none; }}
         .compare-card-cities {{
-            font-size: 1rem; font-weight: 700; color: #1d1d1f; margin-bottom: 6px;
+            font-size: 0.9rem; font-weight: 700; color: #1d1d1f; margin-bottom: 4px;
         }}
         .compare-card-cities .vs {{
-            color: #2563eb; font-size: 0.8rem; margin: 0 4px;
+            color: #2563eb; font-size: 0.75rem; margin: 0 4px;
         }}
         .compare-card-stats {{
-            font-size: 0.8rem; color: #86868b;
+            font-size: 0.75rem; color: #86868b;
         }}
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 24px;
@@ -2555,10 +2610,21 @@ def generate_compare_index(comparison_pairs):
 
         <section class="hero">
             <h1>City Comparisons</h1>
-            <p>{len(comparison_pairs)} popular city-to-city comparisons with salary equivalents</p>
+            <p>{total:,} city-to-city comparisons across 101 cities</p>
+            <div class="search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="searchInput" placeholder="Search cities... e.g. London, Tokyo">
+            </div>
         </section>
 
-        <div class="compare-grid">{pair_links}
+        <div class="search-count" id="searchCount"></div>
+
+        <h2 class="section-title" id="featuredTitle">Popular Comparisons</h2>
+        <div class="compare-grid" id="featuredGrid">{featured_html}
+        </div>
+
+        <h2 class="section-title" id="allTitle">All Comparisons</h2>
+        <div class="compare-grid" id="allGrid">{all_pairs_html}
         </div>
 
         <footer class="page-footer">
@@ -2567,6 +2633,37 @@ def generate_compare_index(comparison_pairs):
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+
+    <script>
+    const searchInput = document.getElementById('searchInput');
+    const searchCount = document.getElementById('searchCount');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const allTitle = document.getElementById('allTitle');
+    const allCards = document.querySelectorAll('.compare-card');
+
+    searchInput.addEventListener('input', function() {{
+        const q = this.value.toLowerCase().trim();
+        let visible = 0;
+        allCards.forEach(card => {{
+            const cities = card.getAttribute('data-cities');
+            if (!q || cities.includes(q)) {{
+                card.classList.remove('hidden');
+                visible++;
+            }} else {{
+                card.classList.add('hidden');
+            }}
+        }});
+        if (q) {{
+            searchCount.textContent = visible + ' comparison' + (visible !== 1 ? 's' : '') + ' found';
+            featuredTitle.style.display = 'none';
+            allTitle.style.display = 'none';
+        }} else {{
+            searchCount.textContent = '';
+            featuredTitle.style.display = '';
+            allTitle.style.display = '';
+        }}
+    }});
+    </script>
 </body>
 </html>'''
 
@@ -3827,69 +3924,38 @@ if __name__ == '__main__':
     os.makedirs(city_dir, exist_ok=True)
     os.makedirs(compare_dir, exist_ok=True)
 
-    # Define popular comparison pairs (high-traffic searches)
-    comparison_pairs = [
-        ('London', 'New York'),
-        ('London', 'Dubai'),
-        ('London', 'Singapore'),
-        ('London', 'Paris'),
-        ('London', 'Berlin'),
-        ('London', 'Amsterdam'),
-        ('London', 'Sydney'),
-        ('London', 'Toronto'),
-        ('London', 'Tokyo'),
-        ('London', 'Dublin'),
-        ('New York', 'San Francisco'),
-        ('New York', 'Los Angeles'),
-        ('New York', 'Chicago'),
-        ('New York', 'Miami'),
-        ('New York', 'Toronto'),
-        ('New York', 'Tokyo'),
-        ('New York', 'Singapore'),
-        ('New York', 'Dubai'),
-        ('New York', 'Berlin'),
-        ('Dubai', 'Singapore'),
-        ('Dubai', 'Abu Dhabi'),
-        ('Dubai', 'Doha'),
-        ('Dubai', 'Bangkok'),
-        ('Dubai', 'Sydney'),
-        ('Singapore', 'Hong Kong'),
-        ('Singapore', 'Bangkok'),
-        ('Singapore', 'Tokyo'),
-        ('Singapore', 'Sydney'),
-        ('Singapore', 'Kuala Lumpur'),
-        ('Tokyo', 'Seoul'),
-        ('Tokyo', 'Osaka'),
-        ('Tokyo', 'Sydney'),
-        ('Paris', 'Berlin'),
-        ('Paris', 'Amsterdam'),
-        ('Paris', 'Barcelona'),
-        ('Paris', 'Rome'),
-        ('Berlin', 'Munich'),
-        ('Berlin', 'Amsterdam'),
-        ('Berlin', 'Prague'),
-        ('Berlin', 'Vienna'),
-        ('Lisbon', 'Barcelona'),
-        ('Lisbon', 'Madrid'),
-        ('Lisbon', 'Porto'),
-        ('Sydney', 'Melbourne'),
-        ('Sydney', 'Auckland'),
-        ('San Francisco', 'Austin'),
-        ('San Francisco', 'Seattle'),
-        ('Boston', 'Washington DC'),
-        ('Bangkok', 'Bali (Denpasar)'),
-        ('Bangkok', 'Ho Chi Minh City'),
-        ('Bangkok', 'Chiang Mai'),
-        ('Mexico City', 'Bogotá'),
-        ('Mexico City', 'Medellín'),
-        ('Buenos Aires', 'São Paulo'),
-        ('Buenos Aires', 'Santiago'),
-        ('Dubai', 'Tel Aviv'),
-        ('Zurich', 'Geneva'),
-        ('Stockholm', 'Copenhagen'),
-        ('Mumbai', 'Bangalore'),
-        ('Hong Kong', 'Taipei'),
-    ]
+    # Featured comparison pairs (high-traffic searches — shown first on index)
+    featured_pairs = {
+        ('London', 'New York'), ('London', 'Dubai'), ('London', 'Singapore'),
+        ('London', 'Paris'), ('London', 'Berlin'), ('London', 'Amsterdam'),
+        ('London', 'Sydney'), ('London', 'Toronto'), ('London', 'Tokyo'),
+        ('London', 'Dublin'), ('New York', 'San Francisco'), ('New York', 'Los Angeles'),
+        ('New York', 'Chicago'), ('New York', 'Miami'), ('New York', 'Toronto'),
+        ('New York', 'Tokyo'), ('New York', 'Singapore'), ('New York', 'Dubai'),
+        ('New York', 'Berlin'), ('Dubai', 'Singapore'), ('Dubai', 'Abu Dhabi'),
+        ('Dubai', 'Doha'), ('Dubai', 'Bangkok'), ('Dubai', 'Sydney'),
+        ('Singapore', 'Hong Kong'), ('Singapore', 'Bangkok'), ('Singapore', 'Tokyo'),
+        ('Singapore', 'Sydney'), ('Singapore', 'Kuala Lumpur'), ('Tokyo', 'Seoul'),
+        ('Tokyo', 'Osaka'), ('Tokyo', 'Sydney'), ('Paris', 'Berlin'),
+        ('Paris', 'Amsterdam'), ('Paris', 'Barcelona'), ('Paris', 'Rome'),
+        ('Berlin', 'Munich'), ('Berlin', 'Amsterdam'), ('Berlin', 'Prague'),
+        ('Berlin', 'Vienna'), ('Lisbon', 'Barcelona'), ('Lisbon', 'Madrid'),
+        ('Lisbon', 'Porto'), ('Sydney', 'Melbourne'), ('Sydney', 'Auckland'),
+        ('San Francisco', 'Austin'), ('San Francisco', 'Seattle'),
+        ('Boston', 'Washington DC'), ('Bangkok', 'Bali (Denpasar)'),
+        ('Bangkok', 'Ho Chi Minh City'), ('Bangkok', 'Chiang Mai'),
+        ('Mexico City', 'Bogotá'), ('Mexico City', 'Medellín'),
+        ('Buenos Aires', 'São Paulo'), ('Buenos Aires', 'Santiago'),
+        ('Dubai', 'Tel Aviv'), ('Zurich', 'Geneva'), ('Stockholm', 'Copenhagen'),
+        ('Mumbai', 'Bangalore'), ('Hong Kong', 'Taipei'),
+    }
+
+    # Generate ALL city pairs (101 cities = 5,050 pairs)
+    all_cities = sorted(coliData.keys())
+    comparison_pairs = []
+    for i, c1 in enumerate(all_cities):
+        for c2 in all_cities[i+1:]:
+            comparison_pairs.append((c1, c2))
 
     # Generate all city pages
     print(f"Generating {len(coliData)} city pages...")
@@ -3957,7 +4023,7 @@ if __name__ == '__main__':
     # Generate compare index page
     compare_index_path = os.path.join(compare_dir, 'index.html')
     with open(compare_index_path, 'w', encoding='utf-8') as f:
-        f.write(generate_compare_index(comparison_pairs))
+        f.write(generate_compare_index(comparison_pairs, featured_pairs))
     print("  Done: Compare index page at /compare/index.html")
 
     # Generate data-driven blog articles
