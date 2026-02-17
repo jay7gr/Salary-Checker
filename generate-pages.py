@@ -1607,7 +1607,7 @@ def generate_city_page(city, comparison_pairs):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
-                <a href="/compare/">Compare</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
@@ -1748,7 +1748,7 @@ def generate_city_page(city, comparison_pairs):
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
-            <a href="/compare/">Compare</a>
+            <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>
@@ -2124,13 +2124,13 @@ def generate_comparison_page(city1, city2):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
-                <a href="/compare/">Compare</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
 
         <div class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/compare/">Compare</a> &rsaquo; {city1} vs {city2}
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; {city1} vs {city2}
         </div>
 
         <section class="hero">
@@ -2263,7 +2263,7 @@ def generate_comparison_page(city1, city2):
             <a href="/">Salary Converter</a>
             <a href="/city/{slug1}.html">{city1}</a>
             <a href="/city/{slug2}.html">{city2}</a>
-            <a href="/compare/">Compare</a>
+            <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>
@@ -2412,7 +2412,7 @@ def generate_city_index():
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
-                <a href="/compare/">Compare</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
@@ -2443,7 +2443,7 @@ def generate_city_index():
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
-            <a href="/compare/">Compare Cities</a>
+            <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
         </footer>
     </div>
@@ -2628,7 +2628,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
-                <a href="/compare/">Compare</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
             </div>
         </nav>
@@ -3208,7 +3208,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 <body>
     <div class="container">
         <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/compare/">Compare</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
         </nav>
 
         <section class="hero">
