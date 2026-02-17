@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salary Converter 2026 — Compare Salaries Across 100 Cities & 1,000+ Neighborhoods</title>
+    <title>Salary Converter 2026 — Compare Salaries Across 100+ Cities & 2,000+ Neighborhoods</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Free salary comparison tool. Compare salaries across 100 cities and over 1,000 neighborhoods worldwide with cost of living adjustments and real-time currency conversion.">
+    <meta name="description" content="Free salary comparison tool. Compare salaries across 100+ cities and 2,000+ neighborhoods worldwide. Cost of living adjustments, tax estimation, and real-time currency conversion.">
     <meta name="keywords" content="salary converter, salary comparison, cost of living, salary calculator, relocation, city comparison, neighborhood cost, currency converter, expat salary">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -20,7 +20,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/">
     <meta property="og:title" content="Salary Converter — Compare Salaries Across 100 Cities">
-    <meta property="og:description" content="Free tool to compare salaries across 100 cities and 1,000+ neighborhoods. Adjust for cost of living and currency conversion instantly.">
+    <meta property="og:description" content="Free tool to compare salaries across 100+ cities and 2,000+ neighborhoods. Adjust for cost of living, taxes, and currency conversion instantly.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
     <!-- Twitter/X Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Salary Converter — Compare Salaries Across 100 Cities">
-    <meta name="twitter:description" content="Free tool to compare salaries across 100 cities and 1,000+ neighborhoods. Adjust for cost of living and currency conversion instantly.">
+    <meta name="twitter:description" content="Free tool to compare salaries across 100+ cities and 2,000+ neighborhoods. Adjust for cost of living, taxes, and currency conversion instantly.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
 
     <!-- JSON-LD Structured Data -->
@@ -41,7 +41,7 @@
         "name": "Salary Converter",
         "alternateName": "salary:converter",
         "url": "https://salary-converter.com",
-        "description": "Compare salaries across 100 cities and over 1,000 neighborhoods worldwide with cost of living adjustments and real-time currency conversion.",
+        "description": "Compare salaries across 100+ cities and 2,000+ neighborhoods worldwide with cost of living adjustments, tax estimation, and real-time currency conversion.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -56,7 +56,7 @@
         },
         "featureList": [
             "Compare salaries across 100 global cities",
-            "1,000+ neighborhood-level cost adjustments",
+            "2,000+ neighborhood-level cost adjustments",
             "Real-time currency conversion for 40+ currencies",
             "Cost of living index comparison",
             "Free embeddable widget"
@@ -1573,7 +1573,7 @@
                 </h1>
                 <div style="width: 40px; height: 3px; background: #2563eb; border-radius: 2px; margin: 10px auto 0;"></div>
             </div>
-            <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;">Compare salaries across 100 cities and over 1,000 neighborhoods worldwide.</p>
+            <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;" id="hero-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</p>
         </div>
 
         <div class="error-message" id="error"></div>
@@ -1789,7 +1789,7 @@
 
     <footer class="site-footer">
         <div class="site-footer-logo">salary<span>:</span>converter</div>
-        <div class="site-footer-text">Compare salaries across 100 cities and over 1,000 neighborhoods worldwide.</div>
+        <div class="site-footer-text" id="footer-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</div>
         <div class="site-footer-links">
             <a href="https://salary-converter.com">Salary Tool</a>
             <a href="/city/">Cities</a>
@@ -2108,102 +2108,119 @@
                 'Manhattan (Midtown)': 1.25, 'Manhattan (Upper East Side)': 1.30, 'Manhattan (Lower East Side)': 1.10,
                 'Brooklyn (Williamsburg)': 1.05, 'Brooklyn (Park Slope)': 1.08, 'Brooklyn (Bushwick)': 0.88,
                 'Queens (Astoria)': 0.90, 'Queens (Long Island City)': 0.95, 'Harlem': 0.82,
-                'The Bronx': 0.72, 'Staten Island': 0.75, 'SoHo / Tribeca': 1.35
+                'The Bronx': 0.72, 'Staten Island': 0.75, 'SoHo / Tribeca': 1.35,
+                'Chelsea': 1.18, 'West Village': 1.28, 'Greenwich Village': 1.25, 'Upper West Side': 1.22, 'Financial District': 1.2, 'DUMBO': 1.15, 'Fort Greene': 1.02, 'Prospect Heights': 1.05, 'Crown Heights': 0.85, 'Red Hook': 0.88, 'Greenpoint': 1.0, 'Jackson Heights': 0.78, 'Flushing': 0.8, 'Bay Ridge': 0.82, 'Forest Hills': 0.88, 'Hoboken (NJ)': 1.08, 'Murray Hill': 1.12, "Hell's Kitchen": 1.1
             },
             'San Francisco': {
                 'Financial District': 1.20, 'SoMa': 1.15, 'Mission District': 1.05,
                 'Castro': 1.08, 'Sunset District': 0.92, 'Richmond District': 0.90,
                 'Nob Hill': 1.18, 'Pacific Heights': 1.25, 'Tenderloin': 0.78,
-                'Oakland (Downtown)': 0.80, 'Oakland (Rockridge)': 0.88, 'Berkeley': 0.90
+                'Oakland (Downtown)': 0.80, 'Oakland (Rockridge)': 0.88, 'Berkeley': 0.90,
+                'Marina District': 1.22, 'Hayes Valley': 1.15, 'Potrero Hill': 1.1, 'Dogpatch': 1.05, 'Russian Hill': 1.2, 'North Beach': 1.12, 'Haight-Ashbury': 1.08, 'Excelsior': 0.82, 'Bayview': 0.75, 'Daly City': 0.78, 'San Mateo': 0.92, 'Palo Alto': 1.28
             },
             'Los Angeles': {
                 'Santa Monica': 1.25, 'Beverly Hills': 1.40, 'Hollywood': 1.10,
                 'Downtown LA': 1.05, 'Silver Lake': 1.08, 'Venice': 1.20,
                 'Koreatown': 0.85, 'Echo Park': 0.90, 'Pasadena': 0.92,
-                'Long Beach': 0.80, 'Culver City': 1.02, 'Burbank': 0.88
+                'Long Beach': 0.80, 'Culver City': 1.02, 'Burbank': 0.88,
+                'West Hollywood': 1.22, 'Westwood': 1.18, 'Glendale': 0.9, 'Studio City': 1.05, 'Sherman Oaks': 1.02, 'Encino': 1.08, 'Bel Air': 1.45, 'Mar Vista': 0.95, 'Los Feliz': 1.12, 'Highland Park': 0.88, 'Eagle Rock': 0.85, 'Inglewood': 0.72, 'Torrance': 0.82, 'Malibu': 1.42, 'Manhattan Beach': 1.3, 'Playa del Rey': 1.1, 'Arts District': 1.05, 'Atwater Village': 0.95
             },
             'Chicago': {
                 'The Loop': 1.20, 'Lincoln Park': 1.15, 'Wicker Park': 1.08,
                 'River North': 1.22, 'Gold Coast': 1.25, 'Lakeview': 1.05,
                 'Logan Square': 0.92, 'Pilsen': 0.82, 'Hyde Park': 0.85,
-                'Bridgeport': 0.78, 'Evanston': 0.95, 'Oak Park': 0.90
+                'Bridgeport': 0.78, 'Evanston': 0.95, 'Oak Park': 0.90,
+                'Bucktown': 1.1, 'Uptown': 0.88, 'Edgewater': 0.9, 'West Loop': 1.18, 'South Loop': 1.08, 'Humboldt Park': 0.82, 'Ravenswood': 0.95, 'Irving Park': 0.8, 'Avondale': 0.85, 'Old Town': 1.15, 'Ukrainian Village': 1.05, 'Chinatown': 0.78, 'Beverly': 0.82, 'Portage Park': 0.75, 'Rogers Park': 0.78
             },
             'Miami': {
                 'South Beach': 1.30, 'Brickell': 1.25, 'Wynwood': 1.10,
                 'Coconut Grove': 1.15, 'Coral Gables': 1.20, 'Downtown Miami': 1.08,
                 'Little Havana': 0.78, 'North Miami': 0.82, 'Hialeah': 0.72,
-                'Miami Beach': 1.22, 'Doral': 0.88, 'Kendall': 0.80
+                'Miami Beach': 1.22, 'Doral': 0.88, 'Kendall': 0.80,
+                'Edgewater': 1.1, 'Midtown': 1.12, 'Design District': 1.18, 'Key Biscayne': 1.35, 'Aventura': 1.08, 'Sunny Isles': 1.15, 'Pinecrest': 1.12, 'Westchester': 0.78, 'Surfside': 1.18, 'Bal Harbour': 1.32, 'Homestead': 0.68, 'Overtown': 0.7
             },
             'Austin': {
                 'Downtown': 1.25, 'South Congress (SoCo)': 1.18, 'East Austin': 1.05,
                 'West Lake Hills': 1.30, 'Hyde Park': 1.08, 'Mueller': 1.02,
                 'North Loop': 0.95, 'Round Rock': 0.80, 'Cedar Park': 0.78,
-                'Pflugerville': 0.75, 'South Lamar': 1.10
+                'Pflugerville': 0.75, 'South Lamar': 1.10,
+                'Zilker': 1.22, 'Barton Hills': 1.18, 'Clarksville': 1.25, 'Bouldin Creek': 1.15, 'Travis Heights': 1.12, 'Crestview': 0.95, 'Holly': 1.08, 'Allandale': 0.98, 'Windsor Park': 0.82, 'Riverside': 0.88, 'Govalle': 0.78, 'St. Elmo': 0.85
             },
             'Seattle': {
                 'Capitol Hill': 1.12, 'Downtown': 1.18, 'Queen Anne': 1.10,
                 'Ballard': 1.05, 'Fremont': 1.08, 'University District': 0.88,
                 'Beacon Hill': 0.85, 'West Seattle': 0.92, 'Columbia City': 0.90,
-                'Bellevue': 1.15, 'Redmond': 1.05, 'Kirkland': 1.02
+                'Bellevue': 1.15, 'Redmond': 1.05, 'Kirkland': 1.02,
+                'South Lake Union': 1.15, 'Georgetown': 0.82, 'Madrona': 1.1, 'Wallingford': 1.05, 'Ravenna': 0.98, 'Magnolia': 1.08, 'Central District': 0.92, 'Rainier Valley': 0.78, 'Green Lake': 1.05, 'Northgate': 0.82, 'Pioneer Square': 0.95, 'Mercer Island': 1.25
             },
             'Denver': {
                 'LoDo (Lower Downtown)': 1.22, 'Cherry Creek': 1.28, 'Capitol Hill': 1.10,
                 'RiNo (River North)': 1.15, 'Highlands': 1.12, 'Washington Park': 1.08,
                 'Baker': 1.02, 'Park Hill': 0.90, 'Montbello': 0.72,
-                'Aurora': 0.78, 'Lakewood': 0.85, 'Englewood': 0.82
+                'Aurora': 0.78, 'Lakewood': 0.85, 'Englewood': 0.82,
+                'Five Points': 0.95, 'Sloan Lake': 1.08, 'Congress Park': 1.05, 'Platt Park': 1.02, 'Hilltop': 1.15, 'City Park': 1.0, 'Globeville': 0.72, 'Stapleton (Central Park)': 0.92, 'Green Valley Ranch': 0.75, 'Federal Heights': 0.7, 'Wheat Ridge': 0.8, 'Arvada': 0.82
             },
             'Boston': {
                 'Back Bay': 1.30, 'Beacon Hill': 1.28, 'South End': 1.18,
                 'North End': 1.12, 'Seaport': 1.25, 'Cambridge (Harvard Sq)': 1.15,
                 'Cambridge (Kendall Sq)': 1.20, 'Somerville': 0.95, 'Jamaica Plain': 0.90,
-                'Dorchester': 0.78, 'Allston/Brighton': 0.85, 'Brookline': 1.10
+                'Dorchester': 0.78, 'Allston/Brighton': 0.85, 'Brookline': 1.10,
+                'Fenway-Kenmore': 1.12, 'Charlestown': 1.05, 'South Boston (Southie)': 1.08, 'East Boston': 0.82, 'Roxbury': 0.72, 'Medford': 0.85, 'Newton': 1.1, 'Watertown': 0.88, 'Waltham': 0.82, 'Malden': 0.78, 'Quincy': 0.8, 'Revere': 0.75
             },
             'Washington DC': {
                 'Georgetown': 1.30, 'Dupont Circle': 1.20, 'Capitol Hill': 1.15,
                 'Adams Morgan': 1.05, 'Logan Circle': 1.18, 'Navy Yard': 1.10,
                 'Columbia Heights': 0.92, 'Foggy Bottom': 1.22, 'U Street': 1.08,
-                'Anacostia': 0.72, 'Arlington (VA)': 1.05, 'Bethesda (MD)': 1.12
+                'Anacostia': 0.72, 'Arlington (VA)': 1.05, 'Bethesda (MD)': 1.12,
+                'Shaw': 1.08, 'Woodley Park': 1.15, 'Cleveland Park': 1.12, 'Tenleytown': 1.05, 'Petworth': 0.9, 'Brookland': 0.88, 'Chevy Chase (DC)': 1.18, 'Takoma Park (MD)': 0.85, 'Silver Spring (MD)': 0.88, 'Pentagon City (VA)': 1.02, 'Rosslyn (VA)': 1.08, 'Alexandria (VA)': 1.05
             },
             'Houston': {
                 'River Oaks': 1.35, 'The Heights': 1.15, 'Montrose': 1.12,
                 'Downtown': 1.18, 'Midtown': 1.10, 'Museum District': 1.08,
                 'Upper Kirby': 1.05, 'EaDo': 0.95, 'Katy': 0.82,
-                'Sugar Land': 0.85, 'Spring': 0.78, 'Pearland': 0.80
+                'Sugar Land': 0.85, 'Spring': 0.78, 'Pearland': 0.80,
+                'West University Place': 1.22, 'Bellaire': 1.08, 'Memorial': 1.18, 'Tanglewood': 1.25, 'Rice Village': 1.1, 'Galleria': 1.15, 'Clear Lake': 0.85, 'Cypress': 0.78, 'Kingwood': 0.82, 'The Woodlands': 0.92, 'Pasadena (TX)': 0.72, 'Friendswood': 0.82
             },
             'Toronto': {
                 'Yorkville': 1.30, 'King West': 1.22, 'Liberty Village': 1.10,
                 'Queen West': 1.08, 'The Annex': 1.12, 'Leslieville': 0.95,
                 'Kensington Market': 0.92, 'Etobicoke': 0.80, 'Scarborough': 0.75,
-                'North York': 0.85, 'Downtown Core': 1.18, 'Danforth': 0.90
+                'North York': 0.85, 'Downtown Core': 1.18, 'Danforth': 0.90,
+                'Distillery District': 1.15, 'Cabbagetown': 1.05, 'Roncesvalles': 1.02, 'High Park': 1.08, 'Midtown': 1.12, 'Bloor West Village': 0.95, 'Riverdale': 0.98, 'Parkdale': 0.82, 'Mimico': 0.78, 'Don Mills': 0.85, 'Forest Hill': 1.28, 'Yorkdale': 0.88
             },
             'Vancouver': {
                 'Yaletown': 1.25, 'Kitsilano': 1.15, 'Gastown': 1.12,
                 'West End': 1.10, 'Commercial Drive': 0.95, 'Mount Pleasant': 1.05,
                 'East Van': 0.88, 'Burnaby': 0.82, 'Richmond': 0.85,
-                'North Vancouver': 0.92, 'West Vancouver': 1.30, 'Surrey': 0.72
+                'North Vancouver': 0.92, 'West Vancouver': 1.30, 'Surrey': 0.72,
+                'Coal Harbour': 1.22, 'False Creek': 1.12, 'Kerrisdale': 1.08, 'Dunbar': 1.05, 'Marpole': 0.85, 'Hastings-Sunrise': 0.8, 'Main Street': 0.98, 'Point Grey': 1.15, 'Collingwood': 0.78, 'New Westminster': 0.75, 'Coquitlam': 0.78, 'Port Moody': 0.8
             },
             'Montreal': {
                 'Plateau Mont-Royal': 1.18, 'Old Montreal': 1.22, 'Griffintown': 1.15,
                 'Mile End': 1.08, 'Outremont': 1.20, 'Westmount': 1.30,
                 'Villeray': 0.92, 'Rosemont': 0.95, 'Verdun': 0.88,
-                'NDG (Notre-Dame-de-Grâce)': 0.90, 'Hochelaga': 0.78, 'Laval': 0.75
+                'NDG (Notre-Dame-de-Grâce)': 0.90, 'Hochelaga': 0.78, 'Laval': 0.75,
+                'Saint-Henri': 0.92, 'Ahuntsic': 0.85, 'Côte-des-Neiges': 0.82, 'Pointe-Saint-Charles': 0.88, 'Petite-Italie': 1.05, 'Mercier': 0.78, 'Lachine': 0.75, 'Saint-Laurent': 0.8, 'Dorval': 0.82, 'Brossard': 0.78, 'Longueuil': 0.72, 'Anjou': 0.75
             },
             'Mexico City': {
                 'Polanco': 1.35, 'Condesa': 1.22, 'Roma Norte': 1.18,
                 'Santa Fe': 1.15, 'Coyoacán': 1.02, 'Del Valle': 0.95,
                 'Narvarte': 0.88, 'Tlalpan': 0.78, 'Iztapalapa': 0.65,
-                'Centro Histórico': 0.90, 'San Ángel': 1.10
+                'Centro Histórico': 0.90, 'San Ángel': 1.10,
+                'Lomas de Chapultepec': 1.3, 'Juárez': 1.12, 'Anzures': 1.08, 'Pedregal': 1.22, 'Xochimilco': 0.72, 'Reforma': 1.15, 'Escandón': 0.95, 'Doctores': 0.78, 'Portales': 0.82, 'Cuauhtémoc': 0.9, 'Mixcoac': 0.85, 'Lindavista': 0.82, 'Insurgentes Sur': 1.05, 'Satélite': 0.8
             },
             'Cancún': {
                 'Zona Hotelera': 1.35, 'Puerto Cancún': 1.28, 'Centro': 0.85,
                 'SM 17 (Downtown)': 0.82, 'Alfredo V. Bonfil': 0.72, 'Playa Mujeres': 1.22,
-                'Puerto Juárez': 0.90, 'Isla Mujeres': 1.15
+                'Puerto Juárez': 0.90, 'Isla Mujeres': 1.15,
+                'Punta Sam': 1.08, 'El Table': 0.78, 'Residencial Campestre': 0.82, 'Supermanzana 500': 0.7, 'Lagos del Sol': 0.88, 'Jardines del Sur': 0.75, 'Malecón Américas': 0.92
             },
             'Panama City': {
                 'Punta Pacífica': 1.30, 'Costa del Este': 1.25, 'Casco Viejo': 1.12,
                 'Obarrio': 1.10, 'El Cangrejo': 1.02, 'San Francisco': 1.08,
                 'Calidonia': 0.78, 'Juan Díaz': 0.72, 'Clayton': 1.05,
-                'Balboa': 0.92
+                'Balboa': 0.92,
+                'Marbella': 1.15, 'Bella Vista': 1.08, 'Condado del Rey': 0.85, 'Albrook': 0.88, 'Betania': 0.75, 'Transistmica': 0.72, 'San Miguelito': 0.68, 'Coco del Mar': 1.1, 'Vista Hermosa': 0.92
             },
 
             // ===== EUROPE - WESTERN =====
@@ -2213,73 +2230,85 @@
                 'Camden': 1.05, 'Islington': 1.12, 'Brixton': 0.88,
                 'Hackney': 0.92, 'Peckham': 0.82, 'Canary Wharf': 1.15,
                 'Greenwich': 0.90, 'Clapham': 0.95, 'Stratford': 0.78,
-                'Marylebone': 1.32, 'Hampstead': 1.30
+                'Marylebone': 1.32, 'Hampstead': 1.30,
+                'Battersea': 1.05, 'Fulham': 1.1, 'Wimbledon': 1.02, 'Ealing': 0.85, 'Dalston': 0.95, 'Tooting': 0.82, 'Walthamstow': 0.8, 'Richmond': 1.18, 'Putney': 1.05, 'Chiswick': 1.1, 'Balham': 0.98, 'Lewisham': 0.78, 'Croydon': 0.72, 'Barking': 0.68, 'Angel (Islington)': 1.12, 'Vauxhall': 1.05, 'Bermondsey': 1.0, 'Kentish Town': 0.95
             },
             'Paris': {
                 'Le Marais (3rd/4th)': 1.30, 'Saint-Germain (6th)': 1.35, 'Champs-Élysées (8th)': 1.40,
                 'Montmartre (18th)': 0.92, 'Bastille (11th)': 1.05, 'Oberkampf (11th)': 1.02,
                 'Belleville (20th)': 0.82, 'La Défense': 1.10, 'Pigalle (9th)': 0.95,
-                'Nation (12th)': 0.88, 'Batignolles (17th)': 0.98, 'Boulogne-Billancourt': 1.08
+                'Nation (12th)': 0.88, 'Batignolles (17th)': 0.98, 'Boulogne-Billancourt': 1.08,
+                'Latin Quarter (5th)': 1.25, 'Tour Eiffel (7th)': 1.38, 'Opéra (9th)': 1.15, 'République (10th)': 1.0, 'Bercy (12th)': 0.95, 'Alésia (14th)': 0.92, 'Vaugirard (15th)': 0.9, 'Passy (16th)': 1.3, 'Buttes-Chaumont (19th)': 0.85, 'Neuilly-sur-Seine': 1.25, 'Saint-Denis': 0.7, 'Vincennes': 0.95, 'Levallois-Perret': 1.1, 'Issy-les-Moulineaux': 1.02
             },
             'Amsterdam': {
                 'Canal Ring (Centrum)': 1.30, 'Jordaan': 1.25, 'De Pijp': 1.10,
                 'Oud-West': 1.15, 'Oud-Zuid': 1.28, 'Oost': 0.95,
                 'Noord': 0.82, 'Nieuw-West': 0.75, 'Amstelveen': 0.88,
-                'Zuidas': 1.20, 'Westerpark': 1.05
+                'Zuidas': 1.20, 'Westerpark': 1.05,
+                'Rivierenbuurt': 1.05, 'Buitenveldert': 0.92, 'Java-eiland': 1.08, 'IJburg': 0.88, 'Diemen': 0.78, 'Haarlem': 0.82, 'Watergraafsmeer': 0.98, 'Slotervaart': 0.72, 'Geuzenveld': 0.7
             },
             'Berlin': {
                 'Mitte': 1.22, 'Prenzlauer Berg': 1.12, 'Kreuzberg': 1.08,
                 'Friedrichshain': 1.02, 'Charlottenburg': 1.15, 'Neukölln': 0.85,
                 'Schöneberg': 1.05, 'Wedding': 0.78, 'Tempelhof': 0.82,
-                'Spandau': 0.72, 'Steglitz': 0.88, 'Grunewald': 1.30
+                'Spandau': 0.72, 'Steglitz': 0.88, 'Grunewald': 1.30,
+                'Lichtenberg': 0.75, 'Pankow': 0.85, 'Treptow': 0.82, 'Reinickendorf': 0.72, 'Moabit': 0.92, 'Köpenick': 0.78, 'Wilmersdorf': 1.1, 'Dahlem': 1.22, 'Zehlendorf': 1.05, 'Britz': 0.72, 'Rudow': 0.7, 'Friedenau': 0.98
             },
             'Munich': {
                 'Altstadt-Lehel': 1.35, 'Maxvorstadt': 1.18, 'Schwabing': 1.22,
                 'Bogenhausen': 1.15, 'Haidhausen': 1.10, 'Glockenbachviertel': 1.20,
                 'Sendling': 0.92, 'Moosach': 0.82, 'Pasing': 0.85,
-                'Neuhausen': 1.05, 'Berg am Laim': 0.88
+                'Neuhausen': 1.05, 'Berg am Laim': 0.88,
+                'Schwabing-West': 1.18, 'Au': 1.08, 'Solln': 1.02, 'Trudering': 0.88, 'Milbertshofen': 0.82, 'Laim': 0.9, 'Riem': 0.85, 'Unterföhring': 0.95, 'Thalkirchen': 1.0
             },
             'Dublin': {
                 'Dublin 2 (City Centre)': 1.25, 'Dublin 4 (Ballsbridge)': 1.30,
                 'Dublin 6 (Ranelagh)': 1.15, 'Dublin 8 (Portobello)': 1.08,
                 'Dún Laoghaire': 1.10, 'Rathmines': 1.05, 'Drumcondra': 0.92,
-                'Tallaght': 0.75, 'Clontarf': 1.02, 'Howth': 1.12
+                'Tallaght': 0.75, 'Clontarf': 1.02, 'Howth': 1.12,
+                'Dublin 1 (North City)': 1.08, 'Dublin 7 (Phibsborough)': 0.98, 'Dublin 3 (Clontarf)': 1.05, 'Dublin 9 (Griffith Avenue)': 0.95, 'Blackrock': 1.15, 'Stillorgan': 1.02, 'Sandyford': 0.9, 'Swords': 0.78, 'Lucan': 0.75
             },
             'Brussels': {
                 'Ixelles': 1.18, 'Saint-Gilles': 1.05, 'Uccle': 1.22,
                 'Sablon': 1.28, 'Etterbeek': 1.02, 'Schaerbeek': 0.85,
                 'Molenbeek': 0.72, 'Woluwe-Saint-Pierre': 1.12, 'Forest': 0.88,
-                'EU Quarter': 1.15, 'Auderghem': 0.95
+                'EU Quarter': 1.15, 'Auderghem': 0.95,
+                'Avenue Louise': 1.2, 'Montgomery': 1.02, 'Flagey': 1.08, 'Place du Châtelain': 1.12, 'Jette': 0.8, 'Anderlecht': 0.72, 'Stockel': 1.05, 'Watermael-Boitsfort': 0.98, 'Evere': 0.82
             },
             'Luxembourg City': {
                 'Ville Haute': 1.30, 'Kirchberg': 1.22, 'Belair': 1.18,
                 'Limpertsberg': 1.15, 'Grund': 1.08, 'Bonnevoie': 0.88,
                 'Gasperich': 1.05, 'Eich': 0.92, 'Hollerich': 0.85,
-                'Cessange': 0.90
+                'Cessange': 0.90,
+                'Clausen': 1.02, 'Merl': 0.95, 'Pfaffenthal': 0.98, 'Neudorf': 0.88, 'Hamm': 0.82, 'Bertrange': 0.92, 'Strassen': 0.9
             },
             'Zurich': {
                 'Bahnhofstrasse': 1.35, 'Seefeld': 1.25, 'Enge': 1.18,
                 'Niederdorf': 1.15, 'Wiedikon': 1.02, 'Oerlikon': 0.88,
                 'Altstetten': 0.82, 'Hottingen': 1.12, 'Wipkingen': 0.95,
-                'Schwamendingen': 0.78
+                'Schwamendingen': 0.78,
+                'Seebach': 0.8, 'Witikon': 1.05, 'Höngg': 0.92, 'Fluntern': 1.1, 'Leimbach': 0.82, 'Affoltern': 0.75, 'Wollishofen': 1.0, 'Unterstrass': 0.98
             },
             'Geneva': {
                 'Eaux-Vives': 1.20, 'Champel': 1.25, 'Carouge': 1.05,
                 'Plainpalais': 1.10, 'Pâquis': 0.92, 'Nations': 1.15,
                 'Servette': 0.88, 'Meyrin': 0.78, 'Vernier': 0.75,
-                'Cologny': 1.35
+                'Cologny': 1.35,
+                'Florissant': 1.18, 'Grand-Saconnex': 0.95, 'Lancy': 0.82, 'Onex': 0.72, 'Thônex': 0.85, 'Chêne-Bourg': 0.8, 'Bernex': 0.78, 'Plan-les-Ouates': 0.88
             },
             'Edinburgh': {
                 'New Town': 1.25, 'Old Town': 1.18, 'Stockbridge': 1.15,
                 'Morningside': 1.10, 'Marchmont': 1.02, 'Leith': 0.90,
                 'Portobello': 0.88, 'Bruntsfield': 1.08, 'Gorgie': 0.78,
-                'Corstorphine': 0.82
+                'Corstorphine': 0.82,
+                'Haymarket': 1.05, 'Dean Village': 1.15, 'Comely Bank': 1.02, 'Cramond': 0.92, 'Dalry': 0.85, 'Tollcross': 0.95, 'Murrayfield': 1.08, 'Newington': 0.9
             },
             'Nice': {
                 'Promenade des Anglais': 1.30, 'Old Nice (Vieux Nice)': 1.18, 'Cimiez': 1.15,
                 'Port': 1.05, 'Libération': 0.90, 'Riquier': 0.85,
                 'Saint-Roch': 0.82, "L'Ariane": 0.70, 'Fabron': 0.95,
-                'Mont Boron': 1.22
+                'Mont Boron': 1.22,
+                'Magnan': 0.88, 'Musiciens': 1.1, 'Carabacel': 0.82, 'Pasteur': 0.78, 'Gambetta': 0.85, 'Las Planas': 0.72, 'Saint-Isidore': 0.75, 'Caucade': 0.8
             },
 
             // ===== EUROPE - SOUTHERN =====
@@ -2287,60 +2316,70 @@
                 'Salamanca': 1.30, 'Chamberí': 1.18, 'Malasaña': 1.10,
                 'Chueca': 1.12, 'La Latina': 1.05, 'Lavapiés': 0.90,
                 'Retiro': 1.15, 'Chamartín': 1.08, 'Vallecas': 0.72,
-                'Tetuán': 0.82, 'Moncloa': 1.02
+                'Tetuán': 0.82, 'Moncloa': 1.02,
+                'Barrio de las Letras': 1.15, 'Arganzuela': 0.95, 'Hortaleza': 0.85, 'Usera': 0.72, 'Carabanchel': 0.7, 'Moncloa-Aravaca': 1.08, 'Barajas': 0.8, 'Fuencarral': 0.88, 'Atocha': 1.0, 'Prosperidad': 0.92, 'Conde de Casal': 0.88, 'Arturo Soria': 0.95
             },
             'Barcelona': {
                 'Eixample': 1.15, 'Gràcia': 1.08, 'Born / El Born': 1.20,
                 'Gothic Quarter': 1.18, 'Barceloneta': 1.10, 'Poblenou': 1.02,
                 'Raval': 0.88, 'Sants': 0.85, 'Sant Andreu': 0.78,
-                'Sarrià-Sant Gervasi': 1.25, 'Horta-Guinardó': 0.80
+                'Sarrià-Sant Gervasi': 1.25, 'Horta-Guinardó': 0.80,
+                'Pedralbes': 1.3, 'Les Corts': 1.05, 'Sant Martí': 0.82, 'El Clot': 0.8, 'Diagonal Mar': 1.08, 'Vila de Gràcia': 1.1, 'La Sagrada Família': 1.05, 'Sant Antoni': 1.02, 'Poble Sec': 0.92, 'Camp Nou': 0.9, 'Nou Barris': 0.72, 'Vallcarca': 0.85
             },
             'Valencia': {
                 'El Carmen': 1.18, 'Ruzafa': 1.15, 'Eixample': 1.10,
                 'Ciutat Vella': 1.12, 'El Cabanyal': 0.92, 'Benimaclet': 0.88,
                 'Patraix': 0.82, 'Poblats Marítims': 0.85, 'Campanar': 0.90,
-                'Quatre Carreres': 0.78
+                'Quatre Carreres': 0.78,
+                'La Seu': 1.08, 'Pla del Real': 1.05, 'Mestalla': 0.95, 'Algirós': 0.88, 'Jesús': 0.78, 'La Saïdia': 0.82, 'Olivereta': 0.75, 'Malvarrosa': 0.9
             },
             'Málaga': {
                 'Centro Histórico': 1.22, 'Soho': 1.15, 'Pedregalejo': 1.10,
                 'El Palo': 0.92, 'Huelin': 0.88, 'Teatinos': 0.85,
                 'La Malagueta': 1.18, 'Puerto de la Torre': 0.75,
-                'Churriana': 0.78, 'El Limonar': 1.12
+                'Churriana': 0.78, 'El Limonar': 1.12,
+                'La Merced': 1.08, 'Carretera de Cádiz': 0.8, 'Ciudad Jardín': 0.92, 'Bailén-Miraflores': 0.78, 'Cruz de Humilladero': 0.82, 'Campanillas': 0.7, 'Rosaleda': 0.88, 'Victoria': 1.05
             },
             'Lisbon': {
                 'Chiado': 1.28, 'Príncipe Real': 1.25, 'Alfama': 1.10,
                 'Bairro Alto': 1.15, 'Estrela / Lapa': 1.12, 'Avenidas Novas': 1.05,
                 'Alcântara': 0.95, 'Benfica': 0.82, 'Amadora': 0.72,
-                'Parque das Nações': 1.08, 'Campo de Ourique': 1.02
+                'Parque das Nações': 1.08, 'Campo de Ourique': 1.02,
+                'Santos': 1.08, 'Graça': 1.05, 'Anjos': 0.92, 'Penha de França': 0.85, 'Belém': 1.1, 'Lumiar': 0.88, 'Telheiras': 0.9, 'Marvila': 0.78, 'Olivais': 0.8
             },
             'Porto': {
                 'Ribeira': 1.22, 'Foz do Douro': 1.25, 'Cedofeita': 1.10,
                 'Boavista': 1.15, 'Bonfim': 0.95, 'Campanhã': 0.78,
                 'Paranhos': 0.85, 'Ramalde': 0.82, 'Matosinhos': 0.90,
-                'Vila Nova de Gaia': 0.88
+                'Vila Nova de Gaia': 0.88,
+                'Clérigos': 1.15, 'Miragaia': 1.05, 'Lordelo do Ouro': 0.92, 'Aldoar': 0.82, 'Massarelos': 1.02, 'São Bento': 1.1, 'Bonfim Sul': 0.88, 'Gondomar': 0.75
             },
             'Rome': {
                 'Centro Storico': 1.30, 'Trastevere': 1.15, 'Prati': 1.18,
                 'Testaccio': 1.05, 'Monti': 1.20, 'San Giovanni': 0.92,
                 'EUR': 0.88, 'Pigneto': 0.85, 'Ostiense': 0.90,
-                'Garbatella': 0.82, 'Flaminio': 1.08
+                'Garbatella': 0.82, 'Flaminio': 1.08,
+                'Aventino': 1.12, 'Coppedè': 1.15, 'Nomentano': 1.02, 'Balduina': 0.92, 'Trastevere Nord': 1.08, 'San Lorenzo': 0.85, 'Monteverde': 0.88, 'Tor Vergata': 0.72, 'Parioli': 1.22, 'Trieste': 1.05, 'Appio-Latino': 0.82
             },
             'Milan': {
                 'Brera': 1.30, 'Navigli': 1.15, 'Porta Nuova': 1.25,
                 'City Centre': 1.35, 'Isola': 1.10, 'Città Studi': 0.90,
                 'Lambrate': 0.85, 'Bovisa': 0.78, 'San Siro': 0.88,
-                'Porta Venezia': 1.12
+                'Porta Venezia': 1.12,
+                'Tortona': 1.08, 'Loreto': 0.95, 'Garibaldi': 1.18, 'Porta Romana': 1.1, 'Cenisio': 0.92, 'Bicocca': 0.82, 'Corsica': 0.88, 'Porta Ticinese': 1.05, 'Sarpi': 0.95, 'Nolo': 0.85, 'QT8': 0.8
             },
             'Athens': {
                 'Kolonaki': 1.30, 'Plaka': 1.18, 'Kifissia': 1.22,
                 'Glyfada': 1.15, 'Pangrati': 1.02, 'Exarchia': 0.85,
                 'Koukaki': 1.05, 'Nea Smyrni': 0.90, 'Piraeus': 0.78,
-                'Marousi': 0.95, 'Psyrri': 1.08
+                'Marousi': 0.95, 'Psyrri': 1.08,
+                'Vouliagmeni': 1.25, 'Monastiraki': 1.1, 'Thisio': 1.08, 'Ampelokipoi': 0.88, 'Patisia': 0.72, 'Zografou': 0.82, 'Halandri': 0.92, 'Filothei': 1.18, 'Peristeri': 0.75
             },
             'Split': {
                 'Diocletian\'s Palace': 1.25, 'Bačvice': 1.15, 'Manuš': 1.05,
                 'Žnjan': 1.10, 'Firule': 1.02, 'Spinut': 0.90,
-                'Sućidar': 0.82, 'Trstenik': 0.88, 'Mertojak': 0.92
+                'Sućidar': 0.82, 'Trstenik': 0.88, 'Mertojak': 0.92,
+                'Varoš': 1.0, 'Bol': 0.95, 'Gripe': 0.85, 'Lokve': 0.78, 'Kman': 0.8, 'Pazdigrad': 0.88, 'Brda': 0.82
             },
 
             // ===== EUROPE - NORTHERN =====
@@ -2348,31 +2387,36 @@
                 'Östermalm': 1.32, 'Södermalm': 1.15, 'Kungsholmen': 1.10,
                 'Vasastan': 1.12, 'Gamla Stan': 1.20, 'Djurgården': 1.18,
                 'Hammarby Sjöstad': 1.05, 'Hägersten': 0.88, 'Farsta': 0.75,
-                'Solna': 0.90, 'Nacka': 0.92, 'Lidingö': 1.08
+                'Solna': 0.90, 'Nacka': 0.92, 'Lidingö': 1.08,
+                'Norrmalm': 1.22, 'Bromma': 0.95, 'Enskede': 0.82, 'Skärholmen': 0.72, 'Bandhagen': 0.78, 'Liljeholmen': 1.02, 'Kista': 0.8, 'Sundbyberg': 0.88, 'Täby': 0.95, 'Danderyd': 1.15, 'Vallentuna': 0.72, 'Huddinge': 0.78
             },
             'Copenhagen': {
                 'Indre By (City Centre)': 1.28, 'Frederiksberg': 1.18, 'Nørrebro': 1.02,
                 'Vesterbro': 1.10, 'Østerbro': 1.15, 'Christianshavn': 1.12,
                 'Amager': 0.90, 'Valby': 0.85, 'Brønshøj': 0.80,
-                'Hellerup': 1.22, 'Nordvest': 0.78
+                'Hellerup': 1.22, 'Nordvest': 0.78,
+                'Sydhavnen': 0.92, 'Vanløse': 0.82, 'Gentofte': 1.18, 'Hvidovre': 0.78, 'Rødovre': 0.75, 'Islands Brygge': 1.08, 'Nørreport': 1.15, 'Carlsberg Byen': 1.05, 'Nordhavn': 1.12
             },
             'Helsinki': {
                 'Kruununhaka': 1.25, 'Eira': 1.22, 'Punavuori': 1.15,
                 'Kallio': 1.05, 'Töölö': 1.12, 'Ullanlinna': 1.18,
                 'Vallila': 0.95, 'Sörnäinen': 0.88, 'Vuosaari': 0.75,
-                'Espoo (Tapiola)': 0.92, 'Kontula': 0.72
+                'Espoo (Tapiola)': 0.92, 'Kontula': 0.72,
+                'Lauttasaari': 1.08, 'Herttoniemi': 0.85, 'Munkkiniemi': 1.02, 'Pasila': 0.9, 'Malmi': 0.72, 'Kulosaari': 1.12, 'Arabianranta': 0.92, 'Jätkäsaari': 1.05, 'Katajanokka': 1.18
             },
             'Oslo': {
                 'Frogner': 1.30, 'Majorstuen': 1.18, 'Grünerløkka': 1.12,
                 'Aker Brygge': 1.25, 'Sentrum': 1.15, 'St. Hanshaugen': 1.08,
                 'Tøyen': 0.88, 'Sagene': 1.02, 'Grønland': 0.82,
-                'Stovner': 0.72, 'Bærum': 1.10
+                'Stovner': 0.72, 'Bærum': 1.10,
+                'Bygdøy': 1.22, 'Holmenkollen': 1.18, 'Nydalen': 1.02, 'Torshov': 1.05, 'Alna': 0.78, 'Nordstrand': 0.92, 'Lambertseter': 0.85, 'Ullern': 1.12, 'Manglerud': 0.8
             },
             'Vienna': {
                 'Innere Stadt (1st)': 1.35, 'Josefstadt (8th)': 1.15, 'Neubau (7th)': 1.12,
                 'Wieden (4th)': 1.18, 'Mariahilf (6th)': 1.08, 'Landstraße (3rd)': 1.05,
                 'Leopoldstadt (2nd)': 0.95, 'Favoriten (10th)': 0.75, 'Ottakring (16th)': 0.82,
-                'Döbling (19th)': 1.20, 'Hietzing (13th)': 1.10
+                'Döbling (19th)': 1.20, 'Hietzing (13th)': 1.10,
+                'Alsergrund (9th)': 1.08, 'Margareten (5th)': 0.95, 'Brigittenau (20th)': 0.78, 'Floridsdorf (21st)': 0.72, 'Donaustadt (22nd)': 0.8, 'Liesing (23rd)': 0.82, 'Meidling (12th)': 0.85, 'Penzing (14th)': 0.88, 'Hernals (17th)': 0.82
             },
 
             // ===== EUROPE - EASTERN =====
@@ -2380,49 +2424,57 @@
                 'Prague 1 (Old Town)': 1.30, 'Prague 2 (Vinohrady)': 1.18, 'Prague 3 (Žižkov)': 0.95,
                 'Prague 5 (Smíchov)': 1.05, 'Prague 6 (Dejvice)': 1.12, 'Prague 7 (Holešovice)': 1.08,
                 'Prague 4 (Nusle)': 0.88, 'Prague 8 (Karlín)': 1.02, 'Prague 9': 0.78,
-                'Prague 10': 0.82
+                'Prague 10': 0.82,
+                'Prague 11 (Chodov)': 0.78, 'Prague 12 (Modřany)': 0.75, 'Prague 13 (Stodůlky)': 0.72, 'Letná': 1.1, 'Anděl': 1.08, 'Vršovice': 0.9, 'Bubeneč': 1.12, 'Troja': 0.85
             },
             'Budapest': {
                 'District V (Belváros)': 1.30, 'District VI (Terézváros)': 1.15, 'District VII (Jewish Quarter)': 1.12,
                 'District I (Buda Castle)': 1.22, 'District II (Buda Hills)': 1.18, 'District IX (Ferencváros)': 1.02,
                 'District XIII': 1.05, 'District XI (Újbuda)': 0.92, 'District VIII (Józsefváros)': 0.82,
-                'District XIV (Zugló)': 0.85, 'District III (Óbuda)': 0.88
+                'District XIV (Zugló)': 0.85, 'District III (Óbuda)': 0.88,
+                'District IV (Újpest)': 0.78, 'District X (Kőbánya)': 0.75, 'District XV (Rákospalota)': 0.72, 'District XII (Hegyvidék)': 1.15, 'District XVI (Árpádföld)': 0.8, 'Margaret Island': 1.1, 'Csepel': 0.68, 'Kelenföld': 0.85
             },
             'Warsaw': {
                 'Śródmieście (Centre)': 1.25, 'Mokotów': 1.12, 'Żoliborz': 1.15,
                 'Wilanów': 1.18, 'Wola': 1.05, 'Praga Północ': 0.88,
                 'Ursynów': 0.85, 'Ochota': 0.95, 'Bielany': 0.82,
-                'Bemowo': 0.78, 'Targówek': 0.72
+                'Bemowo': 0.78, 'Targówek': 0.72,
+                'Kabaty': 0.88, 'Saska Kępa': 1.08, 'Stary Mokotów': 1.15, 'Muranów': 0.95, 'Natolin': 0.82, 'Służewiec': 0.92, 'Powsin': 0.78, 'Grochów': 0.75
             },
             'Krakow': {
                 'Old Town (Stare Miasto)': 1.28, 'Kazimierz': 1.18, 'Podgórze': 1.05,
                 'Krowodrza': 0.95, 'Dębniki': 0.90, 'Zabłocie': 1.08,
                 'Nowa Huta': 0.72, 'Prądnik Biały': 0.82, 'Bronowice': 0.85,
-                'Ruczaj': 0.88
+                'Ruczaj': 0.88,
+                'Salwator': 1.05, 'Zwierzyniec': 1.1, 'Łagiewniki': 0.82, 'Prądnik Czerwony': 0.8, 'Mistrzejowice': 0.72, 'Kurdwanów': 0.75, 'Bieżanów': 0.7, 'Czyżyny': 0.85
             },
             'Bucharest': {
                 'Dorobanți': 1.28, 'Primăverii': 1.25, 'Floreasca': 1.18,
                 'Herăstrău': 1.22, 'Cotroceni': 1.10, 'Aviatorilor': 1.15,
                 'Pipera': 1.02, 'Militari': 0.75, 'Rahova': 0.70,
-                'Tineretului': 0.88, 'Berceni': 0.78
+                'Tineretului': 0.88, 'Berceni': 0.78,
+                'Unirii': 1.05, 'Titan': 0.82, 'Drumul Taberei': 0.78, 'Băneasa': 1.12, 'Colentina': 0.72, 'Pantelimon': 0.68, 'Victoriei': 1.08, 'Giurgiului': 0.65
             },
             'Tallinn': {
                 'Old Town (Vanalinn)': 1.28, 'Kalamaja': 1.15, 'Kadriorg': 1.18,
                 'Pirita': 1.10, 'Telliskivi': 1.12, 'Rotermanni': 1.08,
                 'Kristiine': 0.92, 'Mustamäe': 0.82, 'Lasnamäe': 0.72,
-                'Nõmme': 0.88
+                'Nõmme': 0.88,
+                'Pelgulinn': 0.85, 'Kopli': 0.78, 'Tondi': 0.82, 'Viimsi': 0.92, 'Haabersti': 0.8, 'Õismäe': 0.75, 'Ülemiste': 0.88
             },
             'Riga': {
                 'Old Riga (Vecrīga)': 1.25, 'Quiet Centre': 1.18, 'Āgenskalns': 1.05,
                 'Mežaparks': 1.10, 'Grīziņkalns': 0.92, 'Teika': 0.95,
                 'Purvciems': 0.78, 'Imanta': 0.75, 'Ziepniekkalns': 0.72,
-                'Torņakalns': 0.88
+                'Torņakalns': 0.88,
+                'Sarkandaugava': 0.8, 'Jugla': 0.72, 'Ķengarags': 0.7, 'Dreiliņi': 0.68, 'Čiekurkalns': 0.82, 'Berģi': 0.75, 'Iļguciems': 0.78
             },
             'Istanbul': {
                 'Beşiktaş': 1.28, 'Nişantaşı': 1.35, 'Kadıköy': 1.15,
                 'Bebek': 1.30, 'Cihangir': 1.18, 'Karaköy': 1.12,
                 'Şişli': 1.05, 'Üsküdar': 0.92, 'Bakırköy': 0.88,
-                'Fatih': 0.82, 'Beyoğlu': 1.08, 'Esenyurt': 0.65
+                'Fatih': 0.82, 'Beyoğlu': 1.08, 'Esenyurt': 0.65,
+                'Sarıyer': 1.12, 'Ataşehir': 1.05, 'Maltepe': 0.88, 'Pendik': 0.75, 'Levent': 1.22, 'Etiler': 1.25, 'Bağcılar': 0.68, 'Beykoz': 0.92, 'Çekmeköy': 0.78, 'Zeytinburnu': 0.8, 'Küçükçekmece': 0.72, 'Kartal': 0.82
             },
 
             // ===== ASIA - EAST =====
@@ -2430,61 +2482,71 @@
                 'Minato (Roppongi)': 1.30, 'Shibuya': 1.25, 'Shinjuku': 1.18,
                 'Chiyoda (Marunouchi)': 1.35, 'Meguro': 1.15, 'Setagaya': 1.08,
                 'Nakano': 0.92, 'Suginami': 0.88, 'Koto (Toyosu)': 1.05,
-                'Adachi': 0.75, 'Edogawa': 0.78, 'Bunkyo': 1.10
+                'Adachi': 0.75, 'Edogawa': 0.78, 'Bunkyo': 1.10,
+                'Daikanyama': 1.28, 'Ebisu': 1.22, 'Ikebukuro': 1.08, 'Asakusa': 0.92, 'Akihabara': 1.0, 'Nerima': 0.82, 'Katsushika': 0.72, 'Toshima': 0.95, 'Shinagawa': 1.12, 'Kichijoji (Musashino)': 0.98, 'Chofu': 0.85, 'Machida': 0.78, 'Ota': 0.88, 'Arakawa': 0.82, 'Sumida': 0.9, 'Taito': 0.95, 'Itabashi': 0.8, 'Azabu': 1.35
             },
             'Osaka': {
                 'Kita (Umeda)': 1.22, 'Chuo (Namba)': 1.18, 'Tennoji': 1.08,
                 'Fukushima': 1.10, 'Nishi': 1.05, 'Shinmachi': 1.02,
                 'Sumiyoshi': 0.88, 'Higashiyodogawa': 0.82, 'Ikuno': 0.78,
-                'Sakai': 0.75
+                'Sakai': 0.75,
+                'Shinsaibashi': 1.15, 'Tsurumi': 0.8, 'Abeno': 1.02, 'Minoh': 0.85, 'Toyonaka': 0.9, 'Ibaraki': 0.82, 'Nishinari': 0.68, 'Yodogawa': 0.85, 'Joto': 0.78, 'Miyakojima': 0.92
             },
             'Fukuoka': {
                 'Tenjin': 1.20, 'Hakata': 1.15, 'Daimyo': 1.12,
                 'Yakuin': 1.08, 'Ohori': 1.10, 'Nishijin': 0.92,
                 'Hakozaki': 0.85, 'Kashii': 0.80, 'Noke': 0.78,
-                'Momochi': 1.05
+                'Momochi': 1.05,
+                'Imaizumi': 1.1, 'Ropponmatsu': 1.05, 'Meinohama': 0.82, 'Chihaya': 0.78, 'Nishijin Area': 0.88, 'Muromi': 0.85, 'Zasshonokuma': 0.75, 'Takamiya': 0.82
             },
             'Seoul': {
                 'Gangnam': 1.30, 'Itaewon': 1.15, 'Myeongdong': 1.20,
                 'Hongdae': 1.08, 'Bukchon': 1.18, 'Yeouido': 1.12,
                 'Sinchon': 0.92, 'Gwangjin': 0.88, 'Nowon': 0.75,
-                'Mapo': 1.02
+                'Mapo': 1.02,
+                'Seocho': 1.25, 'Jongno': 1.15, 'Jung-gu': 1.12, 'Songpa': 1.1, 'Yongsan': 1.08, 'Seodaemun': 0.92, 'Dongjak': 0.95, 'Eunpyeong': 0.8, 'Geumcheon': 0.72, 'Dobong': 0.75, 'Gangdong': 0.88, 'Yangcheon': 0.85
             },
             'Hong Kong': {
                 'Central': 1.40, 'The Peak': 1.50, 'Mid-Levels': 1.30,
                 'Causeway Bay': 1.25, 'Tsim Sha Tsui': 1.15, 'Wan Chai': 1.18,
                 'Mong Kok': 0.92, 'Sham Shui Po': 0.78, 'Tai Po': 0.72,
-                'Sai Kung': 0.85, 'Discovery Bay': 1.10
+                'Sai Kung': 0.85, 'Discovery Bay': 1.10,
+                'Repulse Bay': 1.3, 'Aberdeen': 0.92, 'Happy Valley': 1.22, 'Tseung Kwan O': 0.8, 'Sha Tin': 0.78, 'Tuen Mun': 0.68, 'Yuen Long': 0.65, 'Kennedy Town': 1.05, 'North Point': 1.0, 'Quarry Bay': 0.98, 'Hung Hom': 0.88
             },
             'Taipei': {
                 'Da\'an': 1.25, 'Xinyi': 1.30, 'Zhongshan': 1.12,
                 'Songshan': 1.08, 'Zhongzheng': 1.10, 'Shilin': 0.92,
                 'Beitou': 0.88, 'Neihu': 1.02, 'Wanhua': 0.82,
-                'Banqiao (New Taipei)': 0.78
+                'Banqiao (New Taipei)': 0.78,
+                'Wenshan': 0.85, 'Nangang': 0.9, 'Datong': 0.8, 'Tamsui': 0.72, 'Xindian (New Taipei)': 0.78, 'Yonghe (New Taipei)': 0.82, 'Zhonghe (New Taipei)': 0.78, 'Linkou (New Taipei)': 0.72, 'Tianmu': 1.05, 'Donghu': 0.95
             },
             'Shanghai': {
                 'Jing\'an': 1.30, 'Xuhui (French Concession)': 1.28, 'Lujiazui (Pudong)': 1.25,
                 'Huangpu (The Bund)': 1.22, 'Changning': 1.10, 'Hongkou': 0.92,
                 'Yangpu': 0.88, 'Minhang': 0.82, 'Baoshan': 0.75,
-                'Putuo': 0.90
+                'Putuo': 0.90,
+                'Xintiandi': 1.25, 'Pudong (Century Park)': 1.15, 'Gubei': 1.12, 'Qingpu': 0.72, 'Songjiang': 0.7, 'Jiading': 0.68, 'Zhabei': 0.88, 'Pudong (Jinqiao)': 1.05, 'Luwan': 1.18, 'Fengxian': 0.65, 'Chuansha': 0.72, 'Zhangjiang': 1.02
             },
             'Beijing': {
                 'Chaoyang (CBD)': 1.28, 'Dongcheng': 1.22, 'Xicheng': 1.18,
                 'Haidian (Zhongguancun)': 1.15, 'Shunyi': 1.08, 'Chaoyang (Sanlitun)': 1.25,
                 'Fengtai': 0.82, 'Tongzhou': 0.75, 'Daxing': 0.72,
-                'Changping': 0.78
+                'Changping': 0.78,
+                'Wangjing': 1.08, 'Yizhuang': 0.82, 'Shijingshan': 0.85, 'Dongzhimen': 1.15, 'Guomao': 1.22, 'Wudaokou': 1.05, 'Xidan': 1.12, 'Wangfujing': 1.18, 'Lido': 1.05, 'Yansha': 1.1, 'Zhongguancun South': 1.08, 'Mentougou': 0.68
             },
             'Shenzhen': {
                 'Nanshan (Shekou)': 1.25, 'Futian (CBD)': 1.22, 'Luohu': 1.05,
                 'Nanshan (Tech Park)': 1.18, 'Bao\'an': 0.82, 'Longhua': 0.78,
                 'Longgang': 0.72, 'Yantian': 0.85, 'Guangming': 0.75,
-                'Qianhai': 1.12
+                'Qianhai': 1.12,
+                'Houhai': 1.2, 'Chegongmiao': 1.08, 'Shuiwei': 1.02, 'Sungang': 0.9, 'Buji': 0.75, 'Xili': 0.88, 'Shahe': 0.82, 'Dalang': 0.7, 'Pingshan': 0.68
             },
             'Guangzhou': {
                 'Tianhe': 1.22, 'Yuexiu': 1.10, 'Haizhu': 1.02,
                 'Liwan': 0.92, 'Panyu': 0.82, 'Baiyun': 0.78,
                 'Huangpu': 1.05, 'Nansha': 0.75, 'Zhujiang New Town': 1.18,
-                'Huadu': 0.72
+                'Huadu': 0.72,
+                'Dongshan': 1.08, 'Jiangnan Xi': 0.95, 'Wuyang': 1.02, 'Zhujiang New Town East': 1.12, 'Dongpu': 0.8, 'Fangcun': 0.78, 'Luogang': 0.72, 'Conghua': 0.65, 'Zengcheng': 0.68
             },
 
             // ===== ASIA - SOUTHEAST =====
@@ -2492,67 +2554,78 @@
                 'Orchard Road': 1.30, 'Marina Bay': 1.35, 'Raffles Place': 1.25,
                 'Holland Village': 1.12, 'Tiong Bahru': 1.10, 'Tanjong Pagar': 1.15,
                 'Bukit Timah': 1.18, 'Clementi': 0.88, 'Woodlands': 0.75,
-                'Tampines': 0.78, 'Jurong East': 0.80, 'Sentosa': 1.40
+                'Tampines': 0.78, 'Jurong East': 0.80, 'Sentosa': 1.40,
+                'Toa Payoh': 0.82, 'Ang Mo Kio': 0.78, 'Bishan': 0.85, 'Queenstown': 0.88, 'Novena': 1.05, 'Bedok': 0.78, 'Punggol': 0.72, 'Sengkang': 0.72, 'Pasir Ris': 0.75, 'Serangoon': 0.85, 'Katong': 1.02, 'Dempsey Hill': 1.22
             },
             'Bangkok': {
                 'Sukhumvit (Asoke)': 1.25, 'Silom / Sathorn': 1.22, 'Siam': 1.18,
                 'Thonglor': 1.28, 'Ekkamai': 1.15, 'Ari': 1.10,
                 'Khao San': 0.85, 'On Nut': 0.88, 'Phra Khanong': 0.92,
-                'Bang Na': 0.78, 'Chatuchak': 0.90, 'Ladprao': 0.82
+                'Bang Na': 0.78, 'Chatuchak': 0.90, 'Ladprao': 0.82,
+                'Ratchadaphisek': 1.02, 'Phrom Phong': 1.18, 'Sathorn': 1.15, 'Pratunam': 0.95, 'Saphan Kwai': 0.88, 'Rama 9': 1.02, 'Bangrak': 0.92, 'Thong Lo Soi': 1.22, 'Udom Suk': 0.8, 'Bearing': 0.75, 'Pinklao': 0.82, 'Bangsue': 0.85
             },
             'Chiang Mai': {
                 'Old City': 1.15, 'Nimmanhaemin': 1.22, 'Santitham': 1.05,
                 'Chang Khlan (Night Bazaar)': 1.08, 'Hang Dong': 0.82, 'San Sai': 0.78,
                 'Mae Rim': 0.85, 'Suthep': 1.02, 'Wualai': 0.92,
-                'San Kamphaeng': 0.75
+                'San Kamphaeng': 0.75,
+                'Tha Phae': 1.1, 'Night Bazaar East': 1.02, 'Wat Ket': 0.88, 'Chang Phueak': 0.95, 'Ban Waen': 0.72, 'Mae Hia': 0.75, 'Pa Tan': 0.82, 'Don Kaeo': 0.78
             },
             'Phuket': {
                 'Patong': 1.22, 'Kata': 1.12, 'Karon': 1.08,
                 'Kamala': 1.15, 'Surin': 1.20, 'Bang Tao': 1.18,
                 'Phuket Town': 0.85, 'Rawai': 0.92, 'Chalong': 0.88,
-                'Cherng Talay': 1.05
+                'Cherng Talay': 1.05,
+                'Mai Khao': 1.1, 'Nai Harn': 1.05, 'Kata Noi': 1.15, 'Ao Po': 0.85, 'Thalang': 0.78, 'Kathu': 0.82, 'Wichit': 0.8, 'Koh Kaew': 0.88
             },
             'Kuala Lumpur': {
                 'KLCC': 1.30, 'Bukit Bintang': 1.22, 'Bangsar': 1.18,
                 'Mont Kiara': 1.15, 'Damansara Heights': 1.20, 'Sri Hartamas': 1.08,
                 'Petaling Jaya': 0.90, 'Cheras': 0.78, 'Sentul': 0.82,
-                'Kepong': 0.75, 'Desa ParkCity': 1.10
+                'Kepong': 0.75, 'Desa ParkCity': 1.10,
+                'Bukit Jalil': 0.92, 'Taman Tun Dr Ismail': 1.08, 'Ampang': 0.85, 'Setapak': 0.72, 'Wangsa Maju': 0.78, 'Brickfields': 0.88, 'Mid Valley': 1.05, 'Kuchai Lama': 0.8, 'Old Klang Road': 0.82
             },
             'Ho Chi Minh City': {
                 'District 1': 1.30, 'District 2 (Thao Dien)': 1.22, 'District 3': 1.15,
                 'District 7 (Phu My Hung)': 1.12, 'Binh Thanh': 1.02, 'District 4': 0.90,
                 'Go Vap': 0.82, 'Tan Binh': 0.85, 'Thu Duc': 0.88,
-                'Binh Tan': 0.72
+                'Binh Tan': 0.72,
+                'District 5 (Chinatown)': 0.85, 'District 6': 0.78, 'District 8': 0.72, 'District 10': 0.88, 'District 11': 0.82, 'Phu Nhuan': 0.95, 'Tan Phu': 0.78, 'District 9': 0.8, 'Nha Be': 0.72
             },
             'Hanoi': {
                 'Hoan Kiem (Old Quarter)': 1.25, 'Ba Dinh': 1.18, 'Tay Ho (West Lake)': 1.22,
                 'Hai Ba Trung': 1.08, 'Dong Da': 1.02, 'Cau Giay': 1.05,
                 'Thanh Xuan': 0.88, 'Ha Dong': 0.78, 'Long Bien': 0.82,
-                'Hoang Mai': 0.85
+                'Hoang Mai': 0.85,
+                'Nam Tu Liem': 0.88, 'Bac Tu Liem': 0.82, 'Tay Ho Tay': 1.15, 'My Dinh': 0.92, 'Gia Lam': 0.75, 'Thanh Tri': 0.72, 'Truc Bach': 1.08, 'Kim Ma': 1.05, 'Van Quan': 0.8
             },
             'Manila': {
                 'Makati (CBD)': 1.28, 'BGC (Taguig)': 1.25, 'Rockwell': 1.22,
                 'Alabang': 1.10, 'Ortigas': 1.08, 'Eastwood (Quezon City)': 1.02,
                 'Pasig': 0.92, 'Mandaluyong': 0.95, 'Quezon City (Cubao)': 0.82,
-                'Manila (Ermita)': 0.78, 'Las Piñas': 0.75
+                'Manila (Ermita)': 0.78, 'Las Piñas': 0.75,
+                'Greenhills': 1.05, 'San Juan': 0.98, 'Marikina': 0.82, 'Antipolo': 0.72, 'Paranaque': 0.85, 'Muntinlupa': 0.88, 'Valenzuela': 0.72, 'Cainta': 0.75, 'Quezon City (Diliman)': 0.88
             },
             'Jakarta': {
                 'Menteng': 1.30, 'Sudirman (SCBD)': 1.25, 'Kemang': 1.18,
                 'Kuningan': 1.15, 'Senopati': 1.20, 'Pondok Indah': 1.12,
                 'Kelapa Gading': 1.02, 'Pluit': 0.90, 'Cempaka Putih': 0.82,
-                'Bekasi': 0.72, 'Tangerang': 0.75
+                'Bekasi': 0.72, 'Tangerang': 0.75,
+                'Cikini': 1.1, 'Thamrin': 1.22, 'Pantai Indah Kapuk': 1.08, 'Sunter': 0.88, 'Ancol': 0.85, 'Tebet': 0.95, 'Cipete': 1.02, 'Cilandak': 1.05, 'Depok': 0.68, 'Bintaro': 0.82
             },
             'Bali (Denpasar)': {
                 'Seminyak': 1.28, 'Canggu': 1.22, 'Ubud': 1.10,
                 'Sanur': 1.05, 'Kuta': 0.92, 'Nusa Dua': 1.18,
                 'Jimbaran': 1.12, 'Denpasar Centre': 0.82, 'Uluwatu': 1.15,
-                'Legian': 0.88
+                'Legian': 0.88,
+                'Kedonganan': 1.08, 'Pererenan': 1.15, 'Tabanan': 0.75, 'Gianyar': 0.8, 'Amed': 0.85, 'Lovina': 0.78, 'Pecatu': 1.1, 'Keramas': 0.82
             },
             'Phnom Penh': {
                 'BKK1': 1.30, 'BKK2': 1.10, 'Tonle Bassac': 1.22,
                 'Daun Penh (Riverside)': 1.15, 'Toul Tom Poung (Russian Market)': 1.05,
                 'Chroy Changvar': 0.90, 'Toul Kork': 0.95, 'Sen Sok': 0.78,
-                'Meanchey': 0.72, 'Chamkarmon': 1.02
+                'Meanchey': 0.72, 'Chamkarmon': 1.02,
+                'BKK3': 1.0, 'Tuol Sleng': 0.85, 'Chbar Ampov': 0.68, 'Prek Pnov': 0.62, 'Russey Keo': 0.72, 'Boeung Kak': 0.88, 'Olympic': 0.92
             },
 
             // ===== ASIA - SOUTH =====
@@ -2560,25 +2633,29 @@
                 'South Mumbai (Colaba)': 1.35, 'Bandra West': 1.28, 'Juhu': 1.22,
                 'Worli': 1.25, 'Lower Parel': 1.18, 'Andheri West': 1.05,
                 'Powai': 1.08, 'Dadar': 0.95, 'Andheri East': 0.88,
-                'Borivali': 0.78, 'Thane': 0.72, 'Navi Mumbai': 0.75
+                'Borivali': 0.78, 'Thane': 0.72, 'Navi Mumbai': 0.75,
+                'Kandivali West': 0.82, 'Malad West': 0.8, 'Goregaon West': 0.85, 'Chembur': 0.88, 'Wadala': 0.92, 'BKC': 1.2, 'Versova': 1.02, 'Santacruz West': 1.05, 'Vikhroli': 0.82, 'Mulund': 0.75, 'Ghatkopar West': 0.82, 'Khar West': 1.12, 'Matunga': 0.95, 'Sion': 0.85
             },
             'Bangalore': {
                 'Indiranagar': 1.25, 'Koramangala': 1.22, 'Whitefield': 1.08,
                 'MG Road': 1.18, 'HSR Layout': 1.05, 'Jayanagar': 1.02,
                 'Electronic City': 0.85, 'Marathahalli': 0.92, 'Yelahanka': 0.78,
-                'Bannerghatta Road': 0.88, 'Hebbal': 0.95
+                'Bannerghatta Road': 0.88, 'Hebbal': 0.95,
+                'Sadashivanagar': 1.15, 'Rajajinagar': 0.95, 'Malleswaram': 1.02, 'Basavanagudi': 0.98, 'JP Nagar': 0.88, 'BTM Layout': 0.85, 'Bellandur': 0.92, 'Sarjapur Road': 0.85, 'Ulsoor': 1.08, 'Shivajinagar': 0.9, 'Vijayanagar': 0.78, 'Kengeri': 0.72
             },
             'Delhi': {
                 'South Delhi (GK)': 1.30, 'Lutyens Delhi': 1.40, 'Hauz Khas': 1.18,
                 'Defence Colony': 1.22, 'Vasant Kunj': 1.08, 'Dwarka': 0.85,
                 'Rohini': 0.78, 'Gurugram (DLF)': 1.12, 'Noida (Sector 18)': 0.82,
-                'Saket': 1.05, 'Karol Bagh': 0.88
+                'Saket': 1.05, 'Karol Bagh': 0.88,
+                'Lajpat Nagar': 1.05, 'Greater Kailash': 1.25, 'Rajouri Garden': 0.88, 'Connaught Place': 1.22, 'Janakpuri': 0.8, 'Patel Nagar': 0.82, 'Mayur Vihar': 0.85, 'Pitampura': 0.82, 'Vasant Vihar': 1.18, 'Chanakyapuri': 1.3, 'Green Park': 1.1, 'Lodhi Colony': 1.15, 'Nehru Place': 0.92
             },
             'Chennai': {
                 'Adyar': 1.18, 'Nungambakkam': 1.22, 'T. Nagar': 1.10,
                 'Anna Nagar': 1.05, 'Mylapore': 1.08, 'OMR (Sholinganallur)': 0.92,
                 'Velachery': 0.88, 'Tambaram': 0.75, 'Porur': 0.82,
-                'Besant Nagar': 1.15
+                'Besant Nagar': 1.15,
+                'Boat Club': 1.2, 'Alwarpet': 1.15, 'Kilpauk': 1.02, 'Thiruvanmiyur': 1.05, 'Perungudi': 0.85, 'Chromepet': 0.72, 'Medavakkam': 0.78, 'Kodambakkam': 0.92, 'Royapettah': 1.0, 'Egmore': 0.95
             },
 
             // ===== OCEANIA =====
@@ -2586,25 +2663,29 @@
                 'CBD': 1.25, 'Bondi': 1.22, 'Surry Hills': 1.15,
                 'Darlinghurst': 1.12, 'Newtown': 1.05, 'Manly': 1.10,
                 'Parramatta': 0.82, 'Bankstown': 0.72, 'Chatswood': 0.95,
-                'Pyrmont': 1.18, 'Mosman': 1.28, 'Marrickville': 0.90
+                'Pyrmont': 1.18, 'Mosman': 1.28, 'Marrickville': 0.90,
+                'Glebe': 1.08, 'Redfern': 1.02, 'Balmain': 1.1, 'Coogee': 1.12, 'Paddington': 1.15, 'Double Bay': 1.3, 'Neutral Bay': 1.05, 'Kirribilli': 1.12, 'Lane Cove': 0.92, 'Hornsby': 0.78, 'Cronulla': 0.9, 'Ryde': 0.82
             },
             'Melbourne': {
                 'CBD': 1.20, 'South Yarra': 1.22, 'Fitzroy': 1.10,
                 'Carlton': 1.05, 'St Kilda': 1.08, 'Collingwood': 1.02,
                 'Richmond': 0.98, 'Brunswick': 0.92, 'Footscray': 0.78,
-                'Docklands': 1.12, 'Toorak': 1.30, 'Prahran': 1.08
+                'Docklands': 1.12, 'Toorak': 1.30, 'Prahran': 1.08,
+                'Albert Park': 1.15, 'Northcote': 1.02, 'Thornbury': 0.95, 'Preston': 0.82, 'Caulfield': 1.0, 'Malvern': 1.15, 'Box Hill': 0.82, 'Camberwell': 1.05, 'Brighton': 1.22, 'Hawthorn': 1.08, 'Kew': 1.12, 'Sunshine': 0.72
             },
             'Perth': {
                 'CBD': 1.18, 'Subiaco': 1.15, 'Cottesloe': 1.22,
                 'Claremont': 1.12, 'Fremantle': 1.05, 'Leederville': 1.08,
                 'Mount Lawley': 1.02, 'Northbridge': 0.95, 'Scarborough': 0.90,
-                'Rockingham': 0.78, 'Joondalup': 0.82, 'Nedlands': 1.10
+                'Rockingham': 0.78, 'Joondalup': 0.82, 'Nedlands': 1.10,
+                'Victoria Park': 1.0, 'South Perth': 1.1, 'Applecross': 1.15, 'Dalkeith': 1.25, 'Morley': 0.85, 'Cannington': 0.8, 'Armadale': 0.72, 'Innaloo': 0.85, 'Midland': 0.72, 'Karrinyup': 0.92
             },
             'Auckland': {
                 'Ponsonby': 1.25, 'Parnell': 1.22, 'Herne Bay': 1.30,
                 'Grey Lynn': 1.15, 'CBD': 1.12, 'Newmarket': 1.08,
                 'Mt Eden': 1.05, 'Kingsland': 1.02, 'Devonport': 1.10,
-                'Henderson': 0.78, 'Manukau': 0.72, 'Takapuna': 0.95
+                'Henderson': 0.78, 'Manukau': 0.72, 'Takapuna': 0.95,
+                'Remuera': 1.18, 'Mission Bay': 1.15, 'Onehunga': 0.85, 'Mt Albert': 0.92, 'Epsom': 1.05, 'Botany': 0.8, 'Albany': 0.82, 'Howick': 0.85, 'Titirangi': 0.88, 'St Heliers': 1.08
             },
 
             // ===== MIDDLE EAST =====
@@ -2612,31 +2693,36 @@
                 'Downtown Dubai': 1.35, 'Dubai Marina': 1.28, 'Palm Jumeirah': 1.40,
                 'JBR': 1.22, 'Business Bay': 1.18, 'DIFC': 1.30,
                 'JLT': 1.05, 'Deira': 0.78, 'Al Barsha': 0.88,
-                'Jumeirah': 1.15, 'Silicon Oasis': 0.72, 'Sports City': 0.80
+                'Jumeirah': 1.15, 'Silicon Oasis': 0.72, 'Sports City': 0.80,
+                'Arabian Ranches': 1.08, 'The Greens': 0.95, 'Discovery Gardens': 0.72, 'International City': 0.65, 'Mirdif': 0.85, 'Al Nahda': 0.78, 'Jumeirah Village Circle': 0.82, 'Damac Hills': 0.9, 'City Walk': 1.22, 'Dubai Hills': 1.1, 'Al Quoz': 0.75, 'Motor City': 0.78
             },
             'Abu Dhabi': {
                 'Al Reem Island': 1.22, 'Saadiyat Island': 1.30, 'Corniche': 1.25,
                 'Al Raha Beach': 1.15, 'Yas Island': 1.12, 'Khalifa City': 0.88,
                 'Mussafah': 0.72, 'Al Khalidiya': 1.08, 'Tourist Club Area': 0.92,
-                'Al Ain': 0.78
+                'Al Ain': 0.78,
+                'Al Maryah Island': 1.22, 'Al Bateen': 1.15, 'Al Mushrif': 0.95, 'Al Shamkha': 0.72, 'Mohamed Bin Zayed City': 0.78, 'Al Reef': 0.82, 'Al Ghadeer': 0.8, 'Masdar City': 0.92, 'Al Ruwais': 0.68
             },
             'Doha': {
                 'The Pearl': 1.35, 'West Bay': 1.28, 'Katara': 1.22,
                 'Al Sadd': 1.05, 'Souq Waqif': 1.10, 'Lusail': 1.18,
                 'Al Rayyan': 0.85, 'Al Wakrah': 0.78, 'Al Gharrafa': 0.82,
-                'Industrial Area': 0.65
+                'Industrial Area': 0.65,
+                'Musheireb': 1.12, 'Al Dafna': 1.22, 'Ain Khaled': 0.88, 'Al Thumama': 0.82, 'Umm Salal': 0.75, 'Al Kheesa': 0.78, 'Duhail': 0.85, 'Education City': 1.05
             },
             'Riyadh': {
                 'Al Olaya': 1.28, 'King Abdullah Financial District': 1.30, 'Al Nakheel': 1.18,
                 'Diplomatic Quarter': 1.22, 'Al Malqa': 1.12, 'Al Yasmin': 1.05,
                 'Al Sulimaniyah': 0.95, 'Al Batha': 0.72, 'Al Khaleej': 0.82,
-                'Al Thumama': 0.88
+                'Al Thumama': 0.88,
+                'Al Muhammadiyah': 1.05, 'Al Rawdah': 1.08, 'Hittin': 1.15, 'Al Narjis': 0.92, 'Al Izdihar': 0.88, 'Al Aqiq': 1.0, 'Al Wadi': 0.82, 'King Fahad Road': 1.12, 'Al Shifa': 0.75
             },
             'Tel Aviv': {
                 'Rothschild Blvd': 1.35, 'Neve Tzedek': 1.30, 'Florentin': 1.10,
                 'Old North': 1.20, 'Sarona': 1.18, 'Jaffa': 0.95,
                 'Ramat Aviv': 1.12, 'Bat Yam': 0.78, 'Holon': 0.75,
-                'Givatayim': 0.92
+                'Givatayim': 0.92,
+                "Lev Ha'ir (City Centre)": 1.25, 'Kerem HaTeimanim': 1.15, 'Shapira': 0.82, 'Yad Eliyahu': 0.88, 'Ramat HaHayal': 1.08, 'Bavli': 1.12, 'Kiryat Shalom': 0.78, 'Herzliya Pituach': 1.28, 'Bnei Brak': 0.72
             },
 
             // ===== AFRICA =====
@@ -2644,37 +2730,43 @@
                 'Camps Bay': 1.35, 'Clifton': 1.40, 'Sea Point': 1.18,
                 'City Bowl': 1.15, 'Green Point': 1.12, 'Woodstock': 0.92,
                 'Observatory': 0.88, 'Rondebosch': 0.95, 'Claremont': 1.02,
-                'Khayelitsha': 0.55, 'Mitchell\'s Plain': 0.60
+                'Khayelitsha': 0.55, 'Mitchell\'s Plain': 0.60,
+                'Constantia': 1.22, 'Newlands': 1.1, 'Hout Bay': 1.05, 'Muizenberg': 0.82, 'Fish Hoek': 0.78, 'Bloubergstrand': 0.85, 'Table View': 0.8, 'Stellenbosch': 0.92, 'Gardens': 1.12, 'Tamboerskloof': 1.08
             },
             'Nairobi': {
                 'Westlands': 1.25, 'Karen': 1.22, 'Kilimani': 1.18,
                 'Lavington': 1.15, 'Runda': 1.28, 'Kileleshwa': 1.10,
                 'Upper Hill': 1.08, 'South B': 0.88, 'Eastleigh': 0.72,
-                'Kibera': 0.55, 'Lang\'ata': 0.95
+                'Kibera': 0.55, 'Lang\'ata': 0.95,
+                'Muthaiga': 1.2, 'Spring Valley': 1.12, 'Hurlingham': 1.08, 'Parklands': 0.92, 'Gigiri': 1.15, 'Kayole': 0.62, 'Donholm': 0.75, 'Kasarani': 0.72, 'Kitisuru': 1.1
             },
             'Lagos': {
                 'Victoria Island': 1.35, 'Ikoyi': 1.30, 'Lekki Phase 1': 1.22,
                 'Banana Island': 1.45, 'Yaba': 0.88, 'Surulere': 0.82,
                 'Ikeja': 0.90, 'Ajah': 0.78, 'Oshodi': 0.68,
-                'Maryland': 0.85, 'Gbagada': 0.92
+                'Maryland': 0.85, 'Gbagada': 0.92,
+                'Lekki Phase 2': 1.08, 'Magodo': 0.95, 'Festac Town': 0.72, 'Ilupeju': 0.82, 'Agege': 0.65, 'Amuwo-Odofin': 0.78, 'Ogudu': 0.82, 'Sangotedo': 0.75, 'Chevron Drive': 1.12
             },
             'Cairo': {
                 'Zamalek': 1.35, 'Garden City': 1.28, 'Maadi': 1.18,
                 'Heliopolis': 1.08, 'New Cairo (5th Settlement)': 1.15, '6th of October City': 0.85,
                 'Dokki': 1.02, 'Mohandessin': 0.95, 'Nasr City': 0.82,
-                'Shubra': 0.72, 'Downtown': 0.90
+                'Shubra': 0.72, 'Downtown': 0.90,
+                'Rehab City': 1.1, 'Sheikh Zayed City': 1.05, 'Katameya': 1.12, 'Obour City': 0.78, 'Al Shorouk': 0.82, 'Corniche El Nil': 1.05, 'Hadayek El Maadi': 1.02, 'Ain Shams': 0.68, 'El Marg': 0.65
             },
             'Marrakech': {
                 'Gueliz': 1.18, 'Hivernage': 1.25, 'Medina (Riads)': 1.15,
                 'Palmeraie': 1.30, 'Agdal': 1.08, 'Targa': 1.02,
                 'Massira': 0.78, 'Sidi Youssef Ben Ali': 0.72, 'Menara': 0.88,
-                'Amelkis': 1.12
+                'Amelkis': 1.12,
+                'Route de Fès': 0.82, 'Route de Ouarzazate': 0.75, 'Tamesna': 0.7, 'Sidi Ghanem': 0.92, 'Bab Doukkala': 0.95, 'Route de Casablanca': 0.8, "M'hamid": 0.82
             },
             'Casablanca': {
                 'Corniche (Ain Diab)': 1.25, 'Maarif': 1.15, 'Anfa': 1.22,
                 'Gauthier': 1.12, 'Bourgogne': 1.08, 'Racine': 1.05,
                 'Sidi Moumen': 0.68, 'Hay Hassani': 0.78, 'Derb Sultan': 0.82,
-                'CIL': 0.88
+                'CIL': 0.88,
+                'Dar Bouazza': 0.85, 'Oulfa': 0.72, 'Oasis': 1.02, 'Palmier': 0.95, "Triangle d'Or": 1.18, 'Ain Chock': 0.75, 'Sidi Bernoussi': 0.68, 'Ain Sebaa': 0.78
             },
 
             // ===== SOUTH AMERICA =====
@@ -2682,57 +2774,76 @@
                 'Jardins': 1.30, 'Vila Madalena': 1.15, 'Pinheiros': 1.18,
                 'Itaim Bibi': 1.25, 'Vila Olímpia': 1.20, 'Moema': 1.12,
                 'Centro': 0.78, 'Liberdade': 0.85, 'Bela Vista': 0.92,
-                'Santana': 0.82, 'Tatuapé': 0.80
+                'Santana': 0.82, 'Tatuapé': 0.80,
+                'Brooklin': 1.18, 'Perdizes': 1.1, 'Alto de Pinheiros': 1.22, 'Consolação': 1.02, 'Higienópolis': 1.2, 'Butantã': 0.85, 'Morumbi': 1.15, 'Campo Belo': 1.08, 'Paraíso': 1.05, 'Lapa': 0.88, 'Ipiranga': 0.78, 'Vila Mariana': 1.02, 'Aclimação': 0.92
             },
             'Buenos Aires': {
                 'Palermo (Soho)': 1.25, 'Recoleta': 1.28, 'Puerto Madero': 1.35,
                 'San Telmo': 1.02, 'Belgrano': 1.10, 'Núñez': 1.05,
                 'Caballito': 0.88, 'Almagro': 0.85, 'Flores': 0.75,
-                'Villa Crespo': 0.92, 'Colegiales': 1.02
+                'Villa Crespo': 0.92, 'Colegiales': 1.02,
+                'La Boca': 0.78, 'Palermo Hollywood': 1.18, 'Montserrat': 0.88, 'Retiro': 1.02, 'Barrio Norte': 1.15, 'Balvanera': 0.82, 'Chacarita': 0.88, 'Saavedra': 0.82, 'Villa Devoto': 0.8, 'Palermo Chico': 1.3, 'Olivos': 1.05, 'Vicente López': 1.02
             },
             'Bogotá': {
                 'Zona T (Zona Rosa)': 1.25, 'Usaquén': 1.22, 'Chicó': 1.20,
                 'Chapinero Alto': 1.12, 'La Candelaria': 0.88, 'Cedritos': 1.02,
                 'Suba': 0.82, 'Kennedy': 0.72, 'Teusaquillo': 0.95,
-                'Santa Bárbara': 1.15
+                'Santa Bárbara': 1.15,
+                'Rosales': 1.18, 'El Virrey': 1.15, 'Galerías': 0.92, 'La Soledad': 0.88, 'La Macarena': 0.95, 'Niza': 1.02, 'Engativá': 0.75, 'Fontibón': 0.78, 'Modelia': 0.88
             },
             'Lima': {
                 'Miraflores': 1.28, 'San Isidro': 1.30, 'Barranco': 1.15,
                 'Surco': 1.08, 'La Molina': 1.05, 'San Borja': 1.02,
                 'Jesús María': 0.90, 'Lince': 0.85, 'San Juan de Lurigancho': 0.68,
-                'Callao': 0.72
+                'Callao': 0.72,
+                'Pueblo Libre': 0.88, 'Magdalena': 0.92, 'San Miguel': 0.85, 'La Victoria': 0.72, 'Chorrillos': 0.78, 'Surquillo': 0.82, 'Ate': 0.72, 'Comas': 0.65, 'Los Olivos': 0.75
             },
             'Santiago': {
                 'Providencia': 1.22, 'Las Condes': 1.25, 'Vitacura': 1.35,
                 'Ñuñoa': 1.08, 'La Reina': 1.05, 'Santiago Centro': 0.92,
                 'Lo Barnechea': 1.18, 'Macul': 0.82, 'La Florida': 0.78,
-                'Puente Alto': 0.70
+                'Puente Alto': 0.70,
+                'Peñalolén': 0.85, 'San Miguel': 0.78, 'Recoleta': 0.72, 'Maipú': 0.7, 'Independencia': 0.75, 'Pedro de Valdivia': 1.15, 'El Golf': 1.22, 'Tobalaba': 1.02, 'Bellavista': 1.0
             },
             'Medellín': {
                 'El Poblado': 1.30, 'Laureles': 1.12, 'Envigado': 1.08,
                 'Sabaneta': 0.95, 'Belén': 0.88, 'La Floresta': 1.02,
                 'Centro': 0.78, 'Robledo': 0.75, 'Aranjuez': 0.72,
-                'Estadio': 0.85
+                'Estadio': 0.85,
+                'Manila': 1.05, 'San Lucas': 1.18, 'La Estrella': 0.82, 'Itagüí': 0.78, 'Bello': 0.72, 'Calasanz': 0.8, 'Castropol': 1.08, 'Boston': 0.75, 'Provenza': 1.15
             },
             'Montevideo': {
                 'Pocitos': 1.22, 'Punta Carretas': 1.25, 'Carrasco': 1.30,
                 'Ciudad Vieja': 1.08, 'Parque Rodó': 1.05, 'Buceo': 1.02,
                 'Cordón': 0.92, 'Tres Cruces': 0.88, 'La Blanqueada': 0.85,
-                'Cerro': 0.70
+                'Cerro': 0.70,
+                'Malvín': 1.0, 'Parque Batlle': 0.95, 'Paso Molino': 0.78, 'La Comercial': 0.82, 'Prado': 0.85, 'Aguada': 0.75, 'Unión': 0.72, 'Punta Gorda': 1.12
             },
             'San José (CR)': {
                 'Escazú': 1.28, 'Santa Ana': 1.22, 'Rohrmoser': 1.12,
                 'Los Yoses': 1.08, 'Barrio Escalante': 1.10, 'San Pedro': 0.92,
                 'Sabana': 1.05, 'Heredia': 0.85, 'Alajuela': 0.78,
-                'Cartago': 0.75
+                'Cartago': 0.75,
+                'Curridabat': 0.92, 'Moravia': 0.85, 'Tibás': 0.78, 'Desamparados': 0.72, 'Montes de Oca': 0.9, 'San Rafael': 0.82, 'Guadalupe': 0.78, 'Zapote': 0.85
             },
             'Playa del Carmen': {
                 'Playacar': 1.30, 'Centro (5th Avenue)': 1.18, 'Gonzalo Guerrero': 1.05,
                 'Ejidal': 0.82, 'Colosio': 0.78, 'Playa Mamitas': 1.22,
                 'Zazil Ha': 0.88, 'Luis Donaldo Colosio': 0.75,
-                'Villas del Sol': 0.72
+                'Villas del Sol': 0.72,
+                'Selvanova': 0.85, 'Real Ibiza': 0.68, 'Riviera Maya Zona': 1.15, 'Puerto Aventuras': 1.1, 'Mayakoba Area': 1.25, 'Playa Paraíso': 1.08, 'La Guadalupana': 0.72
             }
         };
+
+        // Dynamic city & neighborhood counts
+        const totalCities = Object.keys(coliData).length;
+        const totalNeighborhoods = Object.values(cityNeighborhoods).reduce((sum, n) => sum + Object.keys(n).length, 0);
+        const roundedNeighborhoods = Math.floor(totalNeighborhoods / 100) * 100;
+        const countText = `Compare salaries across ${totalCities} cities and over ${roundedNeighborhoods.toLocaleString()} neighborhoods worldwide.`;
+        const heroEl = document.getElementById('hero-subtitle');
+        const footerEl = document.getElementById('footer-subtitle');
+        if (heroEl) heroEl.textContent = countText;
+        if (footerEl) footerEl.textContent = countText;
 
         // Auto-suggest currency when a city is selected (always updates, user can still override)
         function suggestCurrency(city, currencySelectId, hintId) {
