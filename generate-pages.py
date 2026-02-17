@@ -1175,9 +1175,10 @@ def generate_city_page(city, comparison_pairs):
             sign = '+' if pct >= 0 else ''
             bar_width = int(mult * 50)
             color = '#22c55e' if pct < 0 else '#2563eb' if pct < 15 else '#f59e0b' if pct < 30 else '#ef4444'
+            n_slug = slugify(name)
             neighborhood_rows += f'''
                         <tr>
-                            <td style="font-weight: 500;">{name}</td>
+                            <td><a href="/city/{slug}/{n_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
                             <td style="text-align: center;">{mult:.2f}x</td>
                             <td style="text-align: right;">
                                 <span style="color: {color}; font-weight: 600;">{sign}{pct:.0f}%</span>
@@ -2573,10 +2574,1111 @@ def generate_compare_index(comparison_pairs):
 
 
 # ============================================================
+# NEIGHBORHOOD PAGE TEMPLATE
+# ============================================================
+
+def generate_neighborhood_page(city, neighborhood, multiplier):
+    """Generate an individual neighborhood page"""
+    city_slug = slugify(city)
+    nhood_slug = slugify(neighborhood)
+    country = cityCountry.get(city, '')
+    currency = cityToCurrency.get(city, 'USD')
+    city_coli = coliData[city]
+    nhood_coli = round(city_coli * multiplier, 1)
+    rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+
+    # Multiplier description
+    pct_diff = (multiplier - 1) * 100
+    sign = '+' if pct_diff >= 0 else ''
+    if pct_diff > 20:
+        cost_desc = 'significantly above'
+    elif pct_diff > 5:
+        cost_desc = 'above'
+    elif pct_diff > -5:
+        cost_desc = 'near'
+    elif pct_diff > -20:
+        cost_desc = 'below'
+    else:
+        cost_desc = 'well below'
+
+    # Rank within city
+    all_nhoods = cityNeighborhoods.get(city, {})
+    sorted_nhoods = sorted(all_nhoods.items(), key=lambda x: x[1], reverse=True)
+    rank_in_city = 1
+    for i, (n, m) in enumerate(sorted_nhoods):
+        if n == neighborhood:
+            rank_in_city = i + 1
+            break
+    total_in_city = len(sorted_nhoods)
+
+    # Estimated rent (scaled from city rent)
+    city_rent = cityRent1BR.get(city, 0)
+    nhood_rent = city_rent * multiplier
+    nhood_rent_local = nhood_rent * rate_to_local
+    fmt_rent = format_currency_amount(nhood_rent_local, currency)
+
+    # Salary equivalents from reference cities
+    ref_cities = ['New York', 'London', 'Dubai']
+    salary_equivs = []
+    for ref in ref_cities:
+        if ref == city:
+            continue
+        ref_currency = cityToCurrency[ref]
+        ref_rate = exchangeRates[ref_currency] / exchangeRates['USD']
+        equiv_usd = 75000 * (nhood_coli / coliData[ref])
+        equiv_local = equiv_usd * ref_rate
+        salary_equivs.append({
+            'city': ref,
+            'formatted': format_currency_amount(equiv_local, ref_currency),
+            'currency': ref_currency,
+        })
+
+    # Salary equiv rows
+    salary_equiv_rows = ''
+    for se in salary_equivs:
+        se_city = se['city']
+        se_fmt = se['formatted']
+        se_cur = se['currency']
+        salary_equiv_rows += f'''
+                        <tr>
+                            <td style="font-weight: 500;">{se_city}</td>
+                            <td style="text-align: center;">{se_cur}</td>
+                            <td style="text-align: right; font-weight: 600;">{se_fmt}</td>
+                        </tr>'''
+
+    # Comparison with other neighborhoods in same city (up to 5)
+    other_nhoods = [(n, m) for n, m in sorted_nhoods if n != neighborhood][:5]
+    nhood_comparison_rows = ''
+    for on_name, on_mult in other_nhoods:
+        on_coli = round(city_coli * on_mult, 1)
+        on_pct = (on_mult - 1) * 100
+        on_sign = '+' if on_pct >= 0 else ''
+        on_color = '#22c55e' if on_pct < 0 else '#2563eb' if on_pct < 15 else '#f59e0b' if on_pct < 30 else '#ef4444'
+        on_slug = slugify(on_name)
+        nhood_comparison_rows += f'''
+                        <tr>
+                            <td><a href="/city/{city_slug}/{on_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{on_name}</a></td>
+                            <td style="text-align: center;">{on_coli}</td>
+                            <td style="text-align: center;">{on_mult:.2f}x</td>
+                            <td style="text-align: right;"><span style="color: {on_color}; font-weight: 600;">{on_sign}{on_pct:.0f}%</span></td>
+                        </tr>'''
+
+    # Color for this neighborhood
+    nhood_color = '#22c55e' if pct_diff < 0 else '#2563eb' if pct_diff < 15 else '#f59e0b' if pct_diff < 30 else '#ef4444'
+
+    # FAQ answers
+    if pct_diff > 10:
+        expensive_answer = f'Yes, {neighborhood} is one of the more expensive neighborhoods in {city}. It costs about {sign}{pct_diff:.0f}% more than the city average, ranking #{rank_in_city} out of {total_in_city} neighborhoods.'
+    elif pct_diff > -5:
+        expensive_answer = f'{neighborhood} is near the city average for {city}. Costs are about {sign}{pct_diff:.0f}% vs the average, making it a mid-range neighborhood.'
+    else:
+        expensive_answer = f'{neighborhood} is one of the more affordable neighborhoods in {city}. It costs about {pct_diff:.0f}% less than the city average, ranking #{rank_in_city} out of {total_in_city} neighborhoods.'
+
+    avg_comparison = f'The cost of living in {neighborhood} is {cost_desc} the {city} average. With a multiplier of {multiplier:.2f}x, everyday expenses including rent, food, and transportation are {sign}{pct_diff:.0f}% compared to the city baseline.'
+
+    meta_desc = f'Cost of living in {neighborhood}, {city}: COLI index {nhood_coli}, {sign}{pct_diff:.0f}% vs city average. Estimated 1BR rent {fmt_rent}. Compare salaries and expenses.'
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost of Living in {neighborhood}, {city} — salary:converter</title>
+    <meta name="description" content="{meta_desc}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Cost of Living in {neighborhood}, {city}">
+    <meta property="og:description" content="{meta_desc}">
+    <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}.html">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "Place",
+        "name": "{neighborhood}, {city}",
+        "containedInPlace": {{
+            "@type": "City",
+            "name": "{city}",
+            "containedInPlace": {{
+                "@type": "Country",
+                "name": "{country}"
+            }}
+        }}
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
+            {{"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"}},
+            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{city_slug}.html"}},
+            {{"@type": "ListItem", "position": 4, "name": "{neighborhood}"}}
+        ]
+    }}
+    </script>
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {{
+                "@type": "Question",
+                "name": "Is {neighborhood} expensive in {city}?",
+                "acceptedAnswer": {{
+                    "@type": "Answer",
+                    "text": "{expensive_answer}"
+                }}
+            }},
+            {{
+                "@type": "Question",
+                "name": "How does {neighborhood} compare to the {city} average?",
+                "acceptedAnswer": {{
+                    "@type": "Answer",
+                    "text": "{avg_comparison}"
+                }}
+            }}
+        ]
+    }}
+    </script>
+    <style>
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+        .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
+        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
+        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .hero {{ text-align: center; margin-bottom: 40px; }}
+        .hero h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
+        .hero .subtitle {{ font-size: 1.05rem; color: #86868b; }}
+        .badge {{ display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-top: 12px; }}
+        .card {{ background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .card h2 {{ font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px; }}
+        .stats-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }}
+        .stat-item {{ text-align: center; padding: 16px; background: #f5f5f7; border-radius: 12px; }}
+        .stat-value {{ font-size: 1.5rem; font-weight: 700; color: #1d1d1f; }}
+        .stat-label {{ font-size: 0.75rem; color: #86868b; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }}
+        table {{ width: 100%; border-collapse: collapse; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 12px; border-bottom: 2px solid #e8e8ed; }}
+        td {{ padding: 10px 12px; border-bottom: 1px solid #f0f0f2; font-size: 0.85rem; }}
+        .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
+        .cta-box h2 {{ color: white; margin-bottom: 8px; }}
+        .cta-box p {{ color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }}
+        .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
+        .faq-item {{ margin-bottom: 20px; }}
+        .faq-item h3 {{ font-size: 1rem; font-weight: 600; margin-bottom: 8px; }}
+        .faq-item p {{ font-size: 0.9rem; color: #424245; line-height: 1.6; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
+        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        @media (max-width: 600px) {{
+            .hero h1 {{ font-size: 1.5rem; }}
+            .stats-grid {{ grid-template-columns: 1fr 1fr; }}
+            .card {{ padding: 20px; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {neighborhood}
+        </nav>
+
+        <section class="hero">
+            <h1>{neighborhood}</h1>
+            <p class="subtitle">{city}, {country}</p>
+            <span class="badge" style="background: {nhood_color}15; color: {nhood_color};">{sign}{pct_diff:.0f}% vs {city} avg</span>
+        </section>
+
+        <div class="card">
+            <h2>Key Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">{nhood_coli}</div>
+                    <div class="stat-label">COLI Index</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{multiplier:.2f}x</div>
+                    <div class="stat-label">vs City Avg</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{fmt_rent}</div>
+                    <div class="stat-label">Est. 1BR Rent</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">#{rank_in_city}</div>
+                    <div class="stat-label">of {total_in_city} Areas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Salary Equivalents</h2>
+            <p style="font-size: 0.85rem; color: #86868b; margin-bottom: 16px;">What a $75,000 USD salary in {neighborhood} would need to be elsewhere:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th style="text-align: center;">Currency</th>
+                        <th style="text-align: right;">Equivalent</th>
+                    </tr>
+                </thead>
+                <tbody>{salary_equiv_rows}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Other Neighborhoods in {city}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Neighborhood</th>
+                        <th style="text-align: center;">COLI</th>
+                        <th style="text-align: center;">Multiplier</th>
+                        <th style="text-align: right;">vs Avg</th>
+                    </tr>
+                </thead>
+                <tbody>{nhood_comparison_rows}
+                </tbody>
+            </table>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 12px;"><a href="/city/{city_slug}.html" style="color: #2563eb; text-decoration: none;">View all {total_in_city} neighborhoods in {city} &rarr;</a></p>
+        </div>
+
+        <div class="cta-box">
+            <h2>Convert Your Salary</h2>
+            <p>See exactly what you need to earn in {neighborhood}, {city} to maintain your lifestyle.</p>
+            <a href="/" class="cta-btn">Open Salary Converter</a>
+        </div>
+
+        <div class="card">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>Is {neighborhood} expensive in {city}?</h3>
+                <p>{expensive_answer}</p>
+            </div>
+            <div class="faq-item">
+                <h3>How does {neighborhood} compare to the {city} average?</h3>
+                <p>{avg_comparison}</p>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/city/{city_slug}.html">{city}</a>
+            <a href="/city/">All Cities</a>
+            <a href="/blog/">Blog</a>
+        </footer>
+    </div>
+</body>
+</html>'''
+
+    return html
+
+
+# ============================================================
+# NEIGHBORHOOD COMPARISON PAGE TEMPLATE
+# ============================================================
+
+def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
+    """Generate a comparison page between two neighborhoods in the same city"""
+    city_slug = slugify(city)
+    n1_slug = slugify(n1)
+    n2_slug = slugify(n2)
+    country = cityCountry.get(city, '')
+    currency = cityToCurrency.get(city, 'USD')
+    city_coli = coliData[city]
+    rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+
+    coli1 = round(city_coli * m1, 1)
+    coli2 = round(city_coli * m2, 1)
+    pct1 = (m1 - 1) * 100
+    pct2 = (m2 - 1) * 100
+    sign1 = '+' if pct1 >= 0 else ''
+    sign2 = '+' if pct2 >= 0 else ''
+
+    # Determine which is more expensive
+    if m1 > m2:
+        more_expensive = n1
+        more_affordable = n2
+        diff_pct = ((m1 / m2) - 1) * 100
+    else:
+        more_expensive = n2
+        more_affordable = n1
+        diff_pct = ((m2 / m1) - 1) * 100
+
+    # Estimated rents
+    city_rent = cityRent1BR.get(city, 0)
+    rent1 = city_rent * m1 * rate_to_local
+    rent2 = city_rent * m2 * rate_to_local
+    fmt_rent1 = format_currency_amount(rent1, currency)
+    fmt_rent2 = format_currency_amount(rent2, currency)
+
+    # Salary equivalents for $75K
+    equiv1 = 75000 * (coli1 / 100) * rate_to_local
+    equiv2 = 75000 * (coli2 / 100) * rate_to_local
+    fmt_equiv1 = format_currency_amount(equiv1, currency)
+    fmt_equiv2 = format_currency_amount(equiv2, currency)
+
+    # Bar widths (normalize to 100)
+    max_mult = max(m1, m2)
+    bar1 = int((m1 / max_mult) * 100)
+    bar2 = int((m2 / max_mult) * 100)
+    color1 = '#2563eb'
+    color2 = '#f59e0b'
+
+    # Other neighborhoods in this city
+    all_nhoods = cityNeighborhoods.get(city, {})
+    other_links = ''
+    for on_name in sorted(all_nhoods.keys()):
+        if on_name != n1 and on_name != n2:
+            on_s = slugify(on_name)
+            other_links += f'<a href="/city/{city_slug}/{on_s}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{on_name}</a>\n'
+
+    meta_desc = f'{n1} vs {n2} in {city}: compare cost of living, rent, and salary equivalents. {more_affordable} is {diff_pct:.0f}% more affordable.'
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{n1} vs {n2}, {city} — Cost of Living Comparison</title>
+    <meta name="description" content="{meta_desc}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{n1} vs {n2}, {city} — Cost of Living Comparison">
+    <meta property="og:description" content="{meta_desc}">
+    <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
+            {{"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"}},
+            {{"@type": "ListItem", "position": 3, "name": "{n1} vs {n2} ({city})"}}
+        ]
+    }}
+    </script>
+    <style>
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+        .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
+        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
+        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .hero {{ text-align: center; margin-bottom: 40px; }}
+        .hero h1 {{ font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
+        .hero .subtitle {{ font-size: 1rem; color: #86868b; }}
+        .card {{ background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .card h2 {{ font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px; }}
+        .vs-grid {{ display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: center; }}
+        .vs-side {{ text-align: center; padding: 20px; }}
+        .vs-side h3 {{ font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }}
+        .vs-side .coli {{ font-size: 2rem; font-weight: 700; }}
+        .vs-side .label {{ font-size: 0.75rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; }}
+        .vs-divider {{ text-align: center; font-size: 1.2rem; font-weight: 700; color: #86868b; }}
+        .winner-badge {{ display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }}
+        .compare-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }}
+        .compare-item {{ text-align: center; padding: 16px; background: #f5f5f7; border-radius: 12px; }}
+        .compare-item .val {{ font-size: 1.2rem; font-weight: 700; }}
+        .compare-item .lbl {{ font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }}
+        .bar-chart {{ margin: 20px 0; }}
+        .bar-row {{ display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }}
+        .bar-label {{ width: 140px; font-size: 0.8rem; font-weight: 600; text-align: right; flex-shrink: 0; }}
+        .bar-track {{ flex: 1; height: 28px; background: #f0f0f2; border-radius: 8px; overflow: hidden; }}
+        .bar-fill {{ height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 10px; font-size: 0.75rem; font-weight: 600; color: white; }}
+        .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
+        .cta-box h2 {{ color: white; margin-bottom: 8px; }}
+        .cta-box p {{ color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }}
+        .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
+        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        @media (max-width: 600px) {{
+            .hero h1 {{ font-size: 1.3rem; }}
+            .vs-grid {{ grid-template-columns: 1fr 40px 1fr; }}
+            .vs-side h3 {{ font-size: 0.9rem; }}
+            .bar-label {{ width: 100px; font-size: 0.7rem; }}
+            .card {{ padding: 20px; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">Compare</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
+        </nav>
+
+        <section class="hero">
+            <h1>{n1} vs {n2}</h1>
+            <p class="subtitle">Neighborhood comparison in {city}, {country}</p>
+        </section>
+
+        <div class="card">
+            <div class="vs-grid">
+                <div class="vs-side">
+                    <h3><a href="/city/{city_slug}/{n1_slug}.html" style="color: #1d1d1f; text-decoration: none;">{n1}</a></h3>
+                    <div class="coli" style="color: {color1};">{coli1}</div>
+                    <div class="label">COLI Index</div>
+                    {'<span class="winner-badge" style="background: #dcfce7; color: #16a34a;">More Affordable</span>' if m1 < m2 else '<span class="winner-badge" style="background: #fef3c7; color: #d97706;">More Expensive</span>' if m1 > m2 else ''}
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="vs-side">
+                    <h3><a href="/city/{city_slug}/{n2_slug}.html" style="color: #1d1d1f; text-decoration: none;">{n2}</a></h3>
+                    <div class="coli" style="color: {color2};">{coli2}</div>
+                    <div class="label">COLI Index</div>
+                    {'<span class="winner-badge" style="background: #dcfce7; color: #16a34a;">More Affordable</span>' if m2 < m1 else '<span class="winner-badge" style="background: #fef3c7; color: #d97706;">More Expensive</span>' if m2 > m1 else ''}
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Side-by-Side Comparison</h2>
+            <div class="compare-row">
+                <div class="compare-item">
+                    <div class="val">{m1:.2f}x</div>
+                    <div class="lbl">{n1} Multiplier</div>
+                </div>
+                <div class="compare-item">
+                    <div class="val">{m2:.2f}x</div>
+                    <div class="lbl">{n2} Multiplier</div>
+                </div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-item">
+                    <div class="val">{fmt_rent1}</div>
+                    <div class="lbl">Est. 1BR Rent</div>
+                </div>
+                <div class="compare-item">
+                    <div class="val">{fmt_rent2}</div>
+                    <div class="lbl">Est. 1BR Rent</div>
+                </div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-item">
+                    <div class="val">{fmt_equiv1}</div>
+                    <div class="lbl">$75K Equivalent</div>
+                </div>
+                <div class="compare-item">
+                    <div class="val">{fmt_equiv2}</div>
+                    <div class="lbl">$75K Equivalent</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Cost Comparison</h2>
+            <div class="bar-chart">
+                <div class="bar-row">
+                    <div class="bar-label">{n1}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: {bar1}%; background: {color1};">{m1:.2f}x</div>
+                    </div>
+                </div>
+                <div class="bar-row">
+                    <div class="bar-label">{n2}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill" style="width: {bar2}%; background: {color2};">{m2:.2f}x</div>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 0.85rem; color: #424245; line-height: 1.6;">
+                {more_expensive} is <strong>{diff_pct:.0f}% more expensive</strong> than {more_affordable} within {city}.
+                Living in {more_affordable} instead of {more_expensive} could save you significantly on rent and daily expenses.
+            </p>
+        </div>
+
+        <div class="cta-box">
+            <h2>Calculate Your Exact Salary</h2>
+            <p>See what you need to earn in {city} to maintain your lifestyle, with neighborhood-level precision.</p>
+            <a href="/" class="cta-btn">Open Salary Converter</a>
+        </div>
+
+        <div class="card">
+            <h2>More Neighborhoods in {city}</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                {other_links}
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/city/{city_slug}.html">{city}</a>
+            <a href="/compare/">All Comparisons</a>
+            <a href="/blog/">Blog</a>
+        </footer>
+    </div>
+</body>
+</html>'''
+
+    return html
+
+
+# ============================================================
+# NEIGHBORHOOD COMPARISON PAIR SELECTION
+# ============================================================
+
+def get_neighborhood_comparison_pairs(city):
+    """Select interesting neighborhood comparison pairs for a city"""
+    nhoods = cityNeighborhoods.get(city, {})
+    if len(nhoods) < 2:
+        return []
+
+    sorted_nhoods = sorted(nhoods.items(), key=lambda x: x[1], reverse=True)
+    pairs = set()
+
+    # Most expensive vs most affordable
+    pairs.add((sorted_nhoods[0][0], sorted_nhoods[-1][0]))
+
+    # Top 3 paired with each other
+    top = sorted_nhoods[:3]
+    for i in range(len(top)):
+        for j in range(i + 1, len(top)):
+            pairs.add((top[i][0], top[j][0]))
+
+    # Bottom 3 paired with each other
+    bottom = sorted_nhoods[-3:]
+    for i in range(len(bottom)):
+        for j in range(i + 1, len(bottom)):
+            pairs.add((bottom[i][0], bottom[j][0]))
+
+    # 1st vs middle, middle vs last
+    mid_idx = len(sorted_nhoods) // 2
+    pairs.add((sorted_nhoods[0][0], sorted_nhoods[mid_idx][0]))
+    pairs.add((sorted_nhoods[mid_idx][0], sorted_nhoods[-1][0]))
+
+    return [(n1, nhoods[n1], n2, nhoods[n2]) for n1, n2 in pairs]
+
+
+# ============================================================
+# DATA-DRIVEN BLOG ARTICLE GENERATORS
+# ============================================================
+
+def generate_blog_undervalued_neighborhoods():
+    """Article 1: 50 Most Undervalued Neighborhoods in the World"""
+    # Compute absolute COLI for all neighborhoods
+    all_nhoods = []
+    for city, nhoods in cityNeighborhoods.items():
+        city_coli = coliData[city]
+        country = cityCountry.get(city, '')
+        city_slug = slugify(city)
+        for name, mult in nhoods.items():
+            abs_coli = round(city_coli * mult, 1)
+            nhood_slug = slugify(name)
+            all_nhoods.append({
+                'name': name,
+                'city': city,
+                'country': country,
+                'coli': abs_coli,
+                'multiplier': mult,
+                'city_slug': city_slug,
+                'nhood_slug': nhood_slug,
+            })
+
+    # Sort by lowest COLI
+    all_nhoods.sort(key=lambda x: x['coli'])
+    top50 = all_nhoods[:50]
+
+    # Build table rows
+    rows = ''
+    for i, n in enumerate(top50, 1):
+        n_name = n['name']
+        n_city = n['city']
+        n_country = n['country']
+        n_coli = n['coli']
+        n_mult = n['multiplier']
+        n_cs = n['city_slug']
+        n_ns = n['nhood_slug']
+        rows += f'''
+                        <tr>
+                            <td style="font-weight: 600;">{i}</td>
+                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td>{n_city}</td>
+                            <td>{n_country}</td>
+                            <td style="text-align: center; font-weight: 600;">{n_coli}</td>
+                            <td style="text-align: center;">{n_mult:.2f}x</td>
+                        </tr>'''
+
+    article_date = TODAY
+    total = TOTAL_NEIGHBORHOODS
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR}) — salary:converter</title>
+    <meta name="description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index. Data-driven analysis of {total:,} neighborhoods across 101 cities.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})">
+    <meta property="og:description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index.">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})",
+        "datePublished": "{article_date}",
+        "dateModified": "{article_date}",
+        "author": {{"@type": "Organization", "name": "salary:converter"}},
+        "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
+        "url": "https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html"
+    }}
+    </script>
+    <style>
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+        .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
+        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
+        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
+        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
+        .cta-box h2 {{ color: white; margin-bottom: 8px; }}
+        .cta-box p {{ color: rgba(255,255,255,0.85); }}
+        .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
+        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        @media (max-width: 600px) {{
+            article {{ padding: 24px; }}
+            article h1 {{ font-size: 1.5rem; }}
+            table {{ font-size: 0.75rem; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; 50 Most Undervalued Neighborhoods
+        </nav>
+
+        <article>
+            <h1>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})</h1>
+            <div class="meta">Published {article_date} &middot; salary:converter Research &middot; Based on {total:,} neighborhoods</div>
+
+            <p>Not all neighborhoods are created equal. While city-level cost of living data gives you a general picture, the real story is at the neighborhood level. We analyzed <strong>{total:,} neighborhoods across 101 cities</strong> to find the most affordable places to live worldwide.</p>
+
+            <p>Each neighborhood is scored using an absolute COLI (Cost of Living Index), calculated by multiplying the city's baseline COLI by the neighborhood's local multiplier. A lower score means a more affordable place to live.</p>
+
+            <h2>The 50 Most Affordable Neighborhoods Globally</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Neighborhood</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th style="text-align: center;">COLI</th>
+                            <th style="text-align: center;">Multiplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>{rows}
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Key Takeaways</h2>
+            <p>The most affordable neighborhoods tend to be in cities with already-low costs of living in South and Southeast Asia, Africa, and parts of Eastern Europe and Latin America. Within these cities, outer suburbs and working-class districts push costs even lower.</p>
+
+            <p>However, affordability always comes with trade-offs. The cheapest neighborhoods may have longer commutes, fewer amenities, or less developed infrastructure. Always balance cost against quality of life when choosing where to live.</p>
+
+            <div class="cta-box">
+                <h2>Compare Any Neighborhood</h2>
+                <p>Use our converter with {ROUNDED_NEIGHBORHOODS:,}+ neighborhood-level adjustments for precise salary comparisons.</p>
+                <a href="/" class="cta-btn">Open Salary Converter</a>
+            </div>
+
+            <h2>Methodology</h2>
+            <p>Our COLI data is compiled from multiple sources including Numbeo, Expatistan, OECD, and ECB. Neighborhood multipliers are based on local rent differentials, consumer price surveys, and expatriate community reports. The absolute COLI for each neighborhood is calculated as: City COLI x Neighborhood Multiplier.</p>
+        </article>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/blog/">Blog</a>
+            <a href="/city/">All Cities</a>
+        </footer>
+    </div>
+</body>
+</html>'''
+
+    return html
+
+
+def generate_blog_salary_goes_furthest():
+    """Article 2: Where Your Salary Goes Furthest - Neighborhood Edition"""
+    # Compute $100K USD equivalent in each neighborhood
+    all_nhoods = []
+    for city, nhoods in cityNeighborhoods.items():
+        city_coli = coliData[city]
+        currency = cityToCurrency.get(city, 'USD')
+        rate = exchangeRates[currency] / exchangeRates['USD']
+        city_slug = slugify(city)
+        for name, mult in nhoods.items():
+            abs_coli = city_coli * mult
+            # Purchasing power: how far does $100K go here vs NYC baseline
+            purchasing_power = (100 / abs_coli) * 100
+            nhood_slug = slugify(name)
+            all_nhoods.append({
+                'name': name,
+                'city': city,
+                'coli': round(abs_coli, 1),
+                'power': round(purchasing_power, 0),
+                'city_slug': city_slug,
+                'nhood_slug': nhood_slug,
+            })
+
+    # Sort by highest purchasing power (most bang for your buck)
+    all_nhoods.sort(key=lambda x: x['power'], reverse=True)
+
+    top30 = all_nhoods[:30]
+    bottom30 = all_nhoods[-30:]
+    bottom30.reverse()
+
+    top_rows = ''
+    for i, n in enumerate(top30, 1):
+        n_name = n['name']
+        n_city = n['city']
+        n_coli = n['coli']
+        n_power = int(n['power'])
+        n_cs = n['city_slug']
+        n_ns = n['nhood_slug']
+        top_rows += f'''
+                        <tr>
+                            <td style="font-weight: 600;">{i}</td>
+                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td>{n_city}</td>
+                            <td style="text-align: center;">{n_coli}</td>
+                            <td style="text-align: right; font-weight: 600; color: #22c55e;">{n_power}%</td>
+                        </tr>'''
+
+    bottom_rows = ''
+    for i, n in enumerate(bottom30, 1):
+        n_name = n['name']
+        n_city = n['city']
+        n_coli = n['coli']
+        n_power = int(n['power'])
+        n_cs = n['city_slug']
+        n_ns = n['nhood_slug']
+        bottom_rows += f'''
+                        <tr>
+                            <td style="font-weight: 600;">{i}</td>
+                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td>{n_city}</td>
+                            <td style="text-align: center;">{n_coli}</td>
+                            <td style="text-align: right; font-weight: 600; color: #ef4444;">{n_power}%</td>
+                        </tr>'''
+
+    article_date = TODAY
+    total = TOTAL_NEIGHBORHOODS
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR}) — salary:converter</title>
+    <meta name="description" content="Discover which neighborhoods give you the most purchasing power. Analysis of {total:,} neighborhoods across 101 cities worldwide.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})">
+    <meta property="og:description" content="Discover which neighborhoods give you the most purchasing power worldwide.">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})",
+        "datePublished": "{article_date}",
+        "dateModified": "{article_date}",
+        "author": {{"@type": "Organization", "name": "salary:converter"}},
+        "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
+        "url": "https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html"
+    }}
+    </script>
+    <style>
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+        .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
+        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
+        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
+        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
+        .cta-box h2 {{ color: white; margin-bottom: 8px; }}
+        .cta-box p {{ color: rgba(255,255,255,0.85); }}
+        .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
+        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        @media (max-width: 600px) {{
+            article {{ padding: 24px; }}
+            article h1 {{ font-size: 1.5rem; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Where Your Salary Goes Furthest
+        </nav>
+
+        <article>
+            <h1>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})</h1>
+            <div class="meta">Published {article_date} &middot; salary:converter Research &middot; {total:,} neighborhoods analyzed</div>
+
+            <p>A $100,000 salary means very different things depending on where you live &mdash; not just which city, but which <em>neighborhood</em>. We calculated the purchasing power of the same salary across <strong>{total:,} neighborhoods in 101 cities</strong> to find where your money goes furthest.</p>
+
+            <p>Purchasing power is shown as a percentage of New York City baseline (100%). A score of 500% means your dollar buys 5x more than in NYC.</p>
+
+            <h2>Top 30: Where Your Salary Stretches Furthest</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Neighborhood</th>
+                            <th>City</th>
+                            <th style="text-align: center;">COLI</th>
+                            <th style="text-align: right;">Buying Power</th>
+                        </tr>
+                    </thead>
+                    <tbody>{top_rows}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cta-box">
+                <h2>Calculate Your Exact Salary</h2>
+                <p>Pick any two neighborhoods and see precisely what you need to earn to maintain your lifestyle.</p>
+                <a href="/" class="cta-btn">Open Salary Converter</a>
+            </div>
+
+            <h2>Bottom 30: Where Your Salary Stretches Least</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Neighborhood</th>
+                            <th>City</th>
+                            <th style="text-align: center;">COLI</th>
+                            <th style="text-align: right;">Buying Power</th>
+                        </tr>
+                    </thead>
+                    <tbody>{bottom_rows}
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Key Insights</h2>
+            <p>The gap between the most and least affordable neighborhoods is staggering. Your purchasing power can differ by <strong>10x or more</strong> depending on where you choose to live. Even within the same city, choosing the right neighborhood can effectively give you a 30-50% raise.</p>
+
+            <p>Remote workers in particular can leverage this data: earning a Western salary while living in a high-purchasing-power neighborhood lets you build wealth dramatically faster.</p>
+
+            <h2>Methodology</h2>
+            <p>Purchasing power is calculated as: (100 / Absolute COLI) x 100, where Absolute COLI = City COLI x Neighborhood Multiplier. Data sourced from Numbeo, Expatistan, OECD, and ECB, combined with local rental and consumer surveys.</p>
+        </article>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/blog/">Blog</a>
+            <a href="/city/">All Cities</a>
+        </footer>
+    </div>
+</body>
+</html>'''
+
+    return html
+
+
+def generate_blog_major_cities_breakdown():
+    """Article 3: The Real Cost of Living in 10 Major Cities: Neighborhood Breakdown"""
+    focus_cities = ['New York', 'London', 'Tokyo', 'Singapore', 'Dubai', 'Paris', 'Sydney', 'Berlin', 'Bangkok', 'São Paulo']
+
+    city_sections = ''
+    for city in focus_cities:
+        nhoods = cityNeighborhoods.get(city, {})
+        if not nhoods:
+            continue
+        city_slug = slugify(city)
+        currency = cityToCurrency.get(city, 'USD')
+        city_coli = coliData[city]
+        sorted_nhoods = sorted(nhoods.items(), key=lambda x: x[1], reverse=True)
+        most_expensive = sorted_nhoods[0]
+        most_affordable = sorted_nhoods[-1]
+        gap_pct = ((most_expensive[1] / most_affordable[1]) - 1) * 100
+        rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+
+        # Monthly savings: difference in estimated rent
+        city_rent = cityRent1BR.get(city, 0)
+        exp_rent = city_rent * most_expensive[1] * rate_to_local
+        aff_rent = city_rent * most_affordable[1] * rate_to_local
+        monthly_saving = exp_rent - aff_rent
+        fmt_saving = format_currency_amount(monthly_saving, currency)
+
+        rows = ''
+        for name, mult in sorted_nhoods:
+            nhood_slug = slugify(name)
+            abs_coli = round(city_coli * mult, 1)
+            pct = (mult - 1) * 100
+            sign = '+' if pct >= 0 else ''
+            color = '#22c55e' if pct < 0 else '#2563eb' if pct < 15 else '#f59e0b' if pct < 30 else '#ef4444'
+            rows += f'''
+                        <tr>
+                            <td><a href="/city/{city_slug}/{nhood_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
+                            <td style="text-align: center;">{abs_coli}</td>
+                            <td style="text-align: center;">{mult:.2f}x</td>
+                            <td style="text-align: right;"><span style="color: {color}; font-weight: 600;">{sign}{pct:.0f}%</span></td>
+                        </tr>'''
+
+        me_name = most_expensive[0]
+        ma_name = most_affordable[0]
+        city_sections += f'''
+            <h2>{city}</h2>
+            <p><strong>{len(sorted_nhoods)} neighborhoods</strong> &middot; Most expensive: {me_name} &middot; Most affordable: {ma_name} &middot; Gap: {gap_pct:.0f}% &middot; Potential monthly savings: {fmt_saving}</p>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Neighborhood</th>
+                            <th style="text-align: center;">COLI</th>
+                            <th style="text-align: center;">Multiplier</th>
+                            <th style="text-align: right;">vs Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>{rows}
+                    </tbody>
+                </table>
+            </div>
+            <p style="font-size: 0.85rem;"><a href="/city/{city_slug}.html" style="color: #2563eb; text-decoration: none;">View full {city} salary data &rarr;</a></p>
+'''
+
+    article_date = TODAY
+    total = TOTAL_NEIGHBORHOODS
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR}) — salary:converter</title>
+    <meta name="description" content="Detailed neighborhood-level cost of living breakdown for New York, London, Tokyo, Singapore, Dubai, Paris, Sydney, Berlin, Bangkok, and S&#227;o Paulo.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR})">
+    <meta property="og:description" content="Detailed neighborhood-level cost of living data for 10 major world cities.">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR})",
+        "datePublished": "{article_date}",
+        "dateModified": "{article_date}",
+        "author": {{"@type": "Organization", "name": "salary:converter"}},
+        "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
+        "url": "https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html"
+    }}
+    </script>
+    <style>
+        *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+        .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
+        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
+        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
+        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
+        .cta-box h2 {{ color: white; margin-bottom: 8px; }}
+        .cta-box p {{ color: rgba(255,255,255,0.85); }}
+        .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
+        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        @media (max-width: 600px) {{
+            article {{ padding: 24px; }}
+            article h1 {{ font-size: 1.5rem; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Real Cost of Living: Neighborhood Breakdown
+        </nav>
+
+        <article>
+            <h1>The Real Cost of Living in 10 Major Cities: A Neighborhood Breakdown ({CURRENT_YEAR})</h1>
+            <div class="meta">Published {article_date} &middot; salary:converter Research &middot; {total:,} neighborhoods analyzed</div>
+
+            <p>City-level averages hide enormous variation. In most major cities, the most expensive neighborhood costs <strong>50-100% more</strong> than the most affordable one. This guide breaks down the real cost of living across every neighborhood in 10 of the world's most popular cities for expats and remote workers.</p>
+
+            <p>Each neighborhood is rated using a multiplier against the city average (1.00x). Below 1.00 is cheaper than average; above 1.00 is more expensive.</p>
+
+            {city_sections}
+
+            <div class="cta-box">
+                <h2>Compare Any Two Neighborhoods</h2>
+                <p>Our converter handles {ROUNDED_NEIGHBORHOODS:,}+ neighborhoods across 101 cities with real-time salary equivalents.</p>
+                <a href="/" class="cta-btn">Open Salary Converter</a>
+            </div>
+
+            <h2>Methodology</h2>
+            <p>All data is compiled from Numbeo, Expatistan, OECD, and ECB combined with local rent indices, consumer surveys, and expatriate community reports. Neighborhood multipliers reflect relative cost differences within each city, covering housing, food, transportation, and general consumer prices.</p>
+        </article>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/blog/">Blog</a>
+            <a href="/city/">All Cities</a>
+        </footer>
+    </div>
+</body>
+</html>'''
+
+    return html
+
+
+# ============================================================
 # SITEMAP GENERATION
 # ============================================================
 
-def generate_sitemap(comparison_pairs):
+def generate_sitemap(comparison_pairs, neighborhood_comparison_data=None):
     """Generate sitemap.xml for all pages"""
     urls = []
     # Main pages
@@ -2598,11 +3700,27 @@ def generate_sitemap(comparison_pairs):
         slug = slugify(city)
         urls.append(f'https://salary-converter.com/city/{slug}.html')
 
-    # Comparison pages
+    # Neighborhood pages
+    for city, nhoods in cityNeighborhoods.items():
+        city_slug = slugify(city)
+        for nhood in nhoods:
+            nhood_slug = slugify(nhood)
+            urls.append(f'https://salary-converter.com/city/{city_slug}/{nhood_slug}.html')
+
+    # City-vs-city comparison pages
     for city1, city2 in comparison_pairs:
         slug1 = slugify(city1)
         slug2 = slugify(city2)
         urls.append(f'https://salary-converter.com/compare/{slug1}-vs-{slug2}.html')
+
+    # Neighborhood comparison pages
+    if neighborhood_comparison_data:
+        for city, pairs in neighborhood_comparison_data.items():
+            city_slug = slugify(city)
+            for n1, m1, n2, m2 in pairs:
+                n1_slug = slugify(n1)
+                n2_slug = slugify(n2)
+                urls.append(f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html')
 
     xml_entries = ''
     for url in urls:
@@ -2707,8 +3825,23 @@ if __name__ == '__main__':
         f.write(generate_city_index())
     print("  Done: City index page created at /city/index.html")
 
-    # Generate comparison pages
-    print(f"Generating {len(comparison_pairs)} comparison pages...")
+    # Generate individual neighborhood pages
+    nhood_count = 0
+    for city, nhoods in cityNeighborhoods.items():
+        city_slug = slugify(city)
+        nhood_dir = os.path.join(city_dir, city_slug)
+        os.makedirs(nhood_dir, exist_ok=True)
+        for name, mult in nhoods.items():
+            nhood_slug = slugify(name)
+            filepath = os.path.join(nhood_dir, f'{nhood_slug}.html')
+            html = generate_neighborhood_page(city, name, mult)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(html)
+            nhood_count += 1
+    print(f"  Done: {nhood_count} neighborhood pages created in /city/{{city}}/")
+
+    # Generate comparison pages (city vs city)
+    print(f"Generating {len(comparison_pairs)} city comparison pages...")
     for city1, city2 in comparison_pairs:
         slug1 = slugify(city1)
         slug2 = slugify(city2)
@@ -2716,7 +3849,28 @@ if __name__ == '__main__':
         html = generate_comparison_page(city1, city2)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(html)
-    print(f"  Done: {len(comparison_pairs)} comparison pages in /compare/")
+    print(f"  Done: {len(comparison_pairs)} city comparison pages in /compare/")
+
+    # Generate neighborhood comparison pages
+    nhood_comp_count = 0
+    nhood_comp_data = {}
+    for city in cityNeighborhoods:
+        pairs = get_neighborhood_comparison_pairs(city)
+        if not pairs:
+            continue
+        nhood_comp_data[city] = pairs
+        city_slug = slugify(city)
+        nhood_comp_dir = os.path.join(compare_dir, city_slug)
+        os.makedirs(nhood_comp_dir, exist_ok=True)
+        for n1, m1, n2, m2 in pairs:
+            n1_slug = slugify(n1)
+            n2_slug = slugify(n2)
+            filepath = os.path.join(nhood_comp_dir, f'{n1_slug}-vs-{n2_slug}.html')
+            html = generate_neighborhood_comparison_page(city, n1, m1, n2, m2)
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(html)
+            nhood_comp_count += 1
+    print(f"  Done: {nhood_comp_count} neighborhood comparison pages in /compare/{{city}}/")
 
     # Generate compare index page
     compare_index_path = os.path.join(compare_dir, 'index.html')
@@ -2724,12 +3878,33 @@ if __name__ == '__main__':
         f.write(generate_compare_index(comparison_pairs))
     print("  Done: Compare index page at /compare/index.html")
 
+    # Generate data-driven blog articles
+    blog_articles_dir = os.path.join(base_dir, 'blog', 'articles')
+    os.makedirs(blog_articles_dir, exist_ok=True)
+
+    blog_articles = [
+        ('50-most-undervalued-neighborhoods-in-the-world.html', generate_blog_undervalued_neighborhoods),
+        ('where-your-salary-goes-furthest-neighborhood-edition.html', generate_blog_salary_goes_furthest),
+        ('real-cost-of-living-major-cities-neighborhood-breakdown.html', generate_blog_major_cities_breakdown),
+    ]
+    for filename, generator in blog_articles:
+        filepath = os.path.join(blog_articles_dir, filename)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(generator())
+    print(f"  Done: {len(blog_articles)} data-driven blog articles generated")
+
     # Generate sitemap
     sitemap_path = os.path.join(base_dir, 'sitemap.xml')
     with open(sitemap_path, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(comparison_pairs))
+        f.write(generate_sitemap(comparison_pairs, nhood_comp_data))
     print("  Done: Sitemap generated at /sitemap.xml")
 
     # Summary
-    print(f"\nTotal new pages: {len(coliData) + len(comparison_pairs) + 2}")
-    print(f"Sitemap entries: {len(coliData) + len(comparison_pairs) + 4}")
+    total_pages = len(coliData) + nhood_count + len(comparison_pairs) + nhood_comp_count + len(blog_articles) + 2
+    print(f"\nTotal pages generated: {total_pages}")
+    print(f"  City pages: {len(coliData)}")
+    print(f"  Neighborhood pages: {nhood_count}")
+    print(f"  City comparisons: {len(comparison_pairs)}")
+    print(f"  Neighborhood comparisons: {nhood_comp_count}")
+    print(f"  Blog articles: {len(blog_articles)}")
+    print(f"  Index pages: 2")
