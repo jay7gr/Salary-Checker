@@ -509,6 +509,13 @@
             color: #1d1d1f;
         }
 
+        .afford-local {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: #aeaeb2;
+            white-space: nowrap;
+        }
+
         .afford-note {
             font-size: 0.6rem;
             color: #aeaeb2;
@@ -2263,22 +2270,25 @@ function calculate() {
         document.getElementById('affordVerdict').className = 'afford-verdict ' + vClass;
         document.getElementById('affordVerdict').innerHTML = `<span class="afford-verdict-icon">${vIcon}</span><span>${vText}</span>`;
 
-        function buildAffordCard(label, takeHome, costs, disposable) {
+        function buildAffordCard(label, takeHome, costs, disposable, localCur, toLocalRate) {
             const dc = disposable >= 0 ? 'positive' : 'negative';
-            let rows = `<div class="afford-card-row"><span>Take-home/yr</span><span class="afford-card-val">${fmtCur(takeHome, fromCurrency)}</span></div>
-                <div class="afford-card-row separator"><span>Rent/yr (1BR)</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.rent, fromCurrency)}</span></div>`;
+            const showLocal = localCur && localCur !== fromCurrency;
+            const loc = (amt) => showLocal ? ` <span class="afford-local">(${fmtCur(amt * toLocalRate, localCur)})</span>` : '';
+
+            let rows = `<div class="afford-card-row"><span>Take-home/yr</span><span class="afford-card-val">${fmtCur(takeHome, fromCurrency)}${loc(takeHome)}</span></div>
+                <div class="afford-card-row separator"><span>Rent/yr (1BR)</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.rent, fromCurrency)}${loc(costs.rent)}</span></div>`;
 
             if (hasLivingCosts) {
-                rows += `<div class="afford-card-row"><span>Groceries/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.groceries, fromCurrency)}</span></div>
-                    <div class="afford-card-row"><span>Utilities/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.utilities, fromCurrency)}</span></div>
-                    <div class="afford-card-row"><span>Transport/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.transport, fromCurrency)}</span></div>
-                    <div class="afford-card-row"><span>Healthcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.healthcare, fromCurrency)}</span></div>`;
+                rows += `<div class="afford-card-row"><span>Groceries/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.groceries, fromCurrency)}${loc(costs.groceries)}</span></div>
+                    <div class="afford-card-row"><span>Utilities/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.utilities, fromCurrency)}${loc(costs.utilities)}</span></div>
+                    <div class="afford-card-row"><span>Transport/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.transport, fromCurrency)}${loc(costs.transport)}</span></div>
+                    <div class="afford-card-row"><span>Healthcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.healthcare, fromCurrency)}${loc(costs.healthcare)}</span></div>`;
                 if (includeChildcare) {
-                    rows += `<div class="afford-card-row"><span>Childcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.childcare, fromCurrency)}</span></div>`;
+                    rows += `<div class="afford-card-row"><span>Childcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.childcare, fromCurrency)}${loc(costs.childcare)}</span></div>`;
                 }
             }
 
-            rows += `<div class="afford-card-row total"><span>Disposable</span><span class="afford-card-val ${dc}">${fmtCur(disposable, fromCurrency)}</span></div>`;
+            rows += `<div class="afford-card-row total"><span>Disposable</span><span class="afford-card-val ${dc}">${fmtCur(disposable, fromCurrency)}${loc(disposable)}</span></div>`;
 
             return `<div class="afford-card">
                 <div class="afford-card-city">${label}</div>
@@ -2289,9 +2299,11 @@ function calculate() {
         const fromCostsObj = costBreakdown ? costBreakdown.from : { rent: fromAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
         const toCostsObj = costBreakdown ? costBreakdown.to : { rent: toAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
 
+        const toTargetLocalRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
+
         document.getElementById('affordCards').innerHTML =
-            buildAffordCard(fromLabel, fromTakeHome, fromCostsObj, fromDisposable) +
-            buildAffordCard(toLabel, toTakeHome, toCostsObj, toDisposable);
+            buildAffordCard(fromLabel, fromTakeHome, fromCostsObj, fromDisposable, null, null) +
+            buildAffordCard(toLabel, toTakeHome, toCostsObj, toDisposable, toCurrency, toTargetLocalRate);
 
         // Show/hide childcare toggle
         document.getElementById('childcareToggle').style.display = hasLivingCosts ? 'flex' : 'none';
