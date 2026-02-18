@@ -807,13 +807,6 @@
                 z-index: 10000;
             }
 
-            .theme-toggle {
-                position: fixed;
-                top: 16px;
-                right: 16px;
-                z-index: 10001;
-            }
-
             .nav-dropdown {
                 position: fixed;
                 top: 58px;
@@ -1311,6 +1304,13 @@
         }
 
         @media (max-width: 768px) {
+            .theme-toggle {
+                position: fixed !important;
+                top: 23px !important;
+                right: 16px !important;
+                z-index: 10001 !important;
+            }
+
             .sidebar-burger {
                 display: none !important;
             }
