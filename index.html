@@ -3566,10 +3566,12 @@
             const currentCountry = cityToCountry[currentCity];
             const targetCountry = cityToCountry[targetCity];
             const taxSection = document.getElementById('taxSection');
+            let currentDed = null;
+            let targetDed = null;
 
             if (currentCountry && targetCountry) {
-                const currentDed = calculateAllDeductions(salary, currentCountry, currentCity, isExpatMode, currentNeighborhood);
-                const targetDed = calculateAllDeductions(equivalentSalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
+                currentDed = calculateAllDeductions(salary, currentCountry, currentCity, isExpatMode, currentNeighborhood);
+                targetDed = calculateAllDeductions(equivalentSalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
 
                 function buildDedCard(cityLabel, grossFormatted, ded, currency) {
                     const maxRate = Math.max(...ded.items.map(i => i.rate), 1);
@@ -3670,7 +3672,7 @@
                 </div>
             `;
 
-            if (currentCountry && targetCountry) {
+            if (currentDed && targetDed) {
                 const netCurrentVal = currentDed.net;
                 const netTargetVal = targetDed.net;
                 const maxNet = Math.max(netCurrentVal, netTargetVal);
