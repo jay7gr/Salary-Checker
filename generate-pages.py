@@ -1255,30 +1255,77 @@ THEME_CSS_VARS = '''
 
 THEME_TOGGLE_CSS = '''
         .theme-toggle {
-            background: none;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 48px;
+            height: 26px;
+            background: var(--border);
             border: none;
+            border-radius: 13px;
             cursor: pointer;
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            padding: 4px 8px;
-            border-radius: 8px;
-            transition: color 0.2s, background 0.2s;
-            line-height: 1;
+            padding: 0;
+            transition: background 0.3s;
+            flex-shrink: 0;
         }
         .theme-toggle:hover {
-            color: var(--text-primary);
-            background: var(--tag-bg);
+            background: var(--text-secondary);
+        }
+        .theme-toggle .toggle-thumb {
+            position: absolute;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: #60a5fa;
+        }
+        [data-theme="dark"] .theme-toggle .toggle-thumb {
+            transform: translateX(22px);
+        }
+        .theme-toggle .toggle-icon {
+            width: 12px;
+            height: 12px;
+        }
+        .theme-toggle .icon-sun {
+            color: #f59e0b;
+        }
+        .theme-toggle .icon-moon {
+            display: none;
+            color: #1e293b;
+        }
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            display: none;
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            display: block;
+            color: #1e293b;
         }
 '''
 
-THEME_TOGGLE_HTML = '<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>'
+THEME_TOGGLE_HTML = '''<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+            <span class="toggle-thumb">
+                <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+        </button>'''
 
 THEME_JS = '''
     <script>
     (function(){
         var t=document.getElementById('themeToggle');
         function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
-        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\\u2600':'\\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
         a(g());
         t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
         matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
@@ -2632,9 +2679,12 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     if featured_pairs is None:
         featured_pairs = set()
 
-    # Build featured section
+    # Build featured section — limit to 10 cards (5 rows of 2)
     featured_html = ''
+    featured_shown = 0
     for city1, city2 in comparison_pairs:
+        if featured_shown >= 10:
+            break
         if (city1, city2) in featured_pairs or (city2, city1) in featured_pairs:
             slug1 = slugify(city1)
             slug2 = slugify(city2)
@@ -2642,29 +2692,16 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             coli2 = coliData[city2]
             diff = abs(((coli2/coli1) - 1) * 100)
             featured_html += f'''
-                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card" data-cities="{city1.lower()} {city2.lower()}">
+                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card">
                     <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
                     <div class="compare-card-stats">COLI: {coli1} vs {coli2} &middot; {diff:.0f}% difference</div>
                 </a>'''
-
-    # Build all pairs section
-    all_pairs_html = ''
-    for city1, city2 in comparison_pairs:
-        if (city1, city2) in featured_pairs or (city2, city1) in featured_pairs:
-            continue
-        slug1 = slugify(city1)
-        slug2 = slugify(city2)
-        coli1 = coliData[city1]
-        coli2 = coliData[city2]
-        diff = abs(((coli2/coli1) - 1) * 100)
-        all_pairs_html += f'''
-                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card" data-cities="{city1.lower()} {city2.lower()}">
-                    <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
-                    <div class="compare-card-stats">COLI: {coli1} vs {coli2} &middot; {diff:.0f}% difference</div>
-                </a>'''
+            featured_shown += 1
 
     total = len(comparison_pairs)
-    featured_count = len(featured_pairs)
+
+    # Build city options for dropdowns
+    city_options = '\n'.join(f'                        <option value="{city}">{city}</option>' for city in sorted(coliData.keys()))
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -2725,23 +2762,39 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             text-align: center;
         }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; margin-bottom: 8px; }}
-        .hero p {{ color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; }}
-        .search-box {{
-            max-width: 500px; margin: 0 auto; position: relative;
+        .hero p {{ color: var(--text-secondary); font-size: 1rem; margin-bottom: 24px; }}
+        .compare-form {{
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
         }}
-        .search-box input {{
-            width: 100%; padding: 14px 20px 14px 44px; border: 2px solid var(--border);
-            border-radius: 100px; font-size: 0.95rem; font-family: inherit;
-            outline: none; transition: border-color 0.2s; background: var(--stat-card-bg);
-            color: var(--text-primary);
+        .compare-form-label {{
+            font-size: 1rem; font-weight: 600; color: var(--text-primary);
         }}
-        .search-box input:focus {{ border-color: var(--accent); background: var(--card-bg); }}
-        .search-box svg {{
-            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-            width: 18px; height: 18px; color: var(--text-secondary);
+        .city-select {{
+            padding: 12px 16px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 0.95rem; font-family: inherit;
+            outline: none; transition: border-color 0.2s;
+            background: var(--stat-card-bg); color: var(--text-primary);
+            cursor: pointer; min-width: 180px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2386868b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
         }}
-        .search-count {{
-            text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin: 16px 0;
+        .city-select:focus {{ border-color: var(--accent); background-color: var(--card-bg); }}
+        .compare-btn {{
+            padding: 12px 28px; border: none; border-radius: 12px;
+            background: var(--accent); color: white; font-size: 0.95rem;
+            font-weight: 600; font-family: inherit; cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }}
+        .compare-btn:hover {{ background: var(--accent-hover); transform: translateY(-1px); }}
+        .compare-btn:disabled {{
+            opacity: 0.5; cursor: not-allowed; transform: none;
+        }}
+        .compare-error {{
+            color: #ef4444; font-size: 0.82rem; margin-top: 12px;
+            min-height: 1.2em;
         }}
         .section-title {{
             font-size: 1.1rem; font-weight: 700; margin: 32px 0 16px;
@@ -2758,7 +2811,6 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         .compare-card:hover {{
             transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1);
         }}
-        .compare-card.hidden {{ display: none; }}
         .compare-card-cities {{
             font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;
         }}
@@ -2781,6 +2833,8 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             .page-wrapper {{ padding: 0 16px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
+            .compare-form {{ flex-direction: column; gap: 10px; }}
+            .city-select {{ min-width: 100%; }}
             .compare-grid {{ grid-template-columns: 1fr; }}
         }}
     </style>
@@ -2800,20 +2854,24 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         <section class="hero">
             <h1>City Comparisons</h1>
             <p>{total:,} city-to-city comparisons across 101 cities</p>
-            <div class="search-box">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input type="text" id="searchInput" placeholder="Search cities... e.g. London, Tokyo">
+            <div class="compare-form">
+                <span class="compare-form-label">Compare</span>
+                <select id="cityA" class="city-select">
+                    <option value="">Select a city...</option>
+{city_options}
+                </select>
+                <span class="compare-form-label">to</span>
+                <select id="cityB" class="city-select">
+                    <option value="">Select a city...</option>
+{city_options}
+                </select>
+                <button id="compareBtn" class="compare-btn" disabled>Compare</button>
             </div>
+            <div class="compare-error" id="compareError"></div>
         </section>
 
-        <div class="search-count" id="searchCount"></div>
-
-        <h2 class="section-title" id="featuredTitle">Popular Comparisons</h2>
-        <div class="compare-grid" id="featuredGrid">{featured_html}
-        </div>
-
-        <h2 class="section-title" id="allTitle">All Comparisons</h2>
-        <div class="compare-grid" id="allGrid">{all_pairs_html}
+        <h2 class="section-title">Popular Comparisons</h2>
+        <div class="compare-grid">{featured_html}
         </div>
 
         <footer class="page-footer">
@@ -2824,34 +2882,41 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     </div>
 
     <script>
-    const searchInput = document.getElementById('searchInput');
-    const searchCount = document.getElementById('searchCount');
-    const featuredTitle = document.getElementById('featuredTitle');
-    const allTitle = document.getElementById('allTitle');
-    const allCards = document.querySelectorAll('.compare-card');
+    (function() {{
+        var cityA = document.getElementById('cityA');
+        var cityB = document.getElementById('cityB');
+        var btn = document.getElementById('compareBtn');
+        var err = document.getElementById('compareError');
 
-    searchInput.addEventListener('input', function() {{
-        const q = this.value.toLowerCase().trim();
-        let visible = 0;
-        allCards.forEach(card => {{
-            const cities = card.getAttribute('data-cities');
-            if (!q || cities.includes(q)) {{
-                card.classList.remove('hidden');
-                visible++;
-            }} else {{
-                card.classList.add('hidden');
-            }}
-        }});
-        if (q) {{
-            searchCount.textContent = visible + ' comparison' + (visible !== 1 ? 's' : '') + ' found';
-            featuredTitle.style.display = 'none';
-            allTitle.style.display = 'none';
-        }} else {{
-            searchCount.textContent = '';
-            featuredTitle.style.display = '';
-            allTitle.style.display = '';
+        function slugify(s) {{
+            return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         }}
-    }});
+
+        function validate() {{
+            var a = cityA.value, b = cityB.value;
+            if (!a || !b) {{
+                btn.disabled = true;
+                err.textContent = '';
+            }} else if (a === b) {{
+                btn.disabled = true;
+                err.textContent = 'Please select two different cities.';
+            }} else {{
+                btn.disabled = false;
+                err.textContent = '';
+            }}
+        }}
+
+        cityA.addEventListener('change', validate);
+        cityB.addEventListener('change', validate);
+
+        btn.addEventListener('click', function() {{
+            var a = cityA.value, b = cityB.value;
+            if (!a || !b || a === b) return;
+            var cities = [a, b].sort();
+            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]) + '.html';
+            window.location.href = url;
+        }});
+    }})();
     </script>
 {THEME_JS}
 </body>
