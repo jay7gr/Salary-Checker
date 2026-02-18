@@ -1568,11 +1568,11 @@
             <div class="quick-select" id="currentCityQuick"></div>
             <div class="neighborhood-group" id="currentNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="currentNeighborhood">Neighborhood</label>
+                    <label for="currentNeighborhood">Neighborhood <span class="optional-tag">Recommended</span></label>
                     <select id="currentNeighborhood">
-                        <option value="">Select a neighborhood...</option>
+                        <option value="">City average (no adjustment)</option>
                     </select>
-                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Required — neighborhood selection adjusts cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
                 </div>
             </div>
             <div class="two-column">
@@ -1600,11 +1600,11 @@
             <div class="quick-select" id="targetCityQuick"></div>
             <div class="neighborhood-group" id="targetNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="targetNeighborhood">Neighborhood</label>
+                    <label for="targetNeighborhood">Neighborhood <span class="optional-tag">Recommended</span></label>
                     <select id="targetNeighborhood">
-                        <option value="">Select a neighborhood...</option>
+                        <option value="">City average (no adjustment)</option>
                     </select>
-                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Required — neighborhood selection adjusts cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
                 </div>
             </div>
             <div class="two-column">
@@ -3214,7 +3214,7 @@
             const neighborhoods = cityNeighborhoods[city];
 
             // Clear existing options
-            select.innerHTML = '<option value="">Select a neighborhood...</option>';
+            select.innerHTML = '<option value="">City average (no adjustment)</option>';
 
             if (neighborhoods) {
                 // Sort neighborhoods by multiplier (highest first)
@@ -3399,16 +3399,6 @@
             }
             if (!targetCurrency) {
                 showError('Please select a target currency', 'targetCurrency');
-                return;
-            }
-
-            // Validate neighborhoods are selected (required for accurate tax calculations)
-            if (cityNeighborhoods[currentCity] && !currentNeighborhood) {
-                showError('Please select a neighborhood for accurate local tax rates', 'currentNeighborhood');
-                return;
-            }
-            if (cityNeighborhoods[targetCity] && !targetNeighborhood) {
-                showError('Please select a neighborhood for accurate local tax rates', 'targetNeighborhood');
                 return;
             }
 
