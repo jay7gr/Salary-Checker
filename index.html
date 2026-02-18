@@ -1654,7 +1654,7 @@
                     <span class="expat-toggle-label" id="expatLabel" onclick="if(!isExpatMode) toggleExpatMode()">Expat</span>
                 </div>
                 <div class="tax-comparison" id="taxComparison"></div>
-                <div style="font-size: 0.7rem; color: var(--text-secondary, #aeaeb2); margin-top: 8px; line-height: 1.4;">Includes income tax, social security, and local taxes. Toggle between Local Employee and Expat to see how deductions differ.</div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary, #aeaeb2); margin-top: 8px; line-height: 1.4;">Includes income tax, social security, and local taxes. Expats may pay different social security rates in some countries — toggle to compare.</div>
             </div>
 
             <!-- Estimated Rent -->
@@ -2392,8 +2392,8 @@
             document.getElementById('expatLabel').classList.toggle('active', isExpatMode);
             const thumb = document.querySelector('.expat-toggle-thumb');
             thumb.style.transform = isExpatMode ? 'translateX(20px)' : 'translateX(0)';
-            // Re-trigger form submission to recalculate
-            document.getElementById('converterForm').dispatchEvent(new Event('submit'));
+            // Re-trigger calculation
+            document.getElementById('calculateBtn').click();
         }
 
         // Salary ranges by job title (annual USD, global median ranges)
