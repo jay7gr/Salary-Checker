@@ -2508,8 +2508,8 @@ def generate_city_index():
                     </td>
                     <td>{country}</td>
                     <td style="text-align: center; font-weight: 600;">{coli}</td>
-                    <td style="text-align: center;">{currency}</td>
-                    <td style="text-align: center;">{num_neighborhoods or "—"}</td>
+                    <td style="text-align: center;" class="col-currency">{currency}</td>
+                    <td style="text-align: center;" class="col-neighborhoods">{num_neighborhoods or "—"}</td>
                 </tr>'''
 
     html = f'''<!DOCTYPE html>
@@ -2611,15 +2611,18 @@ def generate_city_index():
             font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }}
         .page-footer a:hover {{ color: var(--accent); }}
+        .col-currency {{ }}
+        .col-neighborhoods {{ }}
         @media (max-width: 768px) {{
             body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
             .nav-links {{ padding-right: 48px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
-            .content-card {{ border-radius: 16px; padding: 16px; }}
-            table {{ font-size: 0.8rem; }}
-            table th, table td {{ padding: 8px 6px; }}
+            .content-card {{ border-radius: 16px; padding: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+            table {{ font-size: 0.78rem; min-width: 0; }}
+            table th, table td {{ padding: 8px 5px; white-space: nowrap; }}
+            .col-currency {{ display: none; }}
         }}
     </style>
 </head>
@@ -2650,8 +2653,8 @@ def generate_city_index():
                         <th>City</th>
                         <th>Country</th>
                         <th style="text-align: center;">COLI</th>
-                        <th style="text-align: center;">Currency</th>
-                        <th style="text-align: center;">Neighborhoods</th>
+                        <th style="text-align: center;" class="col-currency">Currency</th>
+                        <th style="text-align: center;" class="col-neighborhoods">Neighborhoods</th>
                     </tr>
                 </thead>
                 <tbody>{city_rows}

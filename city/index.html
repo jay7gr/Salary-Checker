@@ -195,15 +195,18 @@
             font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }
         .page-footer a:hover { color: var(--accent); }
+        .col-currency { }
+        .col-neighborhoods { }
         @media (max-width: 768px) {
             body { padding: 0; background: var(--bg); }
             .page-wrapper { padding: 0 16px; }
             .nav-links { padding-right: 48px; }
             .hero { border-radius: 0; padding: 32px 16px; box-shadow: none; }
             .hero h1 { font-size: 1.5rem; }
-            .content-card { border-radius: 16px; padding: 16px; }
-            table { font-size: 0.8rem; }
-            table th, table td { padding: 8px 6px; }
+            .content-card { border-radius: 16px; padding: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            table { font-size: 0.78rem; min-width: 0; }
+            table th, table td { padding: 8px 5px; white-space: nowrap; }
+            .col-currency { display: none; }
         }
     </style>
 </head>
@@ -239,8 +242,8 @@
                         <th>City</th>
                         <th>Country</th>
                         <th style="text-align: center;">COLI</th>
-                        <th style="text-align: center;">Currency</th>
-                        <th style="text-align: center;">Neighborhoods</th>
+                        <th style="text-align: center;" class="col-currency">Currency</th>
+                        <th style="text-align: center;" class="col-neighborhoods">Neighborhoods</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -250,8 +253,8 @@
                     </td>
                     <td>Switzerland</td>
                     <td style="text-align: center; font-weight: 600;">122.4</td>
-                    <td style="text-align: center;">CHF</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">CHF</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -259,8 +262,8 @@
                     </td>
                     <td>Switzerland</td>
                     <td style="text-align: center; font-weight: 600;">118.6</td>
-                    <td style="text-align: center;">CHF</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">CHF</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -268,8 +271,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">100</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">30</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">30</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -277,8 +280,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">97.6</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -286,8 +289,8 @@
                     </td>
                     <td>Singapore</td>
                     <td style="text-align: center; font-weight: 600;">87.7</td>
-                    <td style="text-align: center;">SGD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">SGD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -295,8 +298,8 @@
                     </td>
                     <td>United Kingdom</td>
                     <td style="text-align: center; font-weight: 600;">87.5</td>
-                    <td style="text-align: center;">GBP</td>
-                    <td style="text-align: center;">35</td>
+                    <td style="text-align: center;" class="col-currency">GBP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">35</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -304,8 +307,8 @@
                     </td>
                     <td>Denmark</td>
                     <td style="text-align: center; font-weight: 600;">85.7</td>
-                    <td style="text-align: center;">DKK</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">DKK</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -313,8 +316,8 @@
                     </td>
                     <td>Netherlands</td>
                     <td style="text-align: center; font-weight: 600;">82.6</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -322,8 +325,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">82.4</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -331,8 +334,8 @@
                     </td>
                     <td>Israel</td>
                     <td style="text-align: center; font-weight: 600;">81.3</td>
-                    <td style="text-align: center;">ILS</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">ILS</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -340,8 +343,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">80.1</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -349,8 +352,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">79.8</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -358,8 +361,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">79.5</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -367,8 +370,8 @@
                     </td>
                     <td>Norway</td>
                     <td style="text-align: center; font-weight: 600;">78.5</td>
-                    <td style="text-align: center;">NOK</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">NOK</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -376,8 +379,8 @@
                     </td>
                     <td>Japan</td>
                     <td style="text-align: center; font-weight: 600;">77.3</td>
-                    <td style="text-align: center;">JPY</td>
-                    <td style="text-align: center;">30</td>
+                    <td style="text-align: center;" class="col-currency">JPY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">30</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -385,8 +388,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">76.3</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">30</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">30</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -394,8 +397,8 @@
                     </td>
                     <td>Australia</td>
                     <td style="text-align: center; font-weight: 600;">74.5</td>
-                    <td style="text-align: center;">AUD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">AUD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -403,8 +406,8 @@
                     </td>
                     <td>China (SAR)</td>
                     <td style="text-align: center; font-weight: 600;">73.6</td>
-                    <td style="text-align: center;">HKD</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">HKD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -412,8 +415,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">73.2</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">27</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">27</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -421,8 +424,8 @@
                     </td>
                     <td>Ireland</td>
                     <td style="text-align: center; font-weight: 600;">72.8</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -430,8 +433,8 @@
                     </td>
                     <td>UAE</td>
                     <td style="text-align: center; font-weight: 600;">72.4</td>
-                    <td style="text-align: center;">AED</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">AED</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -439,8 +442,8 @@
                     </td>
                     <td>Qatar</td>
                     <td style="text-align: center; font-weight: 600;">69.5</td>
-                    <td style="text-align: center;">QAR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">QAR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -448,8 +451,8 @@
                     </td>
                     <td>South Korea</td>
                     <td style="text-align: center; font-weight: 600;">68.9</td>
-                    <td style="text-align: center;">KRW</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">KRW</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -457,8 +460,8 @@
                     </td>
                     <td>Luxembourg</td>
                     <td style="text-align: center; font-weight: 600;">68.4</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">17</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">17</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -466,8 +469,8 @@
                     </td>
                     <td>Australia</td>
                     <td style="text-align: center; font-weight: 600;">68.2</td>
-                    <td style="text-align: center;">AUD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">AUD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -475,8 +478,8 @@
                     </td>
                     <td>UAE</td>
                     <td style="text-align: center; font-weight: 600;">67.8</td>
-                    <td style="text-align: center;">AED</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">AED</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -484,8 +487,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">65.7</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -493,8 +496,8 @@
                     </td>
                     <td>Canada</td>
                     <td style="text-align: center; font-weight: 600;">65.4</td>
-                    <td style="text-align: center;">CAD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">CAD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -502,8 +505,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">64.8</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">23</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">23</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -511,8 +514,8 @@
                     </td>
                     <td>Sweden</td>
                     <td style="text-align: center; font-weight: 600;">64.3</td>
-                    <td style="text-align: center;">SEK</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">SEK</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -520,8 +523,8 @@
                     </td>
                     <td>Australia</td>
                     <td style="text-align: center; font-weight: 600;">63.5</td>
-                    <td style="text-align: center;">AUD</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">AUD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -529,8 +532,8 @@
                     </td>
                     <td>Japan</td>
                     <td style="text-align: center; font-weight: 600;">62.8</td>
-                    <td style="text-align: center;">JPY</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">JPY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -538,8 +541,8 @@
                     </td>
                     <td>Canada</td>
                     <td style="text-align: center; font-weight: 600;">62.3</td>
-                    <td style="text-align: center;">CAD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">CAD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -547,8 +550,8 @@
                     </td>
                     <td>United Kingdom</td>
                     <td style="text-align: center; font-weight: 600;">62.1</td>
-                    <td style="text-align: center;">GBP</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">GBP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -556,8 +559,8 @@
                     </td>
                     <td>Germany</td>
                     <td style="text-align: center; font-weight: 600;">61.5</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -565,8 +568,8 @@
                     </td>
                     <td>New Zealand</td>
                     <td style="text-align: center; font-weight: 600;">60.8</td>
-                    <td style="text-align: center;">NZD</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">NZD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -574,8 +577,8 @@
                     </td>
                     <td>United States</td>
                     <td style="text-align: center; font-weight: 600;">60.2</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -583,8 +586,8 @@
                     </td>
                     <td>Finland</td>
                     <td style="text-align: center; font-weight: 600;">58.2</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -592,8 +595,8 @@
                     </td>
                     <td>Italy</td>
                     <td style="text-align: center; font-weight: 600;">57.8</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">21</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">21</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -601,8 +604,8 @@
                     </td>
                     <td>France</td>
                     <td style="text-align: center; font-weight: 600;">52.7</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -610,8 +613,8 @@
                     </td>
                     <td>Canada</td>
                     <td style="text-align: center; font-weight: 600;">52.1</td>
-                    <td style="text-align: center;">CAD</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">CAD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -619,8 +622,8 @@
                     </td>
                     <td>Japan</td>
                     <td style="text-align: center; font-weight: 600;">51.4</td>
-                    <td style="text-align: center;">JPY</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">JPY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -628,8 +631,8 @@
                     </td>
                     <td>Germany</td>
                     <td style="text-align: center; font-weight: 600;">51.2</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -637,8 +640,8 @@
                     </td>
                     <td>Belgium</td>
                     <td style="text-align: center; font-weight: 600;">50.3</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -646,8 +649,8 @@
                     </td>
                     <td>Italy</td>
                     <td style="text-align: center; font-weight: 600;">49.3</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -655,8 +658,8 @@
                     </td>
                     <td>Austria</td>
                     <td style="text-align: center; font-weight: 600;">48.2</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -664,8 +667,8 @@
                     </td>
                     <td>France</td>
                     <td style="text-align: center; font-weight: 600;">46.9</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">26</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">26</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -673,8 +676,8 @@
                     </td>
                     <td>China</td>
                     <td style="text-align: center; font-weight: 600;">46.2</td>
-                    <td style="text-align: center;">CNY</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">CNY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -682,8 +685,8 @@
                     </td>
                     <td>Taiwan</td>
                     <td style="text-align: center; font-weight: 600;">44.8</td>
-                    <td style="text-align: center;">TWD</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">TWD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -691,8 +694,8 @@
                     </td>
                     <td>China</td>
                     <td style="text-align: center; font-weight: 600;">43.5</td>
-                    <td style="text-align: center;">CNY</td>
-                    <td style="text-align: center;">22</td>
+                    <td style="text-align: center;" class="col-currency">CNY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">22</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -700,8 +703,8 @@
                     </td>
                     <td>Saudi Arabia</td>
                     <td style="text-align: center; font-weight: 600;">42.6</td>
-                    <td style="text-align: center;">SAR</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">SAR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -709,8 +712,8 @@
                     </td>
                     <td>Panama</td>
                     <td style="text-align: center; font-weight: 600;">42.3</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -718,8 +721,8 @@
                     </td>
                     <td>Spain</td>
                     <td style="text-align: center; font-weight: 600;">42.1</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">23</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">23</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -727,8 +730,8 @@
                     </td>
                     <td>China</td>
                     <td style="text-align: center; font-weight: 600;">41.9</td>
-                    <td style="text-align: center;">CNY</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">CNY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -736,8 +739,8 @@
                     </td>
                     <td>Brazil</td>
                     <td style="text-align: center; font-weight: 600;">41.8</td>
-                    <td style="text-align: center;">BRL</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">BRL</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -745,8 +748,8 @@
                     </td>
                     <td>China</td>
                     <td style="text-align: center; font-weight: 600;">38.7</td>
-                    <td style="text-align: center;">CNY</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">CNY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -754,8 +757,8 @@
                     </td>
                     <td>Spain</td>
                     <td style="text-align: center; font-weight: 600;">38.0</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">23</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">23</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -763,8 +766,8 @@
                     </td>
                     <td>Thailand</td>
                     <td style="text-align: center; font-weight: 600;">37.2</td>
-                    <td style="text-align: center;">THB</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">THB</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -772,8 +775,8 @@
                     </td>
                     <td>Mexico</td>
                     <td style="text-align: center; font-weight: 600;">35.8</td>
-                    <td style="text-align: center;">MXN</td>
-                    <td style="text-align: center;">15</td>
+                    <td style="text-align: center;" class="col-currency">MXN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">15</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -781,8 +784,8 @@
                     </td>
                     <td>Portugal</td>
                     <td style="text-align: center; font-weight: 600;">34.7</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -790,8 +793,8 @@
                     </td>
                     <td>Spain</td>
                     <td style="text-align: center; font-weight: 600;">33.5</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -799,8 +802,8 @@
                     </td>
                     <td>Chile</td>
                     <td style="text-align: center; font-weight: 600;">33.2</td>
-                    <td style="text-align: center;">CLP</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">CLP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -808,8 +811,8 @@
                     </td>
                     <td>Malaysia</td>
                     <td style="text-align: center; font-weight: 600;">32.8</td>
-                    <td style="text-align: center;">MYR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">MYR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -817,8 +820,8 @@
                     </td>
                     <td>Mexico</td>
                     <td style="text-align: center; font-weight: 600;">32.5</td>
-                    <td style="text-align: center;">MXN</td>
-                    <td style="text-align: center;">25</td>
+                    <td style="text-align: center;" class="col-currency">MXN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">25</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -826,8 +829,8 @@
                     </td>
                     <td>Uruguay</td>
                     <td style="text-align: center; font-weight: 600;">32.5</td>
-                    <td style="text-align: center;">UYU</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">UYU</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -835,8 +838,8 @@
                     </td>
                     <td>Croatia</td>
                     <td style="text-align: center; font-weight: 600;">31.8</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">16</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">16</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -844,8 +847,8 @@
                     </td>
                     <td>Spain</td>
                     <td style="text-align: center; font-weight: 600;">31.2</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -853,8 +856,8 @@
                     </td>
                     <td>Costa Rica</td>
                     <td style="text-align: center; font-weight: 600;">31.2</td>
-                    <td style="text-align: center;">CRC</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">CRC</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -862,8 +865,8 @@
                     </td>
                     <td>Mexico</td>
                     <td style="text-align: center; font-weight: 600;">30.8</td>
-                    <td style="text-align: center;">MXN</td>
-                    <td style="text-align: center;">16</td>
+                    <td style="text-align: center;" class="col-currency">MXN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">16</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -871,8 +874,8 @@
                     </td>
                     <td>Greece</td>
                     <td style="text-align: center; font-weight: 600;">30.6</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -880,8 +883,8 @@
                     </td>
                     <td>Czech Republic</td>
                     <td style="text-align: center; font-weight: 600;">30.6</td>
-                    <td style="text-align: center;">CZK</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">CZK</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -889,8 +892,8 @@
                     </td>
                     <td>Thailand</td>
                     <td style="text-align: center; font-weight: 600;">30.5</td>
-                    <td style="text-align: center;">THB</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">THB</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -898,8 +901,8 @@
                     </td>
                     <td>Portugal</td>
                     <td style="text-align: center; font-weight: 600;">30.1</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -907,8 +910,8 @@
                     </td>
                     <td>Estonia</td>
                     <td style="text-align: center; font-weight: 600;">28.9</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">17</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">17</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -916,8 +919,8 @@
                     </td>
                     <td>Poland</td>
                     <td style="text-align: center; font-weight: 600;">28.4</td>
-                    <td style="text-align: center;">PLN</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">PLN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -925,8 +928,8 @@
                     </td>
                     <td>South Africa</td>
                     <td style="text-align: center; font-weight: 600;">28.4</td>
-                    <td style="text-align: center;">ZAR</td>
-                    <td style="text-align: center;">21</td>
+                    <td style="text-align: center;" class="col-currency">ZAR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">21</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -934,8 +937,8 @@
                     </td>
                     <td>Nigeria</td>
                     <td style="text-align: center; font-weight: 600;">27.3</td>
-                    <td style="text-align: center;">NGN</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">NGN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -943,8 +946,8 @@
                     </td>
                     <td>Philippines</td>
                     <td style="text-align: center; font-weight: 600;">26.8</td>
-                    <td style="text-align: center;">PHP</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">PHP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -952,8 +955,8 @@
                     </td>
                     <td>Vietnam</td>
                     <td style="text-align: center; font-weight: 600;">26.4</td>
-                    <td style="text-align: center;">VND</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">VND</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -961,8 +964,8 @@
                     </td>
                     <td>Hungary</td>
                     <td style="text-align: center; font-weight: 600;">26.1</td>
-                    <td style="text-align: center;">HUF</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">HUF</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -970,8 +973,8 @@
                     </td>
                     <td>Peru</td>
                     <td style="text-align: center; font-weight: 600;">25.8</td>
-                    <td style="text-align: center;">PEN</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">PEN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -979,8 +982,8 @@
                     </td>
                     <td>Argentina</td>
                     <td style="text-align: center; font-weight: 600;">25.6</td>
-                    <td style="text-align: center;">ARS</td>
-                    <td style="text-align: center;">23</td>
+                    <td style="text-align: center;" class="col-currency">ARS</td>
+                    <td style="text-align: center;" class="col-neighborhoods">23</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -988,8 +991,8 @@
                     </td>
                     <td>Latvia</td>
                     <td style="text-align: center; font-weight: 600;">25.3</td>
-                    <td style="text-align: center;">EUR</td>
-                    <td style="text-align: center;">17</td>
+                    <td style="text-align: center;" class="col-currency">EUR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">17</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -997,8 +1000,8 @@
                     </td>
                     <td>Indonesia</td>
                     <td style="text-align: center; font-weight: 600;">25.3</td>
-                    <td style="text-align: center;">IDR</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">IDR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1006,8 +1009,8 @@
                     </td>
                     <td>Cambodia</td>
                     <td style="text-align: center; font-weight: 600;">24.8</td>
-                    <td style="text-align: center;">USD</td>
-                    <td style="text-align: center;">17</td>
+                    <td style="text-align: center;" class="col-currency">USD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">17</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1015,8 +1018,8 @@
                     </td>
                     <td>Kenya</td>
                     <td style="text-align: center; font-weight: 600;">24.7</td>
-                    <td style="text-align: center;">KES</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">KES</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1024,8 +1027,8 @@
                     </td>
                     <td>Indonesia</td>
                     <td style="text-align: center; font-weight: 600;">24.5</td>
-                    <td style="text-align: center;">IDR</td>
-                    <td style="text-align: center;">21</td>
+                    <td style="text-align: center;" class="col-currency">IDR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">21</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1033,8 +1036,8 @@
                     </td>
                     <td>Vietnam</td>
                     <td style="text-align: center; font-weight: 600;">24.1</td>
-                    <td style="text-align: center;">VND</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">VND</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1042,8 +1045,8 @@
                     </td>
                     <td>Poland</td>
                     <td style="text-align: center; font-weight: 600;">23.8</td>
-                    <td style="text-align: center;">PLN</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">PLN</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1051,8 +1054,8 @@
                     </td>
                     <td>Turkey</td>
                     <td style="text-align: center; font-weight: 600;">23.1</td>
-                    <td style="text-align: center;">TRY</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">TRY</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1060,8 +1063,8 @@
                     </td>
                     <td>Colombia</td>
                     <td style="text-align: center; font-weight: 600;">22.9</td>
-                    <td style="text-align: center;">COP</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">COP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1069,8 +1072,8 @@
                     </td>
                     <td>Thailand</td>
                     <td style="text-align: center; font-weight: 600;">22.6</td>
-                    <td style="text-align: center;">THB</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">THB</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1078,8 +1081,8 @@
                     </td>
                     <td>Romania</td>
                     <td style="text-align: center; font-weight: 600;">22.5</td>
-                    <td style="text-align: center;">RON</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">RON</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1087,8 +1090,8 @@
                     </td>
                     <td>India</td>
                     <td style="text-align: center; font-weight: 600;">22.3</td>
-                    <td style="text-align: center;">INR</td>
-                    <td style="text-align: center;">26</td>
+                    <td style="text-align: center;" class="col-currency">INR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">26</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1096,8 +1099,8 @@
                     </td>
                     <td>Morocco</td>
                     <td style="text-align: center; font-weight: 600;">22.1</td>
-                    <td style="text-align: center;">MAD</td>
-                    <td style="text-align: center;">18</td>
+                    <td style="text-align: center;" class="col-currency">MAD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">18</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1105,8 +1108,8 @@
                     </td>
                     <td>India</td>
                     <td style="text-align: center; font-weight: 600;">20.8</td>
-                    <td style="text-align: center;">INR</td>
-                    <td style="text-align: center;">23</td>
+                    <td style="text-align: center;" class="col-currency">INR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">23</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1114,8 +1117,8 @@
                     </td>
                     <td>Colombia</td>
                     <td style="text-align: center; font-weight: 600;">20.4</td>
-                    <td style="text-align: center;">COP</td>
-                    <td style="text-align: center;">19</td>
+                    <td style="text-align: center;" class="col-currency">COP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">19</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1123,8 +1126,8 @@
                     </td>
                     <td>India</td>
                     <td style="text-align: center; font-weight: 600;">19.5</td>
-                    <td style="text-align: center;">INR</td>
-                    <td style="text-align: center;">24</td>
+                    <td style="text-align: center;" class="col-currency">INR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">24</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1132,8 +1135,8 @@
                     </td>
                     <td>Morocco</td>
                     <td style="text-align: center; font-weight: 600;">19.2</td>
-                    <td style="text-align: center;">MAD</td>
-                    <td style="text-align: center;">17</td>
+                    <td style="text-align: center;" class="col-currency">MAD</td>
+                    <td style="text-align: center;" class="col-neighborhoods">17</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1141,8 +1144,8 @@
                     </td>
                     <td>India</td>
                     <td style="text-align: center; font-weight: 600;">18.9</td>
-                    <td style="text-align: center;">INR</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">INR</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 <tr>
                     <td style="font-weight: 600;">
@@ -1150,8 +1153,8 @@
                     </td>
                     <td>Egypt</td>
                     <td style="text-align: center; font-weight: 600;">16.8</td>
-                    <td style="text-align: center;">EGP</td>
-                    <td style="text-align: center;">20</td>
+                    <td style="text-align: center;" class="col-currency">EGP</td>
+                    <td style="text-align: center;" class="col-neighborhoods">20</td>
                 </tr>
                 </tbody>
             </table>
