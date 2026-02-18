@@ -513,7 +513,52 @@
             font-size: 0.6rem;
             color: #aeaeb2;
             margin-top: 6px;
+            line-height: 1.4;
         }
+        .afford-note a {
+            color: #0071e3;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 2px;
+        }
+        .afford-note a:hover { text-decoration-style: solid; }
+
+        .childcare-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+        .childcare-toggle-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #aeaeb2;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .childcare-toggle-label.active {
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+        .childcare-toggle-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
+        .afford-card-row.separator {
+            border-top: 1px dashed #e8e8ed;
+            margin-top: 3px;
+            padding-top: 3px;
+        }
+        .afford-card-row .afford-card-val.deduction { color: #aeaeb2; }
 
         /* === CHART SECTION === */
         .chart-section {
@@ -771,9 +816,16 @@
         <!-- Affordability Verdict -->
         <div class="affordability-section" id="affordabilitySection">
             <div class="section-title">Affordability Verdict</div>
+            <div class="childcare-toggle" id="childcareToggle" style="display: none;">
+                <span class="childcare-toggle-label active" id="noChildcareLabel" onclick="if(includeChildcare) toggleChildcare()">Without Childcare</span>
+                <div class="expat-toggle-track" onclick="toggleChildcare()">
+                    <div class="childcare-toggle-thumb"></div>
+                </div>
+                <span class="childcare-toggle-label" id="childcareLabel" onclick="if(!includeChildcare) toggleChildcare()">With Childcare</span>
+            </div>
             <div class="afford-verdict" id="affordVerdict"></div>
             <div class="afford-cards" id="affordCards"></div>
-            <div class="afford-note">Disposable = est. take-home minus annual 1BR rent.</div>
+            <div class="afford-note" id="affordNote">Disposable = take-home minus rent, groceries, utilities, transport &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI-adjusted salary above — this breakdown shows where your money goes. Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.</div>
         </div>
 
         <!-- Visual Chart -->
@@ -1687,6 +1739,110 @@ const cityRent1BR = {
     'San José (CR)':550,'Playa del Carmen':500
 };
 
+const cityLivingCosts = {
+    'New York':{groceries:550,utilities:330,transport:134,healthcare:450,childcare:2400},
+    'San Francisco':{groceries:520,utilities:365,transport:87,healthcare:420,childcare:2500},
+    'Los Angeles':{groceries:450,utilities:290,transport:100,healthcare:400,childcare:1800},
+    'Chicago':{groceries:400,utilities:250,transport:105,healthcare:380,childcare:1600},
+    'Miami':{groceries:420,utilities:280,transport:115,healthcare:400,childcare:1500},
+    'Austin':{groceries:380,utilities:260,transport:42,healthcare:350,childcare:1300},
+    'Seattle':{groceries:450,utilities:280,transport:100,healthcare:400,childcare:2000},
+    'Denver':{groceries:400,utilities:230,transport:115,healthcare:370,childcare:1500},
+    'Boston':{groceries:480,utilities:300,transport:90,healthcare:420,childcare:2200},
+    'Washington DC':{groceries:470,utilities:280,transport:100,healthcare:400,childcare:2400},
+    'Houston':{groceries:370,utilities:260,transport:45,healthcare:360,childcare:1200},
+    'Toronto':{groceries:350,utilities:230,transport:110,healthcare:75,childcare:1100},
+    'Vancouver':{groceries:360,utilities:200,transport:75,healthcare:75,childcare:1200},
+    'Montreal':{groceries:320,utilities:180,transport:65,healthcare:50,childcare:200},
+    'Mexico City':{groceries:250,utilities:115,transport:20,healthcare:50,childcare:475},
+    'Cancún':{groceries:280,utilities:245,transport:28,healthcare:50,childcare:210},
+    'Panama City':{groceries:300,utilities:180,transport:30,healthcare:60,childcare:500},
+    'London':{groceries:400,utilities:415,transport:225,healthcare:50,childcare:2600},
+    'Paris':{groceries:380,utilities:320,transport:105,healthcare:60,childcare:1450},
+    'Amsterdam':{groceries:350,utilities:310,transport:100,healthcare:130,childcare:2400},
+    'Berlin':{groceries:300,utilities:310,transport:50,healthcare:90,childcare:135},
+    'Munich':{groceries:350,utilities:320,transport:60,healthcare:90,childcare:400},
+    'Dublin':{groceries:350,utilities:280,transport:120,healthcare:50,childcare:1200},
+    'Brussels':{groceries:340,utilities:280,transport:55,healthcare:80,childcare:975},
+    'Luxembourg City':{groceries:380,utilities:300,transport:0,healthcare:80,childcare:1550},
+    'Zurich':{groceries:550,utilities:325,transport:100,healthcare:400,childcare:3600},
+    'Geneva':{groceries:530,utilities:310,transport:80,healthcare:400,childcare:3400},
+    'Edinburgh':{groceries:320,utilities:290,transport:70,healthcare:30,childcare:1400},
+    'Nice':{groceries:370,utilities:280,transport:50,healthcare:60,childcare:1000},
+    'Madrid':{groceries:280,utilities:235,transport:55,healthcare:40,childcare:550},
+    'Barcelona':{groceries:290,utilities:230,transport:45,healthcare:40,childcare:600},
+    'Valencia':{groceries:250,utilities:210,transport:40,healthcare:35,childcare:400},
+    'Málaga':{groceries:240,utilities:200,transport:40,healthcare:35,childcare:380},
+    'Lisbon':{groceries:280,utilities:220,transport:45,healthcare:35,childcare:450},
+    'Porto':{groceries:250,utilities:200,transport:40,healthcare:35,childcare:380},
+    'Rome':{groceries:320,utilities:260,transport:40,healthcare:40,childcare:700},
+    'Milan':{groceries:350,utilities:270,transport:40,healthcare:45,childcare:800},
+    'Athens':{groceries:270,utilities:230,transport:35,healthcare:35,childcare:400},
+    'Split':{groceries:280,utilities:230,transport:40,healthcare:30,childcare:350},
+    'Stockholm':{groceries:350,utilities:200,transport:100,healthcare:40,childcare:180},
+    'Copenhagen':{groceries:380,utilities:250,transport:60,healthcare:35,childcare:400},
+    'Helsinki':{groceries:330,utilities:220,transport:65,healthcare:40,childcare:350},
+    'Oslo':{groceries:400,utilities:370,transport:70,healthcare:30,childcare:235},
+    'Vienna':{groceries:310,utilities:280,transport:55,healthcare:60,childcare:350},
+    'Prague':{groceries:280,utilities:375,transport:24,healthcare:25,childcare:955},
+    'Budapest':{groceries:240,utilities:250,transport:30,healthcare:25,childcare:500},
+    'Warsaw':{groceries:260,utilities:270,transport:30,healthcare:25,childcare:550},
+    'Krakow':{groceries:230,utilities:250,transport:25,healthcare:25,childcare:400},
+    'Bucharest':{groceries:250,utilities:210,transport:20,healthcare:20,childcare:450},
+    'Tallinn':{groceries:290,utilities:400,transport:35,healthcare:30,childcare:645},
+    'Riga':{groceries:280,utilities:400,transport:35,healthcare:25,childcare:560},
+    'Istanbul':{groceries:250,utilities:115,transport:75,healthcare:40,childcare:350},
+    'Tokyo':{groceries:400,utilities:215,transport:78,healthcare:200,childcare:1100},
+    'Osaka':{groceries:350,utilities:195,transport:65,healthcare:180,childcare:900},
+    'Fukuoka':{groceries:320,utilities:180,transport:55,healthcare:170,childcare:800},
+    'Seoul':{groceries:350,utilities:205,transport:45,healthcare:100,childcare:700},
+    'Hong Kong':{groceries:450,utilities:260,transport:70,healthcare:60,childcare:1020},
+    'Taipei':{groceries:300,utilities:120,transport:38,healthcare:40,childcare:650},
+    'Shanghai':{groceries:350,utilities:130,transport:30,healthcare:50,childcare:800},
+    'Beijing':{groceries:340,utilities:120,transport:25,healthcare:50,childcare:750},
+    'Shenzhen':{groceries:320,utilities:110,transport:30,healthcare:45,childcare:700},
+    'Guangzhou':{groceries:300,utilities:100,transport:25,healthcare:45,childcare:650},
+    'Singapore':{groceries:380,utilities:200,transport:100,healthcare:150,childcare:1465},
+    'Bangkok':{groceries:250,utilities:140,transport:38,healthcare:50,childcare:550},
+    'Chiang Mai':{groceries:200,utilities:100,transport:58,healthcare:40,childcare:840},
+    'Phuket':{groceries:240,utilities:145,transport:24,healthcare:45,childcare:645},
+    'Kuala Lumpur':{groceries:220,utilities:120,transport:35,healthcare:40,childcare:400},
+    'Ho Chi Minh City':{groceries:200,utilities:100,transport:12,healthcare:30,childcare:350},
+    'Hanoi':{groceries:190,utilities:95,transport:10,healthcare:25,childcare:300},
+    'Manila':{groceries:220,utilities:160,transport:15,healthcare:35,childcare:400},
+    'Jakarta':{groceries:200,utilities:110,transport:15,healthcare:30,childcare:300},
+    'Bali (Denpasar)':{groceries:180,utilities:70,transport:12,healthcare:30,childcare:160},
+    'Phnom Penh':{groceries:220,utilities:150,transport:10,healthcare:30,childcare:635},
+    'Mumbai':{groceries:150,utilities:75,transport:6,healthcare:25,childcare:200},
+    'Bangalore':{groceries:140,utilities:80,transport:15,healthcare:25,childcare:180},
+    'Delhi':{groceries:130,utilities:70,transport:10,healthcare:20,childcare:150},
+    'Chennai':{groceries:120,utilities:65,transport:8,healthcare:20,childcare:130},
+    'Sydney':{groceries:380,utilities:270,transport:145,healthcare:150,childcare:2100},
+    'Melbourne':{groceries:350,utilities:250,transport:115,healthcare:150,childcare:2000},
+    'Perth':{groceries:340,utilities:240,transport:120,healthcare:150,childcare:1800},
+    'Auckland':{groceries:340,utilities:220,transport:125,healthcare:100,childcare:1200},
+    'Dubai':{groceries:380,utilities:400,transport:87,healthcare:80,childcare:1200},
+    'Abu Dhabi':{groceries:360,utilities:380,transport:80,healthcare:70,childcare:1100},
+    'Doha':{groceries:350,utilities:215,transport:33,healthcare:50,childcare:775},
+    'Riyadh':{groceries:300,utilities:180,transport:40,healthcare:50,childcare:600},
+    'Tel Aviv':{groceries:420,utilities:250,transport:55,healthcare:80,childcare:1230},
+    'Cape Town':{groceries:220,utilities:185,transport:55,healthcare:60,childcare:240},
+    'Nairobi':{groceries:200,utilities:95,transport:31,healthcare:40,childcare:200},
+    'Lagos':{groceries:180,utilities:100,transport:36,healthcare:30,childcare:670},
+    'Cairo':{groceries:120,utilities:45,transport:7,healthcare:25,childcare:100},
+    'Marrakech':{groceries:170,utilities:80,transport:10,healthcare:25,childcare:100},
+    'Casablanca':{groceries:200,utilities:100,transport:25,healthcare:30,childcare:465},
+    'São Paulo':{groceries:220,utilities:150,transport:55,healthcare:60,childcare:500},
+    'Buenos Aires':{groceries:200,utilities:235,transport:20,healthcare:50,childcare:300},
+    'Bogotá':{groceries:200,utilities:120,transport:39,healthcare:40,childcare:330},
+    'Lima':{groceries:200,utilities:95,transport:20,healthcare:35,childcare:190},
+    'Santiago':{groceries:250,utilities:160,transport:40,healthcare:60,childcare:500},
+    'Medellín':{groceries:180,utilities:120,transport:60,healthcare:35,childcare:545},
+    'Montevideo':{groceries:280,utilities:260,transport:72,healthcare:70,childcare:520},
+    'San José (CR)':{groceries:280,utilities:180,transport:60,healthcare:70,childcare:695},
+    'Playa del Carmen':{groceries:260,utilities:140,transport:28,healthcare:45,childcare:210}
+};
+
 const dedColors = {income_tax:'#ef4444',social_security:'#f59e0b',state_tax:'#8b5cf6',cantonal_tax:'#8b5cf6',provincial_tax:'#8b5cf6',solidarity:'#06b6d4',church_tax:'#06b6d4',council_tax:'#6b7280'};
 
 const salaryRanges = {
@@ -1766,6 +1922,18 @@ const resultBox = document.getElementById('resultBox');
 const resultAmount = document.getElementById('resultAmount');
 const errorMsg = document.getElementById('errorMsg');
 let isExpatMode = false;
+let includeChildcare = false;
+
+function toggleChildcare() {
+    includeChildcare = !includeChildcare;
+    document.getElementById('noChildcareLabel').classList.toggle('active', !includeChildcare);
+    document.getElementById('childcareLabel').classList.toggle('active', includeChildcare);
+    const thumb = document.querySelector('.childcare-toggle-thumb');
+    thumb.style.transform = includeChildcare ? 'translateX(14px)' : 'translateX(0)';
+    if (resultBox.style.display !== 'none' && resultBox.style.display !== '') {
+        calculate();
+    }
+}
 
 function toggleExpatMode() {
     isExpatMode = !isExpatMode;
@@ -2005,11 +2173,11 @@ function calculate() {
     let fromRentUSD = 0;
     let toRentUSD = 0;
     let hasRentData = false;
+    const fromMult = (fromNhood && cityNeighborhoods[fromCity] && cityNeighborhoods[fromCity][fromNhood]) ? cityNeighborhoods[fromCity][fromNhood] : 1.0;
+    const toMult = (toNhood && cityNeighborhoods[toCity] && cityNeighborhoods[toCity][toNhood]) ? cityNeighborhoods[toCity][toNhood] : 1.0;
 
     if (fromBaseRent && toBaseRent) {
         hasRentData = true;
-        const fromMult = (fromNhood && cityNeighborhoods[fromCity] && cityNeighborhoods[fromCity][fromNhood]) ? cityNeighborhoods[fromCity][fromNhood] : 1.0;
-        const toMult = (toNhood && cityNeighborhoods[toCity] && cityNeighborhoods[toCity][toNhood]) ? cityNeighborhoods[toCity][toNhood] : 1.0;
         fromRentUSD = fromBaseRent * fromMult;
         toRentUSD = toBaseRent * toMult;
         const fromRentLocal = fromRentUSD * (exchangeRates[fromCurrency] / exchangeRates['USD']);
@@ -2040,39 +2208,103 @@ function calculate() {
         const toTakeHome = toDed.net / xRate;
         const fromAnnualRent = fromRentUSD * usdToFromRate * 12;
         const toAnnualRent = toRentUSD * usdToFromRate * 12;
-        const fromDisposable = fromTakeHome - fromAnnualRent;
-        const toDisposable = toTakeHome - toAnnualRent;
+
+        // Look up living costs
+        const fromCosts = cityLivingCosts[fromCity];
+        const toCosts = cityLivingCosts[toCity];
+        const hasLivingCosts = fromCosts && toCosts;
+
+        let fromDisposable, toDisposable;
+        let costBreakdown = null;
+
+        if (hasLivingCosts) {
+            const fromGroceries = fromCosts.groceries * fromMult * usdToFromRate * 12;
+            const toGroceries = toCosts.groceries * toMult * usdToFromRate * 12;
+            const fromUtilities = fromCosts.utilities * fromMult * usdToFromRate * 12;
+            const toUtilities = toCosts.utilities * toMult * usdToFromRate * 12;
+            const fromTransport = fromCosts.transport * fromMult * usdToFromRate * 12;
+            const toTransport = toCosts.transport * toMult * usdToFromRate * 12;
+            const fromHealthcare = fromCosts.healthcare * fromMult * usdToFromRate * 12;
+            const toHealthcare = toCosts.healthcare * toMult * usdToFromRate * 12;
+            const fromChildcare = includeChildcare ? fromCosts.childcare * fromMult * usdToFromRate * 12 : 0;
+            const toChildcare = includeChildcare ? toCosts.childcare * toMult * usdToFromRate * 12 : 0;
+
+            const fromTotalLiving = fromGroceries + fromUtilities + fromTransport + fromHealthcare + fromChildcare;
+            const toTotalLiving = toGroceries + toUtilities + toTransport + toHealthcare + toChildcare;
+
+            fromDisposable = fromTakeHome - fromAnnualRent - fromTotalLiving;
+            toDisposable = toTakeHome - toAnnualRent - toTotalLiving;
+
+            costBreakdown = {
+                from: { rent: fromAnnualRent, groceries: fromGroceries, utilities: fromUtilities, transport: fromTransport, healthcare: fromHealthcare, childcare: fromChildcare },
+                to: { rent: toAnnualRent, groceries: toGroceries, utilities: toUtilities, transport: toTransport, healthcare: toHealthcare, childcare: toChildcare }
+            };
+        } else {
+            fromDisposable = fromTakeHome - fromAnnualRent;
+            toDisposable = toTakeHome - toAnnualRent;
+        }
+
         const diffPct = fromDisposable !== 0 ? ((toDisposable - fromDisposable) / Math.abs(fromDisposable)) * 100 : 0;
         const absDiff = Math.abs(diffPct).toFixed(0);
+        const costPhrase = hasLivingCosts ? 'after taxes and living costs' : 'after rent & taxes';
 
         let vClass, vIcon, vText;
-        if (diffPct > 5) {
+        if (diffPct > 10) {
             vClass = 'better'; vIcon = '\uD83D\uDFE2';
-            vText = `~${absDiff}% more spending power in ${toCity} after rent & taxes`;
-        } else if (diffPct < -5) {
+            vText = `~${absDiff}% more spending power in ${toCity} ${costPhrase}`;
+        } else if (diffPct < -10) {
             vClass = 'worse'; vIcon = '\uD83D\uDD34';
-            vText = `~${absDiff}% less spending power in ${toCity} after rent & taxes`;
+            vText = `~${absDiff}% less spending power in ${toCity} ${costPhrase}`;
         } else {
             vClass = 'similar'; vIcon = '\uD83D\uDFE1';
-            vText = `Roughly similar spending power between ${fromCity} and ${toCity}`;
+            vText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
         }
 
         document.getElementById('affordVerdict').className = 'afford-verdict ' + vClass;
         document.getElementById('affordVerdict').innerHTML = `<span class="afford-verdict-icon">${vIcon}</span><span>${vText}</span>`;
 
-        function buildAffordCard(label, takeHome, annualRent, disposable) {
+        function buildAffordCard(label, takeHome, costs, disposable) {
             const dc = disposable >= 0 ? 'positive' : 'negative';
+            let rows = `<div class="afford-card-row"><span>Take-home/yr</span><span class="afford-card-val">${fmtCur(takeHome, fromCurrency)}</span></div>
+                <div class="afford-card-row separator"><span>Rent/yr (1BR)</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.rent, fromCurrency)}</span></div>`;
+
+            if (hasLivingCosts) {
+                rows += `<div class="afford-card-row"><span>Groceries/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.groceries, fromCurrency)}</span></div>
+                    <div class="afford-card-row"><span>Utilities/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.utilities, fromCurrency)}</span></div>
+                    <div class="afford-card-row"><span>Transport/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.transport, fromCurrency)}</span></div>
+                    <div class="afford-card-row"><span>Healthcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.healthcare, fromCurrency)}</span></div>`;
+                if (includeChildcare) {
+                    rows += `<div class="afford-card-row"><span>Childcare/yr</span><span class="afford-card-val deduction">\u2212 ${fmtCur(costs.childcare, fromCurrency)}</span></div>`;
+                }
+            }
+
+            rows += `<div class="afford-card-row total"><span>Disposable</span><span class="afford-card-val ${dc}">${fmtCur(disposable, fromCurrency)}</span></div>`;
+
             return `<div class="afford-card">
                 <div class="afford-card-city">${label}</div>
-                <div class="afford-card-row"><span>Take-home/yr</span><span class="afford-card-val">${fmtCur(takeHome, fromCurrency)}</span></div>
-                <div class="afford-card-row"><span>Rent/yr (1BR)</span><span class="afford-card-val">\u2212 ${fmtCur(annualRent, fromCurrency)}</span></div>
-                <div class="afford-card-row total"><span>Disposable</span><span class="afford-card-val ${dc}">${fmtCur(disposable, fromCurrency)}</span></div>
+                ${rows}
             </div>`;
         }
 
+        const fromCostsObj = costBreakdown ? costBreakdown.from : { rent: fromAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
+        const toCostsObj = costBreakdown ? costBreakdown.to : { rent: toAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
+
         document.getElementById('affordCards').innerHTML =
-            buildAffordCard(fromLabel, fromTakeHome, fromAnnualRent, fromDisposable) +
-            buildAffordCard(toLabel, toTakeHome, toAnnualRent, toDisposable);
+            buildAffordCard(fromLabel, fromTakeHome, fromCostsObj, fromDisposable) +
+            buildAffordCard(toLabel, toTakeHome, toCostsObj, toDisposable);
+
+        // Show/hide childcare toggle
+        document.getElementById('childcareToggle').style.display = hasLivingCosts ? 'flex' : 'none';
+
+        // Update note
+        const noteEl = document.getElementById('affordNote');
+        const sources = ' Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.';
+        if (hasLivingCosts) {
+            noteEl.innerHTML = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI-adjusted salary above — this breakdown shows where your money goes.' + sources;
+        } else {
+            noteEl.innerHTML = 'Full living cost data not available for one or both cities. Showing rent only.' + sources;
+        }
+
         affordSection.style.display = 'block';
     } else {
         affordSection.style.display = 'none';
