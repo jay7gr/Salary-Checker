@@ -1312,6 +1312,14 @@ THEME_TOGGLE_CSS = '''
             display: block;
             color: #3b82f6;
         }
+        @media (max-width: 768px) {
+            .theme-toggle {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10001;
+            }
+        }
 '''
 
 THEME_TOGGLE_HTML = '''<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
@@ -1780,6 +1788,7 @@ def generate_city_page(city, comparison_pairs):
         @media (max-width: 768px) {{
             body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
+            .nav-links {{ padding-right: 48px; }}
             .hero {{ border-radius: 0; padding: 32px 20px; box-shadow: none; }}
             .stat-grid {{ grid-template-columns: repeat(2, 1fr); gap: 10px; }}
             .content-card {{ border-radius: 16px; padding: 20px; }}
@@ -2307,6 +2316,7 @@ def generate_comparison_page(city1, city2):
         @media (max-width: 768px) {{
             body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
+            .nav-links {{ padding-right: 48px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.4rem; }}
             .compare-col {{ padding: 12px 8px; }}
@@ -2604,6 +2614,7 @@ def generate_city_index():
         @media (max-width: 768px) {{
             body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
+            .nav-links {{ padding-right: 48px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
             .content-card {{ border-radius: 16px; padding: 16px; }}
@@ -2832,6 +2843,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         @media (max-width: 768px) {{
             body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
+            .nav-links {{ padding-right: 48px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
             .compare-form {{ flex-direction: column; gap: 10px; }}
