@@ -271,11 +271,51 @@
         }
 
         /* === TAX SECTION === */
-        .tax-section {
+        .tax-section, .rent-section {
             display: none;
             margin-top: 14px;
             padding-top: 14px;
             border-top: 1px solid #e8e8ed;
+        }
+
+        .rent-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .rent-card {
+            background: #ffffff;
+            border: 1px solid #e8e8ed;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .rent-card-city {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+        }
+
+        .rent-card-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1d1d1f;
+        }
+
+        .rent-card-usd {
+            font-size: 0.7rem;
+            color: #86868b;
+        }
+
+        .rent-card-label {
+            font-size: 0.6rem;
+            color: #aeaeb2;
+            margin-top: 2px;
         }
 
         .section-title {
@@ -498,11 +538,18 @@
         </div>
         <div class="result-note" id="resultNote"></div>
 
-        <!-- Tax Estimation -->
+        <!-- Tax & Deductions -->
         <div class="tax-section" id="taxSection">
-            <div class="section-title">Estimated Take-Home Pay</div>
+            <div class="section-title">Tax &amp; Deductions Breakdown</div>
             <div class="tax-grid" id="taxGrid"></div>
-            <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 6px; line-height: 1.3;">Income tax only. Does not include social security, national insurance, or other mandatory contributions.</div>
+            <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 6px; line-height: 1.3;">Includes income tax, social security, and local taxes for a local employee.</div>
+        </div>
+
+        <!-- Estimated Rent -->
+        <div class="rent-section" id="rentSection">
+            <div class="section-title">Estimated Monthly Rent (1BR)</div>
+            <div class="rent-grid" id="rentGrid"></div>
+            <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 4px;">City avg adjusted for neighborhood. Actual rents vary.</div>
         </div>
 
         <!-- Visual Chart -->
@@ -1260,6 +1307,198 @@ function calculateTax(income, countryCode) {
     return { tax, effectiveRate, net: income - tax };
 }
 
+// Social security & deductions by country (ISO codes)
+const countryDeductions = {
+    'AE': {}, 'QA': {}, 'KH': {},
+    'SA': {social_security: {local: 9.75, expat: 0, cap: null, label: 'GOSI'}},
+    'US': {social_security: {local: 7.65, expat: 7.65, cap: 168600, label: 'FICA'}},
+    'CA': {social_security: {local: 6.8, expat: 0, cap: 68500, label: 'CPP + EI'}},
+    'MX': {social_security: {local: 2.78, expat: 0, cap: null, label: 'IMSS'}},
+    'PA': {social_security: {local: 9.75, expat: 0, cap: null, label: 'CSS'}},
+    'BR': {social_security: {local: 14, expat: 0, cap: 105432, label: 'INSS'}},
+    'AR': {social_security: {local: 17, expat: 0, cap: null, label: 'Social Security'}},
+    'CO': {social_security: {local: 8, expat: 0, cap: null, label: 'Health + Pension'}},
+    'PE': {social_security: {local: 13, expat: 0, cap: null, label: 'ONP/AFP'}},
+    'CL': {social_security: {local: 19.5, expat: 0, cap: null, label: 'AFP + Health'}},
+    'UY': {social_security: {local: 18.1, expat: 0, cap: null, label: 'BPS'}},
+    'CR': {social_security: {local: 10.67, expat: 0, cap: null, label: 'CCSS'}},
+    'GB': {social_security: {local: 8, expat: 0, cap: 50270, reduced_rate: 2, label: 'National Insurance'}},
+    'FR': {social_security: {local: 22, expat: 0, cap: null, label: 'Social Charges'}},
+    'NL': {social_security: {local: 27.65, expat: 0, cap: 38098, label: 'Social Premiums'}},
+    'DE': {social_security: {local: 20.2, expat: 20.2, cap: 90600, label: 'Social Security'}, solidarity: {rate: 5.5, of: 'income_tax', label: 'Solidarity'}},
+    'IE': {social_security: {local: 4, expat: 0, cap: null, label: 'PRSI'}},
+    'BE': {social_security: {local: 13.07, expat: 0, cap: null, label: 'Social Security'}},
+    'LU': {social_security: {local: 12.45, expat: 12.45, cap: null, label: 'Social Security'}},
+    'CH': {social_security: {local: 6.4, expat: 6.4, cap: null, label: 'AHV/IV/EO'}},
+    'ES': {social_security: {local: 6.35, expat: 0, cap: 56646, label: 'Social Security'}},
+    'PT': {social_security: {local: 11, expat: 0, cap: null, label: 'Social Security'}},
+    'IT': {social_security: {local: 9.19, expat: 0, cap: 119650, label: 'INPS'}},
+    'GR': {social_security: {local: 13.87, expat: 0, cap: null, label: 'Social Insurance'}},
+    'HR': {social_security: {local: 20, expat: 0, cap: null, label: 'Pension + Health'}},
+    'SE': {social_security: {local: 7, expat: 0, cap: null, label: 'Social Fees'}},
+    'DK': {social_security: {local: 8, expat: 0, cap: null, label: 'AM-bidrag'}},
+    'FI': {social_security: {local: 10.5, expat: 0, cap: null, label: 'Pension + Health'}},
+    'NO': {social_security: {local: 7.8, expat: 0, cap: null, label: 'Trygdeavgift'}},
+    'AT': {social_security: {local: 18.07, expat: 0, cap: 78660, label: 'Social Security'}},
+    'CZ': {social_security: {local: 11, expat: 0, cap: null, label: 'Social + Health'}},
+    'HU': {social_security: {local: 18.5, expat: 0, cap: null, label: 'Social Contribution'}},
+    'PL': {social_security: {local: 13.71, expat: 0, cap: null, label: 'ZUS'}},
+    'RO': {social_security: {local: 35, expat: 0, cap: null, label: 'CAS + CASS'}},
+    'EE': {social_security: {local: 1.6, expat: 0, cap: null, label: 'Unemployment'}},
+    'LV': {social_security: {local: 10.5, expat: 0, cap: null, label: 'Social Security'}},
+    'TR': {social_security: {local: 15, expat: 0, cap: null, label: 'SSI'}},
+    'JP': {social_security: {local: 14.75, expat: 14.75, cap: null, label: 'Health + Pension'}},
+    'KR': {social_security: {local: 9.4, expat: 0, cap: null, label: 'NPS + Health'}},
+    'HK': {social_security: {local: 5, expat: 0, cap: 18000, label: 'MPF'}},
+    'TW': {social_security: {local: 5.17, expat: 0, cap: null, label: 'Labor + Health'}},
+    'CN': {social_security: {local: 22.5, expat: 0, cap: null, label: 'Five Insurances'}},
+    'SG': {social_security: {local: 20, expat: 0, cap: 102000, label: 'CPF'}},
+    'TH': {social_security: {local: 5, expat: 0, cap: 180000, label: 'Social Security'}},
+    'MY': {social_security: {local: 11, expat: 0, cap: null, label: 'EPF'}},
+    'VN': {social_security: {local: 10.5, expat: 0, cap: null, label: 'Social + Health'}},
+    'PH': {social_security: {local: 5, expat: 0, cap: null, label: 'SSS + PhilHealth'}},
+    'ID': {social_security: {local: 5, expat: 0, cap: null, label: 'BPJS'}},
+    'IN': {social_security: {local: 12, expat: 0, cap: 180000, label: 'PF + ESI'}},
+    'AU': {},
+    'NZ': {social_security: {local: 3, expat: 0, cap: null, label: 'KiwiSaver'}},
+    'IL': {social_security: {local: 12, expat: 0, cap: null, label: 'NI + Health'}},
+    'ZA': {social_security: {local: 1, expat: 0, cap: 17712, label: 'UIF'}},
+    'KE': {social_security: {local: 6, expat: 0, cap: null, label: 'NSSF + NHIF'}},
+    'NG': {social_security: {local: 8, expat: 0, cap: null, label: 'Pension + NHF'}},
+    'EG': {social_security: {local: 11, expat: 0, cap: null, label: 'Social Insurance'}},
+    'MA': {social_security: {local: 6.29, expat: 0, cap: null, label: 'CNSS'}}
+};
+
+const cityDedOverrides = {
+    'New York': {state_tax: {rate: 10.3, label: 'NY State+City Tax'}},
+    'San Francisco': {state_tax: {rate: 9.3, label: 'CA State Tax'}},
+    'Los Angeles': {state_tax: {rate: 9.3, label: 'CA State Tax'}},
+    'Chicago': {state_tax: {rate: 4.95, label: 'IL State Tax'}},
+    'Austin': {state_tax: {rate: 0, label: 'No State Tax'}},
+    'Miami': {state_tax: {rate: 0, label: 'No State Tax'}},
+    'Seattle': {state_tax: {rate: 0, label: 'No State Tax'}},
+    'Denver': {state_tax: {rate: 4.4, label: 'CO State Tax'}},
+    'Boston': {state_tax: {rate: 9.0, label: 'MA State Tax'}},
+    'Washington DC': {state_tax: {rate: 8.5, label: 'DC Tax'}},
+    'Houston': {state_tax: {rate: 0, label: 'No State Tax'}},
+    'Zurich': {cantonal_tax: {rate: 22, label: 'Cantonal Tax'}},
+    'Geneva': {cantonal_tax: {rate: 26, label: 'Cantonal Tax'}},
+    'Toronto': {provincial_tax: {rate: 9.15, label: 'Ontario Tax'}},
+    'Vancouver': {provincial_tax: {rate: 7.7, label: 'BC Tax'}},
+    'Montreal': {provincial_tax: {rate: 15, label: 'Québec Tax'}},
+    'Berlin': {solidarity: {rate: 5.5, of: 'income_tax', label: 'Solidarity'}},
+    'Munich': {solidarity: {rate: 5.5, of: 'income_tax', label: 'Solidarity'}},
+    'London': {council_tax: {flat_annual: 1800, label: 'Council Tax'}},
+    'Edinburgh': {council_tax: {flat_annual: 1500, label: 'Council Tax'}}
+};
+
+// Neighborhood-level deduction overrides (Tier 1: exact rates)
+const nhoodDedOverrides = {
+    'London': {
+        'Mayfair':{council_tax:{flat_annual:972,label:'Council Tax (Westminster)'}},'Chelsea':{council_tax:{flat_annual:972,label:'Council Tax (K&C)'}},
+        'Kensington':{council_tax:{flat_annual:972,label:'Council Tax (K&C)'}},'Soho':{council_tax:{flat_annual:972,label:'Council Tax (Westminster)'}},
+        'Marylebone':{council_tax:{flat_annual:972,label:'Council Tax (Westminster)'}},'Notting Hill':{council_tax:{flat_annual:972,label:'Council Tax (K&C)'}},
+        'Shoreditch':{council_tax:{flat_annual:1672,label:'Council Tax (Hackney)'}},'Hackney':{council_tax:{flat_annual:1672,label:'Council Tax (Hackney)'}},
+        'Camden':{council_tax:{flat_annual:1942,label:'Council Tax (Camden)'}},'Islington':{council_tax:{flat_annual:1635,label:'Council Tax (Islington)'}},
+        'Brixton':{council_tax:{flat_annual:1844,label:'Council Tax (Lambeth)'}},'Peckham':{council_tax:{flat_annual:1820,label:'Council Tax (Southwark)'}},
+        'Canary Wharf':{council_tax:{flat_annual:1541,label:'Council Tax (Tower Hamlets)'}},'Greenwich':{council_tax:{flat_annual:1808,label:'Council Tax (Greenwich)'}},
+        'Clapham':{council_tax:{flat_annual:1844,label:'Council Tax (Lambeth)'}},'Stratford':{council_tax:{flat_annual:1637,label:'Council Tax (Newham)'}},
+        'Hampstead':{council_tax:{flat_annual:1942,label:'Council Tax (Camden)'}},'Battersea':{council_tax:{flat_annual:898,label:'Council Tax (Wandsworth)'}},
+        'Fulham':{council_tax:{flat_annual:1375,label:'Council Tax (H&F)'}},'Wimbledon':{council_tax:{flat_annual:1694,label:'Council Tax (Merton)'}},
+        'Ealing':{council_tax:{flat_annual:1765,label:'Council Tax (Ealing)'}},'Dalston':{council_tax:{flat_annual:1672,label:'Council Tax (Hackney)'}},
+        'Tooting':{council_tax:{flat_annual:898,label:'Council Tax (Wandsworth)'}},'Walthamstow':{council_tax:{flat_annual:2050,label:'Council Tax (Waltham Forest)'}},
+        'Richmond':{council_tax:{flat_annual:1994,label:'Council Tax (Richmond)'}},'Putney':{council_tax:{flat_annual:898,label:'Council Tax (Wandsworth)'}},
+        'Chiswick':{council_tax:{flat_annual:1666,label:'Council Tax (Hounslow)'}},'Balham':{council_tax:{flat_annual:898,label:'Council Tax (Wandsworth)'}},
+        'Lewisham':{council_tax:{flat_annual:1859,label:'Council Tax (Lewisham)'}},'Croydon':{council_tax:{flat_annual:2081,label:'Council Tax (Croydon)'}},
+        'Barking':{council_tax:{flat_annual:1751,label:'Council Tax (Barking)'}},'Angel (Islington)':{council_tax:{flat_annual:1635,label:'Council Tax (Islington)'}},
+        'Vauxhall':{council_tax:{flat_annual:1844,label:'Council Tax (Lambeth)'}},'Bermondsey':{council_tax:{flat_annual:1820,label:'Council Tax (Southwark)'}},
+        'Kentish Town':{council_tax:{flat_annual:1942,label:'Council Tax (Camden)'}}
+    },
+    'Geneva': {
+        'Eaux-Vives':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},'Champel':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},
+        'Carouge':{cantonal_tax:{rate:25,label:'Canton+Muni (Carouge)'}},'Plainpalais':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},
+        'Pâquis':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},'Nations':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},
+        'Servette':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},'Meyrin':{cantonal_tax:{rate:27,label:'Canton+Muni (Meyrin)'}},
+        'Vernier':{cantonal_tax:{rate:28,label:'Canton+Muni (Vernier)'}},'Cologny':{cantonal_tax:{rate:21,label:'Canton+Muni (Cologny)'}},
+        'Florissant':{cantonal_tax:{rate:26,label:'Canton+Muni (Genève)'}},'Grand-Saconnex':{cantonal_tax:{rate:25,label:'Canton+Muni (Grand-Saconnex)'}},
+        'Lancy':{cantonal_tax:{rate:27,label:'Canton+Muni (Lancy)'}},'Onex':{cantonal_tax:{rate:28,label:'Canton+Muni (Onex)'}},
+        'Thônex':{cantonal_tax:{rate:27,label:'Canton+Muni (Thônex)'}},'Chêne-Bourg':{cantonal_tax:{rate:27,label:'Canton+Muni (Chêne-Bourg)'}},
+        'Bernex':{cantonal_tax:{rate:27,label:'Canton+Muni (Bernex)'}},'Plan-les-Ouates':{cantonal_tax:{rate:25,label:'Canton+Muni (Plan-les-Ouates)'}}
+    }
+};
+const scalableDed = new Set(['council_tax','property_tax']);
+
+// Approximate monthly 1BR rent in city center (USD)
+const cityRent1BR = {
+    'New York':3500,'San Francisco':3200,'Los Angeles':2400,'Chicago':2000,
+    'Miami':2500,'Austin':1800,'Seattle':2200,'Denver':1900,'Boston':2800,
+    'Washington DC':2400,'Houston':1600,'Toronto':2000,'Vancouver':2100,
+    'Montreal':1400,'Mexico City':700,'Cancún':600,'Panama City':1000,
+    'London':2500,'Paris':1400,'Amsterdam':1800,'Berlin':1200,'Munich':1500,
+    'Dublin':2000,'Brussels':1100,'Luxembourg City':1800,'Zurich':2800,
+    'Geneva':2600,'Edinburgh':1300,'Nice':1100,
+    'Madrid':1100,'Barcelona':1200,'Valencia':850,'Málaga':800,
+    'Lisbon':1000,'Porto':800,'Rome':1200,'Milan':1400,'Athens':700,'Split':650,
+    'Stockholm':1500,'Copenhagen':1800,'Helsinki':1200,'Oslo':1600,'Vienna':1000,
+    'Prague':800,'Budapest':600,'Warsaw':700,'Krakow':550,'Bucharest':500,
+    'Tallinn':650,'Riga':550,'Istanbul':450,
+    'Tokyo':1500,'Osaka':1000,'Fukuoka':700,'Seoul':1200,'Hong Kong':2500,
+    'Taipei':800,'Shanghai':1100,'Beijing':1000,'Shenzhen':900,'Guangzhou':750,
+    'Singapore':2200,'Bangkok':600,'Chiang Mai':350,'Phuket':500,
+    'Kuala Lumpur':550,'Ho Chi Minh City':500,'Hanoi':450,'Manila':500,
+    'Jakarta':500,'Bali (Denpasar)':450,'Phnom Penh':450,
+    'Mumbai':700,'Bangalore':400,'Delhi':350,'Chennai':300,
+    'Sydney':2200,'Melbourne':1800,'Perth':1500,'Auckland':1400,
+    'Dubai':1800,'Abu Dhabi':1500,'Doha':1600,'Riyadh':800,'Tel Aviv':1800,
+    'Cape Town':650,'Nairobi':500,'Lagos':600,'Cairo':300,
+    'Marrakech':350,'Casablanca':400,
+    'São Paulo':600,'Buenos Aires':400,'Bogotá':400,'Lima':450,
+    'Santiago':550,'Medellín':350,'Montevideo':500,
+    'San José (CR)':550,'Playa del Carmen':500
+};
+
+const dedColors = {income_tax:'#ef4444',social_security:'#f59e0b',state_tax:'#8b5cf6',cantonal_tax:'#8b5cf6',provincial_tax:'#8b5cf6',solidarity:'#06b6d4',church_tax:'#06b6d4',council_tax:'#6b7280'};
+
+function calculateAllDeductions(income, countryCode, cityName, isExpat, nhood) {
+    if (income <= 0) return {items:[], total:0, totalRate:0, net:0};
+    const items = [];
+    const nhOvr = (nhood && nhoodDedOverrides[cityName]) ? (nhoodDedOverrides[cityName][nhood]||{}) : {};
+    const nhMult = (nhood && cityNeighborhoods[cityName]) ? (cityNeighborhoods[cityName][nhood]||1.0) : 1.0;
+    const taxResult = calculateTax(income, countryCode);
+    items.push({key:'income_tax', label:'Income Tax', amount:taxResult.tax, rate:taxResult.effectiveRate});
+    const cDed = countryDeductions[countryCode] || {};
+    const ss = cDed.social_security;
+    if (ss) {
+        const ssRate = isExpat ? (ss.expat||0) : (ss.local||0);
+        if (ssRate > 0) {
+            const ssBase = ss.cap ? Math.min(income, ss.cap) : income;
+            let ssAmt = ssBase * (ssRate/100);
+            if (ss.reduced_rate && ss.cap && income > ss.cap) ssAmt += (income - ss.cap) * (ss.reduced_rate/100);
+            items.push({key:'social_security', label:ss.label||'Social Security', amount:ssAmt, rate:Math.round((ssAmt/income)*1000)/10});
+        }
+    }
+    const cityD = cityDedOverrides[cityName] || {};
+    for (const k of ['state_tax','cantonal_tax','provincial_tax']) {
+        const info = nhOvr[k] || cityD[k] || cDed[k];
+        if (info && (info.rate||0) > 0) items.push({key:k, label:info.label, amount:income*(info.rate/100), rate:info.rate});
+    }
+    for (const k of ['solidarity','church_tax','council_tax']) {
+        let levy = nhOvr[k];
+        if (!levy) {
+            const base = cityD[k] || cDed[k];
+            if (!base) continue;
+            if (scalableDed.has(k) && nhood && base.flat_annual) {
+                levy = {flat_annual: Math.round(base.flat_annual * nhMult), label: base.label + ' (est.)'};
+            } else { levy = base; }
+        }
+        if (levy.flat_annual) items.push({key:k, label:levy.label, amount:levy.flat_annual, rate:Math.round((levy.flat_annual/income)*1000)/10});
+        else if (levy.of==='income_tax') { const a=taxResult.tax*(levy.rate/100); items.push({key:k, label:levy.label, amount:a, rate:Math.round((a/income)*1000)/10}); }
+        else if (levy.rate) items.push({key:k, label:levy.label, amount:income*(levy.rate/100), rate:levy.rate});
+    }
+    const total = items.reduce((s,i)=>s+i.amount, 0);
+    return {items, total, totalRate: income>0 ? Math.round((total/income)*1000)/10 : 0, net: income-total};
+}
+
 // === DOM REFS ===
 const salaryInput = document.getElementById('salary');
 const currentCity = document.getElementById('currentCity');
@@ -1441,36 +1680,75 @@ function calculate() {
     const fmtSalaryFrom = fmtCur(salary, fromCurrency);
     const fmtSalaryTo = fmtCur(Math.round(equivalent), toCurrency);
 
-    // === TAX ESTIMATION (Progressive Brackets) ===
+    // === TAX & DEDUCTIONS BREAKDOWN ===
     const fromCountry = cityToCountry[fromCity];
     const toCountry = cityToCountry[toCity];
-    const fromTaxResult = calculateTax(salary, fromCountry);
-    const toTaxResult = calculateTax(equivalent, toCountry);
     const taxSection = document.getElementById('taxSection');
 
     if (fromCountry && toCountry) {
-        const fmtNetFrom = fmtCur(fromTaxResult.net, fromCurrency);
-        const fmtNetTo = fmtCur(toTaxResult.net, toCurrency);
+        const fromDed = calculateAllDeductions(salary, fromCountry, fromCity, false, fromNhood);
+        const toDed = calculateAllDeductions(equivalent, toCountry, toCity, false, toNhood);
 
-        document.getElementById('taxGrid').innerHTML = `
-            <div class="tax-card">
-                <div class="tax-card-city">${fromLabel}</div>
-                <div class="tax-card-gross">Gross: ${fmtSalaryFrom}</div>
-                <div class="tax-card-rate">Tax: ~${fromTaxResult.effectiveRate}% effective${fromTaxResult.effectiveRate === 0 ? ' (Tax-Free)' : ''}</div>
-                <div class="tax-card-net">${fmtNetFrom}</div>
-                <div class="tax-card-label">Est. Take-Home</div>
-            </div>
-            <div class="tax-card">
-                <div class="tax-card-city">${toLabel}</div>
-                <div class="tax-card-gross">Gross: ${fmtSalaryTo}</div>
-                <div class="tax-card-rate">Tax: ~${toTaxResult.effectiveRate}% effective${toTaxResult.effectiveRate === 0 ? ' (Tax-Free)' : ''}</div>
-                <div class="tax-card-net">${fmtNetTo}</div>
-                <div class="tax-card-label">Est. Take-Home</div>
-            </div>
-        `;
+        function buildCompactCard(label, grossFmt, ded, cur) {
+            const maxR = Math.max(...ded.items.map(i=>i.rate), 1);
+            let bars = '';
+            for (const item of ded.items) {
+                const bw = Math.max(Math.round((item.rate/maxR)*100), 2);
+                const c = dedColors[item.key]||'#6b7280';
+                bars += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;">
+                    <div style="width:100px;font-size:0.7rem;color:#86868b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.label}</div>
+                    <div style="flex:1;background:#f0f0f2;border-radius:3px;height:8px;overflow:hidden;"><div style="width:${bw}%;height:100%;background:${c};border-radius:3px;"></div></div>
+                    <div style="width:32px;text-align:right;font-size:0.7rem;font-weight:600;color:#1d1d1f;">${item.rate}%</div>
+                </div>`;
+            }
+            const fmtNet = fmtCur(ded.net, cur);
+            return `<div class="tax-card" style="text-align:left;">
+                <div class="tax-card-city">${label}</div>
+                <div class="tax-card-gross">Gross: ${grossFmt}</div>
+                ${bars}
+                <div style="border-top:1px solid #e5e5ea;margin-top:6px;padding-top:6px;display:flex;justify-content:space-between;">
+                    <span style="font-size:0.75rem;font-weight:600;">Total: ${ded.totalRate}%</span>
+                    <span style="font-size:0.85rem;font-weight:700;color:#22c55e;">${fmtNet}</span>
+                </div>
+                <div style="text-align:right;font-size:0.6rem;color:#86868b;">Take-Home/yr</div>
+            </div>`;
+        }
+
+        document.getElementById('taxGrid').innerHTML =
+            buildCompactCard(fromLabel, fmtSalaryFrom, fromDed, fromCurrency) +
+            buildCompactCard(toLabel, fmtSalaryTo, toDed, toCurrency);
         taxSection.style.display = 'block';
     } else {
         taxSection.style.display = 'none';
+    }
+
+    // === ESTIMATED RENT ===
+    const rentSection = document.getElementById('rentSection');
+    const fromBaseRent = cityRent1BR[fromCity];
+    const toBaseRent = cityRent1BR[toCity];
+    if (fromBaseRent && toBaseRent) {
+        const fromMult = (fromNhood && cityNeighborhoods[fromCity] && cityNeighborhoods[fromCity][fromNhood]) ? cityNeighborhoods[fromCity][fromNhood] : 1.0;
+        const toMult = (toNhood && cityNeighborhoods[toCity] && cityNeighborhoods[toCity][toNhood]) ? cityNeighborhoods[toCity][toNhood] : 1.0;
+        const fromRentUSD = fromBaseRent * fromMult;
+        const toRentUSD = toBaseRent * toMult;
+        const fromRentLocal = fromRentUSD * (exchangeRates[fromCurrency] / exchangeRates['USD']);
+        const toRentLocal = toRentUSD * (exchangeRates[toCurrency] / exchangeRates['USD']);
+        const fmtUSD = (a) => fmtCur(a, 'USD');
+        function buildRentCard(label, rentLocal, rentUSD, cur) {
+            const usdLine = cur !== 'USD' ? `<div class="rent-card-usd">≈ ${fmtUSD(rentUSD)}/mo</div>` : '';
+            return `<div class="rent-card">
+                <div class="rent-card-city">${label}</div>
+                <div class="rent-card-amount">${fmtCur(rentLocal, cur)}</div>
+                ${usdLine}
+                <div class="rent-card-label">per month (1BR)</div>
+            </div>`;
+        }
+        document.getElementById('rentGrid').innerHTML =
+            buildRentCard(fromLabel, fromRentLocal, fromRentUSD, fromCurrency) +
+            buildRentCard(toLabel, toRentLocal, toRentUSD, toCurrency);
+        rentSection.style.display = 'block';
+    } else {
+        rentSection.style.display = 'none';
     }
 
     // === VISUAL CHART ===

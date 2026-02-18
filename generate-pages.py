@@ -969,6 +969,408 @@ def calculate_tax(income, country_name):
     effective_rate = round((tax / income) * 100) if income > 0 else 0
     return {'tax': tax, 'effective_rate': effective_rate, 'net': income - tax}
 
+# Social security & mandatory deductions by country
+# Each country: social_security = {local: %, expat: %, cap: amount_or_None, label: str}
+# Optional: church_tax, solidarity, council_tax, etc.
+countryDeductions = {
+    # Tax-free / minimal
+    'UAE': {},
+    'Qatar': {},
+    'Saudi Arabia': {'social_security': {'local': 9.75, 'expat': 0, 'cap': None, 'label': 'GOSI'}},
+    'Cambodia': {},
+    # Americas
+    'United States': {
+        'social_security': {'local': 7.65, 'expat': 7.65, 'cap': 168600, 'label': 'Social Security + Medicare (FICA)'},
+    },
+    'Canada': {
+        'social_security': {'local': 6.8, 'expat': 0, 'cap': 68500, 'label': 'CPP + EI'},
+    },
+    'Mexico': {
+        'social_security': {'local': 2.78, 'expat': 0, 'cap': None, 'label': 'IMSS'},
+    },
+    'Panama': {
+        'social_security': {'local': 9.75, 'expat': 0, 'cap': None, 'label': 'CSS'},
+    },
+    'Brazil': {
+        'social_security': {'local': 14, 'expat': 0, 'cap': 105432, 'label': 'INSS'},
+    },
+    'Argentina': {
+        'social_security': {'local': 17, 'expat': 0, 'cap': None, 'label': 'Social Security'},
+    },
+    'Colombia': {
+        'social_security': {'local': 8, 'expat': 0, 'cap': None, 'label': 'Health + Pension'},
+    },
+    'Peru': {
+        'social_security': {'local': 13, 'expat': 0, 'cap': None, 'label': 'ONP/AFP + EsSalud'},
+    },
+    'Chile': {
+        'social_security': {'local': 19.5, 'expat': 0, 'cap': None, 'label': 'AFP + Health + Unemployment'},
+    },
+    'Uruguay': {
+        'social_security': {'local': 18.1, 'expat': 0, 'cap': None, 'label': 'BPS Contributions'},
+    },
+    'Costa Rica': {
+        'social_security': {'local': 10.67, 'expat': 0, 'cap': None, 'label': 'CCSS + Worker Risks'},
+    },
+    # UK
+    'United Kingdom': {
+        'social_security': {'local': 8, 'expat': 0, 'cap': 50270, 'reduced_rate': 2, 'label': 'National Insurance (NI)'},
+    },
+    # Europe
+    'France': {
+        'social_security': {'local': 22, 'expat': 0, 'cap': None, 'label': 'Social Charges (CSG/CRDS)'},
+    },
+    'Netherlands': {
+        'social_security': {'local': 27.65, 'expat': 0, 'cap': 38098, 'label': 'Social Premiums'},
+    },
+    'Germany': {
+        'social_security': {'local': 20.2, 'expat': 20.2, 'cap': 90600, 'label': 'Social Security (Pension+Health+Unemp+Care)'},
+        'solidarity': {'rate': 5.5, 'of': 'income_tax', 'label': 'Solidarity Surcharge'},
+    },
+    'Ireland': {
+        'social_security': {'local': 4, 'expat': 0, 'cap': None, 'label': 'PRSI'},
+    },
+    'Belgium': {
+        'social_security': {'local': 13.07, 'expat': 0, 'cap': None, 'label': 'Social Security'},
+    },
+    'Luxembourg': {
+        'social_security': {'local': 12.45, 'expat': 12.45, 'cap': None, 'label': 'Social Security'},
+    },
+    'Switzerland': {
+        'social_security': {'local': 6.4, 'expat': 6.4, 'cap': None, 'label': 'AHV/IV/EO + ALV'},
+    },
+    'Spain': {
+        'social_security': {'local': 6.35, 'expat': 0, 'cap': 56646, 'label': 'Social Security'},
+    },
+    'Portugal': {
+        'social_security': {'local': 11, 'expat': 0, 'cap': None, 'label': 'Social Security'},
+    },
+    'Italy': {
+        'social_security': {'local': 9.19, 'expat': 0, 'cap': 119650, 'label': 'INPS Contributions'},
+    },
+    'Greece': {
+        'social_security': {'local': 13.87, 'expat': 0, 'cap': None, 'label': 'Social Insurance'},
+    },
+    'Croatia': {
+        'social_security': {'local': 20, 'expat': 0, 'cap': None, 'label': 'Pension + Health'},
+    },
+    'Sweden': {
+        'social_security': {'local': 7, 'expat': 0, 'cap': None, 'label': 'Employee Social Fees'},
+    },
+    'Denmark': {
+        'social_security': {'local': 8, 'expat': 0, 'cap': None, 'label': 'AM-bidrag + ATP'},
+    },
+    'Finland': {
+        'social_security': {'local': 10.5, 'expat': 0, 'cap': None, 'label': 'Pension + Unemployment + Health'},
+    },
+    'Norway': {
+        'social_security': {'local': 7.8, 'expat': 0, 'cap': None, 'label': 'Trygdeavgift'},
+    },
+    'Austria': {
+        'social_security': {'local': 18.07, 'expat': 0, 'cap': 78660, 'label': 'Social Security'},
+    },
+    'Czech Republic': {
+        'social_security': {'local': 11, 'expat': 0, 'cap': None, 'label': 'Social + Health Insurance'},
+    },
+    'Hungary': {
+        'social_security': {'local': 18.5, 'expat': 0, 'cap': None, 'label': 'Social Contribution (TB)'},
+    },
+    'Poland': {
+        'social_security': {'local': 13.71, 'expat': 0, 'cap': None, 'label': 'ZUS Contributions'},
+    },
+    'Romania': {
+        'social_security': {'local': 35, 'expat': 0, 'cap': None, 'label': 'CAS + CASS'},
+    },
+    'Estonia': {
+        'social_security': {'local': 1.6, 'expat': 0, 'cap': None, 'label': 'Unemployment Insurance'},
+    },
+    'Latvia': {
+        'social_security': {'local': 10.5, 'expat': 0, 'cap': None, 'label': 'Social Security'},
+    },
+    'Turkey': {
+        'social_security': {'local': 15, 'expat': 0, 'cap': None, 'label': 'SSI + Unemployment'},
+    },
+    # Asia
+    'Japan': {
+        'social_security': {'local': 14.75, 'expat': 14.75, 'cap': None, 'label': 'Health + Pension + Employment'},
+    },
+    'South Korea': {
+        'social_security': {'local': 9.4, 'expat': 0, 'cap': None, 'label': 'NPS + Health + Employment'},
+    },
+    'China (SAR)': {
+        'social_security': {'local': 5, 'expat': 0, 'cap': 18000, 'label': 'MPF'},
+    },
+    'Taiwan': {
+        'social_security': {'local': 5.17, 'expat': 0, 'cap': None, 'label': 'Labor + Health Insurance'},
+    },
+    'China': {
+        'social_security': {'local': 22.5, 'expat': 0, 'cap': None, 'label': 'Five Insurances + Housing Fund'},
+    },
+    'Singapore': {
+        'social_security': {'local': 20, 'expat': 0, 'cap': 102000, 'label': 'CPF (Employee Share)'},
+    },
+    'Thailand': {
+        'social_security': {'local': 5, 'expat': 0, 'cap': 180000, 'label': 'Social Security'},
+    },
+    'Malaysia': {
+        'social_security': {'local': 11, 'expat': 0, 'cap': None, 'label': 'EPF'},
+    },
+    'Vietnam': {
+        'social_security': {'local': 10.5, 'expat': 0, 'cap': None, 'label': 'Social + Health + Unemployment'},
+    },
+    'Philippines': {
+        'social_security': {'local': 5, 'expat': 0, 'cap': None, 'label': 'SSS + PhilHealth + Pag-IBIG'},
+    },
+    'Indonesia': {
+        'social_security': {'local': 5, 'expat': 0, 'cap': None, 'label': 'BPJS (Health + Employment)'},
+    },
+    'India': {
+        'social_security': {'local': 12, 'expat': 0, 'cap': 180000, 'label': 'PF + ESI'},
+    },
+    # Oceania
+    'Australia': {},  # Super is employer-paid, no employee deduction
+    'New Zealand': {
+        'social_security': {'local': 3, 'expat': 0, 'cap': None, 'label': 'KiwiSaver (default)'},
+    },
+    # Middle East & Africa
+    'Israel': {
+        'social_security': {'local': 12, 'expat': 0, 'cap': None, 'label': 'National Insurance + Health'},
+    },
+    'South Africa': {
+        'social_security': {'local': 1, 'expat': 0, 'cap': 17712, 'label': 'UIF'},
+    },
+    'Kenya': {
+        'social_security': {'local': 6, 'expat': 0, 'cap': None, 'label': 'NSSF + NHIF + Housing Levy'},
+    },
+    'Nigeria': {
+        'social_security': {'local': 8, 'expat': 0, 'cap': None, 'label': 'Pension + NHF'},
+    },
+    'Egypt': {
+        'social_security': {'local': 11, 'expat': 0, 'cap': None, 'label': 'Social Insurance'},
+    },
+    'Morocco': {
+        'social_security': {'local': 6.29, 'expat': 0, 'cap': None, 'label': 'CNSS'},
+    },
+}
+
+# City-level deduction overrides (state/provincial/cantonal taxes, council tax, etc.)
+cityDeductions = {
+    # US state+city income tax (effective mid-range rates)
+    'New York': {'state_tax': {'rate': 10.3, 'label': 'State + City Income Tax (NY)'}},
+    'San Francisco': {'state_tax': {'rate': 9.3, 'label': 'State Income Tax (CA)'}},
+    'Los Angeles': {'state_tax': {'rate': 9.3, 'label': 'State Income Tax (CA)'}},
+    'Chicago': {'state_tax': {'rate': 4.95, 'label': 'State Income Tax (IL)'}},
+    'Austin': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (TX)'}},
+    'Miami': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (FL)'}},
+    'Seattle': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (WA)'}},
+    'Denver': {'state_tax': {'rate': 4.4, 'label': 'State Income Tax (CO)'}},
+    'Boston': {'state_tax': {'rate': 9.0, 'label': 'State Income Tax (MA)'}},
+    'Washington DC': {'state_tax': {'rate': 8.5, 'label': 'District Income Tax (DC)'}},
+    'Houston': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (TX)'}},
+    # Swiss cantonal+municipal tax (approximate effective rates for mid-range earners)
+    'Zurich': {'cantonal_tax': {'rate': 22, 'label': 'Cantonal + Municipal Tax (Zürich)'}},
+    'Geneva': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève)'}},
+    # Canadian provincial tax
+    'Toronto': {'provincial_tax': {'rate': 9.15, 'label': 'Provincial Tax (Ontario)'}},
+    'Vancouver': {'provincial_tax': {'rate': 7.7, 'label': 'Provincial Tax (BC)'}},
+    'Montreal': {'provincial_tax': {'rate': 15, 'label': 'Provincial Tax (Québec)'}},
+    # German solidarity surcharge (city-level because it applies via income tax)
+    'Berlin': {'solidarity': {'rate': 5.5, 'of': 'income_tax', 'label': 'Solidarity Surcharge'}},
+    'Munich': {'solidarity': {'rate': 5.5, 'of': 'income_tax', 'label': 'Solidarity Surcharge'}},
+    # UK council tax (average Band D)
+    'London': {'council_tax': {'flat_annual': 1800, 'label': 'Council Tax (avg)'}},
+    'Edinburgh': {'council_tax': {'flat_annual': 1500, 'label': 'Council Tax (avg)'}},
+}
+
+# Neighborhood-level deduction overrides (Tier 1: exact researched rates)
+# Format: {city: {neighborhood: {deduction_key: {rate/flat_annual, label}}}}
+neighborhoodDeductions = {
+    # London boroughs — actual Band D council tax (2024/25 rates in GBP)
+    'London': {
+        'Mayfair': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Westminster)'}},
+        'Chelsea': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Kensington & Chelsea)'}},
+        'Kensington': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Kensington & Chelsea)'}},
+        'Soho': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Westminster)'}},
+        'Marylebone': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Westminster)'}},
+        'Notting Hill': {'council_tax': {'flat_annual': 972, 'label': 'Council Tax (Kensington & Chelsea)'}},
+        'Shoreditch': {'council_tax': {'flat_annual': 1672, 'label': 'Council Tax (Hackney)'}},
+        'Hackney': {'council_tax': {'flat_annual': 1672, 'label': 'Council Tax (Hackney)'}},
+        'Camden': {'council_tax': {'flat_annual': 1942, 'label': 'Council Tax (Camden)'}},
+        'Islington': {'council_tax': {'flat_annual': 1635, 'label': 'Council Tax (Islington)'}},
+        'Brixton': {'council_tax': {'flat_annual': 1844, 'label': 'Council Tax (Lambeth)'}},
+        'Peckham': {'council_tax': {'flat_annual': 1820, 'label': 'Council Tax (Southwark)'}},
+        'Canary Wharf': {'council_tax': {'flat_annual': 1541, 'label': 'Council Tax (Tower Hamlets)'}},
+        'Greenwich': {'council_tax': {'flat_annual': 1808, 'label': 'Council Tax (Greenwich)'}},
+        'Clapham': {'council_tax': {'flat_annual': 1844, 'label': 'Council Tax (Lambeth)'}},
+        'Stratford': {'council_tax': {'flat_annual': 1637, 'label': 'Council Tax (Newham)'}},
+        'Hampstead': {'council_tax': {'flat_annual': 1942, 'label': 'Council Tax (Camden)'}},
+        'Battersea': {'council_tax': {'flat_annual': 898, 'label': 'Council Tax (Wandsworth)'}},
+        'Fulham': {'council_tax': {'flat_annual': 1375, 'label': 'Council Tax (Hammersmith & Fulham)'}},
+        'Wimbledon': {'council_tax': {'flat_annual': 1694, 'label': 'Council Tax (Merton)'}},
+        'Ealing': {'council_tax': {'flat_annual': 1765, 'label': 'Council Tax (Ealing)'}},
+        'Dalston': {'council_tax': {'flat_annual': 1672, 'label': 'Council Tax (Hackney)'}},
+        'Tooting': {'council_tax': {'flat_annual': 898, 'label': 'Council Tax (Wandsworth)'}},
+        'Walthamstow': {'council_tax': {'flat_annual': 2050, 'label': 'Council Tax (Waltham Forest)'}},
+        'Richmond': {'council_tax': {'flat_annual': 1994, 'label': 'Council Tax (Richmond)'}},
+        'Putney': {'council_tax': {'flat_annual': 898, 'label': 'Council Tax (Wandsworth)'}},
+        'Chiswick': {'council_tax': {'flat_annual': 1666, 'label': 'Council Tax (Hounslow)'}},
+        'Balham': {'council_tax': {'flat_annual': 898, 'label': 'Council Tax (Wandsworth)'}},
+        'Lewisham': {'council_tax': {'flat_annual': 1859, 'label': 'Council Tax (Lewisham)'}},
+        'Croydon': {'council_tax': {'flat_annual': 2081, 'label': 'Council Tax (Croydon)'}},
+        'Barking': {'council_tax': {'flat_annual': 1751, 'label': 'Council Tax (Barking & Dagenham)'}},
+        'Angel (Islington)': {'council_tax': {'flat_annual': 1635, 'label': 'Council Tax (Islington)'}},
+        'Vauxhall': {'council_tax': {'flat_annual': 1844, 'label': 'Council Tax (Lambeth)'}},
+        'Bermondsey': {'council_tax': {'flat_annual': 1820, 'label': 'Council Tax (Southwark)'}},
+        'Kentish Town': {'council_tax': {'flat_annual': 1942, 'label': 'Council Tax (Camden)'}},
+    },
+    # Geneva municipalities — effective cantonal + municipal tax rates
+    'Geneva': {
+        'Eaux-Vives': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Champel': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Carouge': {'cantonal_tax': {'rate': 25, 'label': 'Cantonal + Municipal Tax (Carouge)'}},
+        'Plainpalais': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Pâquis': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Nations': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Servette': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Meyrin': {'cantonal_tax': {'rate': 27, 'label': 'Cantonal + Municipal Tax (Meyrin)'}},
+        'Vernier': {'cantonal_tax': {'rate': 28, 'label': 'Cantonal + Municipal Tax (Vernier)'}},
+        'Cologny': {'cantonal_tax': {'rate': 21, 'label': 'Cantonal + Municipal Tax (Cologny)'}},
+        'Florissant': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève ville)'}},
+        'Grand-Saconnex': {'cantonal_tax': {'rate': 25, 'label': 'Cantonal + Municipal Tax (Grand-Saconnex)'}},
+        'Lancy': {'cantonal_tax': {'rate': 27, 'label': 'Cantonal + Municipal Tax (Lancy)'}},
+        'Onex': {'cantonal_tax': {'rate': 28, 'label': 'Cantonal + Municipal Tax (Onex)'}},
+        'Thônex': {'cantonal_tax': {'rate': 27, 'label': 'Cantonal + Municipal Tax (Thônex)'}},
+        'Chêne-Bourg': {'cantonal_tax': {'rate': 27, 'label': 'Cantonal + Municipal Tax (Chêne-Bourg)'}},
+        'Bernex': {'cantonal_tax': {'rate': 27, 'label': 'Cantonal + Municipal Tax (Bernex)'}},
+        'Plan-les-Ouates': {'cantonal_tax': {'rate': 25, 'label': 'Cantonal + Municipal Tax (Plan-les-Ouates)'}},
+    },
+}
+
+# Property-linked deduction keys that scale with neighborhood cost multiplier
+SCALABLE_DEDUCTIONS = {'council_tax', 'property_tax'}
+
+# Colors for deduction breakdown bars
+DEDUCTION_COLORS = {
+    'income_tax': '#ef4444',
+    'social_security': '#f59e0b',
+    'state_tax': '#8b5cf6',
+    'cantonal_tax': '#8b5cf6',
+    'provincial_tax': '#8b5cf6',
+    'solidarity': '#06b6d4',
+    'church_tax': '#06b6d4',
+    'council_tax': '#6b7280',
+    'trash_tax': '#6b7280',
+}
+
+
+def calculate_all_deductions(income, country_name, city_name, is_expat=False, neighborhood=None):
+    """Calculate all deductions: income tax + social security + city/state taxes + levies.
+    Supports 3-tier neighborhood lookup: exact override → scaled → city fallback.
+    Returns dict with items list, total, total_rate, net."""
+    if income <= 0:
+        return {'items': [], 'total': 0, 'total_rate': 0, 'net': 0}
+
+    items = []
+    nhood_overrides = neighborhoodDeductions.get(city_name, {}).get(neighborhood, {}) if neighborhood else {}
+    nhood_multiplier = cityNeighborhoods.get(city_name, {}).get(neighborhood, 1.0) if neighborhood else 1.0
+
+    # 1. Income Tax (existing progressive calculation — not neighborhood-dependent)
+    tax_result = calculate_tax(income, country_name)
+    items.append({
+        'key': 'income_tax',
+        'label': 'Income Tax',
+        'amount': tax_result['tax'],
+        'rate': tax_result['effective_rate']
+    })
+
+    # 2. Social Security from country-level data (not neighborhood-dependent)
+    country_ded = countryDeductions.get(country_name, {})
+    ss = country_ded.get('social_security', {})
+    if ss:
+        ss_rate = ss.get('expat' if is_expat else 'local', 0)
+        if ss_rate > 0:
+            ss_cap = ss.get('cap')
+            ss_base = min(income, ss_cap) if ss_cap else income
+            ss_amount = ss_base * (ss_rate / 100)
+            # Handle UK-style reduced rate above cap
+            if ss.get('reduced_rate') and ss_cap and income > ss_cap:
+                ss_amount += (income - ss_cap) * (ss['reduced_rate'] / 100)
+            ss_eff_rate = round((ss_amount / income) * 100, 1)
+            items.append({
+                'key': 'social_security',
+                'label': ss.get('label', 'Social Security'),
+                'amount': ss_amount,
+                'rate': ss_eff_rate
+            })
+
+    # 3. City/neighborhood-level taxes (state, cantonal, provincial)
+    # Tier 1: Check neighborhood override first, then city, then country
+    city_ded = cityDeductions.get(city_name, {})
+    for tax_key in ['state_tax', 'cantonal_tax', 'provincial_tax']:
+        tax_info = nhood_overrides.get(tax_key, city_ded.get(tax_key, country_ded.get(tax_key, {})))
+        if tax_info and tax_info.get('rate', 0) > 0:
+            rate = tax_info['rate']
+            amount = income * (rate / 100)
+            items.append({
+                'key': tax_key,
+                'label': tax_info['label'],
+                'amount': amount,
+                'rate': rate
+            })
+
+    # 4. Country/city/neighborhood levies (solidarity, church tax, council tax, etc.)
+    # 3-tier: neighborhood override → scaled by multiplier → city/country fallback
+    for levy_key in ['solidarity', 'church_tax', 'council_tax', 'trash_tax']:
+        # Tier 1: Exact neighborhood override
+        levy = nhood_overrides.get(levy_key)
+        if not levy:
+            # Tier 2: Scale property-linked deductions by neighborhood multiplier
+            base_levy = city_ded.get(levy_key, country_ded.get(levy_key))
+            if not base_levy:
+                continue
+            if levy_key in SCALABLE_DEDUCTIONS and neighborhood and base_levy.get('flat_annual'):
+                scaled_amount = round(base_levy['flat_annual'] * nhood_multiplier)
+                levy = {**base_levy, 'flat_annual': scaled_amount, 'label': base_levy['label'] + ' (est.)'}
+            else:
+                # Tier 3: City/country fallback unchanged
+                levy = base_levy
+
+        if levy.get('flat_annual'):
+            amount = levy['flat_annual']
+            eff_rate = round((amount / income) * 100, 1)
+            items.append({
+                'key': levy_key,
+                'label': levy['label'],
+                'amount': amount,
+                'rate': eff_rate
+            })
+        elif levy.get('of') == 'income_tax':
+            base = tax_result['tax']
+            amount = base * (levy['rate'] / 100)
+            eff_rate = round((amount / income) * 100, 1)
+            items.append({
+                'key': levy_key,
+                'label': levy['label'],
+                'amount': amount,
+                'rate': eff_rate
+            })
+        elif levy.get('rate'):
+            rate = levy['rate']
+            amount = income * (rate / 100)
+            items.append({
+                'key': levy_key,
+                'label': levy['label'],
+                'amount': amount,
+                'rate': rate
+            })
+
+    total_deductions = sum(item['amount'] for item in items)
+    total_rate = round((total_deductions / income) * 100, 1)
+    net = income - total_deductions
+
+    return {'items': items, 'total': total_deductions, 'total_rate': total_rate, 'net': net}
+
+
 # Approximate average monthly rent for 1BR in city center (USD)
 cityRent1BR = {
     'New York': 3500, 'San Francisco': 3200, 'Los Angeles': 2400, 'Chicago': 2000,
@@ -1363,6 +1765,9 @@ def generate_city_page(city, comparison_pairs):
     ref_salary_local = 75000 * (coli / 100) * rate_to_local
     tax_result_ref = calculate_tax(ref_salary_local, country)
     tax_rate = tax_result_ref['effective_rate']
+    # Calculate full deductions breakdown for reference salary
+    ded_result = calculate_all_deductions(ref_salary_local, country, city, is_expat=False)
+    total_deduction_rate = ded_result['total_rate']
     sample_local = 75000 * rate_to_local
     sample_formatted = format_currency_amount(sample_local, currency)
 
@@ -1474,7 +1879,7 @@ def generate_city_page(city, comparison_pairs):
     # How much do you need section
     annual_rent = rent * 12
     mid_salary_local = 75000 * (coli / 100) * rate_to_local
-    monthly_salary_after_tax = (mid_salary_local * (1 - tax_rate / 100)) / 12
+    monthly_salary_after_tax = (mid_salary_local * (1 - total_deduction_rate / 100)) / 12
     fmt_annual_rent = format_currency_amount(annual_rent * rate_to_local, currency)
     fmt_monthly_salary = format_currency_amount(monthly_salary_after_tax, currency)
     fmt_mid_salary_local = format_currency_amount(mid_salary_local, currency)
@@ -1511,8 +1916,8 @@ def generate_city_page(city, comparison_pairs):
             'a': f'The average monthly rent for a one-bedroom apartment in the city center of {city} is approximately ${rent:,} USD.'
         },
         {
-            'q': f'What is the income tax rate in {country}?',
-            'a': f'The approximate effective income tax rate for a mid-range earner in {country} is {tax_note}.'
+            'q': f'What are the total payroll deductions in {country}?',
+            'a': f'The approximate effective income tax rate for a mid-range earner in {country} is {tax_note}. Including social security and other mandatory contributions, total deductions are approximately {total_deduction_rate}%.'
         },
         {
             'q': f'What are the cheapest neighborhoods in {city}?',
@@ -1551,10 +1956,12 @@ def generate_city_page(city, comparison_pairs):
         blog_links_html += f'<a href="{bl_url}" style="display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f2; color: #2563eb; text-decoration: none; font-weight: 500; font-size: 0.9rem;">{bl_title}</a>\n'
 
     # About section tax paragraph
-    if tax_rate == 0:
-        tax_paragraph = '<p>The approximate average effective income tax rate in ' + country + ' is <strong>0%</strong>. This is a tax-free jurisdiction.</p>'
+    if tax_rate == 0 and total_deduction_rate == 0:
+        tax_paragraph = '<p>The approximate average effective income tax rate in ' + country + ' is <strong>0%</strong>. This is a tax-free jurisdiction with no mandatory employee deductions.</p>'
+    elif tax_rate == 0:
+        tax_paragraph = '<p>' + country + ' is a tax-free jurisdiction, but employees may still face mandatory deductions of approximately <strong>' + str(total_deduction_rate) + '%</strong> (including social security contributions).</p>'
     elif tax_rate is not None:
-        tax_paragraph = '<p>The approximate average effective income tax rate in ' + country + ' is <strong>' + str(tax_rate) + '%</strong> for a mid-range earner.</p>'
+        tax_paragraph = '<p>The approximate effective income tax rate in ' + country + ' is <strong>' + str(tax_rate) + '%</strong> for a mid-range earner. Including social security and other mandatory deductions, the total deduction rate is approximately <strong>' + str(total_deduction_rate) + '%</strong>.</p>'
     else:
         tax_paragraph = ''
 
@@ -1594,6 +2001,42 @@ def generate_city_page(city, comparison_pairs):
         expense_rows += '</div>'
         expense_rows += '<div style="width: 40px; text-align: right; font-size: 0.85rem; font-weight: 600; color: #1d1d1f;">' + str(pct) + '%</div>'
         expense_rows += '</div>'
+
+    # Deductions breakdown rows (reuses expense bar pattern)
+    deduction_rows = ''
+    fmt_ref_salary = format_currency_amount(ref_salary_local, currency)
+    fmt_net_salary = format_currency_amount(ded_result['net'], currency)
+    max_ded_rate = max((item['rate'] for item in ded_result['items']), default=1) or 1
+    for item in ded_result['items']:
+        dcolor = DEDUCTION_COLORS.get(item['key'], '#6b7280')
+        bar_width = round((item['rate'] / max_ded_rate) * 100) if max_ded_rate > 0 else 0
+        bar_width = max(bar_width, 2)  # minimum visible width
+        fmt_amount = format_currency_amount(item['amount'], currency)
+        deduction_rows += '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">'
+        deduction_rows += '<div style="width: 200px; font-size: 0.85rem; font-weight: 500; color: var(--text-body, #4a4a4c);">' + item['label'] + '</div>'
+        deduction_rows += '<div style="flex: 1; background: var(--border-light, #f0f0f2); border-radius: 6px; height: 12px; overflow: hidden;">'
+        deduction_rows += '<div style="width: ' + str(bar_width) + '%; height: 100%; background: ' + dcolor + '; border-radius: 6px;"></div>'
+        deduction_rows += '</div>'
+        deduction_rows += '<div style="width: 48px; text-align: right; font-size: 0.85rem; font-weight: 600; color: var(--text-primary, #1d1d1f);">' + str(item['rate']) + '%</div>'
+        deduction_rows += '</div>'
+
+    deduction_section = ''
+    if ded_result['items']:
+        deduction_section = f'''<section class="content-card">
+            <h2>Tax &amp; Deductions Breakdown in {city}</h2>
+            <p>Estimated annual deductions for a mid-range salary of <strong>{fmt_ref_salary}</strong> in {city}. This shows all mandatory payroll deductions as a local employee.</p>
+            {deduction_rows}
+            <div style="border-top: 1px solid var(--border, #e5e5ea); margin-top: 16px; padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary, #1d1d1f);">Total Deductions: {total_deduction_rate}%</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary, #86868b);">Est. Take-Home: </span>
+                    <span style="font-size: 1.1rem; font-weight: 700; color: #22c55e;">{fmt_net_salary}/yr</span>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary, #86868b); margin-top: 12px; margin-bottom: 0;">Rates shown are for a local employee. Expat rates may differ — use the <a href="/" style="color: var(--accent, #2563eb);">main converter</a> for personalized calculations.</p>
+        </section>'''
 
     # Compare with other cities section
     comp_section = ''
@@ -1830,8 +2273,8 @@ def generate_city_page(city, comparison_pairs):
                     <div class="stat-label">of {total_cities} Cities</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">{tax_rate}%</div>
-                    <div class="stat-label">Est. Tax Rate</div>
+                    <div class="stat-value">{total_deduction_rate}%</div>
+                    <div class="stat-label">Total Deductions</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${rent:,}</div>
@@ -1858,8 +2301,10 @@ def generate_city_page(city, comparison_pairs):
             <h2>Monthly Cost Breakdown in {city}</h2>
             <p>Estimated monthly expense allocation for a mid-range earner living in {city}. Housing costs are based on average one-bedroom rent in the city center (${rent:,}/month), with other categories adjusted for the local cost of living index.</p>
             {expense_rows}
-            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for {city}'s COLI of {coli} and {country}'s effective tax rate of {tax_rate}%. Individual expenses will vary.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary, #86868b); margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for {city}'s COLI of {coli} and {country}'s total deduction rate of {total_deduction_rate}%. Individual expenses will vary.</p>
         </section>
+
+        {deduction_section}
 
         <section class="content-card">
             <h2>Salary Ranges by Job Title in {city} ({CURRENT_YEAR})</h2>
@@ -1883,7 +2328,7 @@ def generate_city_page(city, comparison_pairs):
 
         <section class="content-card">
             <h2>How Much Do You Need to Earn in {city}?</h2>
-            <p>Understanding your take-home pay is critical when evaluating a move to {city}. With an effective tax rate of <strong>{tax_rate}%</strong> in {country} and average one-bedroom rent of <strong>${rent:,}/month</strong>, here is what a mid-range salary looks like:</p>
+            <p>Understanding your take-home pay is critical when evaluating a move to {city}. With total deductions of approximately <strong>{total_deduction_rate}%</strong> (income tax + social security) in {country} and average one-bedroom rent of <strong>${rent:,}/month</strong>, here is what a mid-range salary looks like:</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
                 <div class="stat-card">
                     <div class="stat-value" style="font-size: 1.2rem;">{fmt_mid_salary_local}</div>
@@ -1891,7 +2336,7 @@ def generate_city_page(city, comparison_pairs):
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" style="font-size: 1.2rem;">{fmt_monthly_salary}</div>
-                    <div class="stat-label">Monthly After Tax</div>
+                    <div class="stat-label">Monthly Take-Home</div>
                 </div>
             </div>
             <p>After taxes, a mid-range earner in {city} takes home approximately <strong>{fmt_monthly_salary}</strong> per month. With housing consuming roughly <strong>{expenses['housing']}%</strong> of after-tax income, careful budgeting is essential in this <strong>{coli_desc}</strong> cost city. Your purchasing power in {city} is <strong>{purchasing_power_vs_ny:.0f}%</strong> of what it would be in New York for the same nominal salary.</p>
@@ -1982,6 +2427,11 @@ def generate_comparison_page(city1, city2):
     ref_salary_local_2 = 75000 * (coli2 / 100) * rate2_local
     tax1 = calculate_tax(ref_salary_local_1, country1)['effective_rate']
     tax2 = calculate_tax(ref_salary_local_2, country2)['effective_rate']
+    # Full deductions breakdown for both cities
+    ded1 = calculate_all_deductions(ref_salary_local_1, country1, city1, is_expat=False)
+    ded2 = calculate_all_deductions(ref_salary_local_2, country2, city2, is_expat=False)
+    total_ded_rate1 = ded1['total_rate']
+    total_ded_rate2 = ded2['total_rate']
     rent1 = cityRent1BR.get(city1, 0)
     rent2 = cityRent1BR.get(city2, 0)
     neighborhoods1 = cityNeighborhoods.get(city1, {})
@@ -2043,13 +2493,13 @@ def generate_comparison_page(city1, city2):
     rent_cheaper_city = city1 if rent1 < rent2 else city2
     rent_more_city = city1 if rent1 >= rent2 else city2
 
-    # Tax comparison text
-    if tax1 == tax2:
-        tax_compare_text = f'Both cities have the same effective tax rate of {tax1}%.'
-    elif tax1 < tax2:
-        tax_compare_text = f'{city1} has a lower effective tax rate ({tax1}%) compared to {city2} ({tax2}%), meaning you keep more of your gross salary in {city1}.'
+    # Tax comparison text (using total deductions)
+    if total_ded_rate1 == total_ded_rate2:
+        tax_compare_text = f'Both cities have similar total deduction rates of approximately {total_ded_rate1}% (income tax + social security + local taxes).'
+    elif total_ded_rate1 < total_ded_rate2:
+        tax_compare_text = f'{city1} has lower total deductions ({total_ded_rate1}%) compared to {city2} ({total_ded_rate2}%), meaning you keep more of your gross salary in {city1}.'
     else:
-        tax_compare_text = f'{city2} has a lower effective tax rate ({tax2}%) compared to {city1} ({tax1}%), meaning you keep more of your gross salary in {city2}.'
+        tax_compare_text = f'{city2} has lower total deductions ({total_ded_rate2}%) compared to {city1} ({total_ded_rate1}%), meaning you keep more of your gross salary in {city2}.'
 
     # Tax-free note
     if tax1 == 0:
@@ -2124,8 +2574,50 @@ def generate_comparison_page(city1, city2):
     coli2_winner = 'winner' if coli2 <= coli1 else ''
     rent1_winner = 'winner' if rent1 <= rent2 else ''
     rent2_winner = 'winner' if rent2 <= rent1 else ''
-    tax1_winner = 'winner' if tax1 <= tax2 else ''
-    tax2_winner = 'winner' if tax2 <= tax1 else ''
+    tax1_winner = 'winner' if total_ded_rate1 <= total_ded_rate2 else ''
+    tax2_winner = 'winner' if total_ded_rate2 <= total_ded_rate1 else ''
+
+    # Build side-by-side deductions breakdown section
+    def build_ded_bars(ded_result, currency):
+        """Build horizontal bar HTML for a city's deductions."""
+        rows = ''
+        max_rate = max((item['rate'] for item in ded_result['items']), default=1) or 1
+        for item in ded_result['items']:
+            dcolor = DEDUCTION_COLORS.get(item['key'], '#6b7280')
+            bar_w = round((item['rate'] / max_rate) * 100) if max_rate > 0 else 0
+            bar_w = max(bar_w, 2)
+            rows += '<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">'
+            rows += '<div style="width: 140px; font-size: 0.8rem; font-weight: 500; color: var(--text-body, #4a4a4c); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + item['label'] + '</div>'
+            rows += '<div style="flex: 1; background: var(--border-light, #f0f0f2); border-radius: 4px; height: 10px; overflow: hidden;">'
+            rows += '<div style="width: ' + str(bar_w) + '%; height: 100%; background: ' + dcolor + '; border-radius: 4px;"></div>'
+            rows += '</div>'
+            rows += '<div style="width: 38px; text-align: right; font-size: 0.8rem; font-weight: 600; color: var(--text-primary, #1d1d1f);">' + str(item['rate']) + '%</div>'
+            rows += '</div>'
+        fmt_net = format_currency_amount(ded_result['net'], currency)
+        rows += '<div style="border-top: 1px solid var(--border, #e5e5ea); margin-top: 8px; padding-top: 8px;">'
+        rows += '<div style="display: flex; justify-content: space-between; font-size: 0.85rem;">'
+        rows += '<span style="font-weight: 600; color: var(--text-primary, #1d1d1f);">Total: ' + str(ded_result['total_rate']) + '%</span>'
+        rows += '<span style="color: #22c55e; font-weight: 700;">Take-Home: ' + fmt_net + '/yr</span>'
+        rows += '</div></div>'
+        return rows
+
+    ded_bars_1 = build_ded_bars(ded1, currency1)
+    ded_bars_2 = build_ded_bars(ded2, currency2)
+    ded_comparison_section = f'''<section class="content-card">
+            <h2>Tax &amp; Deductions Comparison</h2>
+            <p>Full breakdown of mandatory payroll deductions for a mid-range salary as a local employee in each city.</p>
+            <div class="two-col">
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-primary, #1d1d1f);">{city1}</h3>
+                    {ded_bars_1}
+                </div>
+                <div>
+                    <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-primary, #1d1d1f);">{city2}</h3>
+                    {ded_bars_2}
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary, #86868b); margin-top: 12px; margin-bottom: 0;">Rates shown for local employees. Expat deductions may differ — use the <a href="/" style="color: var(--accent, #2563eb);">main converter</a> for personalized calculations.</p>
+        </section>'''
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -2398,9 +2890,9 @@ def generate_comparison_page(city1, city2):
                 <div class="metric-value {rent2_winner}">${rent2:,}</div>
             </div>
             <div class="metric-row">
-                <div class="metric-label">Income Tax Rate</div>
-                <div class="metric-value {tax1_winner}">{tax1}%</div>
-                <div class="metric-value {tax2_winner}">{tax2}%</div>
+                <div class="metric-label">Total Deductions</div>
+                <div class="metric-value {tax1_winner}">{total_ded_rate1}%</div>
+                <div class="metric-value {tax2_winner}">{total_ded_rate2}%</div>
             </div>
             <div class="metric-row">
                 <div class="metric-label">Exchange Rate</div>
@@ -2412,8 +2904,10 @@ def generate_comparison_page(city1, city2):
             <h2>Key Takeaways: {city1} vs {city2}</h2>
             <p>Overall, <strong>{less_expensive_city}</strong> is approximately <strong>{pct_cheaper:.0f}% cheaper</strong> than {more_expensive_city} based on our cost of living index. {city1} has a COLI of {coli1} (ranked #{rank1} of {total_cities} cities), while {city2} has a COLI of {coli2} (ranked #{rank2}).</p>
             <p>When it comes to housing, one-bedroom apartment rent in {city1} averages <strong>${rent1:,}/month</strong> compared to <strong>${rent2:,}/month</strong> in {city2}. That makes {rent_cheaper_city} approximately <strong>{rent_diff_pct:.0f}% cheaper</strong> for rent alone.</p>
-            <p>{tax_compare_text}{tax_free_note_1}{tax_free_note_2} When evaluating a relocation, remember that tax rates directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
+            <p>{tax_compare_text}{tax_free_note_1}{tax_free_note_2} When evaluating a relocation, remember that total deductions directly impact your take-home pay and should be weighed alongside cost of living differences.</p>
         </section>
+
+        {ded_comparison_section}
 
         <section class="content-card">
             <h2>Salary Equivalent</h2>
@@ -3077,6 +3571,46 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         sg_ns = slugify(sg_name)
         similar_global_html += f'<a href="/city/{sg_cs}/{sg_ns}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{sg_name}, {sg_city}</a>\n'
 
+    # Tax & Deductions breakdown for this neighborhood
+    nhood_ref_salary_local = 75000 * (nhood_coli / 100) * rate_to_local
+    nhood_ded_result = calculate_all_deductions(nhood_ref_salary_local, country, city, is_expat=False, neighborhood=neighborhood)
+    nhood_deduction_rows = ''
+    nhood_fmt_ref_salary = format_currency_amount(nhood_ref_salary_local, currency)
+    nhood_fmt_net = format_currency_amount(nhood_ded_result['net'], currency)
+    nhood_total_ded_rate = nhood_ded_result['total_rate']
+    if nhood_ded_result['items']:
+        max_ded_r = max((item['rate'] for item in nhood_ded_result['items']), default=1) or 1
+        for item in nhood_ded_result['items']:
+            dcolor = DEDUCTION_COLORS.get(item['key'], '#6b7280')
+            bar_w = round((item['rate'] / max_ded_r) * 100) if max_ded_r > 0 else 0
+            bar_w = max(bar_w, 2)
+            fmt_amt = format_currency_amount(item['amount'], currency)
+            nhood_deduction_rows += '<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">'
+            nhood_deduction_rows += '<div style="width: 200px; font-size: 0.85rem; font-weight: 500; color: var(--text-body, #4a4a4c);">' + item['label'] + '</div>'
+            nhood_deduction_rows += '<div style="flex: 1; background: var(--border-light, #f0f0f2); border-radius: 6px; height: 12px; overflow: hidden;">'
+            nhood_deduction_rows += '<div style="width: ' + str(bar_w) + '%; height: 100%; background: ' + dcolor + '; border-radius: 6px;"></div>'
+            nhood_deduction_rows += '</div>'
+            nhood_deduction_rows += '<div style="width: 48px; text-align: right; font-size: 0.85rem; font-weight: 600; color: var(--text-primary, #1d1d1f);">' + str(item['rate']) + '%</div>'
+            nhood_deduction_rows += '</div>'
+
+    nhood_deduction_section = ''
+    if nhood_ded_result['items']:
+        nhood_deduction_section = f'''<div class="card">
+            <h2>Tax &amp; Deductions in {neighborhood}</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary, #86868b); margin-bottom: 16px;">Estimated annual deductions on a <strong>{nhood_fmt_ref_salary}</strong> salary in {neighborhood}, {city} (local employee).</p>
+            {nhood_deduction_rows}
+            <div style="border-top: 1px solid var(--border, #e5e5ea); margin-top: 16px; padding-top: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <div>
+                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary, #1d1d1f);">Total Deductions: {nhood_total_ded_rate}%</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary, #86868b);">Est. Take-Home: </span>
+                    <span style="font-size: 1.1rem; font-weight: 700; color: #22c55e;">{nhood_fmt_net}/yr</span>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary, #86868b); margin-top: 12px; margin-bottom: 0;">Rates shown are for a local employee. Use the <a href="/" style="color: var(--accent, #2563eb);">salary converter</a> for expat calculations.</p>
+        </div>'''
+
     # FAQ answers
     if pct_diff > 10:
         expensive_answer = f'Yes, {neighborhood} is one of the more expensive neighborhoods in {city}. It costs about {sign}{pct_diff:.0f}% more than the city average, ranking #{rank_in_city} out of {total_in_city} neighborhoods.'
@@ -3087,7 +3621,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 
     avg_comparison = f'The cost of living in {neighborhood} is {cost_desc} the {city} average. With a multiplier of {multiplier:.2f}x, everyday expenses including rent, food, and transportation are {sign}{pct_diff:.0f}% compared to the city baseline.'
 
-    meta_desc = f'Cost of living in {neighborhood}, {city}: COLI index {nhood_coli}, {sign}{pct_diff:.0f}% vs city average. Estimated 1BR rent {fmt_rent}. Compare salaries and expenses.'
+    meta_desc = f'Cost of living in {neighborhood}, {city}: COLI index {nhood_coli}, {sign}{pct_diff:.0f}% vs city average. {nhood_total_ded_rate}% total deductions. Estimated 1BR rent {fmt_rent}. Compare salaries and expenses.'
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -3250,8 +3784,14 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
                     <div class="stat-value">#{rank_in_city}</div>
                     <div class="stat-label">of {total_in_city} Areas</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-value">{nhood_total_ded_rate}%</div>
+                    <div class="stat-label">Total Deductions</div>
+                </div>
             </div>
         </div>
+
+        {nhood_deduction_section}
 
         <div class="card">
             <h2>Salary Equivalents</h2>

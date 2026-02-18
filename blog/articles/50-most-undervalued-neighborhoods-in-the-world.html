@@ -136,6 +136,14 @@
             display: block;
             color: #3b82f6;
         }
+        @media (max-width: 768px) {
+            .theme-toggle {
+                position: fixed;
+                top: 16px;
+                right: 16px;
+                z-index: 10001;
+            }
+        }
 
         .breadcrumb { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }
         .breadcrumb a { color: var(--accent); text-decoration: none; }
