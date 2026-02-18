@@ -664,7 +664,16 @@
                 font-size: 13px;
             }
         }
-    </style>
+    
+        @media (max-width: 768px) {
+            .theme-toggle {
+                position: fixed !important;
+                top: 16px !important;
+                right: 16px !important;
+                z-index: 10001 !important;
+            }
+        }
+</style>
 </head>
 <body>
     <!-- Navigation -->
