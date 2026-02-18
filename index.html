@@ -1846,7 +1846,7 @@
                 </div>
                 <div class="afford-verdict" id="affordVerdict"></div>
                 <div class="afford-cards" id="affordCards"></div>
-                <div class="afford-note" id="affordNote">Disposable = take-home minus rent, groceries, utilities, transport &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI-adjusted salary above — this breakdown shows where your money goes. Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.</div>
+                <div class="afford-note" id="affordNote">Disposable = take-home minus rent, groceries, utilities, transport &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI (Cost of Living Index) adjusted salary above — COLI measures relative price levels across cities (New York = 100) — this breakdown shows where your money goes. Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.</div>
             </div>
 
             <!-- Tax & Deductions Estimation -->
@@ -4130,7 +4130,7 @@
                 const noteEl = document.getElementById('affordNote');
                 const sources = ' Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.';
                 if (hasLivingCosts) {
-                    noteEl.innerHTML = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI-adjusted salary above — this breakdown shows where your money goes.' + sources;
+                    noteEl.innerHTML = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI (Cost of Living Index) adjusted salary above — COLI measures relative price levels across cities (New York = 100) — this breakdown shows where your money goes.' + sources;
                 } else {
                     noteEl.innerHTML = 'Full living cost data not available for one or both cities. Showing rent only.' + sources;
                 }
