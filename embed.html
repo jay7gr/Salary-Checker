@@ -270,6 +270,50 @@
             color: #2563eb;
         }
 
+        /* === EXPAT TOGGLE === */
+        .expat-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .expat-toggle-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #aeaeb2;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .expat-toggle-label.active {
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+
+        .expat-toggle-track {
+            width: 32px;
+            height: 18px;
+            background: #e8e8ed;
+            border-radius: 9px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .expat-toggle-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+
         /* === TAX SECTION === */
         .tax-section, .rent-section {
             display: none;
@@ -536,6 +580,65 @@
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
+        /* === SALARY RANGES === */
+        .salary-ranges-section {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .ranges-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .range-item {
+            background: #ffffff;
+            border: 1px solid #e8e8ed;
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+
+        .range-item-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .range-item-bar {
+            height: 4px;
+            background: #e8e8ed;
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: 3px;
+        }
+
+        .range-item-bar-fill {
+            position: absolute;
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #2563eb, #8b5cf6);
+        }
+
+        .range-item-mid {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-align: center;
+        }
+
+        .range-item-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.55rem;
+            color: #aeaeb2;
+        }
+
         /* === EXPLANATION SECTION === */
         .explanation-section {
             display: none;
@@ -647,8 +750,15 @@
         <!-- Tax & Deductions -->
         <div class="tax-section" id="taxSection">
             <div class="section-title">Tax &amp; Deductions Breakdown</div>
+            <div class="expat-toggle">
+                <span class="expat-toggle-label active" id="localLabel" onclick="if(isExpatMode) toggleExpatMode()">Local</span>
+                <div class="expat-toggle-track" onclick="toggleExpatMode()">
+                    <div class="expat-toggle-thumb"></div>
+                </div>
+                <span class="expat-toggle-label" id="expatLabel" onclick="if(!isExpatMode) toggleExpatMode()">Expat</span>
+            </div>
             <div class="tax-grid" id="taxGrid"></div>
-            <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 6px; line-height: 1.3;">Includes income tax, social security, and local taxes for a local employee.</div>
+            <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 6px; line-height: 1.3;">Includes income tax, social security, and local taxes. Toggle to compare expat rates.</div>
         </div>
 
         <!-- Estimated Rent -->
@@ -670,6 +780,12 @@
         <div class="chart-section" id="chartSection">
             <div class="section-title">Visual Comparison</div>
             <div id="chartBars"></div>
+        </div>
+
+        <!-- Salary Ranges by Role -->
+        <div class="salary-ranges-section" id="salaryRangesSection" style="display: none;">
+            <div class="section-title">Salary Ranges by Role</div>
+            <div class="ranges-list" id="rangesList"></div>
         </div>
 
         <!-- How we calculated this -->
@@ -1573,6 +1689,29 @@ const cityRent1BR = {
 
 const dedColors = {income_tax:'#ef4444',social_security:'#f59e0b',state_tax:'#8b5cf6',cantonal_tax:'#8b5cf6',provincial_tax:'#8b5cf6',solidarity:'#06b6d4',church_tax:'#06b6d4',council_tax:'#6b7280'};
 
+const salaryRanges = {
+    'Doctor (General)':{low:80000,mid:180000,high:350000},'Surgeon':{low:120000,mid:280000,high:500000},
+    'Dentist':{low:70000,mid:160000,high:300000},'Pharmacist':{low:60000,mid:125000,high:200000},
+    'Nurse':{low:30000,mid:58000,high:100000},'Psychologist':{low:45000,mid:85000,high:150000},
+    'Software Engineer':{low:45000,mid:85000,high:180000},'DevOps Engineer':{low:50000,mid:95000,high:175000},
+    'Data Scientist':{low:50000,mid:95000,high:170000},'Mechanical Engineer':{low:40000,mid:78000,high:140000},
+    'Civil Engineer':{low:38000,mid:72000,high:135000},'Electrical Engineer':{low:42000,mid:80000,high:145000},
+    'Architect':{low:38000,mid:72000,high:130000},'UX Designer':{low:40000,mid:75000,high:140000},
+    'Product Manager':{low:55000,mid:100000,high:190000},'Project Manager':{low:45000,mid:80000,high:150000},
+    'Financial Analyst':{low:42000,mid:78000,high:145000},'Accountant':{low:35000,mid:62000,high:110000},
+    'Business Analyst':{low:42000,mid:75000,high:140000},'Consultant':{low:45000,mid:90000,high:180000},
+    'Investment Banker':{low:80000,mid:150000,high:350000},'Actuary':{low:60000,mid:110000,high:200000},
+    'Lawyer':{low:50000,mid:100000,high:220000},'Paralegal':{low:30000,mid:52000,high:85000},
+    'Marketing Manager':{low:38000,mid:72000,high:135000},'Sales Manager':{low:40000,mid:80000,high:160000},
+    'Graphic Designer':{low:30000,mid:55000,high:100000},'Content Writer':{low:25000,mid:50000,high:90000},
+    'HR Manager':{low:38000,mid:70000,high:130000},'Operations Manager':{low:45000,mid:82000,high:150000},
+    'CEO / Executive':{low:100000,mid:220000,high:500000},
+    'Teacher':{low:25000,mid:48000,high:85000},'Professor':{low:50000,mid:95000,high:180000},
+    'Research Scientist':{low:45000,mid:85000,high:155000},
+    'Pilot':{low:50000,mid:120000,high:250000},'Chef':{low:25000,mid:50000,high:100000},
+    'Journalist':{low:25000,mid:52000,high:95000}
+};
+
 function calculateAllDeductions(income, countryCode, cityName, isExpat, nhood) {
     if (income <= 0) return {items:[], total:0, totalRate:0, net:0};
     const items = [];
@@ -1626,6 +1765,19 @@ const calcBtn = document.getElementById('calcBtn');
 const resultBox = document.getElementById('resultBox');
 const resultAmount = document.getElementById('resultAmount');
 const errorMsg = document.getElementById('errorMsg');
+let isExpatMode = false;
+
+function toggleExpatMode() {
+    isExpatMode = !isExpatMode;
+    document.getElementById('localLabel').classList.toggle('active', !isExpatMode);
+    document.getElementById('expatLabel').classList.toggle('active', isExpatMode);
+    const thumb = document.querySelector('.expat-toggle-thumb');
+    thumb.style.transform = isExpatMode ? 'translateX(14px)' : 'translateX(0)';
+    // Re-trigger calculation
+    if (resultBox.style.display !== 'none' && resultBox.style.display !== '') {
+        calculate();
+    }
+}
 
 // === INIT ===
 function init() {
@@ -1650,7 +1802,7 @@ function init() {
 
 // Populate neighborhood dropdown
 function populateNeighborhoods(city, selectEl, groupEl) {
-    selectEl.innerHTML = '<option value="">City average (no adjustment)</option>';
+    selectEl.innerHTML = '<option value="">Select a neighborhood...</option>';
     const neighborhoods = cityNeighborhoods[city];
     if (neighborhoods) {
         const sorted = Object.entries(neighborhoods).sort((a, b) => b[1] - a[1]);
@@ -1735,6 +1887,8 @@ function calculate() {
     if (!fromCity) return showError('Please select your current city', currentCity);
     if (!toCity) return showError('Please select a city to compare', targetCity);
     if (fromCity === toCity && currentNeighborhood.value === targetNeighborhood.value) return showError('Please select two different locations', targetCity);
+    if (cityNeighborhoods[fromCity] && !currentNeighborhood.value) return showError('Please select a neighborhood for your current city', currentNeighborhood);
+    if (cityNeighborhoods[toCity] && !targetNeighborhood.value) return showError('Please select a neighborhood for your target city', targetNeighborhood);
 
     let fromCOLI = coliData[fromCity];
     let toCOLI = coliData[toCity];
@@ -1802,8 +1956,8 @@ function calculate() {
     let toDed = null;
 
     if (fromCountry && toCountry) {
-        fromDed = calculateAllDeductions(salary, fromCountry, fromCity, false, fromNhood);
-        toDed = calculateAllDeductions(equivalent, toCountry, toCity, false, toNhood);
+        fromDed = calculateAllDeductions(salary, fromCountry, fromCity, isExpatMode, fromNhood);
+        toDed = calculateAllDeductions(equivalent, toCountry, toCity, isExpatMode, toNhood);
 
         function buildCompactCard(label, grossFmt, ded, cur, equivNet, equivCur) {
             const maxR = Math.max(...ded.items.map(i=>i.rate), 1);
@@ -1972,6 +2126,46 @@ function calculate() {
 
     document.getElementById('chartBars').innerHTML = chartHTML;
     chartSection.style.display = 'block';
+
+    // === SALARY RANGES BY ROLE ===
+    const rangesSection = document.getElementById('salaryRangesSection');
+    const rangesList = document.getElementById('rangesList');
+    const targetExRate = exchangeRates[toCurrency] / exchangeRates['USD'];
+    const targetColiAdj = coliData[toCity] / 100;
+    let rangesHTML = '';
+
+    Object.entries(salaryRanges).forEach(([title, range]) => {
+        const adjLow = range.low * targetColiAdj * targetExRate;
+        const adjMid = range.mid * targetColiAdj * targetExRate;
+        const adjHigh = range.high * targetColiAdj * targetExRate;
+
+        const fmtLow = new Intl.NumberFormat('en-US', {
+            style: 'currency', currency: toCurrency,
+            minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+        }).format(adjLow);
+        const fmtMid = new Intl.NumberFormat('en-US', {
+            style: 'currency', currency: toCurrency,
+            minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+        }).format(adjMid);
+        const fmtHigh = new Intl.NumberFormat('en-US', {
+            style: 'currency', currency: toCurrency,
+            minimumFractionDigits: 0, maximumFractionDigits: 0, notation: 'compact'
+        }).format(adjHigh);
+
+        const maxHigh = Math.max(...Object.values(salaryRanges).map(r => r.high * targetColiAdj * targetExRate));
+        const barLeft = (adjLow / maxHigh) * 100;
+        const barWidth = ((adjHigh - adjLow) / maxHigh) * 100;
+
+        rangesHTML += `<div class="range-item">
+            <div class="range-item-title">${title}</div>
+            <div class="range-item-bar"><div class="range-item-bar-fill" style="left:${barLeft}%;width:${barWidth}%;"></div></div>
+            <div class="range-item-mid">${fmtMid}</div>
+            <div class="range-item-values"><span>${fmtLow}</span><span>${fmtHigh}</span></div>
+        </div>`;
+    });
+
+    rangesList.innerHTML = rangesHTML;
+    rangesSection.style.display = 'block';
 
     // === HOW WE CALCULATED THIS ===
     const baseCOLIFrom = coliData[fromCity];
