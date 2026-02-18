@@ -365,6 +365,112 @@
             color: #86868b;
         }
 
+        .ded-take-home-equiv {
+            font-size: 0.65rem;
+            color: #86868b;
+            text-align: right;
+            margin-top: 1px;
+        }
+
+        /* === AFFORDABILITY SECTION === */
+        .affordability-section {
+            display: none;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid #e8e8ed;
+        }
+
+        .afford-verdict {
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .afford-verdict.better {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .afford-verdict.similar {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .afford-verdict.worse {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .afford-verdict-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .afford-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .afford-card {
+            background: #ffffff;
+            border: 1px solid #e8e8ed;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .afford-card-city {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+        }
+
+        .afford-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            font-size: 0.7rem;
+            color: #6e6e73;
+        }
+
+        .afford-card-row.total {
+            border-top: 1px solid #e8e8ed;
+            margin-top: 4px;
+            padding-top: 6px;
+        }
+
+        .afford-card-row.total .afford-card-val {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .afford-card-row.total .afford-card-val.positive { color: #22c55e; }
+        .afford-card-row.total .afford-card-val.negative { color: #ef4444; }
+
+        .afford-card-val {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .afford-note {
+            font-size: 0.6rem;
+            color: #aeaeb2;
+            margin-top: 6px;
+        }
+
         /* === CHART SECTION === */
         .chart-section {
             display: none;
@@ -550,6 +656,14 @@
             <div class="section-title">Estimated Monthly Rent (1BR)</div>
             <div class="rent-grid" id="rentGrid"></div>
             <div style="font-size: 0.6rem; color: #aeaeb2; margin-top: 4px;">City avg adjusted for neighborhood. Actual rents vary.</div>
+        </div>
+
+        <!-- Affordability Verdict -->
+        <div class="affordability-section" id="affordabilitySection">
+            <div class="section-title">Affordability Verdict</div>
+            <div class="afford-verdict" id="affordVerdict"></div>
+            <div class="afford-cards" id="affordCards"></div>
+            <div class="afford-note">Disposable = est. take-home minus annual 1BR rent.</div>
         </div>
 
         <!-- Visual Chart -->
@@ -1684,12 +1798,14 @@ function calculate() {
     const fromCountry = cityToCountry[fromCity];
     const toCountry = cityToCountry[toCity];
     const taxSection = document.getElementById('taxSection');
+    let fromDed = null;
+    let toDed = null;
 
     if (fromCountry && toCountry) {
-        const fromDed = calculateAllDeductions(salary, fromCountry, fromCity, false, fromNhood);
-        const toDed = calculateAllDeductions(equivalent, toCountry, toCity, false, toNhood);
+        fromDed = calculateAllDeductions(salary, fromCountry, fromCity, false, fromNhood);
+        toDed = calculateAllDeductions(equivalent, toCountry, toCity, false, toNhood);
 
-        function buildCompactCard(label, grossFmt, ded, cur) {
+        function buildCompactCard(label, grossFmt, ded, cur, equivNet, equivCur) {
             const maxR = Math.max(...ded.items.map(i=>i.rate), 1);
             let bars = '';
             for (const item of ded.items) {
@@ -1702,6 +1818,10 @@ function calculate() {
                 </div>`;
             }
             const fmtNet = fmtCur(ded.net, cur);
+            let equivLine = '';
+            if (equivNet != null && equivCur && equivCur !== cur) {
+                equivLine = `<div class="ded-take-home-equiv">\u2248 ${fmtCur(equivNet, equivCur)} in ${equivCur}</div>`;
+            }
             return `<div class="tax-card" style="text-align:left;">
                 <div class="tax-card-city">${label}</div>
                 <div class="tax-card-gross">Gross: ${grossFmt}</div>
@@ -1710,13 +1830,15 @@ function calculate() {
                     <span style="font-size:0.75rem;font-weight:600;">Total: ${ded.totalRate}%</span>
                     <span style="font-size:0.85rem;font-weight:700;color:#22c55e;">${fmtNet}</span>
                 </div>
+                ${equivLine}
                 <div style="text-align:right;font-size:0.6rem;color:#86868b;">Take-Home/yr</div>
             </div>`;
         }
 
+        const toNetInFromCurr = toDed.net / xRate;
         document.getElementById('taxGrid').innerHTML =
             buildCompactCard(fromLabel, fmtSalaryFrom, fromDed, fromCurrency) +
-            buildCompactCard(toLabel, fmtSalaryTo, toDed, toCurrency);
+            buildCompactCard(toLabel, fmtSalaryTo, toDed, toCurrency, toNetInFromCurr, fromCurrency);
         taxSection.style.display = 'block';
     } else {
         taxSection.style.display = 'none';
@@ -1726,16 +1848,21 @@ function calculate() {
     const rentSection = document.getElementById('rentSection');
     const fromBaseRent = cityRent1BR[fromCity];
     const toBaseRent = cityRent1BR[toCity];
+    let fromRentUSD = 0;
+    let toRentUSD = 0;
+    let hasRentData = false;
+
     if (fromBaseRent && toBaseRent) {
+        hasRentData = true;
         const fromMult = (fromNhood && cityNeighborhoods[fromCity] && cityNeighborhoods[fromCity][fromNhood]) ? cityNeighborhoods[fromCity][fromNhood] : 1.0;
         const toMult = (toNhood && cityNeighborhoods[toCity] && cityNeighborhoods[toCity][toNhood]) ? cityNeighborhoods[toCity][toNhood] : 1.0;
-        const fromRentUSD = fromBaseRent * fromMult;
-        const toRentUSD = toBaseRent * toMult;
+        fromRentUSD = fromBaseRent * fromMult;
+        toRentUSD = toBaseRent * toMult;
         const fromRentLocal = fromRentUSD * (exchangeRates[fromCurrency] / exchangeRates['USD']);
         const toRentLocal = toRentUSD * (exchangeRates[toCurrency] / exchangeRates['USD']);
         const fmtUSD = (a) => fmtCur(a, 'USD');
         function buildRentCard(label, rentLocal, rentUSD, cur) {
-            const usdLine = cur !== 'USD' ? `<div class="rent-card-usd">≈ ${fmtUSD(rentUSD)}/mo</div>` : '';
+            const usdLine = cur !== 'USD' ? `<div class="rent-card-usd">\u2248 ${fmtUSD(rentUSD)}/mo</div>` : '';
             return `<div class="rent-card">
                 <div class="rent-card-city">${label}</div>
                 <div class="rent-card-amount">${fmtCur(rentLocal, cur)}</div>
@@ -1749,6 +1876,52 @@ function calculate() {
         rentSection.style.display = 'block';
     } else {
         rentSection.style.display = 'none';
+    }
+
+    // === AFFORDABILITY VERDICT ===
+    const affordSection = document.getElementById('affordabilitySection');
+    if (fromDed && toDed && hasRentData) {
+        const usdToFromRate = exchangeRates[fromCurrency] / exchangeRates['USD'];
+        const fromTakeHome = fromDed.net;
+        const toTakeHome = toDed.net / xRate;
+        const fromAnnualRent = fromRentUSD * usdToFromRate * 12;
+        const toAnnualRent = toRentUSD * usdToFromRate * 12;
+        const fromDisposable = fromTakeHome - fromAnnualRent;
+        const toDisposable = toTakeHome - toAnnualRent;
+        const diffPct = fromDisposable !== 0 ? ((toDisposable - fromDisposable) / Math.abs(fromDisposable)) * 100 : 0;
+        const absDiff = Math.abs(diffPct).toFixed(0);
+
+        let vClass, vIcon, vText;
+        if (diffPct > 5) {
+            vClass = 'better'; vIcon = '\uD83D\uDFE2';
+            vText = `~${absDiff}% more spending power in ${toCity} after rent & taxes`;
+        } else if (diffPct < -5) {
+            vClass = 'worse'; vIcon = '\uD83D\uDD34';
+            vText = `~${absDiff}% less spending power in ${toCity} after rent & taxes`;
+        } else {
+            vClass = 'similar'; vIcon = '\uD83D\uDFE1';
+            vText = `Roughly similar spending power between ${fromCity} and ${toCity}`;
+        }
+
+        document.getElementById('affordVerdict').className = 'afford-verdict ' + vClass;
+        document.getElementById('affordVerdict').innerHTML = `<span class="afford-verdict-icon">${vIcon}</span><span>${vText}</span>`;
+
+        function buildAffordCard(label, takeHome, annualRent, disposable) {
+            const dc = disposable >= 0 ? 'positive' : 'negative';
+            return `<div class="afford-card">
+                <div class="afford-card-city">${label}</div>
+                <div class="afford-card-row"><span>Take-home/yr</span><span class="afford-card-val">${fmtCur(takeHome, fromCurrency)}</span></div>
+                <div class="afford-card-row"><span>Rent/yr (1BR)</span><span class="afford-card-val">\u2212 ${fmtCur(annualRent, fromCurrency)}</span></div>
+                <div class="afford-card-row total"><span>Disposable</span><span class="afford-card-val ${dc}">${fmtCur(disposable, fromCurrency)}</span></div>
+            </div>`;
+        }
+
+        document.getElementById('affordCards').innerHTML =
+            buildAffordCard(fromLabel, fromTakeHome, fromAnnualRent, fromDisposable) +
+            buildAffordCard(toLabel, toTakeHome, toAnnualRent, toDisposable);
+        affordSection.style.display = 'block';
+    } else {
+        affordSection.style.display = 'none';
     }
 
     // === VISUAL CHART ===
@@ -1772,9 +1945,9 @@ function calculate() {
         </div>
     `;
 
-    if (fromCountry && toCountry) {
-        const netFromVal = fromTaxResult.net;
-        const netToVal = toTaxResult.net;
+    if (fromDed && toDed) {
+        const netFromVal = fromDed.net;
+        const netToVal = toDed.net;
         const maxNet = Math.max(netFromVal, netToVal);
         const netFromPct = (netFromVal / maxNet) * 100;
         const netToPct = (netToVal / maxNet) * 100;

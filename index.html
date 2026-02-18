@@ -988,6 +988,142 @@
             line-height: 1.4;
         }
 
+        .affordability-section {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .afford-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .afford-verdict {
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .afford-verdict.better {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .afford-verdict.similar {
+            background: rgba(245, 158, 11, 0.1);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .afford-verdict.worse {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        [data-theme="dark"] .afford-verdict.better {
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.25);
+        }
+
+        [data-theme="dark"] .afford-verdict.similar {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        [data-theme="dark"] .afford-verdict.worse {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.25);
+        }
+
+        .afford-verdict-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .afford-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .afford-card {
+            background: var(--stat-card-bg);
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .afford-card-city {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .afford-card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 0.82rem;
+            color: var(--text-body);
+        }
+
+        .afford-card-row.total {
+            border-top: 1px solid var(--border);
+            margin-top: 6px;
+            padding-top: 10px;
+        }
+
+        .afford-card-row.total .afford-card-val {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .afford-card-row.total .afford-card-val.positive {
+            color: #22c55e;
+        }
+
+        .afford-card-row.total .afford-card-val.negative {
+            color: #ef4444;
+        }
+
+        .afford-card-val {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .afford-note {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        .ded-take-home-equiv {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: 2px;
+        }
+
         .tax-section {
             margin-top: 24px;
             padding-top: 24px;
@@ -1143,6 +1279,13 @@
             .ded-bar-label {
                 width: 120px;
                 font-size: 0.75rem;
+            }
+            .afford-cards {
+                grid-template-columns: 1fr;
+            }
+            .afford-verdict {
+                font-size: 0.85rem;
+                padding: 14px 16px;
             }
         }
 
@@ -1642,6 +1785,14 @@
                 </div>
             </div>
             <div class="comparison-note" id="comparisonNote"></div>
+
+            <!-- Affordability Verdict -->
+            <div class="affordability-section" id="affordabilitySection" style="display: none;">
+                <div class="afford-title">Affordability Verdict</div>
+                <div class="afford-verdict" id="affordVerdict"></div>
+                <div class="afford-cards" id="affordCards"></div>
+                <div class="afford-note">Disposable = estimated annual take-home minus annual 1BR rent. Actual costs vary.</div>
+            </div>
 
             <!-- Tax & Deductions Estimation -->
             <div class="tax-section" id="taxSection" style="display: none;">
@@ -3573,7 +3724,7 @@
                 currentDed = calculateAllDeductions(salary, currentCountry, currentCity, isExpatMode, currentNeighborhood);
                 targetDed = calculateAllDeductions(equivalentSalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
 
-                function buildDedCard(cityLabel, grossFormatted, ded, currency) {
+                function buildDedCard(cityLabel, grossFormatted, ded, currency, equivNet, equivCurrency) {
                     const maxRate = Math.max(...ded.items.map(i => i.rate), 1);
                     let bars = '';
                     for (const item of ded.items) {
@@ -3589,6 +3740,14 @@
                         style: 'currency', currency: currency,
                         minimumFractionDigits: 0, maximumFractionDigits: 0
                     }).format(ded.net);
+                    let equivLine = '';
+                    if (equivNet != null && equivCurrency && equivCurrency !== currency) {
+                        const fmtEquiv = new Intl.NumberFormat('en-US', {
+                            style: 'currency', currency: equivCurrency,
+                            minimumFractionDigits: 0, maximumFractionDigits: 0
+                        }).format(equivNet);
+                        equivLine = `<div class="ded-take-home-equiv">\u2248 ${fmtEquiv} in ${equivCurrency}</div>`;
+                    }
                     return `<div class="tax-card" style="text-align:left;">
                         <div class="tax-card-city">${cityLabel}</div>
                         <div class="tax-card-gross" style="margin-bottom:12px;">Gross: ${grossFormatted}</div>
@@ -3597,13 +3756,15 @@
                             <div class="ded-total-label">Total: ${ded.totalRate}%</div>
                             <div class="ded-take-home">${fmtNet}</div>
                         </div>
+                        ${equivLine}
                         <div style="font-size:0.7rem; color:var(--text-secondary); margin-top:4px; text-align:right;">Est. Take-Home/yr</div>
                     </div>`;
                 }
 
+                const targetNetInCurrentCurr = targetDed.net / exchangeRate;
                 document.getElementById('taxComparison').innerHTML =
                     buildDedCard(currentLabel, formattedOriginalCurrent, currentDed, currentCurrency) +
-                    buildDedCard(targetLabel, formattedAmount, targetDed, targetCurrency);
+                    buildDedCard(targetLabel, formattedAmount, targetDed, targetCurrency, targetNetInCurrentCurr, currentCurrency);
                 taxSection.style.display = '';
             } else {
                 taxSection.style.display = 'none';
@@ -3613,10 +3774,14 @@
             const rentSection = document.getElementById('rentSection');
             const currentBaseRent = cityRent1BR[currentCity];
             const targetBaseRent = cityRent1BR[targetCity];
+            let currentRentUSD = 0;
+            let targetRentUSD = 0;
+            let hasRentData = false;
 
             if (currentBaseRent && targetBaseRent) {
-                const currentRentUSD = currentBaseRent * currentNeighMult;
-                const targetRentUSD = targetBaseRent * targetNeighMult;
+                hasRentData = true;
+                currentRentUSD = currentBaseRent * currentNeighMult;
+                targetRentUSD = targetBaseRent * targetNeighMult;
                 // Convert to local currencies
                 const currentRentLocal = currentRentUSD * (exchangeRates[currentCurrency] / exchangeRates['USD']);
                 const targetRentLocal = targetRentUSD * (exchangeRates[targetCurrency] / exchangeRates['USD']);
@@ -3633,7 +3798,7 @@
 
                 function buildRentCard(label, rentLocal, rentUSD, currency) {
                     const usdLine = currency !== 'USD'
-                        ? `<div class="rent-card-usd">≈ ${fmtUSD(rentUSD)}/mo</div>`
+                        ? `<div class="rent-card-usd">\u2248 ${fmtUSD(rentUSD)}/mo</div>`
                         : '';
                     return `<div class="rent-card">
                         <div class="rent-card-city">${label}</div>
@@ -3649,6 +3814,74 @@
                 rentSection.style.display = '';
             } else {
                 rentSection.style.display = 'none';
+            }
+
+            // === AFFORDABILITY VERDICT ===
+            const affordSection = document.getElementById('affordabilitySection');
+            const fmtCurr = (amount, cur) => new Intl.NumberFormat('en-US', {
+                style: 'currency', currency: cur,
+                minimumFractionDigits: 0, maximumFractionDigits: 0
+            }).format(amount);
+
+            if (currentDed && targetDed && hasRentData) {
+                // Convert everything to current currency for apples-to-apples
+                const usdToCurrentRate = exchangeRates[currentCurrency] / exchangeRates['USD'];
+                const currentTakeHome = currentDed.net;
+                const targetTakeHome = targetDed.net / exchangeRate;
+                const currentAnnualRent = currentRentUSD * usdToCurrentRate * 12;
+                const targetAnnualRent = targetRentUSD * usdToCurrentRate * 12;
+                const currentDisposable = currentTakeHome - currentAnnualRent;
+                const targetDisposable = targetTakeHome - targetAnnualRent;
+
+                const diffPct = currentDisposable !== 0
+                    ? ((targetDisposable - currentDisposable) / Math.abs(currentDisposable)) * 100
+                    : 0;
+
+                let verdictClass, verdictIcon, verdictText;
+                const absDiff = Math.abs(diffPct).toFixed(0);
+                if (diffPct > 5) {
+                    verdictClass = 'better';
+                    verdictIcon = '\uD83D\uDFE2';
+                    verdictText = `You'd have ~${absDiff}% more spending power in ${targetCity} after rent and taxes`;
+                } else if (diffPct < -5) {
+                    verdictClass = 'worse';
+                    verdictIcon = '\uD83D\uDD34';
+                    verdictText = `You'd have ~${absDiff}% less spending power in ${targetCity} after rent and taxes`;
+                } else {
+                    verdictClass = 'similar';
+                    verdictIcon = '\uD83D\uDFE1';
+                    verdictText = `Spending power is roughly similar between ${currentCity} and ${targetCity} after rent and taxes`;
+                }
+
+                document.getElementById('affordVerdict').className = 'afford-verdict ' + verdictClass;
+                document.getElementById('affordVerdict').innerHTML =
+                    `<span class="afford-verdict-icon">${verdictIcon}</span><span>${verdictText}</span>`;
+
+                function buildAffordCard(label, takeHome, annualRent, disposable) {
+                    const dispClass = disposable >= 0 ? 'positive' : 'negative';
+                    return `<div class="afford-card">
+                        <div class="afford-card-city">${label}</div>
+                        <div class="afford-card-row">
+                            <span>Take-home/yr</span>
+                            <span class="afford-card-val">${fmtCurr(takeHome, currentCurrency)}</span>
+                        </div>
+                        <div class="afford-card-row">
+                            <span>Rent/yr (1BR)</span>
+                            <span class="afford-card-val">\u2212 ${fmtCurr(annualRent, currentCurrency)}</span>
+                        </div>
+                        <div class="afford-card-row total">
+                            <span>Disposable</span>
+                            <span class="afford-card-val ${dispClass}">${fmtCurr(disposable, currentCurrency)}</span>
+                        </div>
+                    </div>`;
+                }
+
+                document.getElementById('affordCards').innerHTML =
+                    buildAffordCard(currentLabel, currentTakeHome, currentAnnualRent, currentDisposable) +
+                    buildAffordCard(targetLabel, targetTakeHome, targetAnnualRent, targetDisposable);
+                affordSection.style.display = '';
+            } else {
+                affordSection.style.display = 'none';
             }
 
             // === VISUAL CHART ===
@@ -3780,6 +4013,8 @@
             document.getElementById('targetNeighborhoodGroup').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
             document.getElementById('taxSection').style.display = 'none';
+            document.getElementById('rentSection').style.display = 'none';
+            document.getElementById('affordabilitySection').style.display = 'none';
             document.getElementById('chartSection').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
