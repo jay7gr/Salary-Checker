@@ -105,7 +105,6 @@
             --border: #e5e5e7;
             --shadow: 0 2px 20px rgba(0,0,0,0.06);
             --nav-bg: rgba(245,245,247,0.72);
-            --toggle-bg: #2d1b69;
             --tag-bg: #f0f0f2;
             --table-header-bg: #f5f5f7;
             --table-row-hover: #fafafa;
@@ -123,7 +122,6 @@
             --border: #38383a;
             --shadow: 0 2px 20px rgba(0,0,0,0.3);
             --nav-bg: rgba(0,0,0,0.72);
-            --toggle-bg: #3d3530;
             --tag-bg: #2c2c2e;
             --table-header-bg: #2c2c2e;
             --table-row-hover: #252527;
@@ -196,33 +194,21 @@
         }
 
         .theme-toggle {
-            background: var(--toggle-bg);
+            background: none;
             border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s, transform 0.2s;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
         }
-
         .theme-toggle:hover {
-            transform: scale(1.08);
+            color: var(--text-primary);
+            background: var(--tag-bg);
         }
 
-        .theme-toggle svg {
-            width: 18px;
-            height: 18px;
-            fill: #ffffff;
-            transition: fill 0.3s;
-        }
-
-        [data-theme="dark"] .theme-toggle svg.sun-icon { display: block; }
-        [data-theme="dark"] .theme-toggle svg.moon-icon { display: none; }
-        .theme-toggle svg.sun-icon { display: none; }
-        .theme-toggle svg.moon-icon { display: block; }
 
         /* Main layout */
         main {
@@ -631,10 +617,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com" class="tool-link-text">Tool</a>
                 <a href="/blog/">Blog</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                    <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.752 15.002A9.718 9.718 0 0112.478 3.34a.75.75 0 00-.926-.918 9.75 9.75 0 1010.12 13.5.75.75 0 00.08-.92z"/></svg>
-                    <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zm0 15a5.25 5.25 0 100-10.5 5.25 5.25 0 000 10.5zm7.28-3.97l1.06 1.06a.75.75 0 11-1.06 1.06l-1.06-1.06a.75.75 0 011.06-1.06zm-15.62 1.06a.75.75 0 01-1.06 0l-1.06-1.06a.75.75 0 111.06-1.06l1.06 1.06a.75.75 0 010 1.06zM12 19.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm8.53-13.84a.75.75 0 010 1.06l-1.06 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zM4.47 7.78a.75.75 0 01-1.06 0L2.35 6.72a.75.75 0 111.06-1.06l1.06 1.06a.75.75 0 010 1.06zM21.75 12a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM4.5 12a.75.75 0 01-.75.75H2.25a.75.75 0 010-1.5H3.75A.75.75 0 014.5 12z"/></svg>
-                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </div>
     </nav>
@@ -898,11 +881,11 @@
                 <a href="https://salary-converter.com" class="cta-button">Try salary:converter</a>
             </div>
 
-            <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+            <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <a href="/city/new-york.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">New York</a>
-                    <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
+                    <a href="/city/new-york.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">New York</a>
+                    <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
                 </div>
             </section>
         </article>
@@ -912,37 +895,15 @@
     <footer>
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
     </footer>
-
-    <!-- Theme toggle script -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const storageKey = 'blog-theme';
-
-            function getPreferredTheme() {
-                const stored = localStorage.getItem(storageKey);
-                if (stored) return stored;
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem(storageKey, theme);
-            }
-
-            setTheme(getPreferredTheme());
-
-            toggle.addEventListener('click', function() {
-                const current = document.documentElement.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-            });
-
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-                if (!localStorage.getItem(storageKey)) {
-                    setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 </body>
 </html>

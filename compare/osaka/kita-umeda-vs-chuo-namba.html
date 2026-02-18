@@ -27,37 +27,101 @@
     </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }
         .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        .breadcrumb { font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }
-        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .nav-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }
+        .nav-logo {
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
+        }
+
+        .breadcrumb { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
         .hero { text-align: center; margin-bottom: 40px; }
         .hero h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
-        .hero .subtitle { font-size: 1rem; color: #86868b; }
-        .card { background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+        .hero .subtitle { font-size: 1rem; color: var(--text-secondary); }
+        .card { background: var(--card-bg); border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }
         .card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px; }
         .vs-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: center; }
         .vs-side { text-align: center; padding: 20px; }
         .vs-side h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
         .vs-side .coli { font-size: 2rem; font-weight: 700; }
-        .vs-side .label { font-size: 0.75rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; }
-        .vs-divider { text-align: center; font-size: 1.2rem; font-weight: 700; color: #86868b; }
+        .vs-side .label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .vs-divider { text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--text-secondary); }
         .winner-badge { display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }
         .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-        .compare-item { text-align: center; padding: 16px; background: #f5f5f7; border-radius: 12px; }
+        .compare-item { text-align: center; padding: 16px; background: var(--stat-card-bg); border-radius: 12px; }
         .compare-item .val { font-size: 1.2rem; font-weight: 700; }
-        .compare-item .lbl { font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+        .compare-item .lbl { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
         .bar-chart { margin: 20px 0; }
         .bar-row { display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }
         .bar-label { width: 140px; font-size: 0.8rem; font-weight: 600; text-align: right; flex-shrink: 0; }
-        .bar-track { flex: 1; height: 28px; background: #f0f0f2; border-radius: 8px; overflow: hidden; }
+        .bar-track { flex: 1; height: 28px; background: var(--tag-bg); border-radius: 8px; overflow: hidden; }
         .bar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 10px; font-size: 0.75rem; font-weight: 600; color: white; }
         .cta-box { text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }
         .cta-box h2 { color: white; margin-bottom: 8px; }
         .cta-box p { color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }
         .cta-btn { display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
-        .page-footer { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }
-        .page-footer a { font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }
+        .page-footer { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+        .page-footer a { font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.3rem; }
             .vs-grid { grid-template-columns: 1fr 40px 1fr; }
@@ -69,9 +133,20 @@
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/osaka.html">Osaka</a> &rsaquo; Kita (Umeda) vs Chuo (Namba)
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/osaka.html">Osaka</a> &rsaquo; Kita (Umeda) vs Chuo (Namba)
+        </div>
 
         <section class="hero">
             <h1>Kita (Umeda) vs Chuo (Namba)</h1>
@@ -161,14 +236,14 @@
         <div class="card">
             <h2>More Comparisons in Osaka</h2>
             <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                <a href="/compare/osaka/sakai-vs-nishinari.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Sakai vs Nishinari</a>
+                <a href="/compare/osaka/joto-vs-sakai.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Joto vs Sakai</a>
+<a href="/compare/osaka/kita-umeda-vs-sumiyoshi.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Kita (Umeda) vs Sumiyoshi</a>
 <a href="/compare/osaka/kita-umeda-vs-shinsaibashi.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Kita (Umeda) vs Shinsaibashi</a>
 <a href="/compare/osaka/sumiyoshi-vs-nishinari.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Sumiyoshi vs Nishinari</a>
-<a href="/compare/osaka/chuo-namba-vs-shinsaibashi.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Chuo (Namba) vs Shinsaibashi</a>
 <a href="/compare/osaka/joto-vs-nishinari.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Joto vs Nishinari</a>
-<a href="/compare/osaka/kita-umeda-vs-sumiyoshi.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Kita (Umeda) vs Sumiyoshi</a>
+<a href="/compare/osaka/chuo-namba-vs-shinsaibashi.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Chuo (Namba) vs Shinsaibashi</a>
 <a href="/compare/osaka/kita-umeda-vs-nishinari.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Kita (Umeda) vs Nishinari</a>
-<a href="/compare/osaka/joto-vs-sakai.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Joto vs Sakai</a>
+<a href="/compare/osaka/sakai-vs-nishinari.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Sakai vs Nishinari</a>
 
             </div>
         </div>
@@ -205,5 +280,17 @@
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+
+    <script>
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
+    </script>
+
 </body>
 </html>

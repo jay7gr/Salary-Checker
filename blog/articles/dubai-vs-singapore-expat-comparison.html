@@ -103,7 +103,6 @@
             --accent: #2563eb;
             --shadow: rgba(0, 0, 0, 0.06);
             --border: #e5e5e7;
-            --toggle-bg: #2d1b69;
             --nav-bg: rgba(245, 245, 247, 0.72);
             --tag-bg: #f0f0f2;
             --table-header-bg: #f5f5f7;
@@ -121,7 +120,6 @@
             --accent: #2563eb;
             --shadow: rgba(0, 0, 0, 0.3);
             --border: #38383a;
-            --toggle-bg: #3d3530;
             --nav-bg: rgba(0, 0, 0, 0.72);
             --tag-bg: #2c2c2e;
             --table-header-bg: #2c2c2e;
@@ -195,29 +193,21 @@
         }
 
         .theme-toggle {
-            background: var(--toggle-bg);
+            background: none;
             border: none;
-            border-radius: 50%;
-            width: 34px;
-            height: 34px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease, transform 0.2s ease;
-            flex-shrink: 0;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
         }
-
         .theme-toggle:hover {
-            transform: scale(1.08);
+            color: var(--text-primary);
+            background: var(--tag-bg);
         }
 
-        .theme-toggle svg {
-            width: 18px;
-            height: 18px;
-            fill: #ffffff;
-            transition: transform 0.3s ease;
-        }
 
         /* Back Link */
         .back-link-container {
@@ -566,10 +556,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zm9-6a1 1 0 0 1-1 1h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1zM5 12a1 1 0 0 1-1 1H3a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1zm14.07-6.36a1 1 0 0 1 0 1.41l-.71.71a1 1 0 0 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0zM7.05 17.66a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0zm11.9 0a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0zM7.05 6.34a1 1 0 0 1 0 1.41l-.71.71A1 1 0 0 1 4.93 7.05l.71-.71a1 1 0 0 1 1.41 0zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/></svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none;"><path d="M21.75 15.5a.75.75 0 0 1-.07.97 9.75 9.75 0 1 1-14.15-14.15.75.75 0 0 1 1.17.73A7.5 7.5 0 0 0 20.05 14.4a.75.75 0 0 1 1.7 1.1z"/></svg>
-                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </div>
     </nav>
@@ -977,12 +964,12 @@
                 </div>
             </div>
 
-            <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+            <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <a href="/city/dubai.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Dubai</a>
-                    <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
-                    <a href="/compare/dubai-vs-singapore.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Dubai vs Singapore</a>
+                    <a href="/city/dubai.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Dubai</a>
+                    <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
+                    <a href="/compare/dubai-vs-singapore.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Dubai vs Singapore</a>
                 </div>
             </section>
         </article>
@@ -992,49 +979,15 @@
     <footer>
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
     </footer>
-
-    <!-- Theme Toggle Script -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const sunIcon = toggle.querySelector('.sun-icon');
-            const moonIcon = toggle.querySelector('.moon-icon');
-            const STORAGE_KEY = 'blog-theme';
-
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem(STORAGE_KEY, theme);
-                if (theme === 'dark') {
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
-                } else {
-                    sunIcon.style.display = 'block';
-                    moonIcon.style.display = 'none';
-                }
-            }
-
-            // Initialize theme
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                setTheme(saved);
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                setTheme('dark');
-            } else {
-                setTheme('light');
-            }
-
-            toggle.addEventListener('click', function() {
-                const current = document.documentElement.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-            });
-
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-                if (!localStorage.getItem(STORAGE_KEY)) {
-                    setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 </body>
 </html>

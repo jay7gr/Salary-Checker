@@ -73,83 +73,102 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #f5f5f7; min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: #1d1d1f; }
-        .nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0, 0, 0, 0.06); position: sticky; top: 0; z-index: 100; }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: var(--bg); min-height: 100vh; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; color: var(--text-primary); }
+        .nav { background: var(--nav-bg, rgba(255, 255, 255, 0.85)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
         .nav-inner { max-width: 980px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; color: #1d1d1f; text-decoration: none; line-height: 1; }
+        .nav-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); text-decoration: none; line-height: 1; }
         .nav-logo span { color: #2563eb; }
         .nav-links { display: flex; align-items: center; gap: 24px; }
-        .nav-links a { font-size: 0.85rem; font-weight: 500; color: #86868b; text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: #1d1d1f; }
-        .nav-links a.active { color: #1d1d1f; }
-        .theme-toggle { background: #2d1b69; border: 1px solid #3a2578; color: #d4ccf0; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: all 0.3s; }
-        .theme-toggle:hover { transform: scale(1.1); }
+        .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a.active { color: var(--text-primary); }
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
+        }
         .back-link { max-width: 720px; margin: 0 auto; padding: 32px 24px 0; }
-        .back-link a { font-size: 0.85rem; font-weight: 500; color: #2563eb; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s; }
+        .back-link a { font-size: 0.85rem; font-weight: 500; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: opacity 0.2s; }
         .back-link a:hover { opacity: 0.7; }
         .article-container { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; }
         .article-header { margin-bottom: 40px; }
-        .article-tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #2563eb; margin-bottom: 16px; display: inline-block; }
+        .article-tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 16px; display: inline-block; }
         .article-header h1 { font-size: 2.8rem; font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; }
-        .article-meta { font-size: 0.85rem; color: #86868b; display: flex; gap: 16px; align-items: center; }
-        .article-meta-divider { width: 3px; height: 3px; border-radius: 50%; background: #aeaeb2; }
-        .article-content { background: white; border-radius: 24px; box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06); padding: 48px 52px; }
+        .article-meta { font-size: 0.85rem; color: var(--text-secondary); display: flex; gap: 16px; align-items: center; }
+        .article-meta-divider { width: 3px; height: 3px; border-radius: 50%; background: var(--text-secondary); }
+        .article-content { background: var(--card-bg); border-radius: 24px; box-shadow: var(--shadow); padding: 48px 52px; }
         .article-content h2 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.5px; margin-top: 48px; margin-bottom: 16px; line-height: 1.2; }
         .article-content h2:first-child { margin-top: 0; }
         .article-content h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.3px; margin-top: 36px; margin-bottom: 12px; line-height: 1.3; }
-        .article-content p { font-size: 1.05rem; line-height: 1.75; color: #1d1d1f; margin-bottom: 20px; }
-        .article-content blockquote { border-left: 3px solid #2563eb; padding: 16px 24px; margin: 28px 0; background: #f0f5ff; border-radius: 0 12px 12px 0; }
-        .article-content blockquote p { color: #1d1d1f; font-size: 1.05rem; margin-bottom: 0; font-style: italic; }
+        .article-content p { font-size: 1.05rem; line-height: 1.75; color: var(--text-primary); margin-bottom: 20px; }
+        .article-content blockquote { border-left: 3px solid #2563eb; padding: 16px 24px; margin: 28px 0; background: var(--tag-bg); border-radius: 0 12px 12px 0; }
+        .article-content blockquote p { color: var(--text-primary); font-size: 1.05rem; margin-bottom: 0; font-style: italic; }
         .article-content ul, .article-content ol { margin-bottom: 20px; padding-left: 24px; }
-        .article-content li { font-size: 1.05rem; line-height: 1.75; color: #1d1d1f; margin-bottom: 8px; }
+        .article-content li { font-size: 1.05rem; line-height: 1.75; color: var(--text-primary); margin-bottom: 8px; }
         .article-content strong { font-weight: 600; }
-        .article-content a { color: #2563eb; text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
+        .article-content a { color: var(--accent); text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
         .article-content a:hover { opacity: 0.7; }
-        .article-content code { background: #f5f5f7; padding: 3px 8px; border-radius: 6px; font-size: 0.95rem; font-family: 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; }
-        .article-content .formula-block { background: #f5f5f7; border-radius: 16px; padding: 24px 28px; margin: 28px 0; text-align: center; }
-        .article-content .formula-block code { font-size: 1.05rem; background: none; padding: 0; font-weight: 600; color: #1d1d1f; }
+        .article-content code { background: var(--tag-bg); padding: 3px 8px; border-radius: 6px; font-size: 0.95rem; font-family: 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; }
+        .article-content .formula-block { background: var(--tag-bg); border-radius: 16px; padding: 24px 28px; margin: 28px 0; text-align: center; }
+        .article-content .formula-block code { font-size: 1.05rem; background: none; padding: 0; font-weight: 600; color: var(--text-primary); }
         .article-content .cta-box { background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); border-radius: 20px; padding: 36px 32px; margin: 40px 0; text-align: center; }
         .article-content .cta-box h3 { color: white; font-size: 1.4rem; margin-top: 0; margin-bottom: 12px; }
         .article-content .cta-box p { color: rgba(255, 255, 255, 0.85); margin-bottom: 20px; font-size: 1rem; }
         .article-content .cta-box a.cta-button { display: inline-block; background: white; color: #2563eb; font-weight: 600; font-size: 0.95rem; padding: 12px 28px; border-radius: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
         .article-content .cta-box a.cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); opacity: 1; }
         .comparison-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.95rem; }
-        .comparison-table th { text-align: left; padding: 12px 16px; border-bottom: 2px solid #e5e5ea; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; }
-        .comparison-table td { padding: 12px 16px; border-bottom: 1px solid #f0f0f2; color: #1d1d1f; }
+        .comparison-table th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--border); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); }
+        .comparison-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-light); color: var(--text-primary); }
         .comparison-table tr:last-child td { border-bottom: none; }
-        .footer { border-top: 1px solid rgba(0, 0, 0, 0.06); padding: 40px 24px; text-align: center; }
+        .footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
         .footer-inner { max-width: 980px; margin: 0 auto; }
-        .footer-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.5px; color: #1d1d1f; margin-bottom: 8px; }
+        .footer-logo { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); margin-bottom: 8px; }
         .footer-logo span { color: #2563eb; }
-        .footer-text { font-size: 0.8rem; color: #86868b; }
+        .footer-text { font-size: 0.8rem; color: var(--text-secondary); }
         .footer-links { margin-top: 16px; display: flex; justify-content: center; gap: 24px; }
-        .footer-links a { font-size: 0.8rem; color: #86868b; text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: #1d1d1f; }
-        body.dark { background: #000000; color: #f5f5f7; }
-        body.dark .nav { background: rgba(0, 0, 0, 0.85); border-bottom-color: #38383a; }
-        body.dark .nav-logo { color: #f5f5f7; }
-        body.dark .nav-links a { color: #98989f; }
-        body.dark .nav-links a:hover, body.dark .nav-links a.active { color: #f5f5f7; }
-        body.dark .theme-toggle { background: #3d3530; border-color: #4e443d; color: #e8ddd0; }
-        body.dark .back-link a { color: #5b9aff; }
-        body.dark .article-header h1 { color: #f5f5f7; }
-        body.dark .article-meta { color: #98989f; }
-        body.dark .article-meta-divider { background: #636366; }
-        body.dark .article-content { background: #1c1c1e; box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3); }
-        body.dark .article-content h2, body.dark .article-content h3 { color: #f5f5f7; }
-        body.dark .article-content p, body.dark .article-content li { color: #d1d1d6; }
-        body.dark .article-content blockquote { background: rgba(37, 99, 235, 0.1); border-left-color: #5b9aff; }
-        body.dark .article-content blockquote p { color: #d1d1d6; }
-        body.dark .article-content code { background: #2c2c2e; color: #d1d1d6; }
-        body.dark .article-content .formula-block { background: #2c2c2e; }
-        body.dark .article-content .formula-block code { color: #f5f5f7; }
-        body.dark .article-content a { color: #5b9aff; }
-        body.dark .comparison-table th { border-bottom-color: #38383a; color: #98989f; }
-        body.dark .comparison-table td { border-bottom-color: #2c2c2e; color: #d1d1d6; }
-        body.dark .footer { border-top-color: #38383a; }
-        body.dark .footer-logo { color: #f5f5f7; }
-        body.dark .footer-text, body.dark .footer-links a { color: #98989f; }
-        body.dark .footer-links a:hover { color: #f5f5f7; }
+        .footer-links a { font-size: 0.8rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text-primary); }
         @media (max-width: 768px) {
             .article-header h1 { font-size: 1.9rem; letter-spacing: -0.8px; }
             .article-content { padding: 28px 20px; border-radius: 20px; }
@@ -164,7 +183,6 @@
             .comparison-table { font-size: 0.85rem; }
             .comparison-table th, .comparison-table td { padding: 10px 10px; }
             .nav-links a.nav-link-text { display: none; }
-            .theme-toggle { width: 36px; height: 36px; }
             .back-link { padding: 20px 20px 0; }
             .article-container { padding: 24px 20px 60px; }
         }
@@ -179,9 +197,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com" class="nav-link-text">Tool</a>
                 <a href="/blog/" class="nav-link-text">Blog</a>
-                <button class="theme-toggle" id="themeToggle">
-                    <span id="themeIcon">&#127769;</span>
-                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </div>
     </nav>
@@ -556,15 +572,15 @@
 
         </div>
 
-        <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+        <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <a href="/city/bangkok.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bangkok</a>
-                <a href="/city/chiang-mai.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Chiang Mai</a>
-                <a href="/city/ho-chi-minh-city.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Ho Chi Minh City</a>
-                <a href="/city/bali.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bali</a>
-                <a href="/city/kuala-lumpur.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Kuala Lumpur</a>
-                <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
+                <a href="/city/bangkok.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bangkok</a>
+                <a href="/city/chiang-mai.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Chiang Mai</a>
+                <a href="/city/ho-chi-minh-city.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Ho Chi Minh City</a>
+                <a href="/city/bali.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bali</a>
+                <a href="/city/kuala-lumpur.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Kuala Lumpur</a>
+                <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
             </div>
         </section>
     </article>
@@ -580,27 +596,15 @@
             </div>
         </div>
     </footer>
-
-    <!-- Theme Toggle Script -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const icon = document.getElementById('themeIcon');
-            const body = document.body;
-
-            const savedTheme = localStorage.getItem('blog-theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark');
-                icon.textContent = '\u2600\uFE0F';
-            }
-
-            toggle.addEventListener('click', function() {
-                body.classList.toggle('dark');
-                const isDark = body.classList.contains('dark');
-                icon.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
-                localStorage.setItem('blog-theme', isDark ? 'dark' : 'light');
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 </body>
 </html>

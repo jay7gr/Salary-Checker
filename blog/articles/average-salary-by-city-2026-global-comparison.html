@@ -104,7 +104,6 @@
             --text-secondary: #86868b;
             --accent: #2563eb;
             --border: #e5e5e7;
-            --toggle-bg: #2d1b69;
             --shadow: 0 2px 20px rgba(0,0,0,0.06);
             --nav-bg: rgba(245, 245, 247, 0.72);
             --table-header-bg: #f9fafb;
@@ -121,7 +120,6 @@
             --text-secondary: #98989f;
             --accent: #2563eb;
             --border: #38383a;
-            --toggle-bg: #3d3530;
             --shadow: 0 2px 20px rgba(0,0,0,0.3);
             --nav-bg: rgba(0, 0, 0, 0.72);
             --table-header-bg: #2c2c2e;
@@ -202,32 +200,21 @@
 
         /* Theme toggle */
         .theme-toggle {
-            width: 44px;
-            height: 26px;
-            background: var(--toggle-bg);
+            background: none;
             border: none;
-            border-radius: 13px;
             cursor: pointer;
-            position: relative;
-            transition: background 0.3s ease;
-            flex-shrink: 0;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
         }
 
-        .theme-toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: #ffffff;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
-        [data-theme="dark"] .theme-toggle::after {
-            transform: translateX(18px);
-        }
 
         /* Back link */
         .back-link-container {
@@ -630,7 +617,7 @@
                     <a href="/blog/">Blog</a>
                 </div>
             </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
         </div>
     </nav>
 
@@ -1388,16 +1375,16 @@
             <p>This analysis is updated annually. For real-time, personalized comparisons between any two cities, use our <a href="https://salary-converter.com">salary comparison tool</a>.</p>
         </section>
 
-        <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+        <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <a href="/city/new-york.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">New York</a>
-                <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
-                <a href="/city/london.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">London</a>
-                <a href="/city/zurich.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Zurich</a>
-                <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
-                <a href="/city/tokyo.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Tokyo</a>
-                <a href="/city/sydney.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Sydney</a>
+                <a href="/city/new-york.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">New York</a>
+                <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
+                <a href="/city/london.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">London</a>
+                <a href="/city/zurich.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Zurich</a>
+                <a href="/city/singapore.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Singapore</a>
+                <a href="/city/tokyo.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Tokyo</a>
+                <a href="/city/sydney.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Sydney</a>
             </div>
         </section>
     </article>
@@ -1406,39 +1393,15 @@
     <footer>
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
     </footer>
-
-    <!-- Theme toggle script -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const storageKey = 'blog-theme';
-
-            function getPreferredTheme() {
-                const stored = localStorage.getItem(storageKey);
-                if (stored) return stored;
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem(storageKey, theme);
-            }
-
-            // Apply theme immediately
-            setTheme(getPreferredTheme());
-
-            toggle.addEventListener('click', function() {
-                const current = document.documentElement.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-            });
-
-            // Listen for OS-level theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-                if (!localStorage.getItem(storageKey)) {
-                    setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 </body>
 </html>

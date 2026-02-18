@@ -56,11 +56,44 @@
     </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
             padding: 20px 12px;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }
         .page-wrapper { max-width: 900px; margin: 0 auto; }
         .nav-bar {
@@ -69,27 +102,44 @@
         }
         .nav-logo {
             font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
-            color: #1d1d1f; text-decoration: none;
+            color: var(--text-primary); text-decoration: none;
         }
-        .nav-logo span { color: #2563eb; }
+        .nav-logo span { color: var(--accent); }
         .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a {
-            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             text-decoration: none; transition: color 0.2s;
         }
-        .nav-links a:hover { color: #2563eb; }
-        .breadcrumb {
-            font-size: 0.8rem; color: #86868b; margin-bottom: 24px;
+        .nav-links a:hover { color: var(--accent); }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
         }
-        .breadcrumb a { color: #2563eb; text-decoration: none; }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px;
+        }
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
         .breadcrumb a:hover { text-decoration: underline; }
         .hero {
-            background: white; border-radius: 20px; padding: 40px 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
             text-align: center;
         }
         .hero h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
-        .hero .subtitle { font-size: 1rem; color: #86868b; margin-bottom: 24px; }
+        .hero .subtitle { font-size: 1rem; color: var(--text-secondary); margin-bottom: 24px; }
         .vs-badge {
             display: inline-block; background: #2563eb; color: white;
             font-weight: 700; font-size: 0.85rem; padding: 6px 14px;
@@ -102,31 +152,31 @@
         .compare-col {
             padding: 20px; text-align: center;
         }
-        .compare-col:first-child { border-right: 2px solid #e5e5ea; }
+        .compare-col:first-child { border-right: 2px solid var(--border); }
         .compare-col .city-name {
             font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;
         }
-        .compare-col .country { font-size: 0.8rem; color: #86868b; margin-bottom: 16px; }
+        .compare-col .country { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; }
         .compare-stat {
             margin-bottom: 12px;
         }
         .compare-stat .value {
-            font-size: 1.3rem; font-weight: 700; color: #2563eb;
+            font-size: 1.3rem; font-weight: 700; color: var(--accent);
         }
         .compare-stat .label {
-            font-size: 0.7rem; color: #86868b; text-transform: uppercase;
+            font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase;
             letter-spacing: 0.5px; font-weight: 500;
         }
         .content-card {
-            background: white; border-radius: 20px; padding: 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
         }
         .content-card h2 {
             font-size: 1.3rem; font-weight: 700; margin-bottom: 16px;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
         .content-card p {
-            font-size: 0.92rem; color: #4a4a4c; line-height: 1.7; margin-bottom: 16px;
+            font-size: 0.92rem; color: var(--text-body); line-height: 1.7; margin-bottom: 16px;
         }
         table {
             width: 100%; border-collapse: collapse; font-size: 0.88rem;
@@ -134,18 +184,18 @@
         table th {
             text-align: left; padding: 10px 12px; font-size: 0.75rem;
             text-transform: uppercase; letter-spacing: 0.5px;
-            color: #86868b; border-bottom: 2px solid #e5e5ea; font-weight: 600;
+            color: var(--text-secondary); border-bottom: 2px solid var(--border); font-weight: 600;
         }
         table td {
-            padding: 10px 12px; border-bottom: 1px solid #f0f0f2;
+            padding: 10px 12px; border-bottom: 1px solid var(--border-light);
         }
         .metric-row {
             display: grid; grid-template-columns: 1fr 2fr 2fr; gap: 12px;
-            padding: 14px 0; border-bottom: 1px solid #f0f0f2;
+            padding: 14px 0; border-bottom: 1px solid var(--border-light);
             align-items: center; font-size: 0.9rem;
         }
         .metric-row:last-child { border-bottom: none; }
-        .metric-label { color: #86868b; font-weight: 500; font-size: 0.82rem; }
+        .metric-label { color: var(--text-secondary); font-weight: 500; font-size: 0.82rem; }
         .metric-value { font-weight: 600; text-align: center; }
         .winner { color: #22c55e; }
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -153,12 +203,12 @@
             display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
         }
         .similar-city-link {
-            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            display: inline-block; padding: 8px 16px; background: var(--tag-bg);
             border-radius: 100px; font-size: 0.82rem; font-weight: 500;
-            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+            color: var(--text-primary); text-decoration: none; transition: all 0.2s;
         }
         .similar-city-link:hover {
-            background: #2563eb; color: white;
+            background: var(--accent); color: white;
         }
         .cta-section {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -175,14 +225,14 @@
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         .page-footer {
             text-align: center; padding: 32px 0 16px; margin-top: 16px;
-            border-top: 1px solid #e5e5ea;
+            border-top: 1px solid var(--border);
         }
         .page-footer a {
-            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }
-        .page-footer a:hover { color: #2563eb; }
+        .page-footer a:hover { color: var(--accent); }
         @media (max-width: 768px) {
-            body { padding: 0; background: white; }
+            body { padding: 0; background: var(--bg); }
             .page-wrapper { padding: 0 16px; }
             .hero { border-radius: 0; padding: 32px 16px; box-shadow: none; }
             .hero h1 { font-size: 1.4rem; }
@@ -204,6 +254,7 @@
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </nav>
 
@@ -385,5 +436,17 @@
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+
+    <script>
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
+    </script>
+
 </body>
 </html>

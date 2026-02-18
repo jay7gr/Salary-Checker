@@ -1217,6 +1217,76 @@ def get_city_comparisons(city, comparison_pairs):
 
 
 # ============================================================
+# SHARED DARK MODE THEME CONSTANTS
+# ============================================================
+
+THEME_CSS_VARS = '''
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+'''
+
+THEME_TOGGLE_CSS = '''
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
+        }
+'''
+
+THEME_TOGGLE_HTML = '<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>'
+
+THEME_JS = '''
+    <script>
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\\u2600':'\\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
+    </script>
+'''
+
+# ============================================================
 # CITY PAGE TEMPLATE
 # ============================================================
 
@@ -1537,11 +1607,13 @@ def generate_city_page(city, comparison_pairs):
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+{THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
             padding: 20px 12px;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }}
         .page-wrapper {{ max-width: 900px; margin: 0 auto; }}
         .nav-bar {{
@@ -1550,57 +1622,58 @@ def generate_city_page(city, comparison_pairs):
         }}
         .nav-logo {{
             font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
-            color: #1d1d1f; text-decoration: none;
+            color: var(--text-primary); text-decoration: none;
         }}
-        .nav-logo span {{ color: #2563eb; }}
+        .nav-logo span {{ color: var(--accent); }}
         .nav-links {{ display: flex; gap: 20px; align-items: center; }}
         .nav-links a {{
-            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             text-decoration: none; transition: color 0.2s;
         }}
-        .nav-links a:hover {{ color: #2563eb; }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
         .breadcrumb {{
-            font-size: 0.8rem; color: #86868b; margin-bottom: 24px;
+            font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px;
         }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
         .breadcrumb a:hover {{ text-decoration: underline; }}
         .hero {{
-            background: white; border-radius: 20px; padding: 40px 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
             text-align: center;
         }}
         .hero h1 {{
             font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px;
-            margin-bottom: 8px; color: #1d1d1f;
+            margin-bottom: 8px; color: var(--text-primary);
         }}
         .hero .subtitle {{
-            font-size: 1.05rem; color: #86868b; margin-bottom: 24px;
+            font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 24px;
         }}
         .stat-grid {{
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
             margin-top: 24px;
         }}
         .stat-card {{
-            background: #f5f5f7; border-radius: 14px; padding: 16px 12px;
+            background: var(--stat-card-bg); border-radius: 14px; padding: 16px 12px;
             text-align: center;
         }}
         .stat-card .stat-value {{
-            font-size: 1.5rem; font-weight: 700; color: #2563eb;
+            font-size: 1.5rem; font-weight: 700; color: var(--accent);
         }}
         .stat-card .stat-label {{
-            font-size: 0.75rem; color: #86868b; margin-top: 4px;
+            font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;
             text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;
         }}
         .content-card {{
-            background: white; border-radius: 20px; padding: 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
         }}
         .content-card h2 {{
             font-size: 1.3rem; font-weight: 700; margin-bottom: 16px;
-            color: #1d1d1f; letter-spacing: -0.3px;
+            color: var(--text-primary); letter-spacing: -0.3px;
         }}
         .content-card p {{
-            font-size: 0.92rem; color: #4a4a4c; line-height: 1.7;
+            font-size: 0.92rem; color: var(--text-body); line-height: 1.7;
             margin-bottom: 16px;
         }}
         table {{
@@ -1609,12 +1682,12 @@ def generate_city_page(city, comparison_pairs):
         table th {{
             text-align: left; padding: 10px 12px; font-size: 0.75rem;
             text-transform: uppercase; letter-spacing: 0.5px;
-            color: #86868b; border-bottom: 2px solid #e5e5ea; font-weight: 600;
+            color: var(--text-secondary); border-bottom: 2px solid var(--border); font-weight: 600;
         }}
         table td {{
-            padding: 10px 12px; border-bottom: 1px solid #f0f0f2; color: #1d1d1f;
+            padding: 10px 12px; border-bottom: 1px solid var(--border-light); color: var(--text-primary);
         }}
-        table tr:hover td {{ background: #f9f9fb; }}
+        table tr:hover td {{ background: var(--table-stripe); }}
         .cta-section {{
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 20px; padding: 40px 32px; text-align: center;
@@ -1632,23 +1705,23 @@ def generate_city_page(city, comparison_pairs):
             display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
         }}
         .similar-city-link {{
-            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            display: inline-block; padding: 8px 16px; background: var(--tag-bg);
             border-radius: 100px; font-size: 0.82rem; font-weight: 500;
-            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+            color: var(--text-primary); text-decoration: none; transition: all 0.2s;
         }}
         .similar-city-link:hover {{
-            background: #2563eb; color: white;
+            background: var(--accent); color: white;
         }}
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 16px;
-            border-top: 1px solid #e5e5ea;
+            border-top: 1px solid var(--border);
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }}
-        .page-footer a:hover {{ color: #2563eb; }}
+        .page-footer a:hover {{ color: var(--accent); }}
         .tax-bar {{
-            background: #f5f5f7; border-radius: 10px; padding: 3px; margin: 8px 0;
+            background: var(--tag-bg); border-radius: 10px; padding: 3px; margin: 8px 0;
         }}
         .tax-bar-fill {{
             height: 8px; border-radius: 8px;
@@ -1657,7 +1730,7 @@ def generate_city_page(city, comparison_pairs):
         .two-col {{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }}
 
         @media (max-width: 768px) {{
-            body {{ padding: 0; background: white; }}
+            body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
             .hero {{ border-radius: 0; padding: 32px 20px; box-shadow: none; }}
             .stat-grid {{ grid-template-columns: repeat(2, 1fr); gap: 10px; }}
@@ -1679,6 +1752,7 @@ def generate_city_page(city, comparison_pairs):
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
             </div>
         </nav>
 
@@ -1822,6 +1896,7 @@ def generate_city_page(city, comparison_pairs):
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -2053,11 +2128,13 @@ def generate_comparison_page(city1, city2):
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+{THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
             padding: 20px 12px;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }}
         .page-wrapper {{ max-width: 900px; margin: 0 auto; }}
         .nav-bar {{
@@ -2066,27 +2143,28 @@ def generate_comparison_page(city1, city2):
         }}
         .nav-logo {{
             font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
-            color: #1d1d1f; text-decoration: none;
+            color: var(--text-primary); text-decoration: none;
         }}
-        .nav-logo span {{ color: #2563eb; }}
+        .nav-logo span {{ color: var(--accent); }}
         .nav-links {{ display: flex; gap: 20px; align-items: center; }}
         .nav-links a {{
-            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             text-decoration: none; transition: color 0.2s;
         }}
-        .nav-links a:hover {{ color: #2563eb; }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
         .breadcrumb {{
-            font-size: 0.8rem; color: #86868b; margin-bottom: 24px;
+            font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px;
         }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
         .breadcrumb a:hover {{ text-decoration: underline; }}
         .hero {{
-            background: white; border-radius: 20px; padding: 40px 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
             text-align: center;
         }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
-        .hero .subtitle {{ font-size: 1rem; color: #86868b; margin-bottom: 24px; }}
+        .hero .subtitle {{ font-size: 1rem; color: var(--text-secondary); margin-bottom: 24px; }}
         .vs-badge {{
             display: inline-block; background: #2563eb; color: white;
             font-weight: 700; font-size: 0.85rem; padding: 6px 14px;
@@ -2099,31 +2177,31 @@ def generate_comparison_page(city1, city2):
         .compare-col {{
             padding: 20px; text-align: center;
         }}
-        .compare-col:first-child {{ border-right: 2px solid #e5e5ea; }}
+        .compare-col:first-child {{ border-right: 2px solid var(--border); }}
         .compare-col .city-name {{
             font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;
         }}
-        .compare-col .country {{ font-size: 0.8rem; color: #86868b; margin-bottom: 16px; }}
+        .compare-col .country {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; }}
         .compare-stat {{
             margin-bottom: 12px;
         }}
         .compare-stat .value {{
-            font-size: 1.3rem; font-weight: 700; color: #2563eb;
+            font-size: 1.3rem; font-weight: 700; color: var(--accent);
         }}
         .compare-stat .label {{
-            font-size: 0.7rem; color: #86868b; text-transform: uppercase;
+            font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase;
             letter-spacing: 0.5px; font-weight: 500;
         }}
         .content-card {{
-            background: white; border-radius: 20px; padding: 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
         }}
         .content-card h2 {{
             font-size: 1.3rem; font-weight: 700; margin-bottom: 16px;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }}
         .content-card p {{
-            font-size: 0.92rem; color: #4a4a4c; line-height: 1.7; margin-bottom: 16px;
+            font-size: 0.92rem; color: var(--text-body); line-height: 1.7; margin-bottom: 16px;
         }}
         table {{
             width: 100%; border-collapse: collapse; font-size: 0.88rem;
@@ -2131,18 +2209,18 @@ def generate_comparison_page(city1, city2):
         table th {{
             text-align: left; padding: 10px 12px; font-size: 0.75rem;
             text-transform: uppercase; letter-spacing: 0.5px;
-            color: #86868b; border-bottom: 2px solid #e5e5ea; font-weight: 600;
+            color: var(--text-secondary); border-bottom: 2px solid var(--border); font-weight: 600;
         }}
         table td {{
-            padding: 10px 12px; border-bottom: 1px solid #f0f0f2;
+            padding: 10px 12px; border-bottom: 1px solid var(--border-light);
         }}
         .metric-row {{
             display: grid; grid-template-columns: 1fr 2fr 2fr; gap: 12px;
-            padding: 14px 0; border-bottom: 1px solid #f0f0f2;
+            padding: 14px 0; border-bottom: 1px solid var(--border-light);
             align-items: center; font-size: 0.9rem;
         }}
         .metric-row:last-child {{ border-bottom: none; }}
-        .metric-label {{ color: #86868b; font-weight: 500; font-size: 0.82rem; }}
+        .metric-label {{ color: var(--text-secondary); font-weight: 500; font-size: 0.82rem; }}
         .metric-value {{ font-weight: 600; text-align: center; }}
         .winner {{ color: #22c55e; }}
         .two-col {{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }}
@@ -2150,12 +2228,12 @@ def generate_comparison_page(city1, city2):
             display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;
         }}
         .similar-city-link {{
-            display: inline-block; padding: 8px 16px; background: #f5f5f7;
+            display: inline-block; padding: 8px 16px; background: var(--tag-bg);
             border-radius: 100px; font-size: 0.82rem; font-weight: 500;
-            color: #1d1d1f; text-decoration: none; transition: all 0.2s;
+            color: var(--text-primary); text-decoration: none; transition: all 0.2s;
         }}
         .similar-city-link:hover {{
-            background: #2563eb; color: white;
+            background: var(--accent); color: white;
         }}
         .cta-section {{
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -2172,14 +2250,14 @@ def generate_comparison_page(city1, city2):
         .cta-btn:hover {{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }}
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 16px;
-            border-top: 1px solid #e5e5ea;
+            border-top: 1px solid var(--border);
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }}
-        .page-footer a:hover {{ color: #2563eb; }}
+        .page-footer a:hover {{ color: var(--accent); }}
         @media (max-width: 768px) {{
-            body {{ padding: 0; background: white; }}
+            body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.4rem; }}
@@ -2201,6 +2279,7 @@ def generate_comparison_page(city1, city2):
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
             </div>
         </nav>
 
@@ -2342,6 +2421,7 @@ def generate_comparison_page(city1, city2):
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -2408,10 +2488,12 @@ def generate_city_index():
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+{THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
             padding: 20px 12px; -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }}
         .page-wrapper {{ max-width: 960px; margin: 0 auto; }}
         .nav-bar {{
@@ -2420,34 +2502,36 @@ def generate_city_index():
         }}
         .nav-logo {{
             font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
-            color: #1d1d1f; text-decoration: none;
+            color: var(--text-primary); text-decoration: none;
         }}
-        .nav-logo span {{ color: #2563eb; }}
-        .nav-links {{ display: flex; gap: 20px; }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
         .nav-links a {{
-            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             text-decoration: none;
         }}
-        .nav-links a:hover {{ color: #2563eb; }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
         .hero {{
-            background: white; border-radius: 20px; padding: 40px 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
             text-align: center;
         }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; margin-bottom: 8px; }}
-        .hero p {{ color: #86868b; font-size: 1rem; }}
+        .hero p {{ color: var(--text-secondary); font-size: 1rem; }}
         .search-box {{
             margin-top: 20px; position: relative; max-width: 400px; margin-left: auto; margin-right: auto;
         }}
         .search-box input {{
-            width: 100%; padding: 12px 16px; border: 2px solid #e5e5ea;
+            width: 100%; padding: 12px 16px; border: 2px solid var(--border);
             border-radius: 12px; font-size: 0.95rem; font-family: inherit;
             outline: none; transition: border-color 0.2s;
+            background: var(--card-bg); color: var(--text-primary);
         }}
-        .search-box input:focus {{ border-color: #2563eb; }}
+        .search-box input:focus {{ border-color: var(--accent); }}
         .content-card {{
-            background: white; border-radius: 20px; padding: 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
         }}
         table {{
             width: 100%; border-collapse: collapse; font-size: 0.88rem;
@@ -2455,22 +2539,22 @@ def generate_city_index():
         table th {{
             text-align: left; padding: 10px 12px; font-size: 0.75rem;
             text-transform: uppercase; letter-spacing: 0.5px;
-            color: #86868b; border-bottom: 2px solid #e5e5ea; font-weight: 600;
-            position: sticky; top: 0; background: white;
+            color: var(--text-secondary); border-bottom: 2px solid var(--border); font-weight: 600;
+            position: sticky; top: 0; background: var(--card-bg);
         }}
         table td {{
-            padding: 10px 12px; border-bottom: 1px solid #f0f0f2;
+            padding: 10px 12px; border-bottom: 1px solid var(--border-light);
         }}
-        table tr:hover td {{ background: #f9f9fb; }}
+        table tr:hover td {{ background: var(--table-stripe); }}
         .page-footer {{
-            text-align: center; padding: 32px 0 16px; border-top: 1px solid #e5e5ea;
+            text-align: center; padding: 32px 0 16px; border-top: 1px solid var(--border);
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }}
-        .page-footer a:hover {{ color: #2563eb; }}
+        .page-footer a:hover {{ color: var(--accent); }}
         @media (max-width: 768px) {{
-            body {{ padding: 0; background: white; }}
+            body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
@@ -2488,6 +2572,7 @@ def generate_city_index():
                 <a href="/">Converter</a>
                 <a href="/compare/">City Comparisons</a>
                 <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
             </div>
         </nav>
 
@@ -2532,6 +2617,7 @@ def generate_city_index():
             }});
         }}
     </script>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -2609,10 +2695,12 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+{THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7; color: #1d1d1f; min-height: 100vh;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
             padding: 20px 12px; -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }}
         .page-wrapper {{ max-width: 900px; margin: 0 auto; }}
         .nav-bar {{
@@ -2621,37 +2709,39 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         }}
         .nav-logo {{
             font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
-            color: #1d1d1f; text-decoration: none;
+            color: var(--text-primary); text-decoration: none;
         }}
-        .nav-logo span {{ color: #2563eb; }}
-        .nav-links {{ display: flex; gap: 20px; }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
         .nav-links a {{
-            font-size: 0.85rem; font-weight: 500; color: #86868b;
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
             text-decoration: none;
         }}
-        .nav-links a:hover {{ color: #2563eb; }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
         .hero {{
-            background: white; border-radius: 20px; padding: 40px 32px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06); margin-bottom: 24px;
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
             text-align: center;
         }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; margin-bottom: 8px; }}
-        .hero p {{ color: #86868b; font-size: 1rem; margin-bottom: 20px; }}
+        .hero p {{ color: var(--text-secondary); font-size: 1rem; margin-bottom: 20px; }}
         .search-box {{
             max-width: 500px; margin: 0 auto; position: relative;
         }}
         .search-box input {{
-            width: 100%; padding: 14px 20px 14px 44px; border: 2px solid #e8e8ed;
+            width: 100%; padding: 14px 20px 14px 44px; border: 2px solid var(--border);
             border-radius: 100px; font-size: 0.95rem; font-family: inherit;
-            outline: none; transition: border-color 0.2s; background: #f5f5f7;
+            outline: none; transition: border-color 0.2s; background: var(--stat-card-bg);
+            color: var(--text-primary);
         }}
-        .search-box input:focus {{ border-color: #2563eb; background: white; }}
+        .search-box input:focus {{ border-color: var(--accent); background: var(--card-bg); }}
         .search-box svg {{
             position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-            width: 18px; height: 18px; color: #86868b;
+            width: 18px; height: 18px; color: var(--text-secondary);
         }}
         .search-count {{
-            text-align: center; font-size: 0.8rem; color: #86868b; margin: 16px 0;
+            text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin: 16px 0;
         }}
         .section-title {{
             font-size: 1.1rem; font-weight: 700; margin: 32px 0 16px;
@@ -2661,8 +2751,8 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }}
         .compare-card {{
-            background: white; border-radius: 14px; padding: 18px;
-            box-shadow: 0 1px 12px rgba(0,0,0,0.05); text-decoration: none;
+            background: var(--card-bg); border-radius: 14px; padding: 18px;
+            box-shadow: var(--shadow); text-decoration: none;
             transition: transform 0.2s, box-shadow 0.2s; display: block;
         }}
         .compare-card:hover {{
@@ -2670,24 +2760,24 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         }}
         .compare-card.hidden {{ display: none; }}
         .compare-card-cities {{
-            font-size: 0.9rem; font-weight: 700; color: #1d1d1f; margin-bottom: 4px;
+            font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;
         }}
         .compare-card-cities .vs {{
-            color: #2563eb; font-size: 0.75rem; margin: 0 4px;
+            color: var(--accent); font-size: 0.75rem; margin: 0 4px;
         }}
         .compare-card-stats {{
-            font-size: 0.75rem; color: #86868b;
+            font-size: 0.75rem; color: var(--text-secondary);
         }}
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 24px;
-            border-top: 1px solid #e5e5ea;
+            border-top: 1px solid var(--border);
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: #86868b; text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
         }}
-        .page-footer a:hover {{ color: #2563eb; }}
+        .page-footer a:hover {{ color: var(--accent); }}
         @media (max-width: 768px) {{
-            body {{ padding: 0; background: white; }}
+            body {{ padding: 0; background: var(--bg); }}
             .page-wrapper {{ padding: 0 16px; }}
             .hero {{ border-radius: 0; padding: 32px 16px; box-shadow: none; }}
             .hero h1 {{ font-size: 1.5rem; }}
@@ -2703,6 +2793,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
             </div>
         </nav>
 
@@ -2762,6 +2853,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         }}
     }});
     </script>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -2985,32 +3077,49 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+{THEME_CSS_VARS}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
-        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .nav-bar {{
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }}
+        .nav-logo {{
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
+        .nav-links a {{
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
+        .breadcrumb {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
         .hero {{ text-align: center; margin-bottom: 40px; }}
         .hero h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
-        .hero .subtitle {{ font-size: 1.05rem; color: #86868b; }}
+        .hero .subtitle {{ font-size: 1.05rem; color: var(--text-secondary); }}
         .badge {{ display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-top: 12px; }}
-        .card {{ background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .card {{ background: var(--card-bg); border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }}
         .card h2 {{ font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px; }}
         .stats-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }}
-        .stat-item {{ text-align: center; padding: 16px; background: #f5f5f7; border-radius: 12px; }}
-        .stat-value {{ font-size: 1.5rem; font-weight: 700; color: #1d1d1f; }}
-        .stat-label {{ font-size: 0.75rem; color: #86868b; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }}
+        .stat-item {{ text-align: center; padding: 16px; background: var(--stat-card-bg); border-radius: 12px; }}
+        .stat-value {{ font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }}
+        .stat-label {{ font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }}
         table {{ width: 100%; border-collapse: collapse; }}
-        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 12px; border-bottom: 2px solid #e8e8ed; }}
-        td {{ padding: 10px 12px; border-bottom: 1px solid #f0f0f2; font-size: 0.85rem; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); padding: 8px 12px; border-bottom: 2px solid var(--border); }}
+        td {{ padding: 10px 12px; border-bottom: 1px solid var(--border-light); font-size: 0.85rem; }}
         .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
         .faq-item {{ margin-bottom: 20px; }}
         .faq-item h3 {{ font-size: 1rem; font-weight: 600; margin-bottom: 8px; }}
-        .faq-item p {{ font-size: 0.9rem; color: #424245; line-height: 1.6; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
-        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .faq-item p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
         @media (max-width: 600px) {{
             .hero h1 {{ font-size: 1.5rem; }}
             .stats-grid {{ grid-template-columns: 1fr 1fr; }}
@@ -3020,9 +3129,20 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {neighborhood}
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {neighborhood}
+        </div>
 
         <section class="hero">
             <h1>{neighborhood}</h1>
@@ -3132,6 +3252,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -3238,37 +3359,54 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+{THEME_CSS_VARS}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
-        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
+        .nav-bar {{
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }}
+        .nav-logo {{
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
+        .nav-links a {{
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
+        .breadcrumb {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
         .hero {{ text-align: center; margin-bottom: 40px; }}
         .hero h1 {{ font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
-        .hero .subtitle {{ font-size: 1rem; color: #86868b; }}
-        .card {{ background: white; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .hero .subtitle {{ font-size: 1rem; color: var(--text-secondary); }}
+        .card {{ background: var(--card-bg); border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: var(--shadow); }}
         .card h2 {{ font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.3px; }}
         .vs-grid {{ display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: center; }}
         .vs-side {{ text-align: center; padding: 20px; }}
         .vs-side h3 {{ font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }}
         .vs-side .coli {{ font-size: 2rem; font-weight: 700; }}
-        .vs-side .label {{ font-size: 0.75rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; }}
-        .vs-divider {{ text-align: center; font-size: 1.2rem; font-weight: 700; color: #86868b; }}
+        .vs-side .label {{ font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }}
+        .vs-divider {{ text-align: center; font-size: 1.2rem; font-weight: 700; color: var(--text-secondary); }}
         .winner-badge {{ display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 0.7rem; font-weight: 600; margin-top: 8px; }}
         .compare-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }}
-        .compare-item {{ text-align: center; padding: 16px; background: #f5f5f7; border-radius: 12px; }}
+        .compare-item {{ text-align: center; padding: 16px; background: var(--stat-card-bg); border-radius: 12px; }}
         .compare-item .val {{ font-size: 1.2rem; font-weight: 700; }}
-        .compare-item .lbl {{ font-size: 0.7rem; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }}
+        .compare-item .lbl {{ font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }}
         .bar-chart {{ margin: 20px 0; }}
         .bar-row {{ display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }}
         .bar-label {{ width: 140px; font-size: 0.8rem; font-weight: 600; text-align: right; flex-shrink: 0; }}
-        .bar-track {{ flex: 1; height: 28px; background: #f0f0f2; border-radius: 8px; overflow: hidden; }}
+        .bar-track {{ flex: 1; height: 28px; background: var(--tag-bg); border-radius: 8px; overflow: hidden; }}
         .bar-fill {{ height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 10px; font-size: 0.75rem; font-weight: 600; color: white; }}
         .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
-        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
         @media (max-width: 600px) {{
             .hero h1 {{ font-size: 1.3rem; }}
             .vs-grid {{ grid-template-columns: 1fr 40px 1fr; }}
@@ -3280,9 +3418,20 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
+        </div>
 
         <section class="hero">
             <h1>{n1} vs {n2}</h1>
@@ -3390,6 +3539,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <a href="/blog/">Blog</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -3514,24 +3664,41 @@ def generate_blog_undervalued_neighborhoods():
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+{THEME_CSS_VARS}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
-        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
-        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .nav-bar {{
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }}
+        .nav-logo {{
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
+        .nav-links a {{
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
+        .breadcrumb {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
+        article {{ background: var(--card-bg); border-radius: 16px; padding: 40px; box-shadow: var(--shadow); }}
         article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
-        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        .meta {{ font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 32px; }}
         article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
-        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: var(--text-body); margin-bottom: 16px; }}
         table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
-        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
-        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); padding: 8px 10px; border-bottom: 2px solid var(--border); }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid var(--border-light); font-size: 0.8rem; }}
         .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
-        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
@@ -3541,9 +3708,20 @@ def generate_blog_undervalued_neighborhoods():
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; 50 Most Undervalued Neighborhoods
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; 50 Most Undervalued Neighborhoods
+        </div>
 
         <article>
             <h1>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})</h1>
@@ -3592,6 +3770,7 @@ def generate_blog_undervalued_neighborhoods():
             <a href="/city/">All Cities</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -3695,24 +3874,41 @@ def generate_blog_salary_goes_furthest():
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+{THEME_CSS_VARS}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
-        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
-        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .nav-bar {{
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }}
+        .nav-logo {{
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
+        .nav-links a {{
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
+        .breadcrumb {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
+        article {{ background: var(--card-bg); border-radius: 16px; padding: 40px; box-shadow: var(--shadow); }}
         article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
-        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        .meta {{ font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 32px; }}
         article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
-        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: var(--text-body); margin-bottom: 16px; }}
         table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
-        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
-        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); padding: 8px 10px; border-bottom: 2px solid var(--border); }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid var(--border-light); font-size: 0.8rem; }}
         .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
-        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
@@ -3721,9 +3917,20 @@ def generate_blog_salary_goes_furthest():
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Where Your Salary Goes Furthest
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Where Your Salary Goes Furthest
+        </div>
 
         <article>
             <h1>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})</h1>
@@ -3788,6 +3995,7 @@ def generate_blog_salary_goes_furthest():
             <a href="/city/">All Cities</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 
@@ -3889,24 +4097,41 @@ def generate_blog_major_cities_breakdown():
     </script>
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f7; color: #1d1d1f; -webkit-font-smoothing: antialiased; }}
+{THEME_CSS_VARS}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
-        .breadcrumb {{ font-size: 0.8rem; color: #86868b; margin-bottom: 24px; }}
-        .breadcrumb a {{ color: #2563eb; text-decoration: none; }}
-        article {{ background: white; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }}
+        .nav-bar {{
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }}
+        .nav-logo {{
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }}
+        .nav-logo span {{ color: var(--accent); }}
+        .nav-links {{ display: flex; gap: 20px; align-items: center; }}
+        .nav-links a {{
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none; transition: color 0.2s;
+        }}
+        .nav-links a:hover {{ color: var(--accent); }}
+{THEME_TOGGLE_CSS}
+        .breadcrumb {{ font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
+        article {{ background: var(--card-bg); border-radius: 16px; padding: 40px; box-shadow: var(--shadow); }}
         article h1 {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }}
-        .meta {{ font-size: 0.85rem; color: #86868b; margin-bottom: 32px; }}
+        .meta {{ font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 32px; }}
         article h2 {{ font-size: 1.3rem; font-weight: 700; margin: 32px 0 12px; letter-spacing: -0.3px; }}
-        article p {{ font-size: 0.95rem; line-height: 1.7; color: #424245; margin-bottom: 16px; }}
+        article p {{ font-size: 0.95rem; line-height: 1.7; color: var(--text-body); margin-bottom: 16px; }}
         table {{ width: 100%; border-collapse: collapse; margin: 20px 0; }}
-        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #86868b; padding: 8px 10px; border-bottom: 2px solid #e8e8ed; }}
-        td {{ padding: 8px 10px; border-bottom: 1px solid #f0f0f2; font-size: 0.8rem; }}
+        th {{ text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); padding: 8px 10px; border-bottom: 2px solid var(--border); }}
+        td {{ padding: 8px 10px; border-bottom: 1px solid var(--border-light); font-size: 0.8rem; }}
         .cta-box {{ text-align: center; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border-radius: 16px; padding: 32px; margin: 32px 0; }}
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid #d2d2d7; }}
-        .page-footer a {{ font-size: 0.85rem; color: #2563eb; text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
@@ -3915,9 +4140,20 @@ def generate_blog_major_cities_breakdown():
 </head>
 <body>
     <div class="container">
-        <nav class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Real Cost of Living: Neighborhood Breakdown
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
+                <a href="/blog/">Blog</a>
+                {THEME_TOGGLE_HTML}
+            </div>
         </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/blog/">Blog</a> &rsaquo; Real Cost of Living: Neighborhood Breakdown
+        </div>
 
         <article>
             <h1>The Real Cost of Living in 10 Major Cities: A Neighborhood Breakdown ({CURRENT_YEAR})</h1>
@@ -3945,6 +4181,7 @@ def generate_blog_major_cities_breakdown():
             <a href="/city/">All Cities</a>
         </footer>
     </div>
+{THEME_JS}
 </body>
 </html>'''
 

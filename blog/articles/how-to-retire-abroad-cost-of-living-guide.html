@@ -93,6 +93,37 @@
     </script>
 
     <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -101,16 +132,12 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7;
-            color: #1d1d1f;
+            background: var(--bg);
+            color: var(--text-primary);
             line-height: 1.7;
             transition: background 0.3s, color 0.3s;
         }
 
-        body.dark-mode {
-            background: #000000;
-            color: #f5f5f7;
-        }
 
         /* Navigation */
         nav {
@@ -124,10 +151,6 @@
             transition: background 0.3s, border-color 0.3s;
         }
 
-        body.dark-mode nav {
-            background: rgba(0, 0, 0, 0.72);
-            border-bottom-color: #38383a;
-        }
 
         .nav-inner {
             max-width: 980px;
@@ -142,14 +165,11 @@
         .nav-logo {
             font-size: 19px;
             font-weight: 700;
-            color: #1d1d1f;
+            color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.3px;
         }
 
-        body.dark-mode .nav-logo {
-            color: #f5f5f7;
-        }
 
         .nav-logo .colon {
             color: #2563eb;
@@ -173,46 +193,24 @@
             color: #2563eb;
         }
 
-        body.dark-mode .nav-links a {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .nav-links a:hover {
-            color: #2563eb;
-        }
 
         /* Theme Toggle */
         .theme-toggle {
-            width: 48px;
-            height: 26px;
-            border-radius: 13px;
-            background: #2d1b69;
+            background: none;
             border: none;
             cursor: pointer;
-            position: relative;
-            transition: background 0.3s;
-            flex-shrink: 0;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
         }
 
-        body.dark-mode .theme-toggle {
-            background: #3d3530;
-        }
-
-        .theme-toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #fff;
-            transition: transform 0.3s;
-        }
-
-        body.dark-mode .theme-toggle::after {
-            transform: translateX(22px);
-        }
 
         /* Back link */
         .back-link-container {
@@ -252,10 +250,6 @@
             transition: background 0.3s, box-shadow 0.3s;
         }
 
-        body.dark-mode .article-card {
-            background: #1c1c1e;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-        }
 
         /* Article Meta */
         .article-meta {
@@ -284,10 +278,6 @@
             color: #86868b;
         }
 
-        body.dark-mode .article-date,
-        body.dark-mode .article-read-time {
-            color: #98989f;
-        }
 
         .meta-dot {
             width: 3px;
@@ -296,9 +286,6 @@
             background: #86868b;
         }
 
-        body.dark-mode .meta-dot {
-            background: #98989f;
-        }
 
         /* Article Title */
         .article-title {
@@ -310,9 +297,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-title {
-            color: #f5f5f7;
-        }
 
         /* Article Body */
         .article-body h2 {
@@ -323,9 +307,6 @@
             letter-spacing: -0.3px;
         }
 
-        body.dark-mode .article-body h2 {
-            color: #f5f5f7;
-        }
 
         .article-body h3 {
             font-size: 20px;
@@ -334,9 +315,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-body h3 {
-            color: #f5f5f7;
-        }
 
         .article-body p {
             font-size: 16.5px;
@@ -345,9 +323,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-body p {
-            color: #f5f5f7;
-        }
 
         .article-body a {
             color: #2563eb;
@@ -369,10 +344,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-body ul,
-        body.dark-mode .article-body ol {
-            color: #f5f5f7;
-        }
 
         .article-body li {
             margin-bottom: 8px;
@@ -383,9 +354,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-body strong {
-            color: #f5f5f7;
-        }
 
         .article-body blockquote {
             border-left: 3px solid #2563eb;
@@ -397,10 +365,6 @@
             color: #1d1d1f;
         }
 
-        body.dark-mode .article-body blockquote {
-            background: rgba(37, 99, 235, 0.08);
-            color: #f5f5f7;
-        }
 
         /* Destination Cards */
         .destination-card {
@@ -412,10 +376,6 @@
             transition: background 0.3s, border-color 0.3s;
         }
 
-        body.dark-mode .destination-card {
-            background: #2c2c2e;
-            border-color: #38383a;
-        }
 
         .destination-card h3 {
             margin-top: 0 !important;
@@ -453,18 +413,12 @@
             font-weight: 600;
         }
 
-        body.dark-mode .destination-card .detail-grid .label {
-            color: #98989f;
-        }
 
         .destination-card .detail-grid .value {
             font-weight: 500;
             color: #1d1d1f;
         }
 
-        body.dark-mode .destination-card .detail-grid .value {
-            color: #f5f5f7;
-        }
 
         /* Checklist */
         .checklist {
@@ -537,9 +491,6 @@
             color: #86868b;
         }
 
-        body.dark-mode footer {
-            color: #98989f;
-        }
 
         footer a {
             color: #2563eb;
@@ -620,7 +571,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </div>
     </nav>
@@ -859,14 +810,14 @@
             </div>
         </div>
 
-        <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+        <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <a href="/city/lisbon.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Lisbon</a>
-                <a href="/city/bangkok.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bangkok</a>
-                <a href="/city/medellin.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Medellin</a>
-                <a href="/city/buenos-aires.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Buenos Aires</a>
-                <a href="/city/chiang-mai.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Chiang Mai</a>
+                <a href="/city/lisbon.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Lisbon</a>
+                <a href="/city/bangkok.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bangkok</a>
+                <a href="/city/medellin.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Medellin</a>
+                <a href="/city/buenos-aires.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Buenos Aires</a>
+                <a href="/city/chiang-mai.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Chiang Mai</a>
             </div>
         </section>
     </article>
@@ -875,36 +826,15 @@
     <footer>
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
     </footer>
-
-    <!-- Theme Toggle Script -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const storageKey = 'blog-theme';
-
-            function applyTheme(theme) {
-                if (theme === 'dark') {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
-
-            // Initialize theme from localStorage
-            const savedTheme = localStorage.getItem(storageKey);
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                applyTheme('dark');
-            }
-
-            toggle.addEventListener('click', function() {
-                const isDark = document.body.classList.contains('dark-mode');
-                const newTheme = isDark ? 'light' : 'dark';
-                applyTheme(newTheme);
-                localStorage.setItem(storageKey, newTheme);
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 </body>
 </html>

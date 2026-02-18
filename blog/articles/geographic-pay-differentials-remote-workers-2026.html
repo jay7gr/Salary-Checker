@@ -85,11 +85,42 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f7;
+            background: var(--bg);
             min-height: 100vh;
-            color: #1d1d1f;
+            color: var(--text-primary);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             transition: background 0.3s ease, color 0.3s ease;
@@ -120,7 +151,7 @@
         .nav-logo {
             font-size: 19px;
             font-weight: 700;
-            color: #1d1d1f;
+            color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.5px;
             transition: color 0.3s ease;
@@ -150,28 +181,21 @@
 
         /* ── Theme Toggle ── */
         .theme-toggle {
-            background: #2d1b69;
+            background: none;
             border: none;
-            width: 44px;
-            height: 24px;
-            border-radius: 12px;
             cursor: pointer;
-            position: relative;
-            transition: background 0.3s ease;
-            flex-shrink: 0;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: var(--tag-bg);
         }
 
-        .theme-toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: white;
-            transition: transform 0.3s ease;
-        }
 
         /* ── Main Content ── */
         .page-content {
@@ -216,7 +240,7 @@
             display: inline-block;
             font-size: 12px;
             font-weight: 600;
-            color: #2563eb;
+            color: var(--accent);
             background: rgba(37, 99, 235, 0.08);
             padding: 4px 12px;
             border-radius: 20px;
@@ -237,7 +261,7 @@
 
         .article-meta {
             font-size: 14px;
-            color: #86868b;
+            color: var(--text-secondary);
             margin-bottom: 36px;
             transition: color 0.3s ease;
         }
@@ -441,98 +465,7 @@
         /* ═══════════════════════════════════════
            DARK MODE
            ═══════════════════════════════════════ */
-        body.dark-mode {
-            background: #000000;
-            color: #f5f5f7;
-        }
 
-        body.dark-mode .site-nav {
-            background: rgba(0, 0, 0, 0.72);
-            border-bottom-color: rgba(255, 255, 255, 0.08);
-        }
-
-        body.dark-mode .nav-logo {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .nav-links a {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .theme-toggle {
-            background: #3d3530;
-        }
-
-        body.dark-mode .theme-toggle::after {
-            transform: translateX(20px);
-        }
-
-        body.dark-mode .back-link {
-            color: #2563eb;
-        }
-
-        body.dark-mode .article-card {
-            background: #1c1c1e;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        body.dark-mode .article-tag {
-            background: rgba(37, 99, 235, 0.15);
-        }
-
-        body.dark-mode .article-title {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .article-meta {
-            color: #98989f;
-        }
-
-        body.dark-mode .article-body h2,
-        body.dark-mode .article-body h3 {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .article-body p,
-        body.dark-mode .article-body ul,
-        body.dark-mode .article-body ol {
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .article-body blockquote {
-            background: rgba(37, 99, 235, 0.08);
-            color: #f5f5f7;
-        }
-
-        body.dark-mode .data-table-wrapper {
-            border-color: #38383a;
-        }
-
-        body.dark-mode .data-table thead {
-            background: #2c2c2e;
-        }
-
-        body.dark-mode .data-table th {
-            color: #f5f5f7;
-            border-bottom-color: #38383a;
-        }
-
-        body.dark-mode .data-table td {
-            color: #f5f5f7;
-            border-bottom-color: #38383a;
-        }
-
-        body.dark-mode .data-table tbody tr:hover {
-            background: rgba(37, 99, 235, 0.06);
-        }
-
-        body.dark-mode .site-footer {
-            color: #98989f;
-        }
-
-        body.dark-mode .site-footer a {
-            color: #98989f;
-        }
 
         /* ═══════════════════════════════════════
            MOBILE RESPONSIVE
@@ -612,7 +545,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">☾</button>
             </div>
         </div>
     </nav>
@@ -1008,12 +941,12 @@
                 </div>
             </div>
 
-            <section style="margin-top: 40px; padding: 28px; background: #f5f5f7; border-radius: 16px;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: #1d1d1f;">📊 Explore Cost of Living Data</h3>
+            <section style="margin-top: 40px; padding: 28px; background: var(--stat-card-bg); border-radius: 16px;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; color: var(--text-primary);">📊 Explore Cost of Living Data</h3>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
-                    <a href="/city/lisbon.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Lisbon</a>
-                    <a href="/city/bali.html" style="display: inline-block; padding: 8px 16px; background: white; border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: #1d1d1f; text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bali</a>
+                    <a href="/city/san-francisco.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">San Francisco</a>
+                    <a href="/city/lisbon.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Lisbon</a>
+                    <a href="/city/bali.html" style="display: inline-block; padding: 8px 16px; background: var(--card-bg); border-radius: 100px; font-size: 0.82rem; font-weight: 500; color: var(--text-primary); text-decoration: none; box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: all 0.2s;">Bali</a>
                 </div>
             </section>
         </article>
@@ -1023,25 +956,15 @@
     <footer class="site-footer">
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a></p>
     </footer>
-
-    <!-- ── Theme Toggle JS ── -->
     <script>
-        (function() {
-            const toggle = document.getElementById('themeToggle');
-            const STORAGE_KEY = 'blog-theme';
-
-            // Apply saved theme immediately
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-
-            toggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                localStorage.setItem(STORAGE_KEY, isDark ? 'dark' : 'light');
-            });
-        })();
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.textContent=m==='dark'?'\u2600':'\u263E';t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
     </script>
 
 </body>
