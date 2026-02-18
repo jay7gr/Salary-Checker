@@ -885,24 +885,89 @@ cityCountry = {
     'San José (CR)': 'Costa Rica', 'Playa del Carmen': 'Mexico'
 }
 
-# Tax rates by country (approximate effective income tax rate for mid-range earner ~$60-80K equivalent)
-countryTaxRates = {
-    'United States': 24, 'Canada': 26, 'Mexico': 20, 'Panama': 15,
-    'United Kingdom': 25, 'France': 30, 'Netherlands': 37, 'Germany': 32,
-    'Ireland': 27, 'Belgium': 40, 'Luxembourg': 28, 'Switzerland': 18,
-    'Spain': 24, 'Portugal': 25, 'Italy': 31, 'Greece': 22, 'Croatia': 20,
-    'Sweden': 32, 'Denmark': 36, 'Finland': 31, 'Norway': 28, 'Austria': 30,
-    'Czech Republic': 15, 'Hungary': 15, 'Poland': 17, 'Romania': 10,
-    'Estonia': 20, 'Latvia': 20, 'Turkey': 15,
-    'Japan': 23, 'South Korea': 19, 'China (SAR)': 15, 'Taiwan': 12,
-    'China': 20, 'Singapore': 7, 'Thailand': 15, 'Malaysia': 16,
-    'Vietnam': 15, 'Philippines': 20, 'Indonesia': 15, 'Cambodia': 0,
-    'India': 20, 'Australia': 27, 'New Zealand': 24,
-    'UAE': 0, 'Qatar': 0, 'Saudi Arabia': 0, 'Israel': 25,
-    'South Africa': 26, 'Kenya': 20, 'Nigeria': 18, 'Egypt': 15,
-    'Morocco': 20, 'Brazil': 22, 'Argentina': 21, 'Colombia': 19,
-    'Peru': 15, 'Chile': 13, 'Uruguay': 20, 'Costa Rica': 15
+# Progressive income tax brackets by country [[upperBound, marginalRate%], ...]
+# Brackets in local currency, annual. Tax computed progressively on each slice.
+taxBrackets = {
+    # Tax-free
+    'UAE': [], 'Qatar': [], 'Saudi Arabia': [], 'Cambodia': [],
+    # Americas
+    'United States': [[11600,10],[47150,12],[100525,22],[191950,24],[243725,32],[609350,35],[float('inf'),37]],
+    'Canada': [[55867,15],[111733,20.5],[154906,26],[220000,29],[float('inf'),33]],
+    'Mexico': [[8952,1.92],[75985,6.4],[133536,10.88],[155230,16],[185853,17.92],[374838,21.36],[590797,23.52],[1127927,30],[1503902,32],[4511707,34],[float('inf'),35]],
+    'Panama': [[11000,0],[50000,15],[float('inf'),25]],
+    'Brazil': [[24512,0],[33920,7.5],[45013,15],[55976,22.5],[float('inf'),27.5]],
+    'Argentina': [[419254,5],[838508,9],[1257762,12],[1677016,15],[2516524,19],[3356032,23],[5034048,27],[6712063,31],[float('inf'),35]],
+    'Colombia': [[46229000,0],[72066000,19],[163386000,28],[368076000,33],[624096000,35],[969456000,37],[float('inf'),39]],
+    'Peru': [[29050,0],[54250,8],[81375,14],[116250,17],[232500,20],[float('inf'),30]],
+    'Chile': [[8775702,0],[19501560,4],[32502600,8],[45503640,13.5],[58504680,23],[78006240,30.4],[101508120,35],[float('inf'),40]],
+    'Uruguay': [[468720,0],[670320,10],[1005480,15],[1536000,24],[2421600,25],[3643200,27],[5685600,31],[float('inf'),36]],
+    'Costa Rica': [[11160000,0],[16380000,10],[float('inf'),15]],
+    # UK
+    'United Kingdom': [[12570,0],[50270,20],[125140,40],[float('inf'),45]],
+    # Europe
+    'France': [[11294,0],[28797,11],[82341,30],[177106,41],[float('inf'),45]],
+    'Netherlands': [[38098,9.32],[75518,36.97],[float('inf'),49.50]],
+    'Germany': [[11604,0],[17005,14],[66760,24],[277826,42],[float('inf'),45]],
+    'Ireland': [[42000,20],[float('inf'),40]],
+    'Belgium': [[15200,0],[28730,25],[40580,40],[float('inf'),50]],
+    'Luxembourg': [[11265,0],[25000,14],[50000,30],[100000,38],[200000,41],[float('inf'),42]],
+    'Switzerland': [[14500,0],[50000,10],[100000,16],[200000,22],[float('inf'),22]],
+    'Spain': [[12450,19],[20200,24],[35200,30],[60000,37],[300000,45],[float('inf'),47]],
+    'Portugal': [[7703,13.25],[11623,18],[16472,23],[21321,26],[27146,32.75],[39791,37],[51997,43.5],[81199,45],[float('inf'),48]],
+    'Italy': [[15000,23],[28000,25],[50000,35],[float('inf'),43]],
+    'Greece': [[10000,9],[20000,22],[30000,28],[40000,36],[float('inf'),44]],
+    'Croatia': [[50400,20],[float('inf'),30]],
+    'Sweden': [[614942,32],[float('inf'),52]],
+    'Denmark': [[46700,0],[588900,37],[float('inf'),52]],
+    'Finland': [[19900,0],[29700,32.64],[49000,37.4],[85800,41.25],[float('inf'),51.25]],
+    'Norway': [[198350,22],[279150,23.7],[642950,26],[926800,35.4],[1500000,38.4],[float('inf'),39.4]],
+    'Austria': [[12816,0],[21816,20],[35016,30],[68016,40],[103816,48],[1000000,50],[float('inf'),55]],
+    'Czech Republic': [[1935552,15],[float('inf'),23]],
+    'Hungary': [[float('inf'),15]],
+    'Poland': [[30000,0],[120000,12],[float('inf'),32]],
+    'Romania': [[float('inf'),10]],
+    'Estonia': [[7848,0],[float('inf'),20]],
+    'Latvia': [[20004,20],[78100,23],[float('inf'),31]],
+    'Turkey': [[110000,15],[230000,20],[580000,27],[3000000,35],[float('inf'),40]],
+    # Asia
+    'Japan': [[1950000,5],[3300000,10],[6950000,20],[9000000,23],[18000000,33],[40000000,40],[float('inf'),45]],
+    'South Korea': [[14000000,6],[50000000,15],[88000000,24],[150000000,35],[300000000,38],[500000000,40],[1000000000,42],[float('inf'),45]],
+    'China (SAR)': [[50000,2],[100000,6],[150000,10],[200000,14],[float('inf'),17]],
+    'Taiwan': [[560000,5],[1260000,12],[2520000,20],[4720000,30],[float('inf'),40]],
+    'China': [[36000,3],[144000,10],[300000,20],[420000,25],[660000,30],[960000,35],[float('inf'),45]],
+    'Singapore': [[20000,0],[30000,2],[40000,3.5],[80000,7],[120000,11.5],[160000,15],[200000,18],[240000,19],[280000,19.5],[320000,20],[500000,22],[1000000,23],[float('inf'),24]],
+    'Thailand': [[150000,0],[300000,5],[500000,10],[750000,15],[1000000,20],[2000000,25],[5000000,30],[float('inf'),35]],
+    'Malaysia': [[5000,0],[20000,1],[35000,3],[50000,6],[70000,11],[100000,19],[400000,25],[600000,26],[2000000,28],[float('inf'),30]],
+    'Vietnam': [[60000000,5],[120000000,10],[216000000,15],[384000000,20],[624000000,25],[960000000,30],[float('inf'),35]],
+    'Philippines': [[250000,0],[400000,15],[800000,20],[2000000,25],[8000000,30],[float('inf'),35]],
+    'Indonesia': [[60000000,5],[250000000,15],[500000000,25],[5000000000,30],[float('inf'),35]],
+    'India': [[300000,0],[700000,5],[1000000,10],[1200000,15],[1500000,20],[float('inf'),30]],
+    # Oceania
+    'Australia': [[18200,0],[45000,16],[135000,30],[190000,37],[float('inf'),45]],
+    'New Zealand': [[14000,10.5],[48000,17.5],[70000,30],[180000,33],[float('inf'),39]],
+    # Middle East & Africa
+    'Israel': [[84120,10],[120720,14],[193800,20],[269280,31],[560280,35],[721560,47],[float('inf'),50]],
+    'South Africa': [[237100,18],[370500,26],[512800,31],[673000,36],[857900,39],[1817000,41],[float('inf'),45]],
+    'Kenya': [[288000,10],[388000,25],[6000000,30],[9600000,32.5],[float('inf'),35]],
+    'Nigeria': [[300000,7],[600000,11],[1100000,15],[1600000,19],[3200000,21],[float('inf'),24]],
+    'Egypt': [[40000,0],[55000,10],[70000,15],[200000,20],[400000,22.5],[float('inf'),25]],
+    'Morocco': [[30000,0],[50000,10],[60000,20],[80000,30],[180000,34],[float('inf'),38]],
 }
+
+
+def calculate_tax(income, country_name):
+    """Calculate progressive tax. Returns dict with tax, effective_rate, net."""
+    brackets = taxBrackets.get(country_name, [])
+    if not brackets:
+        return {'tax': 0, 'effective_rate': 0, 'net': income}
+    tax, prev = 0, 0
+    for limit, rate in brackets:
+        if income <= prev:
+            break
+        tax += (min(income, limit) - prev) * (rate / 100)
+        prev = limit
+    effective_rate = round((tax / income) * 100) if income > 0 else 0
+    return {'tax': tax, 'effective_rate': effective_rate, 'net': income - tax}
 
 # Approximate average monthly rent for 1BR in city center (USD)
 cityRent1BR = {
@@ -1112,9 +1177,11 @@ def get_expense_breakdown(city):
     coli = coliData[city]
     rent = cityRent1BR.get(city, 0)
     country = cityCountry.get(city, '')
-    tax = countryTaxRates.get(country, 20)
-    mid_salary_annual = 75000 * (coli / 100)
-    monthly_after_tax = (mid_salary_annual * (1 - tax / 100)) / 12
+    currency = cityToCurrency.get(city, 'USD')
+    rate_to_local = exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)
+    mid_salary_local = 75000 * (coli / 100) * rate_to_local
+    tax_result = calculate_tax(mid_salary_local, country)
+    monthly_after_tax = (tax_result['net'] / rate_to_local) / 12
     if monthly_after_tax > 0:
         housing_pct = min(45, max(20, round((rent / monthly_after_tax) * 100)))
     else:
@@ -1161,12 +1228,15 @@ def generate_city_page(city, comparison_pairs):
     rank = get_coli_rank(city)
     total_cities = len(coliData)
     region = get_region(city)
-    tax_rate = countryTaxRates.get(country, 0)
     rent = cityRent1BR.get(city, 0)
     neighborhoods = cityNeighborhoods.get(city, {})
 
     # Convert $75K USD to local currency equivalent for the "sample salary"
     rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+    # Calculate effective tax rate for reference salary in local currency
+    ref_salary_local = 75000 * (coli / 100) * rate_to_local
+    tax_result_ref = calculate_tax(ref_salary_local, country)
+    tax_rate = tax_result_ref['effective_rate']
     sample_local = 75000 * rate_to_local
     sample_formatted = format_currency_amount(sample_local, currency)
 
@@ -1630,7 +1700,7 @@ def generate_city_page(city, comparison_pairs):
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">{tax_rate}%</div>
-                    <div class="stat-label">Avg Tax Rate</div>
+                    <div class="stat-label">Est. Tax Rate</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">${rent:,}</div>
@@ -1773,8 +1843,13 @@ def generate_comparison_page(city1, city2):
     coli2 = coliData[city2]
     rank1 = get_coli_rank(city1)
     rank2 = get_coli_rank(city2)
-    tax1 = countryTaxRates.get(country1, 0)
-    tax2 = countryTaxRates.get(country2, 0)
+    # Calculate effective tax rates for reference salary in each city's local currency
+    rate1_local = exchangeRates.get(currency1, 1) / exchangeRates.get('USD', 1)
+    rate2_local = exchangeRates.get(currency2, 1) / exchangeRates.get('USD', 1)
+    ref_salary_local_1 = 75000 * (coli1 / 100) * rate1_local
+    ref_salary_local_2 = 75000 * (coli2 / 100) * rate2_local
+    tax1 = calculate_tax(ref_salary_local_1, country1)['effective_rate']
+    tax2 = calculate_tax(ref_salary_local_2, country2)['effective_rate']
     rent1 = cityRent1BR.get(city1, 0)
     rent2 = cityRent1BR.get(city2, 0)
     neighborhoods1 = cityNeighborhoods.get(city1, {})
