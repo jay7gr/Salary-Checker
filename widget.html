@@ -335,13 +335,19 @@
                     <p>Copy and paste this snippet into your website's HTML.</p>
                     <div class="code-block">
                         <button class="btn-copy" id="copyBtn" onclick="copyCode()">Copy</button>
-                        <code id="embedCode"><span class="tag">&lt;iframe</span>
-  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
-  <span class="attr">width</span>=<span class="val">"420"</span>
-  <span class="attr">height</span>=<span class="val">"520"</span>
-  <span class="attr">frameborder</span>=<span class="val">"0"</span>
-  <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"</span>
-<span class="tag">&gt;&lt;/iframe&gt;</span></code>
+                        <code id="embedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
+    <span class="attr">width</span>=<span class="val">"420"</span>
+    <span class="attr">height</span>=<span class="val">"520"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;"</span><span class="tag">&gt;</span>
+    Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;font-weight:600;"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;</span>
+    — <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/compare/"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;"</span><span class="tag">&gt;</span>Compare Cities<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
                     </div>
 
                     <div class="customize-section">
@@ -380,7 +386,7 @@
 
 <script>
     function copyCode() {
-        const code = `<iframe src="https://salary-converter.com/embed.html" width="420" height="580" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        const code = `<div style="max-width:420px"><iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
         navigator.clipboard.writeText(code).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.textContent = 'Copied!';
@@ -405,22 +411,28 @@
         // Update embed code display
         const widthVal = typeof w === 'string' ? w : w;
         const codeEl = document.getElementById('embedCode');
-        codeEl.innerHTML = `<span class="tag">&lt;iframe</span>
-  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
-  <span class="attr">width</span>=<span class="val">"${widthVal}"</span>
-  <span class="attr">height</span>=<span class="val">"${h}"</span>
-  <span class="attr">frameborder</span>=<span class="val">"0"</span>
-  <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"</span>
-<span class="tag">&gt;&lt;/iframe&gt;</span>`;
+        codeEl.innerHTML = `<span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:${widthVal}${typeof widthVal === 'number' ? 'px' : ''}"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
+    <span class="attr">width</span>=<span class="val">"${widthVal}"</span>
+    <span class="attr">height</span>=<span class="val">"${h}"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;"</span><span class="tag">&gt;</span>
+    Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;font-weight:600;"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;</span>
+    — <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/compare/"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;"</span><span class="tag">&gt;</span>Compare Cities<span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>`;
 
-        // Update copy function dynamically
-        window._currentCode = `<iframe src="https://salary-converter.com/embed.html" width="${widthVal}" height="${h}" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        const mw = typeof widthVal === 'number' ? widthVal + 'px' : widthVal;
+        window._currentCode = `<div style="max-width:${mw}"><iframe src="https://salary-converter.com/embed.html" width="${widthVal}" height="${h}" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
     }
 
     // Override copy to use current size
     const origCopy = copyCode;
     copyCode = function() {
-        const code = window._currentCode || `<iframe src="https://salary-converter.com/embed.html" width="420" height="580" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);"></iframe>`;
+        const code = window._currentCode || `<div style="max-width:420px"><iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
         navigator.clipboard.writeText(code).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.textContent = 'Copied!';
