@@ -76,9 +76,11 @@
         '.chat-bubble .bubble-text{font-size:12px}',
         '.chat-bubble.open{display:none}',
         '.chat-bubble .icon-close svg{width:18px;height:18px}',
-        '.chat-panel{bottom:0;right:0;left:0;top:0;width:100%;height:100%;border-radius:0;border:none}',
-        'body.chat-lock{overflow:hidden;position:fixed;width:100%;touch-action:none}',
-        '}'
+        '.chat-panel{bottom:0;right:0;left:0;top:0;width:100%;height:100%;border-radius:0;border:none;box-shadow:none}',
+        '}',
+        /* Scroll lock (outside media query — JS only applies on mobile) */
+        'html.chat-lock,body.chat-lock{overflow:hidden!important;height:100%!important;touch-action:none}',
+        'body.chat-lock{position:fixed;width:100%;left:0}'
     ].join('\n');
     document.head.appendChild(style);
 
@@ -338,13 +340,15 @@
             panel = createPanel();
         }
         panel.classList.toggle('open', chatOpen);
-        // Lock body scroll on mobile when chat is open
+        // Lock scroll on mobile when chat is open
         if (window.innerWidth <= 768) {
             if (chatOpen) {
                 scrollY = window.pageYOffset;
+                document.documentElement.classList.add('chat-lock');
                 document.body.classList.add('chat-lock');
                 document.body.style.top = -scrollY + 'px';
             } else {
+                document.documentElement.classList.remove('chat-lock');
                 document.body.classList.remove('chat-lock');
                 document.body.style.top = '';
                 window.scrollTo(0, scrollY);
