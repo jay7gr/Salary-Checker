@@ -29,8 +29,13 @@
         '.chat-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border,#e5e5ea);flex-shrink:0}',
         '.chat-header-title{font-size:0.85rem;font-weight:600;color:var(--text-primary,#1d1d1f);line-height:1.3}',
         '.chat-header-subtitle{font-size:0.7rem;color:var(--text-secondary,#86868b);margin-top:2px}',
+        '.chat-header-actions{display:flex;align-items:center;gap:4px}',
         '.chat-new-btn{background:none;border:none;color:var(--text-secondary,#86868b);cursor:pointer;font-size:0.75rem;padding:4px 8px;border-radius:6px;transition:background 0.15s,color 0.15s;font-family:inherit}',
         '.chat-new-btn:hover{background:var(--tag-bg,#f0f0f2);color:var(--text-primary,#1d1d1f)}',
+        '.chat-close-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background 0.15s}',
+        '.chat-close-btn svg{width:18px;height:18px;fill:var(--text-secondary,#86868b)}',
+        '.chat-close-btn:hover{background:var(--tag-bg,#f0f0f2)}',
+        '.chat-close-btn:hover svg{fill:var(--text-primary,#1d1d1f)}',
         '.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:var(--border,#e5e5ea) transparent}',
         '.chat-messages::-webkit-scrollbar{width:4px}',
         '.chat-messages::-webkit-scrollbar-thumb{background:var(--border,#e5e5ea);border-radius:2px}',
@@ -69,7 +74,7 @@
         '.chat-bubble{bottom:16px;right:16px;height:40px;border-radius:20px;padding:0 14px 0 12px;gap:6px}',
         '.chat-bubble .bubble-brand{font-size:12px}',
         '.chat-bubble .bubble-text{font-size:12px}',
-        '.chat-bubble.open{width:40px;height:40px;bottom:12px;right:12px;z-index:10003}',
+        '.chat-bubble.open{display:none}',
         '.chat-bubble .icon-close svg{width:18px;height:18px}',
         '.chat-panel{bottom:0;right:0;left:0;top:0;width:100%;height:100%;border-radius:0;border:none}',
         'body.chat-lock{overflow:hidden;position:fixed;width:100%;touch-action:none}',
@@ -283,7 +288,10 @@
                     '<div class="chat-header-title">Salary & Relocation Assistant</div>' +
                     '<div class="chat-header-subtitle">Powered by AI</div>' +
                 '</div>' +
-                '<button class="chat-new-btn" id="chatNewBtn">New Chat</button>' +
+                '<div class="chat-header-actions">' +
+                    '<button class="chat-new-btn" id="chatNewBtn">New Chat</button>' +
+                    '<button class="chat-close-btn" id="chatCloseBtn" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>' +
+                '</div>' +
             '</div>' +
             '<div class="chat-messages" id="chatMessages"></div>' +
             '<div class="chat-input-area">' +
@@ -295,6 +303,7 @@
         document.body.appendChild(p);
 
         document.getElementById('chatNewBtn').addEventListener('click', clearChat);
+        document.getElementById('chatCloseBtn').addEventListener('click', toggleChat);
         document.getElementById('chatSend').addEventListener('click', function() {
             sendMessage(document.getElementById('chatInput').value);
         });
