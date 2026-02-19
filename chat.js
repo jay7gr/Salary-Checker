@@ -333,6 +333,17 @@
 
     var scrollY = 0;
 
+    // iOS Safari: block touchmove on background when chat is open
+    function preventBgScroll(e) {
+        // Allow scrolling inside chat messages
+        var el = e.target;
+        while (el && el !== document.body) {
+            if (el.classList && el.classList.contains('chat-messages')) return;
+            el = el.parentElement;
+        }
+        e.preventDefault();
+    }
+
     function toggleChat() {
         chatOpen = !chatOpen;
         bubble.classList.toggle('open', chatOpen);
@@ -347,7 +358,9 @@
                 document.documentElement.classList.add('chat-lock');
                 document.body.classList.add('chat-lock');
                 document.body.style.top = -scrollY + 'px';
+                document.addEventListener('touchmove', preventBgScroll, { passive: false });
             } else {
+                document.removeEventListener('touchmove', preventBgScroll);
                 document.documentElement.classList.remove('chat-lock');
                 document.body.classList.remove('chat-lock');
                 document.body.style.top = '';
