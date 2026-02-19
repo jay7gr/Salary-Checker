@@ -670,6 +670,7 @@
             margin-top: 32px;
             display: none;
             border: 1px solid var(--border-section);
+            overflow-x: hidden;
         }
 
         .result-box.show {
@@ -844,11 +845,6 @@
 
             .result-box {
                 padding: 28px 24px;
-            }
-
-            .tax-comparison {
-                grid-template-columns: 1fr;
-                gap: 12px;
             }
 
             .ranges-list {
@@ -1254,24 +1250,6 @@
             margin-top: 2px;
         }
 
-        .expat-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .expat-toggle-label {
-            font-size: 0.82rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .expat-toggle-label.active {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
         .expat-toggle-track {
             width: 42px;
             height: 22px;
@@ -1280,16 +1258,6 @@
             cursor: pointer;
             position: relative;
             transition: background 0.2s;
-        }
-        .expat-toggle-thumb {
-            width: 18px;
-            height: 18px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.2s;
         }
         .ded-bar-row {
             display: flex;
@@ -1354,6 +1322,28 @@
             .afford-verdict {
                 font-size: 0.85rem;
                 padding: 14px 16px;
+            }
+            .tax-comparison {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .rent-comparison {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .comparison-note {
+                font-size: 0.85rem;
+                padding: 14px 16px;
+            }
+            .offer-comparison {
+                font-size: 0.8rem;
+                padding: 10px 14px;
+            }
+            .result-breakdown {
+                padding: 16px;
+            }
+            .breakdown-item {
+                font-size: 0.85rem;
             }
         }
 
@@ -1492,6 +1482,32 @@
             font-weight: 600;
             color: var(--accent);
             text-align: center;
+        }
+
+        .ranges-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 10px;
+            background: var(--stat-card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .ranges-toggle:hover {
+            background: var(--hover-bg, rgba(0,0,0,0.04));
+        }
+        .ranges-toggle .toggle-arrow {
+            transition: transform 0.3s;
+        }
+        .ranges-toggle.expanded .toggle-arrow {
+            transform: rotate(180deg);
         }
 
         .currency-hint {
@@ -1880,15 +1896,8 @@
             <!-- Tax & Deductions Estimation -->
             <div class="tax-section" id="taxSection" style="display: none;">
                 <div class="tax-title">Tax &amp; Deductions Breakdown</div>
-                <div class="expat-toggle">
-                    <span class="expat-toggle-label active" id="localLabel" onclick="if(isExpatMode) toggleExpatMode()">Local Employee</span>
-                    <div class="expat-toggle-track" onclick="toggleExpatMode()">
-                        <div class="expat-toggle-thumb"></div>
-                    </div>
-                    <span class="expat-toggle-label" id="expatLabel" onclick="if(!isExpatMode) toggleExpatMode()">Expat</span>
-                </div>
                 <div class="tax-comparison" id="taxComparison"></div>
-                <div style="font-size: 0.7rem; color: var(--text-secondary, #aeaeb2); margin-top: 8px; line-height: 1.4;">Includes income tax, social security, and local taxes. Expats may pay different social security rates in some countries — toggle to compare.</div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary, #aeaeb2); margin-top: 8px; line-height: 1.4;">Includes income tax, social security, and local taxes.</div>
             </div>
 
             <!-- Estimated Rent -->
@@ -1911,6 +1920,10 @@
                 <div class="ranges-title">Salary Ranges by Role</div>
                 <div class="ranges-subtitle">Adjusted for cost of living in your target city</div>
                 <div class="ranges-list" id="rangesList"></div>
+                <div class="ranges-toggle" id="rangesToggle" onclick="toggleSalaryRanges()" style="display: none;">
+                    <span id="rangesToggleText">Show all roles</span>
+                    <span class="toggle-arrow">▼</span>
+                </div>
             </div>
         </div>
     </div>
@@ -2659,9 +2672,7 @@
             council_tax: '#6b7280', trash_tax: '#6b7280'
         };
 
-        let isExpatMode = false;
-
-        function calculateAllDeductions(income, countryCode, cityName, isExpat, neighborhood) {
+        function calculateAllDeductions(income, countryCode, cityName, neighborhood) {
             if (income <= 0) return {items: [], total: 0, totalRate: 0, net: 0};
             const items = [];
             const nhoodOverrides = (neighborhood && neighborhoodDeductions[cityName]) ? (neighborhoodDeductions[cityName][neighborhood] || {}) : {};
@@ -2673,7 +2684,7 @@
             const cDed = countryDeductions[countryCode] || {};
             const ss = cDed.social_security;
             if (ss) {
-                const ssRate = isExpat ? (ss.expat || 0) : (ss.local || 0);
+                const ssRate = ss.local || 0;
                 if (ssRate > 0) {
                     const ssBase = ss.cap ? Math.min(income, ss.cap) : income;
                     let ssAmount = ssBase * (ssRate / 100);
@@ -2725,16 +2736,6 @@
             return {items, total, totalRate, net: income - total};
         }
 
-        function toggleExpatMode() {
-            isExpatMode = !isExpatMode;
-            document.getElementById('localLabel').classList.toggle('active', !isExpatMode);
-            document.getElementById('expatLabel').classList.toggle('active', isExpatMode);
-            const thumb = document.querySelector('.expat-toggle-thumb');
-            thumb.style.transform = isExpatMode ? 'translateX(20px)' : 'translateX(0)';
-            // Re-trigger calculation
-            document.getElementById('calculateBtn').click();
-        }
-
         let includeChildcare = false;
 
         function toggleChildcare() {
@@ -2745,6 +2746,29 @@
             thumb.style.transform = includeChildcare ? 'translateX(20px)' : 'translateX(0)';
             // Re-trigger calculation
             document.getElementById('calculateBtn').click();
+        }
+
+        function toggleSalaryRanges() {
+            const rangesList = document.getElementById('rangesList');
+            const items = rangesList.querySelectorAll('.range-item');
+            const toggle = document.getElementById('rangesToggle');
+            const toggleText = document.getElementById('rangesToggleText');
+            const isExpanded = toggle.classList.contains('expanded');
+            const isMobile = window.innerWidth <= 768;
+            const visibleCount = 3 * (isMobile ? 1 : 2);
+
+            if (isExpanded) {
+                items.forEach((item, i) => {
+                    if (i >= visibleCount) item.style.display = 'none';
+                });
+                toggle.classList.remove('expanded');
+                toggleText.textContent = `Show all ${items.length} roles`;
+                document.getElementById('salaryRangesSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                items.forEach(item => item.style.display = '');
+                toggle.classList.add('expanded');
+                toggleText.textContent = 'Show fewer';
+            }
         }
 
         // Salary ranges by job title (annual USD, global median ranges)
@@ -3985,8 +4009,8 @@
             let targetDed = null;
 
             if (currentCountry && targetCountry) {
-                currentDed = calculateAllDeductions(salary, currentCountry, currentCity, isExpatMode, currentNeighborhood);
-                targetDed = calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
+                currentDed = calculateAllDeductions(salary, currentCountry, currentCity, currentNeighborhood);
+                targetDed = calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, targetNeighborhood);
 
                 function buildDedCard(cityLabel, grossFormatted, ded, currency, equivNet, equivCurrency) {
                     const maxRate = Math.max(...ded.items.map(i => i.rate), 1);
@@ -4375,6 +4399,25 @@
 
             rangesList.innerHTML = rangesHTML;
             rangesSection.style.display = '';
+
+            // Cap salary ranges to 3 rows
+            const rangeItems = rangesList.querySelectorAll('.range-item');
+            const totalItems = rangeItems.length;
+            const isMobile = window.innerWidth <= 768;
+            const visibleCount = 3 * (isMobile ? 1 : 2);
+            const rangesToggle = document.getElementById('rangesToggle');
+            const rangesToggleText = document.getElementById('rangesToggleText');
+
+            if (totalItems > visibleCount) {
+                rangeItems.forEach((item, i) => {
+                    if (i >= visibleCount) item.style.display = 'none';
+                });
+                rangesToggle.style.display = 'flex';
+                rangesToggle.classList.remove('expanded');
+                rangesToggleText.textContent = `Show all ${totalItems} roles`;
+            } else {
+                rangesToggle.style.display = 'none';
+            }
 
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
