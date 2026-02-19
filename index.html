@@ -1769,8 +1769,32 @@
             background: linear-gradient(135deg, #dc2626, #ef4444);
         }
         .chat-bubble svg { width: 26px; height: 26px; fill: #fff; }
-        .chat-bubble .icon-brand { width: 42px; height: 42px; }
-        .chat-bubble.open .icon-chat { display: none; }
+        .chat-bubble .icon-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+            gap: 1px;
+            pointer-events: none;
+        }
+        .chat-bubble .icon-brand .brand-top {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+        .chat-bubble .icon-brand .brand-colon {
+            color: #c4b5fd;
+        }
+        .chat-bubble .icon-brand .brand-bottom {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2.5px;
+        }
+        .chat-bubble.open .icon-chat { display: none !important; }
         .chat-bubble.open .icon-close { display: block; }
         .chat-bubble .icon-close { display: none; }
         @keyframes chatBubblePulse {
@@ -2008,7 +2032,8 @@
                 border-radius: 14px;
             }
             .chat-bubble svg { width: 22px; height: 22px; }
-            .chat-bubble .icon-brand { width: 36px; height: 36px; }
+            .chat-bubble .icon-brand .brand-top { font-size: 15px; }
+            .chat-bubble .icon-brand .brand-bottom { font-size: 9px; }
             .chat-panel {
                 bottom: 0;
                 right: 0;
@@ -5109,7 +5134,7 @@ South America: Sao Paulo, Buenos Aires, Bogota, Lima, Santiago, Medellin, Montev
             bubble.className = 'chat-bubble';
             bubble.setAttribute('aria-label', 'Open AI chat assistant');
             bubble.innerHTML =
-                '<svg class="icon-brand icon-chat" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><text x="22" y="20" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="16" font-weight="800" fill="#fff" letter-spacing="-0.5">s<tspan fill="#c4b5fd">:</tspan>c</text><text x="22" y="34" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="rgba(255,255,255,0.9)">AI</text><circle cx="36" cy="8" r="2.5" fill="#c4b5fd" opacity="0.9"/><circle cx="38" cy="12" r="1.2" fill="#c4b5fd" opacity="0.5"/></svg>' +
+                '<span class="icon-brand icon-chat"><span class="brand-top">s<span class="brand-colon">:</span>c</span><span class="brand-bottom">AI</span></span>' +
                 '<svg class="icon-close" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
             document.body.appendChild(bubble);
             bubble.addEventListener('click', toggleChat);
