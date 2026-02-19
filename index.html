@@ -1747,25 +1747,23 @@
             right: 20px;
             width: 60px;
             height: 60px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
             border: none;
             cursor: pointer;
             z-index: 10002;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(124, 58, 237, 0);
-            transition: transform 0.25s, box-shadow 0.25s, border-radius 0.25s;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(37, 99, 235, 0);
+            transition: transform 0.25s, box-shadow 0.25s;
             animation: chatBubblePulse 2.5s ease-in-out 1;
         }
         .chat-bubble:hover {
             transform: scale(1.08) translateY(-2px);
-            box-shadow: 0 8px 28px rgba(37, 99, 235, 0.4), 0 0 0 4px rgba(124, 58, 237, 0.12);
-            border-radius: 14px;
+            box-shadow: 0 8px 28px rgba(37, 99, 235, 0.45), 0 0 0 4px rgba(59, 130, 246, 0.15);
         }
         .chat-bubble.open {
-            border-radius: 50%;
             background: linear-gradient(135deg, #dc2626, #ef4444);
         }
         .chat-bubble svg { width: 26px; height: 26px; fill: #fff; }
@@ -1774,7 +1772,7 @@
             flex-direction: column;
             align-items: center;
             line-height: 1;
-            gap: 1px;
+            gap: 2px;
             pointer-events: none;
         }
         .chat-bubble .icon-brand .brand-top {
@@ -1785,22 +1783,23 @@
             letter-spacing: -0.5px;
         }
         .chat-bubble .icon-brand .brand-colon {
-            color: #c4b5fd;
+            color: #93c5fd;
         }
         .chat-bubble .icon-brand .brand-bottom {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            color: rgba(255,255,255,0.9);
-            letter-spacing: 2.5px;
+            font-size: 9px;
+            font-weight: 800;
+            color: #93c5fd;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         .chat-bubble.open .icon-chat { display: none !important; }
         .chat-bubble.open .icon-close { display: block; }
         .chat-bubble .icon-close { display: none; }
         @keyframes chatBubblePulse {
-            0% { box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(124, 58, 237, 0.3); }
-            50% { box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5), 0 0 0 8px rgba(124, 58, 237, 0); }
-            100% { box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(124, 58, 237, 0); }
+            0% { box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 6px 28px rgba(37, 99, 235, 0.5), 0 0 0 8px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 4px 20px rgba(37, 99, 235, 0.35), 0 0 0 0 rgba(59, 130, 246, 0); }
         }
 
         .chat-panel {
@@ -2029,11 +2028,10 @@
                 right: 16px;
                 width: 52px;
                 height: 52px;
-                border-radius: 14px;
             }
             .chat-bubble svg { width: 22px; height: 22px; }
-            .chat-bubble .icon-brand .brand-top { font-size: 15px; }
-            .chat-bubble .icon-brand .brand-bottom { font-size: 9px; }
+            .chat-bubble .icon-brand .brand-top { font-size: 14px; }
+            .chat-bubble .icon-brand .brand-bottom { font-size: 8px; letter-spacing: 2.5px; }
             .chat-panel {
                 bottom: 0;
                 right: 0;
