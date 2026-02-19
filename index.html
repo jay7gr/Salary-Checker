@@ -878,6 +878,19 @@
             line-height: 1.6;
         }
 
+        .offer-comparison {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: var(--stat-card-bg);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--text-body);
+        }
+        .offer-comparison .offer-above { color: #22c55e; font-weight: 600; }
+        .offer-comparison .offer-below { color: #ef4444; font-weight: 600; }
+        .offer-comparison .offer-match { color: #f59e0b; font-weight: 600; }
+
         .explanation-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -1814,6 +1827,13 @@
                     <div class="currency-hint" id="targetCurrencyHint"></div>
                 </div>
             </div>
+            <div class="form-group" style="margin-top: 8px;">
+                <label for="targetSalary">Salary Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
+                <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
+                    Have an actual offer? Enter it for a personalized comparison.
+                </div>
+            </div>
             <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
         </div>
 
@@ -1840,6 +1860,7 @@
                 </div>
             </div>
             <div class="comparison-note" id="comparisonNote"></div>
+            <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
             <!-- Affordability Verdict -->
             <div class="affordability-section" id="affordabilitySection" style="display: none;">
@@ -3697,6 +3718,21 @@
             e.target.value = formatted;
         });
 
+        // Format target salary input with commas as user types
+        const targetSalaryInput = document.getElementById('targetSalary');
+        targetSalaryInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+            if (value === '') { e.target.value = ''; return; }
+            const parts = value.split('.');
+            let integerPart = parts[0].replace(/^0+(?=\d)/, '');
+            const formattedInteger = Number(integerPart).toLocaleString('en-US');
+            let formatted = formattedInteger;
+            if (parts[1] !== undefined) {
+                formatted += '.' + parts[1].slice(0, 2);
+            }
+            e.target.value = formatted;
+        });
+
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => {
             const rawSalary = document.getElementById('currentSalary').value
@@ -3710,6 +3746,12 @@
             const targetCurrency = document.getElementById('targetCurrency').value;
             const currentNeighborhood = document.getElementById('currentNeighborhood').value;
             const targetNeighborhood = document.getElementById('targetNeighborhood').value;
+
+            // Read optional target salary offer
+            const rawTargetSalary = document.getElementById('targetSalary').value
+                .replace(/,/g, '').replace(/[^\d.]/g, '');
+            const targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
+            const hasOffer = targetSalaryOffer !== null && targetSalaryOffer > 0;
 
             if (!salary || salary <= 0) {
                 showError('Please enter your salary', 'salary');
@@ -3764,6 +3806,9 @@
             const colRatio = targetCOLI / currentCOLI;
             const equivalentSalary = salary * colRatio * exchangeRate;
 
+            // Salary used for target-side affordability: actual offer if provided, else COLI equivalent
+            const affordabilitySalary = hasOffer ? targetSalaryOffer : equivalentSalary;
+
             // Format currency
             const formatter = new Intl.NumberFormat('en-US', {
                 style: 'currency',
@@ -3798,12 +3843,52 @@
             document.getElementById('colAdjustment').textContent = `${colRatio.toFixed(2)}x (Cost of living ratio)`;
             document.getElementById('buyingPower').textContent = `Same as ${formattedOriginalCurrent} in ${currentLabel}`;
 
-            const note = `
-                Your salary adjusted from <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}
-                to <strong>${formattedAmount}</strong> in ${targetLabel}.
-                That's ${diffText} due to cost of living differences.
-            `;
+            let note;
+            if (hasOffer) {
+                const formattedOffer = formatter.format(targetSalaryOffer);
+                const offerVsColi = ((targetSalaryOffer - equivalentSalary) / equivalentSalary) * 100;
+                const offerAbsPct = Math.abs(offerVsColi).toFixed(0);
+                let offerDirText;
+                if (offerVsColi > 2) {
+                    offerDirText = `<span class="offer-above">${offerAbsPct}% above</span>`;
+                } else if (offerVsColi < -2) {
+                    offerDirText = `<span class="offer-below">${offerAbsPct}% below</span>`;
+                } else {
+                    offerDirText = `<span class="offer-match">right at</span>`;
+                }
+                note = `
+                    To match your <strong>${formattedOriginalCurrent}</strong> lifestyle in ${currentLabel},
+                    you'd need <strong>${formattedAmount}</strong> in ${targetLabel}.
+                    Your offer of <strong>${formattedOffer}</strong> is ${offerDirText} this benchmark.
+                `;
+            } else {
+                note = `
+                    Your salary adjusted from <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}
+                    to <strong>${formattedAmount}</strong> in ${targetLabel}.
+                    That's ${diffText} due to cost of living differences.
+                `;
+            }
             document.getElementById('comparisonNote').innerHTML = note;
+
+            // Offer comparison callout
+            const offerCompEl = document.getElementById('offerComparison');
+            if (hasOffer) {
+                const formattedOffer = formatter.format(targetSalaryOffer);
+                const offerVsColi = ((targetSalaryOffer - equivalentSalary) / equivalentSalary) * 100;
+                const offerAbsPct = Math.abs(offerVsColi).toFixed(0);
+                let offerLine;
+                if (offerVsColi > 2) {
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-above">${offerAbsPct}% above</span> the COLI-equivalent of ${formattedAmount}. The affordability analysis below uses your actual offer.`;
+                } else if (offerVsColi < -2) {
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-below">${offerAbsPct}% below</span> the COLI-equivalent of ${formattedAmount}. The affordability analysis below uses your actual offer.`;
+                } else {
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the COLI-equivalent ${formattedAmount}. The affordability analysis below uses your actual offer.`;
+                }
+                offerCompEl.innerHTML = offerLine;
+                offerCompEl.style.display = '';
+            } else {
+                offerCompEl.style.display = 'none';
+            }
 
             // Build step-by-step explanation
             const salaryInGBP = salary * currentToGBP;
@@ -3901,7 +3986,7 @@
 
             if (currentCountry && targetCountry) {
                 currentDed = calculateAllDeductions(salary, currentCountry, currentCity, isExpatMode, currentNeighborhood);
-                targetDed = calculateAllDeductions(equivalentSalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
+                targetDed = calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, isExpatMode, targetNeighborhood);
 
                 function buildDedCard(cityLabel, grossFormatted, ded, currency, equivNet, equivCurrency) {
                     const maxRate = Math.max(...ded.items.map(i => i.rate), 1);
@@ -3941,9 +4026,12 @@
                 }
 
                 const targetNetInCurrentCurr = targetDed.net / exchangeRate;
+                const targetGrossFormatted = hasOffer
+                    ? formatter.format(targetSalaryOffer) + ' (your offer)'
+                    : formattedAmount;
                 document.getElementById('taxComparison').innerHTML =
                     buildDedCard(currentLabel, formattedOriginalCurrent, currentDed, currentCurrency) +
-                    buildDedCard(targetLabel, formattedAmount, targetDed, targetCurrency, targetNetInCurrentCurr, currentCurrency);
+                    buildDedCard(targetLabel, targetGrossFormatted, targetDed, targetCurrency, targetNetInCurrentCurr, currentCurrency);
                 taxSection.style.display = '';
             } else {
                 taxSection.style.display = 'none';
@@ -4058,18 +4146,36 @@
                 let verdictClass, verdictIcon, verdictText;
                 const absDiff = Math.abs(diffPct).toFixed(0);
                 const costPhrase = hasLivingCosts ? 'after taxes and living costs' : 'after rent and taxes';
-                if (diffPct > 10) {
-                    verdictClass = 'better';
-                    verdictIcon = '\uD83D\uDFE2';
-                    verdictText = `You'd have ~${absDiff}% more spending power in ${targetCity} ${costPhrase}`;
-                } else if (diffPct < -10) {
-                    verdictClass = 'worse';
-                    verdictIcon = '\uD83D\uDD34';
-                    verdictText = `You'd have ~${absDiff}% less spending power in ${targetCity} ${costPhrase}`;
+
+                if (hasOffer) {
+                    const fmtOffer = formatter.format(targetSalaryOffer);
+                    if (diffPct > 10) {
+                        verdictClass = 'better';
+                        verdictIcon = '\uD83D\uDFE2';
+                        verdictText = `With your ${fmtOffer} offer, you'd have ~${absDiff}% more disposable income in ${targetCity} ${costPhrase}`;
+                    } else if (diffPct < -10) {
+                        verdictClass = 'worse';
+                        verdictIcon = '\uD83D\uDD34';
+                        verdictText = `With your ${fmtOffer} offer, you'd have ~${absDiff}% less disposable income in ${targetCity} ${costPhrase}`;
+                    } else {
+                        verdictClass = 'similar';
+                        verdictIcon = '\uD83D\uDFE1';
+                        verdictText = `With your ${fmtOffer} offer, disposable income is within ~${absDiff}% — too close to call`;
+                    }
                 } else {
-                    verdictClass = 'similar';
-                    verdictIcon = '\uD83D\uDFE1';
-                    verdictText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
+                    if (diffPct > 10) {
+                        verdictClass = 'better';
+                        verdictIcon = '\uD83D\uDFE2';
+                        verdictText = `You'd have ~${absDiff}% more spending power in ${targetCity} ${costPhrase}`;
+                    } else if (diffPct < -10) {
+                        verdictClass = 'worse';
+                        verdictIcon = '\uD83D\uDD34';
+                        verdictText = `You'd have ~${absDiff}% less spending power in ${targetCity} ${costPhrase}`;
+                    } else {
+                        verdictClass = 'similar';
+                        verdictIcon = '\uD83D\uDFE1';
+                        verdictText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
+                    }
                 }
 
                 document.getElementById('affordVerdict').className = 'afford-verdict ' + verdictClass;
@@ -4139,13 +4245,22 @@
                 // Show/hide childcare toggle
                 document.getElementById('childcareToggle').style.display = hasLivingCosts ? 'flex' : 'none';
 
-                // Update note based on data availability
+                // Update note based on data availability and offer mode
                 const noteEl = document.getElementById('affordNote');
                 const sources = ' Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.';
-                if (hasLivingCosts) {
-                    noteEl.innerHTML = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI (Cost of Living Index) adjusted salary above — COLI measures relative price levels across cities (New York = 100) — this breakdown shows where your money goes.' + sources;
+                const costsList = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood.';
+                if (hasOffer) {
+                    if (hasLivingCosts) {
+                        noteEl.innerHTML = 'Based on your actual salary offer. ' + costsList + sources;
+                    } else {
+                        noteEl.innerHTML = 'Based on your actual salary offer. Full living cost data not available for one or both cities. Showing rent only.' + sources;
+                    }
                 } else {
-                    noteEl.innerHTML = 'Full living cost data not available for one or both cities. Showing rent only.' + sources;
+                    if (hasLivingCosts) {
+                        noteEl.innerHTML = 'Based on the COLI (Cost of Living Index) equivalent salary — COLI measures relative price levels across cities (New York = 100). Enter your actual salary offer above for a personalized verdict. ' + costsList + sources;
+                    } else {
+                        noteEl.innerHTML = 'Based on the COLI-equivalent salary. Enter your actual salary offer above for a personalized verdict. Full living cost data not available for one or both cities. Showing rent only.' + sources;
+                    }
                 }
 
                 affordSection.style.display = '';
@@ -4280,6 +4395,8 @@
             document.getElementById('targetNeighborhood').value = '';
             document.getElementById('currentNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetNeighborhoodGroup').style.display = 'none';
+            document.getElementById('targetSalary').value = '';
+            document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
             document.getElementById('taxSection').style.display = 'none';
             document.getElementById('rentSection').style.display = 'none';

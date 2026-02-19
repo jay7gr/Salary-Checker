@@ -567,6 +567,19 @@
         }
         .afford-card-row .afford-card-val.deduction { color: #aeaeb2; }
 
+        .offer-comparison {
+            margin-top: 8px;
+            padding: 8px 10px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: #6e6e73;
+        }
+        .offer-comparison .offer-above { color: #22c55e; font-weight: 600; }
+        .offer-comparison .offer-below { color: #ef4444; font-weight: 600; }
+        .offer-comparison .offer-match { color: #f59e0b; font-weight: 600; }
+
         /* === CHART SECTION === */
         .chart-section {
             display: none;
@@ -778,6 +791,15 @@
         <div class="currency-hint" id="targetHint"></div>
     </div>
 
+    <div class="form-group" style="margin-top: 8px;">
+        <label class="form-label">Salary Offer <span style="font-weight:400;color:#aeaeb2;">(optional)</span></label>
+        <div class="form-row">
+            <input type="text" id="targetSalary" class="salary-input" placeholder="e.g. 45,000" inputmode="numeric">
+            <span style="font-size:0.7rem;color:#aeaeb2;padding-left:6px;" id="targetSalaryCurrLabel"></span>
+        </div>
+        <div style="font-size:0.6rem;color:#aeaeb2;margin-top:3px;">Have an offer? Enter it for a personalized verdict.</div>
+    </div>
+
     <button class="btn-calculate" id="calcBtn">Check Equivalent Salary</button>
 
     <div class="result-box" id="resultBox">
@@ -798,6 +820,7 @@
             </div>
         </div>
         <div class="result-note" id="resultNote"></div>
+        <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
         <!-- Tax & Deductions -->
         <div class="tax-section" id="taxSection">
@@ -2014,8 +2037,10 @@ targetCity.addEventListener('change', () => {
     const currency = cityToCurrency[city];
     if (currency) {
         targetHint.textContent = `Will show result in ${currency}`;
+        document.getElementById('targetSalaryCurrLabel').textContent = currency;
     } else {
         targetHint.textContent = '';
+        document.getElementById('targetSalaryCurrLabel').textContent = '';
     }
     populateNeighborhoods(city, targetNeighborhood, document.getElementById('targetNeighborhoodGroup'));
 });
@@ -2025,6 +2050,14 @@ salaryInput.addEventListener('input', () => {
     let val = salaryInput.value.replace(/[^0-9]/g, '');
     if (val) {
         salaryInput.value = parseInt(val).toLocaleString('en-US');
+    }
+});
+
+const targetSalaryInput = document.getElementById('targetSalary');
+targetSalaryInput.addEventListener('input', () => {
+    let val = targetSalaryInput.value.replace(/[^0-9]/g, '');
+    if (val) {
+        targetSalaryInput.value = parseInt(val).toLocaleString('en-US');
     }
 });
 
@@ -2065,6 +2098,11 @@ function calculate() {
     if (cityNeighborhoods[fromCity] && !currentNeighborhood.value) return showError('Please select a neighborhood for your current city', currentNeighborhood);
     if (cityNeighborhoods[toCity] && !targetNeighborhood.value) return showError('Please select a neighborhood for your target city', targetNeighborhood);
 
+    // Read optional target salary offer
+    const rawTargetSalary = document.getElementById('targetSalary').value.replace(/,/g, '');
+    const targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
+    const hasOffer = targetSalaryOffer !== null && targetSalaryOffer > 0;
+
     let fromCOLI = coliData[fromCity];
     let toCOLI = coliData[toCity];
 
@@ -2087,6 +2125,7 @@ function calculate() {
 
     // Equivalent salary
     const equivalent = salary * (toCOLI / fromCOLI) * xRate;
+    const affordabilitySalary = hasOffer ? targetSalaryOffer : equivalent;
 
     // Buying power
     const converted = salary * xRate;
@@ -2106,14 +2145,6 @@ function calculate() {
     document.getElementById('statCOL').textContent = colRatio >= 100 ? `+${colRatio - 100}% higher` : `${100 - colRatio}% lower`;
     document.getElementById('statPower').textContent = `${buyingPower}%`;
 
-    // Note
-    const fromLabel = fromNhood ? `${fromNhood}, ${fromCity}` : fromCity;
-    const toLabel = toNhood ? `${toNhood}, ${toCity}` : toCity;
-    const note = toCOLI > fromCOLI
-        ? `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% more</strong> to live in than ${fromLabel}`
-        : `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% less</strong> to live in than ${fromLabel}`;
-    document.getElementById('resultNote').innerHTML = note;
-
     // Currency formatter helper
     const fmtCur = (amount, cur) => new Intl.NumberFormat('en-US', {
         style: 'currency', currency: cur,
@@ -2122,6 +2153,42 @@ function calculate() {
 
     const fmtSalaryFrom = fmtCur(salary, fromCurrency);
     const fmtSalaryTo = fmtCur(Math.round(equivalent), toCurrency);
+
+    // Note
+    const fromLabel = fromNhood ? `${fromNhood}, ${fromCity}` : fromCity;
+    const toLabel = toNhood ? `${toNhood}, ${toCity}` : toCity;
+    let note;
+    if (hasOffer) {
+        const fmtOffer = fmtCur(targetSalaryOffer, toCurrency);
+        const offerVsColi = ((targetSalaryOffer - equivalent) / equivalent) * 100;
+        const offerAbsPct = Math.abs(offerVsColi).toFixed(0);
+        let offerDir;
+        if (offerVsColi > 2) offerDir = `<span class="offer-above">${offerAbsPct}% above</span>`;
+        else if (offerVsColi < -2) offerDir = `<span class="offer-below">${offerAbsPct}% below</span>`;
+        else offerDir = `<span class="offer-match">right at</span>`;
+        note = `You'd need <strong>${fmtSalaryTo}</strong> to match your lifestyle. Your offer of <strong>${fmtOffer}</strong> is ${offerDir} this.`;
+    } else {
+        note = toCOLI > fromCOLI
+            ? `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% more</strong> to live in than ${fromLabel}`
+            : `${toLabel} costs <strong>${Math.abs(colRatio - 100)}% less</strong> to live in than ${fromLabel}`;
+    }
+    document.getElementById('resultNote').innerHTML = note;
+
+    // Offer comparison callout
+    const offerCompEl = document.getElementById('offerComparison');
+    if (hasOffer) {
+        const fmtOffer2 = fmtCur(targetSalaryOffer, toCurrency);
+        const offerVsColi2 = ((targetSalaryOffer - equivalent) / equivalent) * 100;
+        const pct2 = Math.abs(offerVsColi2).toFixed(0);
+        let offerLine;
+        if (offerVsColi2 > 2) offerLine = `Your offer of ${fmtOffer2} is <span class="offer-above">${pct2}% above</span> the COLI-equivalent of ${fmtSalaryTo}. Affordability below uses your actual offer.`;
+        else if (offerVsColi2 < -2) offerLine = `Your offer of ${fmtOffer2} is <span class="offer-below">${pct2}% below</span> the COLI-equivalent of ${fmtSalaryTo}. Affordability below uses your actual offer.`;
+        else offerLine = `Your offer of ${fmtOffer2} is <span class="offer-match">within ${pct2}%</span> of the COLI-equivalent ${fmtSalaryTo}. Affordability below uses your actual offer.`;
+        offerCompEl.innerHTML = offerLine;
+        offerCompEl.style.display = '';
+    } else {
+        offerCompEl.style.display = 'none';
+    }
 
     // === TAX & DEDUCTIONS BREAKDOWN ===
     const fromCountry = cityToCountry[fromCity];
@@ -2132,7 +2199,7 @@ function calculate() {
 
     if (fromCountry && toCountry) {
         fromDed = calculateAllDeductions(salary, fromCountry, fromCity, isExpatMode, fromNhood);
-        toDed = calculateAllDeductions(equivalent, toCountry, toCity, isExpatMode, toNhood);
+        toDed = calculateAllDeductions(affordabilitySalary, toCountry, toCity, isExpatMode, toNhood);
 
         function buildCompactCard(label, grossFmt, ded, cur, equivNet, equivCur) {
             const maxR = Math.max(...ded.items.map(i=>i.rate), 1);
@@ -2165,9 +2232,12 @@ function calculate() {
         }
 
         const toNetInFromCurr = toDed.net / xRate;
+        const targetGrossFmt = hasOffer
+            ? fmtCur(targetSalaryOffer, toCurrency) + ' (your offer)'
+            : fmtSalaryTo;
         document.getElementById('taxGrid').innerHTML =
             buildCompactCard(fromLabel, fmtSalaryFrom, fromDed, fromCurrency) +
-            buildCompactCard(toLabel, fmtSalaryTo, toDed, toCurrency, toNetInFromCurr, fromCurrency);
+            buildCompactCard(toLabel, targetGrossFmt, toDed, toCurrency, toNetInFromCurr, fromCurrency);
         taxSection.style.display = 'block';
     } else {
         taxSection.style.display = 'none';
@@ -2256,15 +2326,29 @@ function calculate() {
         const costPhrase = hasLivingCosts ? 'after taxes and living costs' : 'after rent & taxes';
 
         let vClass, vIcon, vText;
-        if (diffPct > 10) {
-            vClass = 'better'; vIcon = '\uD83D\uDFE2';
-            vText = `~${absDiff}% more spending power in ${toCity} ${costPhrase}`;
-        } else if (diffPct < -10) {
-            vClass = 'worse'; vIcon = '\uD83D\uDD34';
-            vText = `~${absDiff}% less spending power in ${toCity} ${costPhrase}`;
+        if (hasOffer) {
+            const fmtOff = fmtCur(targetSalaryOffer, toCurrency);
+            if (diffPct > 10) {
+                vClass = 'better'; vIcon = '\uD83D\uDFE2';
+                vText = `With your ${fmtOff} offer, ~${absDiff}% more disposable in ${toCity} ${costPhrase}`;
+            } else if (diffPct < -10) {
+                vClass = 'worse'; vIcon = '\uD83D\uDD34';
+                vText = `With your ${fmtOff} offer, ~${absDiff}% less disposable in ${toCity} ${costPhrase}`;
+            } else {
+                vClass = 'similar'; vIcon = '\uD83D\uDFE1';
+                vText = `With your ${fmtOff} offer, disposable is within ~${absDiff}% — too close to call`;
+            }
         } else {
-            vClass = 'similar'; vIcon = '\uD83D\uDFE1';
-            vText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
+            if (diffPct > 10) {
+                vClass = 'better'; vIcon = '\uD83D\uDFE2';
+                vText = `~${absDiff}% more spending power in ${toCity} ${costPhrase}`;
+            } else if (diffPct < -10) {
+                vClass = 'worse'; vIcon = '\uD83D\uDD34';
+                vText = `~${absDiff}% less spending power in ${toCity} ${costPhrase}`;
+            } else {
+                vClass = 'similar'; vIcon = '\uD83D\uDFE1';
+                vText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
+            }
         }
 
         document.getElementById('affordVerdict').className = 'afford-verdict ' + vClass;
@@ -2311,10 +2395,15 @@ function calculate() {
         // Update note
         const noteEl = document.getElementById('affordNote');
         const sources = ' Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.';
-        if (hasLivingCosts) {
-            noteEl.innerHTML = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI (Cost of Living Index) adjusted salary above — COLI measures relative price levels across cities (New York = 100) — this breakdown shows where your money goes.' + sources;
+        const costsList = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood.';
+        if (hasOffer) {
+            noteEl.innerHTML = (hasLivingCosts
+                ? 'Based on your actual salary offer. ' + costsList
+                : 'Based on your actual salary offer. Showing rent only.') + sources;
         } else {
-            noteEl.innerHTML = 'Full living cost data not available for one or both cities. Showing rent only.' + sources;
+            noteEl.innerHTML = (hasLivingCosts
+                ? 'Based on COLI-equivalent salary. Enter your offer above for a personalized verdict. ' + costsList
+                : 'Based on COLI-equivalent salary. Enter your offer above for a personalized verdict. Showing rent only.') + sources;
         }
 
         affordSection.style.display = 'block';
