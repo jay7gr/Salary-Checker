@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salary Converter 2026 — Compare Cost of Living Across 2,000+ Neighborhoods Worldwide</title>
 
@@ -14,6 +16,7 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/x-icon" href="/favicon.svg">
 
     <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
@@ -22,6 +25,7 @@
     <meta property="og:title" content="Salary Converter 2026 — Compare Cost of Living Across 2,000+ Neighborhoods Worldwide">
     <meta property="og:description" content="Free tool to compare salaries across 100+ cities and 2,000+ neighborhoods. Adjust for cost of living, taxes, and currency conversion instantly.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="salary:converter">
@@ -460,6 +464,126 @@
 
         .blog-card-cta:hover {
             background: var(--blog-cta-hover);
+        }
+
+        /* SEO Internal Linking Sections */
+        .seo-links-wrapper {
+            max-width: 1200px;
+            width: 100%;
+            margin: 40px auto 0;
+            padding: 0 16px;
+        }
+        .seo-section {
+            margin-bottom: 40px;
+        }
+        .seo-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .seo-section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        .seo-city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .seo-city-card {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .seo-city-card:hover {
+            border-color: var(--accent);
+            background: var(--blog-cta-bg);
+            transform: translateY(-1px);
+        }
+        .seo-city-flag { font-size: 1.1rem; }
+        .seo-compare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .seo-compare-card {
+            display: block;
+            padding: 12px 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .seo-compare-card:hover {
+            border-color: var(--accent);
+            background: var(--blog-cta-bg);
+            transform: translateY(-1px);
+        }
+        .seo-blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .seo-blog-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .seo-blog-card:hover {
+            border-color: var(--accent);
+            background: var(--blog-cta-bg);
+            transform: translateY(-1px);
+        }
+        .seo-blog-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-light);
+        }
+        .seo-blog-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .seo-view-all {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .seo-view-all:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .seo-city-grid { grid-template-columns: repeat(2, 1fr); }
+            .seo-compare-grid { grid-template-columns: 1fr; }
+            .seo-blog-grid { grid-template-columns: 1fr; }
         }
 
         /* Footer */
@@ -1772,6 +1896,7 @@
         }
 
     </style>
+    <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 </head>
 <body>
     <button class="sidebar-burger" id="sidebarBurger" aria-label="Toggle stats panel">
@@ -2054,6 +2179,161 @@
     </aside>
     </div>
 
+    <!-- Internal Linking Sections for SEO -->
+    <div class="seo-links-wrapper">
+        <section class="seo-section">
+            <h2 class="seo-section-title">🌍 Popular Cities</h2>
+            <p class="seo-section-subtitle">Compare cost of living and salaries in 100+ cities worldwide</p>
+            <div class="seo-city-grid">
+                <a href="/city/london.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇬🇧</span>
+                    <span class="seo-city-name">London</span>
+                </a>
+                <a href="/city/new-york.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇺🇸</span>
+                    <span class="seo-city-name">New York</span>
+                </a>
+                <a href="/city/dubai.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇦🇪</span>
+                    <span class="seo-city-name">Dubai</span>
+                </a>
+                <a href="/city/singapore.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇸🇬</span>
+                    <span class="seo-city-name">Singapore</span>
+                </a>
+                <a href="/city/berlin.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇩🇪</span>
+                    <span class="seo-city-name">Berlin</span>
+                </a>
+                <a href="/city/tokyo.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇯🇵</span>
+                    <span class="seo-city-name">Tokyo</span>
+                </a>
+                <a href="/city/paris.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇫🇷</span>
+                    <span class="seo-city-name">Paris</span>
+                </a>
+                <a href="/city/amsterdam.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇳🇱</span>
+                    <span class="seo-city-name">Amsterdam</span>
+                </a>
+                <a href="/city/san-francisco.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇺🇸</span>
+                    <span class="seo-city-name">San Francisco</span>
+                </a>
+                <a href="/city/sydney.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇦🇺</span>
+                    <span class="seo-city-name">Sydney</span>
+                </a>
+                <a href="/city/toronto.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇨🇦</span>
+                    <span class="seo-city-name">Toronto</span>
+                </a>
+                <a href="/city/lisbon.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇵🇹</span>
+                    <span class="seo-city-name">Lisbon</span>
+                </a>
+                <a href="/city/bangkok.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇹🇭</span>
+                    <span class="seo-city-name">Bangkok</span>
+                </a>
+                <a href="/city/barcelona.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇪🇸</span>
+                    <span class="seo-city-name">Barcelona</span>
+                </a>
+                <a href="/city/hong-kong.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇭🇰</span>
+                    <span class="seo-city-name">Hong Kong</span>
+                </a>
+                <a href="/city/munich.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇩🇪</span>
+                    <span class="seo-city-name">Munich</span>
+                </a>
+                <a href="/city/buenos-aires.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇦🇷</span>
+                    <span class="seo-city-name">Buenos Aires</span>
+                </a>
+                <a href="/city/zurich.html" class="seo-city-card">
+                    <span class="seo-city-flag">🇨🇭</span>
+                    <span class="seo-city-name">Zurich</span>
+                </a>
+            </div>
+            <a href="/city/" class="seo-view-all">Browse all 100+ cities →</a>
+        </section>
+
+        <section class="seo-section">
+            <h2 class="seo-section-title">⚖️ Popular Comparisons</h2>
+            <p class="seo-section-subtitle">See how salaries and living costs compare between top city pairs</p>
+            <div class="seo-compare-grid">
+                <a href="/compare/london-vs-new-york.html" class="seo-compare-card">London vs New York</a>
+                <a href="/compare/dubai-vs-singapore.html" class="seo-compare-card">Dubai vs Singapore</a>
+                <a href="/compare/london-vs-berlin.html" class="seo-compare-card">London vs Berlin</a>
+                <a href="/compare/san-francisco-vs-new-york.html" class="seo-compare-card">San Francisco vs New York</a>
+                <a href="/compare/london-vs-paris.html" class="seo-compare-card">London vs Paris</a>
+                <a href="/compare/tokyo-vs-singapore.html" class="seo-compare-card">Tokyo vs Singapore</a>
+                <a href="/compare/sydney-vs-melbourne.html" class="seo-compare-card">Sydney vs Melbourne</a>
+                <a href="/compare/amsterdam-vs-berlin.html" class="seo-compare-card">Amsterdam vs Berlin</a>
+                <a href="/compare/lisbon-vs-barcelona.html" class="seo-compare-card">Lisbon vs Barcelona</a>
+                <a href="/compare/new-york-vs-los-angeles.html" class="seo-compare-card">New York vs Los Angeles</a>
+                <a href="/compare/bangkok-vs-ho-chi-minh-city.html" class="seo-compare-card">Bangkok vs Ho Chi Minh City</a>
+                <a href="/compare/toronto-vs-vancouver.html" class="seo-compare-card">Toronto vs Vancouver</a>
+            </div>
+            <a href="/compare/" class="seo-view-all">Browse all 5,000+ comparisons →</a>
+        </section>
+
+        <section class="seo-section">
+            <h2 class="seo-section-title">💰 What Salary Do You Need?</h2>
+            <p class="seo-section-subtitle">Find out the minimum salary to live comfortably in any city — with neighborhood-level breakdowns</p>
+            <div class="seo-compare-grid">
+                <a href="/salary-needed/london.html" class="seo-compare-card">Salary Needed: London</a>
+                <a href="/salary-needed/new-york.html" class="seo-compare-card">Salary Needed: New York</a>
+                <a href="/salary-needed/berlin.html" class="seo-compare-card">Salary Needed: Berlin</a>
+                <a href="/salary-needed/dubai.html" class="seo-compare-card">Salary Needed: Dubai</a>
+                <a href="/salary-needed/singapore.html" class="seo-compare-card">Salary Needed: Singapore</a>
+                <a href="/salary-needed/tokyo.html" class="seo-compare-card">Salary Needed: Tokyo</a>
+                <a href="/salary-needed/paris.html" class="seo-compare-card">Salary Needed: Paris</a>
+                <a href="/salary-needed/amsterdam.html" class="seo-compare-card">Salary Needed: Amsterdam</a>
+                <a href="/salary-needed/sydney.html" class="seo-compare-card">Salary Needed: Sydney</a>
+                <a href="/salary-needed/lisbon.html" class="seo-compare-card">Salary Needed: Lisbon</a>
+                <a href="/salary-needed/barcelona.html" class="seo-compare-card">Salary Needed: Barcelona</a>
+                <a href="/salary-needed/toronto.html" class="seo-compare-card">Salary Needed: Toronto</a>
+            </div>
+            <a href="/salary-needed/" class="seo-view-all">Browse all 100+ cities →</a>
+        </section>
+
+        <section class="seo-section">
+            <h2 class="seo-section-title">📖 Guides & Insights</h2>
+            <p class="seo-section-subtitle">Expert articles on salary comparison, cost of living, and relocating abroad</p>
+            <div class="seo-blog-grid">
+                <a href="/blog/articles/how-cost-of-living-affects-your-salary.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Fundamentals</span>
+                    <span class="seo-blog-title">How Cost of Living Actually Affects Your Salary</span>
+                </a>
+                <a href="/blog/articles/top-10-cities-for-remote-workers-2026.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Remote Work</span>
+                    <span class="seo-blog-title">Top 10 Cities for Remote Workers in 2026</span>
+                </a>
+                <a href="/blog/articles/london-vs-new-york-true-cost-comparison.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Deep Dive</span>
+                    <span class="seo-blog-title">London vs New York: The True Cost Comparison</span>
+                </a>
+                <a href="/blog/articles/tech-salary-comparison-by-city-2026.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Tech</span>
+                    <span class="seo-blog-title">Tech Salary by City 2026: Where Engineers Earn Most</span>
+                </a>
+                <a href="/blog/articles/salary-negotiation-when-relocating-abroad.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Career</span>
+                    <span class="seo-blog-title">How to Negotiate Your Salary When Relocating Abroad</span>
+                </a>
+                <a href="/blog/articles/affordable-cities-in-europe-for-americans-2026.html" class="seo-blog-card">
+                    <span class="seo-blog-tag">Europe</span>
+                    <span class="seo-blog-title">Affordable Cities in Europe for Americans 2026</span>
+                </a>
+            </div>
+            <a href="/blog/" class="seo-view-all">Read all articles →</a>
+        </section>
+    </div>
+
     <footer class="site-footer">
         <div class="site-footer-logo">salary<span>:</span>converter</div>
         <div class="site-footer-text" id="footer-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</div>
@@ -2061,6 +2341,7 @@
             <a href="https://salary-converter.com">Salary Tool</a>
             <a href="/city/">Cities</a>
             <a href="/compare/">City Comparisons</a>
+            <a href="/salary-needed/">Salary Needed</a>
             <a href="/blog">Blog</a>
             <a href="/widget.html">Widget</a>
         </div>

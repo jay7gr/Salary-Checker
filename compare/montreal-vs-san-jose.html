@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Montreal vs San José (CR): Cost of Living & Salary Comparison 2026</title>
     <meta name="description" content="Compare cost of living between Montreal (COLI: 52.1) and San José (CR) (COLI: 31.2). San José (CR) is 40% cheaper. See salary equivalents, neighborhoods, and tax rates.">
@@ -10,11 +12,15 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/compare/montreal-vs-san-jose.html">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/compare/montreal-vs-san-jose.html">
     <meta property="og:title" content="Montreal vs San José (CR): Cost of Living & Salary Comparison 2026">
     <meta property="og:description" content="San José (CR) is 40% cheaper. Compare salaries, neighborhoods, tax rates, and more.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Montreal vs San José (CR): Salary & Cost of Living 2026">
@@ -51,7 +57,7 @@
     {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [{"@type": "Question", "name": "Is Montreal or San José (CR) more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Montreal is more expensive overall. Montreal has a COLI of 52.1 while San José (CR) has a COLI of 31.2, making San José (CR) approximately 40% cheaper."}}, {"@type": "Question", "name": "What salary in San José (CR) equals C$101,544 in Montreal?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as C$101,544 in Montreal, you would need approximately ₡22,727,378 in San José (CR)."}}, {"@type": "Question", "name": "Is rent cheaper in Montreal or San José (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in Montreal is $1,400/month compared to $550/month in San José (CR). San José (CR) has lower rent by approximately 61%."}}, {"@type": "Question", "name": "Which city has lower taxes, Montreal or San José (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "San José (CR) has lower total deductions (11.2%) compared to Montreal (36.8%), meaning you keep more of your gross salary in San José (CR)."}}]
+        "mainEntity": [{"@type": "Question", "name": "Is Montreal or San José (CR) more expensive?", "acceptedAnswer": {"@type": "Answer", "text": "Montreal is more expensive overall. Montreal has a COLI of 52.1 while San José (CR) has a COLI of 31.2, making San José (CR) approximately 40% cheaper."}}, {"@type": "Question", "name": "What salary in San José (CR) equals C$101,544 in Montreal?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same standard of living as C$101,544 in Montreal, you would need approximately ₡22,727,378 in San José (CR)."}}, {"@type": "Question", "name": "Is rent cheaper in Montreal or San José (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "Average one-bedroom rent in Montreal is $1,400/month compared to $550/month in San José (CR). San José (CR) has lower rent by approximately 61%."}}, {"@type": "Question", "name": "Which city has lower taxes, Montreal or San José (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "San José (CR) has lower total deductions (11.2%) compared to Montreal (36.8%), meaning you keep more of your gross salary in San José (CR)."}}, {"@type": "Question", "name": "Is Montreal cheaper than San Jos\u00e9 (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "No, Montreal is more expensive than San Jos\u00e9 (CR). Montreal has a COLI of 52.1 while San Jos\u00e9 (CR) has a COLI of 31.2, making San Jos\u00e9 (CR) approximately 40% cheaper."}}, {"@type": "Question", "name": "Is San Jos\u00e9 (CR) cheaper than Montreal?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, San Jos\u00e9 (CR) is cheaper than Montreal. San Jos\u00e9 (CR) has a COLI of 31.2 while Montreal has a COLI of 52.1, making San Jos\u00e9 (CR) approximately 40% cheaper."}}, {"@type": "Question", "name": "How much cheaper is San Jos\u00e9 (CR) than Montreal?", "acceptedAnswer": {"@type": "Answer", "text": "San Jos\u00e9 (CR) is approximately 40% cheaper than Montreal overall. San Jos\u00e9 (CR) has a cost of living index of 31.2 compared to 52.1 for Montreal."}}, {"@type": "Question", "name": "What salary do I need in Montreal compared to San Jos\u00e9 (CR)?", "acceptedAnswer": {"@type": "Answer", "text": "If you earn a given salary in San Jos\u00e9 (CR), you'd need 40% more in Montreal to maintain the same standard of living, due to cost of living differences. Use our salary converter at salary-converter.com for an exact calculation."}}]
     }
     </script>
     <style>
@@ -295,7 +301,30 @@
             .metric-row { grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 0.82rem; }
             .cta-section { border-radius: 16px; padding: 32px 16px; }
         }
+
+        .answer-box {
+            background: var(--card-bg); border-radius: 20px; padding: 28px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
+            border-left: 4px solid #22c55e;
+        }
+        .answer-box.more-expensive { border-left-color: #ef4444; }
+        .answer-box.similar { border-left-color: #f59e0b; }
+        .answer-box-question {
+            font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .answer-box-answer {
+            font-size: 1rem; color: var(--text-body); line-height: 1.6;
+        }
+        .answer-box-answer strong { color: var(--text-primary); }
+        .answer-box-stat {
+            display: inline-block; background: var(--stat-card-bg); border-radius: 8px;
+            padding: 4px 10px; font-weight: 700; font-size: 0.9rem; margin-top: 8px;
+        }
+        .answer-box-stat.cheaper { color: #22c55e; }
+        .answer-box-stat.pricier { color: #ef4444; }
     </style>
+    <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 </head>
 <body>
     <div class="page-wrapper">
@@ -359,7 +388,12 @@
             </div>
         </section>
 
-        <section class="content-card">
+        
+        <div class="answer-box">
+            <div class="answer-box-question">Is Montreal cheaper than San José (CR)?</div>
+            <p class="answer-box-answer"><strong>Yes, San José (CR) is 40% cheaper than Montreal</strong> based on our cost of living index. San José (CR) has a COLI of 31.2, while Montreal has a COLI of 52.1. <span class="answer-box-stat cheaper">40% cheaper</span></p>
+        </div>
+<section class="content-card">
             <h2>Key Differences</h2>
             <div class="metric-row">
                 <div class="metric-label">Cost of Living</div>
@@ -499,6 +533,24 @@
             <h2>Data Sources</h2>
             <p>Cost of living indices are derived from <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://www.expatistan.com/cost-of-living" target="_blank" rel="noopener">Expatistan</a>, and national statistics agencies, using New York City as the baseline (COLI&nbsp;=&nbsp;100). Tax rates are based on <a href="https://www.oecd.org/tax/tax-policy/taxing-wages-brochure.pdf" target="_blank" rel="noopener">OECD</a> data. Exchange rates from the <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener">ECB</a>. Neighborhood multipliers are estimated from local rental and property data.</p>
             <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-02-18. All figures are estimates for informational purposes only.</p>
+        </section>
+
+        
+        <section class="content-card" style="margin-top:0;">
+            <h2>Related Comparisons</h2>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+                                <a href="/compare/san-jose-vs-vancouver.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">San Jose vs Vancouver</a>
+                <a href="/compare/montreal-vs-sao-paulo.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">Montreal vs Sao Paulo</a>
+                <a href="/compare/chicago-vs-montreal.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">Chicago vs Montreal</a>
+                <a href="/compare/lima-vs-montreal.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">Lima vs Montreal</a>
+                <a href="/compare/berlin-vs-montreal.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">Berlin vs Montreal</a>
+                <a href="/compare/milan-vs-montreal.html" style="display:inline-block;padding:8px 14px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary,#1d1d1f);font-size:0.85rem;font-weight:500;border:1px solid var(--border-light,#f0f0f2);transition:all 0.2s;">Milan vs Montreal</a>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <a href="/city/montreal.html" style="display:inline-block;padding:8px 16px;background:var(--accent,#2563eb);color:#fff;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:600;">Montreal guide</a>
+                <a href="/city/san-jose.html" style="display:inline-block;padding:8px 16px;background:var(--accent,#2563eb);color:#fff;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:600;">San Jose guide</a>
+                <a href="/" style="display:inline-block;padding:8px 16px;background:var(--blog-cta-bg,rgba(37,99,235,0.08));color:var(--accent,#2563eb);border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:600;">Salary Converter →</a>
+            </div>
         </section>
 
         <footer class="page-footer">

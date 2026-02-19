@@ -1,0 +1,20 @@
+{
+    "name": "salary:converter",
+    "short_name": "s:c",
+    "description": "Compare salaries and cost of living between cities worldwide. See what your salary is really worth in a new city.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f5f5f7",
+    "theme_color": "#2563eb",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["finance", "utilities"],
+    "lang": "en",
+    "orientation": "portrait-primary"
+}
