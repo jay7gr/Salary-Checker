@@ -280,6 +280,51 @@
             margin-bottom: 16px;
         }
 
+        .sidebar-salary-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            background: var(--stat-card-bg, #f5f5f7);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.84rem;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .sidebar-salary-link:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateX(3px);
+        }
+        .sidebar-salary-link span {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        .sidebar-salary-link:hover span {
+            color: #fff;
+        }
+
+        .sidebar-explore-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: var(--stat-card-bg, #f5f5f7);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .sidebar-explore-link:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
         /* Cost of Living Rankings */
         /* Currency Ticker */
 
@@ -2087,6 +2132,20 @@
 
     <aside class="sidebar">
         <div class="sidebar-card">
+            <h3>💰 What Salary Do You Need?</h3>
+            <p style="font-size: 0.82rem; color: var(--text-body); margin-bottom: 14px; line-height: 1.5;">Find the minimum salary to live comfortably — with neighborhood-level breakdowns for 100+ cities.</p>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <a href="/salary-needed/new-york.html" class="sidebar-salary-link">New York <span>$102,720/yr</span></a>
+                <a href="/salary-needed/london.html" class="sidebar-salary-link">London <span>£55,680/yr</span></a>
+                <a href="/salary-needed/dubai.html" class="sidebar-salary-link">Dubai <span>AED 238,840/yr</span></a>
+                <a href="/salary-needed/singapore.html" class="sidebar-salary-link">Singapore <span>S$78,720/yr</span></a>
+                <a href="/salary-needed/tokyo.html" class="sidebar-salary-link">Tokyo <span>¥6,792,000/yr</span></a>
+                <a href="/salary-needed/berlin.html" class="sidebar-salary-link">Berlin <span>€42,480/yr</span></a>
+            </div>
+            <a href="/salary-needed/" style="display: block; text-align: center; margin-top: 14px; font-size: 0.82rem; font-weight: 600; color: var(--accent); text-decoration: none;">Browse all 100+ cities →</a>
+        </div>
+
+        <div class="sidebar-card">
             <h3>📝 From the Blog</h3>
             <div id="blogArticlesList" style="display: flex; flex-direction: column; gap: 10px;">
                 <!-- All 14 articles — JS will randomly show 3 on each page load -->
@@ -2168,11 +2227,14 @@
         <div class="sidebar-card">
             <h3>🏙️ Explore</h3>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-                <a href="/city/" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f5f5f7; border-radius: 10px; text-decoration: none; color: #1d1d1f; font-size: 0.85rem; font-weight: 500; transition: background 0.2s;">
+                <a href="/city/" class="sidebar-explore-link">
                     <span>🌍</span> Browse All 100 Cities
                 </a>
-                <a href="/compare/" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f5f5f7; border-radius: 10px; text-decoration: none; color: #1d1d1f; font-size: 0.85rem; font-weight: 500; transition: background 0.2s;">
+                <a href="/compare/" class="sidebar-explore-link">
                     <span>⚖️</span> City vs City Comparisons
+                </a>
+                <a href="/salary-needed/" class="sidebar-explore-link">
+                    <span>💰</span> Salary Needed by City
                 </a>
             </div>
         </div>
