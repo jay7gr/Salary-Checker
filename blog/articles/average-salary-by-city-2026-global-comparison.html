@@ -686,7 +686,27 @@
                 z-index: 10001 !important;
             }
         }
-</style>
+
+        .share-bar {
+            display: flex; align-items: center; gap: 8px;
+            margin: 16px 0 20px; padding: 12px 16px;
+            background: var(--stat-card-bg, #f5f5f7); border-radius: 12px;
+        }
+        .share-bar-label {
+            font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;
+        }
+        .share-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid var(--border, #e5e5ea); background: var(--card-bg, #fff);
+            color: var(--text-secondary, #86868b); cursor: pointer; transition: all 0.2s;
+            padding: 0;
+        }
+        .share-btn:hover { color: var(--accent); border-color: var(--accent); transform: scale(1.08); }
+        .share-btn.copied { color: #22c55e; border-color: #22c55e; }
+
+    </style>
     <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 </head>
 <body>
@@ -1508,5 +1528,23 @@
     })();
     </script>
     <script src="/chat.js?v=2"></script>
+
+    <script>
+    (function(){
+        document.querySelectorAll('.share-bar').forEach(function(bar){
+            var text=bar.getAttribute('data-share-text'),url=bar.getAttribute('data-share-url');
+            bar.querySelectorAll('.share-btn').forEach(function(btn){
+                btn.addEventListener('click',function(){
+                    var p=btn.getAttribute('data-platform'),enc=encodeURIComponent(text+'\n'+url);
+                    if(p==='twitter')window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text)+'&url='+encodeURIComponent(url),'_blank','width=550,height=420');
+                    else if(p==='linkedin')window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank','width=550,height=420');
+                    else if(p==='whatsapp')window.open('https://wa.me/?text='+enc,'_blank');
+                    else if(p==='email')window.location.href='mailto:?subject='+encodeURIComponent(text)+'&body='+enc;
+                    else if(p==='copy'){navigator.clipboard.writeText(url).then(function(){btn.classList.add('copied');setTimeout(function(){btn.classList.remove('copied')},2000)})}
+                });
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
