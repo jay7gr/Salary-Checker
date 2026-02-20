@@ -1787,7 +1787,7 @@ def generate_city_page(city, comparison_pairs):
             'equivalent': format_currency_amount(equiv_local, comp_currency),
             'currency': comp_currency,
             'coli': coliData[comp],
-            'diff_pct': ((coliData[comp] / coli) - 1) * 100
+            'diff_pct': (coliData[comp] - coli) / max(coli, coliData[comp]) * 100 if max(coli, coliData[comp]) > 0 else 0
         })
 
     # Sort neighborhoods
@@ -2439,7 +2439,7 @@ def generate_comparison_page(city1, city2):
     total_cities = len(coliData)
 
     coli_ratio = coli2 / coli1
-    coli_diff_pct = (coli_ratio - 1) * 100
+    coli_diff_pct = abs(coli2 - coli1) / max(coli1, coli2) * 100
 
     # Equivalent salaries at $75K baseline
     rate1 = exchangeRates[currency1] / exchangeRates['USD']
@@ -2489,7 +2489,7 @@ def generate_comparison_page(city1, city2):
     # Key Takeaways narrative
     more_expensive_city = city2 if coli2 > coli1 else city1
     less_expensive_city = city1 if coli1 < coli2 else city2
-    rent_diff_pct = abs(((rent2 / rent1) - 1) * 100) if rent1 > 0 else 0
+    rent_diff_pct = abs(rent2 - rent1) / max(rent1, rent2) * 100 if max(rent1, rent2) > 0 else 0
     rent_cheaper_city = city1 if rent1 < rent2 else city2
     rent_more_city = city1 if rent1 >= rent2 else city2
 
@@ -3905,11 +3905,11 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     if m1 > m2:
         more_expensive = n1
         more_affordable = n2
-        diff_pct = ((m1 / m2) - 1) * 100
+        diff_pct = abs(m1 - m2) / max(m1, m2) * 100
     else:
         more_expensive = n2
         more_affordable = n1
-        diff_pct = ((m2 / m1) - 1) * 100
+        diff_pct = abs(m2 - m1) / max(m1, m2) * 100
 
     # Estimated rents
     city_rent = cityRent1BR.get(city, 0)
