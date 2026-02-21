@@ -4954,8 +4954,10 @@ def generate_blog_major_cities_breakdown():
 # SITEMAP GENERATION
 # ============================================================
 
-def generate_sitemap(comparison_pairs, neighborhood_comparison_data=None):
-    """Generate sitemap.xml for all pages"""
+def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=None):
+    """Generate split sitemaps + sitemap index (avoids host truncation of large files)"""
+    CHUNK_SIZE = 2000
+
     urls = []
     # Main pages
     urls.append('https://salary-converter.com/')
@@ -4998,15 +5000,36 @@ def generate_sitemap(comparison_pairs, neighborhood_comparison_data=None):
                 n2_slug = slugify(n2)
                 urls.append(f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html')
 
-    xml_entries = ''
-    for url in urls:
-        xml_entries += f'  <url><loc>{url}</loc><lastmod>{TODAY}</lastmod></url>\n'
+    # Split into chunks and write individual sitemaps
+    num_chunks = (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
+    sitemap_files = []
 
-    sitemap = f'''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{xml_entries}</urlset>
-'''
-    return sitemap
+    for i in range(num_chunks):
+        chunk = urls[i * CHUNK_SIZE : (i + 1) * CHUNK_SIZE]
+        filename = f'sitemap-{i + 1}.xml'
+        filepath = os.path.join(base_dir, filename)
+
+        xml_entries = ''
+        for url in chunk:
+            xml_entries += f'  <url><loc>{url}</loc><lastmod>{TODAY}</lastmod></url>\n'
+
+        sitemap_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{xml_entries}</urlset>\n'
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(sitemap_content)
+        sitemap_files.append(filename)
+
+    # Write sitemap index
+    index_entries = ''
+    for filename in sitemap_files:
+        index_entries += f'  <sitemap>\n    <loc>https://salary-converter.com/{filename}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </sitemap>\n'
+
+    index_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{index_entries}</sitemapindex>\n'
+
+    with open(os.path.join(base_dir, 'sitemap.xml'), 'w', encoding='utf-8') as f:
+        f.write(index_content)
+
+    return len(urls), num_chunks
 
 
 # ============================================================
@@ -5138,11 +5161,9 @@ if __name__ == '__main__':
             f.write(generator())
     print(f"  Done: {len(blog_articles)} data-driven blog articles generated")
 
-    # Generate sitemap
-    sitemap_path = os.path.join(base_dir, 'sitemap.xml')
-    with open(sitemap_path, 'w', encoding='utf-8') as f:
-        f.write(generate_sitemap(comparison_pairs, nhood_comp_data))
-    print("  Done: Sitemap generated at /sitemap.xml")
+    # Generate split sitemaps
+    url_count, chunk_count = generate_sitemaps(base_dir, comparison_pairs, nhood_comp_data)
+    print(f"  Done: Sitemap index + {chunk_count} sitemaps ({url_count} URLs)")
 
     # Summary
     total_pages = len(coliData) + nhood_count + len(comparison_pairs) + nhood_comp_count + len(blog_articles) + 2
