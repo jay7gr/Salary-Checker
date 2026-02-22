@@ -3642,8 +3642,10 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     ]
     for c1, c2 in popular_pairs:
         if c1 == city or c2 == city:
-            s1 = slugify(c1)
-            s2 = slugify(c2)
+            # Sort alphabetically for URL (files are named alphabetically)
+            sorted_pair = sorted([c1, c2])
+            s1 = slugify(sorted_pair[0])
+            s2 = slugify(sorted_pair[1])
             city_comp_links_html += f'<a href="/compare/{s1}-vs-{s2}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{c1} vs {c2}</a>\n'
 
     # Build cross-city similar neighborhood links (same cost tier)
@@ -4961,7 +4963,7 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
     urls = []
     # Main pages
     urls.append('https://salary-converter.com/')
-    urls.append('https://salary-converter.com/widget.html')
+    urls.append('https://salary-converter.com/widget')
     urls.append('https://salary-converter.com/city/')
     urls.append('https://salary-converter.com/compare/')
     urls.append('https://salary-converter.com/blog/')
