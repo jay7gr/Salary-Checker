@@ -367,9 +367,9 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     country_name = COUNTRY_NAMES.get(country, country)
 
     if is_nb:
-        canonical = f"https://salary-converter.com/salary-needed/{city_slug}/{to_slug(neighborhood_name)}.html"
+        canonical = f"https://salary-converter.com/salary-needed/{city_slug}/{to_slug(neighborhood_name)}"
     else:
-        canonical = f"https://salary-converter.com/salary-needed/{city_slug}.html"
+        canonical = f"https://salary-converter.com/salary-needed/{city_slug}"
 
     # Neighborhood comparison table (city pages only)
     neighborhood_section = ''
@@ -384,7 +384,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
 
         rows = '\n'.join(
             f'''<tr>
-                <td><a href="/salary-needed/{city_slug}/{to_slug(name)}.html" style="color:var(--accent);text-decoration:none;font-weight:500;">{name}</a></td>
+                <td><a href="/salary-needed/{city_slug}/{to_slug(name)}" style="color:var(--accent);text-decoration:none;font-weight:500;">{name}</a></td>
                 <td style="text-align:right">{format_currency(d['gross_get_by'], d['currency'])}</td>
                 <td style="text-align:right;font-weight:600">{format_currency(d['gross_comfortable'], d['currency'])}</td>
                 <td style="text-align:right">{format_currency(d['gross_live_well'], d['currency'])}</td>
@@ -416,8 +416,8 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
         <section class="content-card">
             <h2>More in {city_name}</h2>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
-                <a href="/salary-needed/{city_slug}.html" style="display:inline-block;padding:8px 16px;background:var(--accent,#2563eb);color:#fff;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:600;">All {city_name} neighborhoods</a>
-                <a href="/city/{city_slug}/{to_slug(neighborhood_name)}.html" style="display:inline-block;padding:8px 16px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary);font-size:0.85rem;font-weight:600;">Cost of living in {neighborhood_name}</a>
+                <a href="/salary-needed/{city_slug}" style="display:inline-block;padding:8px 16px;background:var(--accent,#2563eb);color:#fff;border-radius:10px;text-decoration:none;font-size:0.85rem;font-weight:600;">All {city_name} neighborhoods</a>
+                <a href="/city/{city_slug}/{to_slug(neighborhood_name)}" style="display:inline-block;padding:8px 16px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary);font-size:0.85rem;font-weight:600;">Cost of living in {neighborhood_name}</a>
                 <a href="/" style="display:inline-block;padding:8px 16px;background:var(--stat-card-bg,#f5f5f7);border-radius:10px;text-decoration:none;color:var(--text-primary);font-size:0.85rem;font-weight:600;">Salary Converter →</a>
             </div>
         </section>'''
@@ -455,7 +455,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
         breadcrumb_items = [
             {"pos": 1, "name": "Home", "item": "https://salary-converter.com"},
             {"pos": 2, "name": "Salary Needed", "item": "https://salary-converter.com/salary-needed/"},
-            {"pos": 3, "name": city_name, "item": f"https://salary-converter.com/salary-needed/{city_slug}.html"},
+            {"pos": 3, "name": city_name, "item": f"https://salary-converter.com/salary-needed/{city_slug}"},
             {"pos": 4, "name": neighborhood_name, "item": canonical}
         ]
     else:
@@ -478,7 +478,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
 
     breadcrumb_html = f'<a href="/">Home</a> › <a href="/salary-needed/">Salary Needed</a>'
     if is_nb:
-        breadcrumb_html += f' › <a href="/salary-needed/{city_slug}.html">{city_name}</a> › {neighborhood_name}'
+        breadcrumb_html += f' › <a href="/salary-needed/{city_slug}">{city_name}</a> › {neighborhood_name}'
     else:
         breadcrumb_html += f' › {city_name}'
 
@@ -493,7 +493,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     total_essentials = format_currency(data['monthly_rent_local'] + data['monthly_essentials_local'], data['currency'])
 
     # Build the city page footer link
-    footer_city_link = f'<a href="/city/{city_slug}.html">{city_name} Cost of Living</a>'
+    footer_city_link = f'<a href="/city/{city_slug}">{city_name} Cost of Living</a>'
 
     # Share bar
     comfortable_amt = format_currency(data['gross_comfortable'], data['currency'])
@@ -774,7 +774,7 @@ for city_name in coli_data:
 # Generate index page
 all_cities_data.sort(key=lambda x: x[0])
 city_links = '\n'.join(
-    f'            <a href="/salary-needed/{to_slug(city)}.html" class="city-link">'
+    f'            <a href="/salary-needed/{to_slug(city)}" class="city-link">'
     f'<span class="city-name">{city}</span>'
     f'<span class="city-salary">{format_currency(d["gross_comfortable"], d["currency"])}</span></a>'
     for city, d in all_cities_data

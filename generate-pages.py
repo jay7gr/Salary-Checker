@@ -1456,63 +1456,63 @@ ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
 # Map cities to relevant blog articles for cross-linking
 cityBlogLinks = {
     'London': [
-        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison.html', 'title': 'London vs New York: The True Cost Comparison'},
-        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison', 'title': 'London vs New York: The True Cost Comparison'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026', 'title': 'Most Expensive Cities in the World'},
     ],
     'New York': [
-        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison.html', 'title': 'London vs New York: The True Cost Comparison'},
-        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison.html', 'title': 'Average Salary by City: Global Comparison'},
+        {'url': '/blog/articles/london-vs-new-york-true-cost-comparison', 'title': 'London vs New York: The True Cost Comparison'},
+        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison', 'title': 'Average Salary by City: Global Comparison'},
     ],
     'Dubai': [
-        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison.html', 'title': 'Dubai vs Singapore: Expat Comparison'},
-        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison', 'title': 'Dubai vs Singapore: Expat Comparison'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026', 'title': 'Most Expensive Cities in the World'},
     ],
     'Singapore': [
-        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison.html', 'title': 'Dubai vs Singapore: Expat Comparison'},
-        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/dubai-vs-singapore-expat-comparison', 'title': 'Dubai vs Singapore: Expat Comparison'},
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
     ],
     'Bangkok': [
-        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
-        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026', 'title': 'Top 10 Cities for Remote Workers'},
     ],
     'Chiang Mai': [
-        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
-        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026', 'title': 'Top 10 Cities for Remote Workers'},
     ],
     'Ho Chi Minh City': [
-        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026.html', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
+        {'url': '/blog/articles/cost-of-living-southeast-asia-digital-nomads-2026', 'title': 'Cost of Living in Southeast Asia for Digital Nomads'},
     ],
     'Lisbon': [
-        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
-        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026.html', 'title': 'Top 10 Cities for Remote Workers'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/top-10-cities-for-remote-workers-2026', 'title': 'Top 10 Cities for Remote Workers'},
     ],
     'Barcelona': [
-        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026', 'title': 'Affordable Cities in Europe for Americans'},
     ],
     'Prague': [
-        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026', 'title': 'Affordable Cities in Europe for Americans'},
     ],
     'Budapest': [
-        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026', 'title': 'Affordable Cities in Europe for Americans'},
     ],
     'San Francisco': [
-        {'url': '/blog/articles/tech-salary-comparison-by-city-2026.html', 'title': 'Tech Salary Comparison by City'},
-        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/tech-salary-comparison-by-city-2026', 'title': 'Tech Salary Comparison by City'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026', 'title': 'Most Expensive Cities in the World'},
     ],
     'Tokyo': [
-        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
-        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison.html', 'title': 'Average Salary by City: Global Comparison'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/average-salary-by-city-2026-global-comparison', 'title': 'Average Salary by City: Global Comparison'},
     ],
     'Berlin': [
-        {'url': '/blog/articles/tech-salary-comparison-by-city-2026.html', 'title': 'Tech Salary Comparison by City'},
-        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026.html', 'title': 'Affordable Cities in Europe for Americans'},
+        {'url': '/blog/articles/tech-salary-comparison-by-city-2026', 'title': 'Tech Salary Comparison by City'},
+        {'url': '/blog/articles/affordable-cities-in-europe-for-americans-2026', 'title': 'Affordable Cities in Europe for Americans'},
     ],
     'Zurich': [
-        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026.html', 'title': 'Most Expensive Cities in the World'},
+        {'url': '/blog/articles/most-expensive-cities-in-the-world-2026', 'title': 'Most Expensive Cities in the World'},
     ],
     '_default': [
-        {'url': '/blog/articles/how-cost-of-living-affects-your-salary.html', 'title': 'How Cost of Living Affects Your Salary'},
-        {'url': '/blog/articles/salary-negotiation-when-relocating-abroad.html', 'title': 'Salary Negotiation When Relocating Abroad'},
+        {'url': '/blog/articles/how-cost-of-living-affects-your-salary', 'title': 'How Cost of Living Affects Your Salary'},
+        {'url': '/blog/articles/salary-negotiation-when-relocating-abroad', 'title': 'Salary Negotiation When Relocating Abroad'},
     ],
 }
 
@@ -1612,7 +1612,7 @@ def get_city_comparisons(city, comparison_pairs):
             slug2 = slugify(c2)
             other = c2 if c1 == city else c1
             results.append({
-                'url': f'/compare/{slug1}-vs-{slug2}.html',
+                'url': f'/compare/{slug1}-vs-{slug2}',
                 'other_city': other,
             })
     return results
@@ -1846,7 +1846,7 @@ def generate_city_page(city, comparison_pairs):
             n_slug = slugify(name)
             neighborhood_rows += f'''
                         <tr>
-                            <td><a href="/city/{slug}/{n_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
+                            <td><a href="/city/{slug}/{n_slug}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
                             <td style="text-align: center;">{mult:.2f}x</td>
                             <td style="text-align: right;">
                                 <span style="color: {color}; font-weight: 600;">{sign}{pct:.0f}%</span>
@@ -1865,7 +1865,7 @@ def generate_city_page(city, comparison_pairs):
         comp_equiv = comp['equivalent']
         comparison_rows += f'''
                         <tr>
-                            <td><a href="/city/{comp_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{comp_city_name}</a></td>
+                            <td><a href="/city/{comp_slug}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{comp_city_name}</a></td>
                             <td style="text-align: center;">{comp_coli_val}</td>
                             <td style="text-align: center;">{comp_equiv}</td>
                             <td style="text-align: right;">
@@ -1879,7 +1879,7 @@ def generate_city_page(city, comparison_pairs):
     similar_links = ''
     for sc in region_cities[:6]:
         sc_slug = slugify(sc)
-        similar_links += f'<a href="/city/{sc_slug}.html" class="similar-city-link">{sc}</a>\n'
+        similar_links += f'<a href="/city/{sc_slug}" class="similar-city-link">{sc}</a>\n'
 
     # Calculate what $75K in this city buys vs NY
     purchasing_power_vs_ny = (100 / coli) * 100  # percentage of NY purchasing power
@@ -2095,7 +2095,7 @@ def generate_city_page(city, comparison_pairs):
     if rank:
         share_text += f' (ranked #{rank} of {total_cities})'
     share_text += '. Compare salaries & neighborhoods on salary:converter'
-    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/city/{slug}.html')
+    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/city/{slug}')
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -2107,10 +2107,10 @@ def generate_city_page(city, comparison_pairs):
     <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/city/{slug}.html">
+    <link rel="canonical" href="https://salary-converter.com/city/{slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://salary-converter.com/city/{slug}.html">
+    <meta property="og:url" content="https://salary-converter.com/city/{slug}">
     <meta property="og:title" content="Cost of Living in {city} — Salary & Neighborhood Guide {CURRENT_YEAR}">
     <meta property="og:description" content="COLI index: {coli} (#{rank}/{total_cities}). Compare salaries, explore {len(neighborhoods)} neighborhoods, and see what your salary is worth in {city}.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
@@ -2125,7 +2125,7 @@ def generate_city_page(city, comparison_pairs):
         "@type": "Article",
         "headline": "Cost of Living in {city}, {country} — {CURRENT_YEAR} Guide",
         "description": "Comprehensive cost of living guide for {city} with neighborhood data, salary comparisons, and tax information.",
-        "url": "https://salary-converter.com/city/{slug}.html",
+        "url": "https://salary-converter.com/city/{slug}",
         "datePublished": "{TODAY}",
         "dateModified": "{TODAY}",
         "publisher": {{
@@ -2142,7 +2142,7 @@ def generate_city_page(city, comparison_pairs):
         "itemListElement": [
             {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
             {{"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"}},
-            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{slug}.html"}}
+            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{slug}"}}
         ]
     }}
     </script>
@@ -2690,7 +2690,7 @@ def generate_comparison_page(city1, city2):
 
     # Share bar
     share_text = f'Yes, {cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city} — See the full comparison on salary:converter'
-    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/compare/{slug1}-vs-{slug2}.html')
+    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/compare/{slug1}-vs-{slug2}')
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -2702,10 +2702,10 @@ def generate_comparison_page(city1, city2):
     <meta name="keywords" content="{city1} vs {city2}, cost of living comparison, salary comparison, {city1} {city2} relocation, {city1} or {city2}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/compare/{slug1}-vs-{slug2}.html">
+    <link rel="canonical" href="https://salary-converter.com/compare/{slug1}-vs-{slug2}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://salary-converter.com/compare/{slug1}-vs-{slug2}.html">
+    <meta property="og:url" content="https://salary-converter.com/compare/{slug1}-vs-{slug2}">
     <meta property="og:title" content="{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}">
     <meta property="og:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper. Compare salaries, neighborhoods, tax rates, and more.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
@@ -2720,7 +2720,7 @@ def generate_comparison_page(city1, city2):
         "@type": "Article",
         "headline": "{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}",
         "description": "Detailed comparison of cost of living, salaries, neighborhoods, and tax rates between {city1} and {city2}.",
-        "url": "https://salary-converter.com/compare/{slug1}-vs-{slug2}.html",
+        "url": "https://salary-converter.com/compare/{slug1}-vs-{slug2}",
         "datePublished": "{TODAY}",
         "dateModified": "{TODAY}",
         "publisher": {{
@@ -2737,7 +2737,7 @@ def generate_comparison_page(city1, city2):
         "itemListElement": [
             {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
             {{"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://salary-converter.com/compare/"}},
-            {{"@type": "ListItem", "position": 3, "name": "{city1} vs {city2}", "item": "https://salary-converter.com/compare/{slug1}-vs-{slug2}.html"}}
+            {{"@type": "ListItem", "position": 3, "name": "{city1} vs {city2}", "item": "https://salary-converter.com/compare/{slug1}-vs-{slug2}"}}
         ]
     }}
     </script>
@@ -3046,8 +3046,8 @@ def generate_comparison_page(city1, city2):
         <section class="content-card">
             <h2>Explore Each City</h2>
             <div class="similar-cities">
-                <a href="/city/{slug1}.html" class="similar-city-link">{city1} Cost of Living Guide</a>
-                <a href="/city/{slug2}.html" class="similar-city-link">{city2} Cost of Living Guide</a>
+                <a href="/city/{slug1}" class="similar-city-link">{city1} Cost of Living Guide</a>
+                <a href="/city/{slug2}" class="similar-city-link">{city2} Cost of Living Guide</a>
             </div>
         </section>
 
@@ -3059,8 +3059,8 @@ def generate_comparison_page(city1, city2):
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
-            <a href="/city/{slug1}.html">{city1}</a>
-            <a href="/city/{slug2}.html">{city2}</a>
+            <a href="/city/{slug1}">{city1}</a>
+            <a href="/city/{slug2}">{city2}</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
         </footer>
@@ -3091,7 +3091,7 @@ def generate_city_index():
         city_rows += f'''
                 <tr>
                     <td style="font-weight: 600;">
-                        <a href="/city/{slug}.html" style="color: #2563eb; text-decoration: none;">{city}</a>
+                        <a href="/city/{slug}" style="color: #2563eb; text-decoration: none;">{city}</a>
                     </td>
                     <td>{country}</td>
                     <td style="text-align: center; font-weight: 600;">{coli}</td>
@@ -3294,7 +3294,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             coli2 = coliData[city2]
             diff = abs(((coli2/coli1) - 1) * 100)
             featured_html += f'''
-                <a href="/compare/{slug1}-vs-{slug2}.html" class="compare-card">
+                <a href="/compare/{slug1}-vs-{slug2}" class="compare-card">
                     <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
                     <div class="compare-card-stats">COLI: {coli1} vs {coli2} &middot; {diff:.0f}% difference</div>
                 </a>'''
@@ -3516,7 +3516,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             var a = cityA.value, b = cityB.value;
             if (!a || !b || a === b) return;
             var cities = [a, b].sort();
-            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]) + '.html';
+            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]);
             window.location.href = url;
         }});
     }})();
@@ -3612,7 +3612,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         on_slug = slugify(on_name)
         nhood_comparison_rows += f'''
                         <tr>
-                            <td><a href="/city/{city_slug}/{on_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{on_name}</a></td>
+                            <td><a href="/city/{city_slug}/{on_slug}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{on_name}</a></td>
                             <td style="text-align: center;">{on_coli}</td>
                             <td style="text-align: center;">{on_mult:.2f}x</td>
                             <td style="text-align: right;"><span style="color: {on_color}; font-weight: 600;">{on_sign}{on_pct:.0f}%</span></td>
@@ -3629,7 +3629,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             cn1_slug = slugify(cn1)
             cn2_slug = slugify(cn2)
             other_n = cn2 if cn1 == neighborhood else cn1
-            compare_links_html += f'<a href="/compare/{city_slug}/{cn1_slug}-vs-{cn2_slug}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{neighborhood} vs {other_n}</a>\n'
+            compare_links_html += f'<a href="/compare/{city_slug}/{cn1_slug}-vs-{cn2_slug}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{neighborhood} vs {other_n}</a>\n'
 
     # Build city-level comparison links
     city_comp_links_html = ''
@@ -3644,7 +3644,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         if c1 == city or c2 == city:
             s1 = slugify(c1)
             s2 = slugify(c2)
-            city_comp_links_html += f'<a href="/compare/{s1}-vs-{s2}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{c1} vs {c2}</a>\n'
+            city_comp_links_html += f'<a href="/compare/{s1}-vs-{s2}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{c1} vs {c2}</a>\n'
 
     # Build cross-city similar neighborhood links (same cost tier)
     similar_global_html = ''
@@ -3662,7 +3662,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     for sg_name, sg_city, sg_coli, sg_mult in similar_global[:6]:
         sg_cs = slugify(sg_city)
         sg_ns = slugify(sg_name)
-        similar_global_html += f'<a href="/city/{sg_cs}/{sg_ns}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{sg_name}, {sg_city}</a>\n'
+        similar_global_html += f'<a href="/city/{sg_cs}/{sg_ns}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{sg_name}, {sg_city}</a>\n'
 
     # Tax & Deductions breakdown for this neighborhood
     nhood_ref_salary_local = 75000 * (nhood_coli / 100) * rate_to_local
@@ -3718,7 +3718,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 
     # Share bar
     share_text = f'{neighborhood}, {city} cost of living index: {nhood_coli} ({sign}{pct_diff:.0f}% vs city avg). Compare on salary:converter'
-    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/city/{city_slug}/{nhood_slug}.html')
+    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/city/{city_slug}/{nhood_slug}')
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -3728,12 +3728,12 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     <title>Cost of Living in {neighborhood}, {city} — salary:converter</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}.html">
+    <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Cost of Living in {neighborhood}, {city}">
     <meta property="og:description" content="{meta_desc}">
-    <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}.html">
+    <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -3758,7 +3758,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         "itemListElement": [
             {{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}},
             {{"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"}},
-            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{city_slug}.html"}},
+            {{"@type": "ListItem", "position": 3, "name": "{city}", "item": "https://salary-converter.com/city/{city_slug}"}},
             {{"@type": "ListItem", "position": 4, "name": "{neighborhood}"}}
         ]
     }}
@@ -3871,7 +3871,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         </nav>
 
         <div class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {neighborhood}
+            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{city_slug}">{city}</a> &rsaquo; {neighborhood}
         </div>
 
         <section class="hero">
@@ -3939,7 +3939,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
                 <tbody>{nhood_comparison_rows}
                 </tbody>
             </table>
-            <p style="font-size: 0.8rem; color: #86868b; margin-top: 12px;"><a href="/city/{city_slug}.html" style="color: #2563eb; text-decoration: none;">View all {total_in_city} neighborhoods in {city} &rarr;</a></p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 12px;"><a href="/city/{city_slug}" style="color: #2563eb; text-decoration: none;">View all {total_in_city} neighborhoods in {city} &rarr;</a></p>
         </div>
 
         <div class="cta-box">
@@ -3984,7 +3984,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
-            <a href="/city/{city_slug}.html">{city}</a>
+            <a href="/city/{city_slug}">{city}</a>
             <a href="/city/">All Cities</a>
             <a href="/blog/">Blog</a>
         </footer>
@@ -4054,7 +4054,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     for on_name in sorted(all_nhoods.keys()):
         if on_name != n1 and on_name != n2:
             on_s = slugify(on_name)
-            other_links += f'<a href="/city/{city_slug}/{on_s}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{on_name}</a>\n'
+            other_links += f'<a href="/city/{city_slug}/{on_s}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{on_name}</a>\n'
 
     # Related comparison pages (other comparisons in same city)
     related_comps = get_neighborhood_comparison_pairs(city)
@@ -4064,13 +4064,13 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             continue  # Skip self
         rc_s1 = slugify(rc_n1)
         rc_s2 = slugify(rc_n2)
-        related_comp_links += f'<a href="/compare/{city_slug}/{rc_s1}-vs-{rc_s2}.html" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{rc_n1} vs {rc_n2}</a>\n'
+        related_comp_links += f'<a href="/compare/{city_slug}/{rc_s1}-vs-{rc_s2}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{rc_n1} vs {rc_n2}</a>\n'
 
     meta_desc = f'{n1} vs {n2} in {city}: compare cost of living, rent, and salary equivalents. {more_affordable} is {diff_pct:.0f}% more affordable.'
 
     # Share bar
     share_text = f'{n1} vs {n2} in {city}: {more_affordable} is {diff_pct:.0f}% more affordable — salary:converter'
-    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html')
+    share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}')
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
@@ -4080,12 +4080,12 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     <title>{n1} vs {n2}, {city} — Cost of Living Comparison</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html">
+    <link rel="canonical" href="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:title" content="{n1} vs {n2}, {city} — Cost of Living Comparison">
     <meta property="og:description" content="{meta_desc}">
-    <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html">
+    <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -4190,7 +4190,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         </nav>
 
         <div class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/{city_slug}.html">{city}</a> &rsaquo; {n1} vs {n2}
+            <a href="/">Home</a> &rsaquo; <a href="/compare/">City Comparisons</a> &rsaquo; <a href="/city/{city_slug}">{city}</a> &rsaquo; {n1} vs {n2}
         </div>
 
         <section class="hero">
@@ -4202,14 +4202,14 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         <div class="card">
             <div class="vs-grid">
                 <div class="vs-side">
-                    <h3><a href="/city/{city_slug}/{n1_slug}.html" style="color: #1d1d1f; text-decoration: none;">{n1}</a></h3>
+                    <h3><a href="/city/{city_slug}/{n1_slug}" style="color: #1d1d1f; text-decoration: none;">{n1}</a></h3>
                     <div class="coli" style="color: {color1};">{coli1}</div>
                     <div class="label">COLI Index</div>
                     {'<span class="winner-badge" style="background: #dcfce7; color: #16a34a;">More Affordable</span>' if m1 < m2 else '<span class="winner-badge" style="background: #fef3c7; color: #d97706;">More Expensive</span>' if m1 > m2 else ''}
                 </div>
                 <div class="vs-divider">VS</div>
                 <div class="vs-side">
-                    <h3><a href="/city/{city_slug}/{n2_slug}.html" style="color: #1d1d1f; text-decoration: none;">{n2}</a></h3>
+                    <h3><a href="/city/{city_slug}/{n2_slug}" style="color: #1d1d1f; text-decoration: none;">{n2}</a></h3>
                     <div class="coli" style="color: {color2};">{coli2}</div>
                     <div class="label">COLI Index</div>
                     {'<span class="winner-badge" style="background: #dcfce7; color: #16a34a;">More Affordable</span>' if m2 < m1 else '<span class="winner-badge" style="background: #fef3c7; color: #d97706;">More Expensive</span>' if m2 > m1 else ''}
@@ -4295,7 +4295,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
-            <a href="/city/{city_slug}.html">{city}</a>
+            <a href="/city/{city_slug}">{city}</a>
             <a href="/compare/">All Comparisons</a>
             <a href="/blog/">Blog</a>
         </footer>
@@ -4386,7 +4386,7 @@ def generate_blog_undervalued_neighborhoods():
         rows += f'''
                         <tr>
                             <td style="font-weight: 600;">{i}</td>
-                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td><a href="/city/{n_cs}/{n_ns}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
                             <td>{n_city}</td>
                             <td>{n_country}</td>
                             <td style="text-align: center; font-weight: 600;">{n_coli}</td>
@@ -4404,12 +4404,12 @@ def generate_blog_undervalued_neighborhoods():
     <title>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index. Data-driven analysis of {total:,} neighborhoods across 101 cities.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:title" content="50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})">
     <meta property="og:description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index.">
-    <meta property="og:url" content="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -4421,7 +4421,7 @@ def generate_blog_undervalued_neighborhoods():
         "dateModified": "{article_date}",
         "author": {{"@type": "Organization", "name": "salary:converter"}},
         "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
-        "url": "https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world.html"
+        "url": "https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world"
     }}
     </script>
     <style>
@@ -4580,7 +4580,7 @@ def generate_blog_salary_goes_furthest():
         top_rows += f'''
                         <tr>
                             <td style="font-weight: 600;">{i}</td>
-                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td><a href="/city/{n_cs}/{n_ns}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
                             <td>{n_city}</td>
                             <td style="text-align: center;">{n_coli}</td>
                             <td style="text-align: right; font-weight: 600; color: #22c55e;">{n_power}%</td>
@@ -4597,7 +4597,7 @@ def generate_blog_salary_goes_furthest():
         bottom_rows += f'''
                         <tr>
                             <td style="font-weight: 600;">{i}</td>
-                            <td><a href="/city/{n_cs}/{n_ns}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
+                            <td><a href="/city/{n_cs}/{n_ns}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{n_name}</a></td>
                             <td>{n_city}</td>
                             <td style="text-align: center;">{n_coli}</td>
                             <td style="text-align: right; font-weight: 600; color: #ef4444;">{n_power}%</td>
@@ -4614,12 +4614,12 @@ def generate_blog_salary_goes_furthest():
     <title>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Discover which neighborhoods give you the most purchasing power. Analysis of {total:,} neighborhoods across 101 cities worldwide.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})">
     <meta property="og:description" content="Discover which neighborhoods give you the most purchasing power worldwide.">
-    <meta property="og:url" content="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -4631,7 +4631,7 @@ def generate_blog_salary_goes_furthest():
         "dateModified": "{article_date}",
         "author": {{"@type": "Organization", "name": "salary:converter"}},
         "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
-        "url": "https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition.html"
+        "url": "https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition"
     }}
     </script>
     <style>
@@ -4798,7 +4798,7 @@ def generate_blog_major_cities_breakdown():
             color = '#22c55e' if pct < 0 else '#2563eb' if pct < 15 else '#f59e0b' if pct < 30 else '#ef4444'
             rows += f'''
                         <tr>
-                            <td><a href="/city/{city_slug}/{nhood_slug}.html" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
+                            <td><a href="/city/{city_slug}/{nhood_slug}" style="color: #2563eb; text-decoration: none; font-weight: 500;">{name}</a></td>
                             <td style="text-align: center;">{abs_coli}</td>
                             <td style="text-align: center;">{mult:.2f}x</td>
                             <td style="text-align: right;"><span style="color: {color}; font-weight: 600;">{sign}{pct:.0f}%</span></td>
@@ -4823,7 +4823,7 @@ def generate_blog_major_cities_breakdown():
                     </tbody>
                 </table>
             </div>
-            <p style="font-size: 0.85rem;"><a href="/city/{city_slug}.html" style="color: #2563eb; text-decoration: none;">View full {city} salary data &rarr;</a></p>
+            <p style="font-size: 0.85rem;"><a href="/city/{city_slug}" style="color: #2563eb; text-decoration: none;">View full {city} salary data &rarr;</a></p>
 '''
 
     article_date = TODAY
@@ -4837,12 +4837,12 @@ def generate_blog_major_cities_breakdown():
     <title>Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Detailed neighborhood-level cost of living breakdown for New York, London, Tokyo, Singapore, Dubai, Paris, Sydney, Berlin, Bangkok, and S&#227;o Paulo.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html">
+    <link rel="canonical" href="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR})">
     <meta property="og:description" content="Detailed neighborhood-level cost of living data for 10 major world cities.">
-    <meta property="og:url" content="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html">
+    <meta property="og:url" content="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -4854,7 +4854,7 @@ def generate_blog_major_cities_breakdown():
         "dateModified": "{article_date}",
         "author": {{"@type": "Organization", "name": "salary:converter"}},
         "publisher": {{"@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com"}},
-        "url": "https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown.html"
+        "url": "https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown"
     }}
     </script>
     <style>
@@ -4971,25 +4971,25 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
     if os.path.isdir(blog_dir):
         for fname in sorted(os.listdir(blog_dir)):
             if fname.endswith('.html'):
-                urls.append(f'https://salary-converter.com/blog/articles/{fname}')
+                urls.append(f'https://salary-converter.com/blog/articles/{fname[:-5]}')
 
     # City pages
     for city in coliData:
         slug = slugify(city)
-        urls.append(f'https://salary-converter.com/city/{slug}.html')
+        urls.append(f'https://salary-converter.com/city/{slug}')
 
     # Neighborhood pages
     for city, nhoods in cityNeighborhoods.items():
         city_slug = slugify(city)
         for nhood in nhoods:
             nhood_slug = slugify(nhood)
-            urls.append(f'https://salary-converter.com/city/{city_slug}/{nhood_slug}.html')
+            urls.append(f'https://salary-converter.com/city/{city_slug}/{nhood_slug}')
 
     # City-vs-city comparison pages
     for city1, city2 in comparison_pairs:
         slug1 = slugify(city1)
         slug2 = slugify(city2)
-        urls.append(f'https://salary-converter.com/compare/{slug1}-vs-{slug2}.html')
+        urls.append(f'https://salary-converter.com/compare/{slug1}-vs-{slug2}')
 
     # Neighborhood comparison pages
     if neighborhood_comparison_data:
@@ -4998,7 +4998,7 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
             for n1, m1, n2, m2 in pairs:
                 n1_slug = slugify(n1)
                 n2_slug = slugify(n2)
-                urls.append(f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}.html')
+                urls.append(f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}')
 
     # Split into chunks and write individual sitemaps
     num_chunks = (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
@@ -5091,7 +5091,7 @@ if __name__ == '__main__':
     index_path = os.path.join(city_dir, 'index.html')
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(generate_city_index())
-    print("  Done: City index page created at /city/index.html")
+    print("  Done: City index page created at /city/index")
 
     # Generate individual neighborhood pages
     nhood_count = 0
@@ -5144,7 +5144,7 @@ if __name__ == '__main__':
     compare_index_path = os.path.join(compare_dir, 'index.html')
     with open(compare_index_path, 'w', encoding='utf-8') as f:
         f.write(generate_compare_index(comparison_pairs, featured_pairs))
-    print("  Done: Compare index page at /compare/index.html")
+    print("  Done: Compare index page at /compare/index")
 
     # Generate data-driven blog articles
     blog_articles_dir = os.path.join(base_dir, 'blog', 'articles')
