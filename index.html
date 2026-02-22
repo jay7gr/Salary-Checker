@@ -327,6 +327,23 @@
             background: var(--accent);
             color: #fff;
         }
+        .sidebar-nhood-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--stat-card-bg, #f5f5f7);
+            border-radius: 100px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+            border: 1px solid var(--border-light, #f0f0f2);
+        }
+        .sidebar-nhood-pill:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
 
         /* Cost of Living Rankings */
         /* Currency Ticker */
@@ -2255,20 +2272,60 @@
             <a href="/blog/" class="blog-card-cta">View All Articles →</a>
         </div>
 
-        <!-- Quick Links Card -->
+        <!-- Neighborhoods Card -->
         <div class="sidebar-card">
-            <h3>🏙️ Explore</h3>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-                <a href="/city/" class="sidebar-explore-link">
-                    <span>🌍</span> Browse All 100 Cities
-                </a>
-                <a href="/compare/" class="sidebar-explore-link">
-                    <span>⚖️</span> City vs City Comparisons
-                </a>
-                <a href="/salary-needed/" class="sidebar-explore-link">
-                    <span>💰</span> Salary Needed by City
-                </a>
+            <h3>🏘️ Neighborhoods</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇬🇧 London</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/london/mayfair" class="sidebar-nhood-pill">Mayfair</a>
+                        <a href="/city/london/shoreditch" class="sidebar-nhood-pill">Shoreditch</a>
+                        <a href="/city/london/brixton" class="sidebar-nhood-pill">Brixton</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇺🇸 New York</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/new-york/manhattan-midtown" class="sidebar-nhood-pill">Midtown</a>
+                        <a href="/city/new-york/brooklyn-williamsburg" class="sidebar-nhood-pill">Williamsburg</a>
+                        <a href="/city/new-york/harlem" class="sidebar-nhood-pill">Harlem</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇩🇪 Berlin</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/berlin/mitte" class="sidebar-nhood-pill">Mitte</a>
+                        <a href="/city/berlin/kreuzberg" class="sidebar-nhood-pill">Kreuzberg</a>
+                        <a href="/city/berlin/neukolln" class="sidebar-nhood-pill">Neukölln</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇯🇵 Tokyo</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/tokyo/shibuya" class="sidebar-nhood-pill">Shibuya</a>
+                        <a href="/city/tokyo/shinjuku" class="sidebar-nhood-pill">Shinjuku</a>
+                        <a href="/city/tokyo/minato" class="sidebar-nhood-pill">Minato</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇦🇪 Dubai</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/dubai/downtown-dubai" class="sidebar-nhood-pill">Downtown</a>
+                        <a href="/city/dubai/dubai-marina" class="sidebar-nhood-pill">Marina</a>
+                        <a href="/city/dubai/deira" class="sidebar-nhood-pill">Deira</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">🇸🇬 Singapore</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                        <a href="/city/singapore/orchard-road" class="sidebar-nhood-pill">Orchard Road</a>
+                        <a href="/city/singapore/marina-bay" class="sidebar-nhood-pill">Marina Bay</a>
+                        <a href="/city/singapore/jurong" class="sidebar-nhood-pill">Jurong</a>
+                    </div>
+                </div>
             </div>
+            <a href="/city/" style="display: block; text-align: center; font-size: 0.78rem; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);">Browse all 2,100+ neighborhoods →</a>
         </div>
     </aside>
     </div>
