@@ -3292,7 +3292,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             slug2 = slugify(city2)
             coli1 = coliData[city1]
             coli2 = coliData[city2]
-            diff = abs(((coli2/coli1) - 1) * 100)
+            diff = abs(coli2 - coli1) / max(coli1, coli2) * 100
             featured_html += f'''
                 <a href="/compare/{slug1}-vs-{slug2}" class="compare-card">
                     <div class="compare-card-cities">{city1} <span class="vs">vs</span> {city2}</div>
@@ -4779,7 +4779,7 @@ def generate_blog_major_cities_breakdown():
         sorted_nhoods = sorted(nhoods.items(), key=lambda x: x[1], reverse=True)
         most_expensive = sorted_nhoods[0]
         most_affordable = sorted_nhoods[-1]
-        gap_pct = ((most_expensive[1] / most_affordable[1]) - 1) * 100
+        gap_pct = abs(most_expensive[1] - most_affordable[1]) / max(most_expensive[1], most_affordable[1]) * 100
         rate_to_local = exchangeRates[currency] / exchangeRates['USD']
 
         # Monthly savings: difference in estimated rent
