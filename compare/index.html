@@ -559,7 +559,7 @@
             var a = cityA.value, b = cityB.value;
             if (!a || !b || a === b) return;
             var cities = [a, b].sort();
-            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]) + '.html';
+            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]);
             window.location.href = url;
         });
     })();
