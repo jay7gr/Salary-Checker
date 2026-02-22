@@ -3716,24 +3716,161 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 
     avg_comparison = f'The cost of living in {neighborhood} is {cost_desc} the {city} average. With a multiplier of {multiplier:.2f}x, everyday expenses including rent, food, and transportation are {sign}{pct_diff:.0f}% compared to the city baseline.'
 
-    meta_desc = f'Cost of living in {neighborhood}, {city}: COLI index {nhood_coli}, {sign}{pct_diff:.0f}% vs city average. {nhood_total_ded_rate}% total deductions. Estimated 1BR rent {fmt_rent}. Compare salaries and expenses.'
-
     # Share bar
     share_text = f'{neighborhood}, {city} cost of living index: {nhood_coli} ({sign}{pct_diff:.0f}% vs city avg). Compare on salary:converter'
     share_bar_html = build_share_bar(share_text, f'https://salary-converter.com/city/{city_slug}/{nhood_slug}')
+
+    # --- Enriched prose content ---
+    # Expense breakdown (scaled from city)
+    expenses = get_expense_breakdown(city)
+    nhood_housing_pct = min(55, max(18, round(expenses['housing'] * multiplier)))
+    nhood_food_pct = expenses['food']
+    nhood_transport_pct = expenses['transport']
+
+    # Monthly rent in local currency
+    monthly_rent_local = nhood_rent_local
+
+    # Salary needed to live comfortably (50/30/20: rent = 30% of gross)
+    comfortable_annual = (monthly_rent_local * 12) / 0.30
+    fmt_comfortable = format_currency_amount(comfortable_annual, currency)
+
+    meta_desc = f'{neighborhood}, {city} cost of living: COLI {nhood_coli} ({sign}{pct_diff:.0f}% vs avg). 1BR rent ~{fmt_rent}/mo. You need ~{fmt_comfortable}/yr to live comfortably. Compare salaries and expenses.'
+
+    # Pick 3 representative job titles and show local salaries
+    representative_jobs = ['Software Engineer', 'Teacher', 'Nurse']
+    job_salary_lines = ''
+    for job_title in representative_jobs:
+        ranges = salaryRanges.get(job_title, {})
+        if not ranges:
+            continue
+        local_mid = ranges['mid'] * (nhood_coli / 100) * rate_to_local
+        fmt_job_salary = format_currency_amount(local_mid, currency)
+        job_salary_lines += f'<li>A <strong>{job_title}</strong> earns approximately <strong>{fmt_job_salary}</strong> per year.</li>\n'
+
+    # Cost tier description
+    tier_pct = rank_in_city / total_in_city
+    if tier_pct <= 0.1:
+        tier_desc = f'the most expensive area in {city}'
+        tier_context = f'Only the top {rank_in_city} of {total_in_city} neighborhoods cost more.'
+    elif tier_pct <= 0.25:
+        tier_desc = f'one of the pricier neighborhoods in {city}'
+        tier_context = f'It ranks #{rank_in_city} out of {total_in_city} areas by cost.'
+    elif tier_pct <= 0.5:
+        tier_desc = f'a moderately-priced area within {city}'
+        tier_context = f'It sits around the middle of the pack at #{rank_in_city} out of {total_in_city} neighborhoods.'
+    elif tier_pct <= 0.75:
+        tier_desc = f'a relatively affordable area in {city}'
+        tier_context = f'At #{rank_in_city} of {total_in_city}, it is below the city average in cost.'
+    else:
+        tier_desc = f'one of the most affordable neighborhoods in {city}'
+        tier_context = f'Ranked #{rank_in_city} of {total_in_city}, it offers some of the lowest costs in the city.'
+
+    # Most affordable and most expensive for context
+    cheapest_name = sorted_nhoods[-1][0] if sorted_nhoods else ''
+    cheapest_mult = sorted_nhoods[-1][1] if sorted_nhoods else 1.0
+    priciest_name = sorted_nhoods[0][0] if sorted_nhoods else ''
+    priciest_mult = sorted_nhoods[0][1] if sorted_nhoods else 1.0
+    cheapest_rent = city_rent * cheapest_mult * rate_to_local
+    priciest_rent = city_rent * priciest_mult * rate_to_local
+    fmt_cheapest_rent = format_currency_amount(cheapest_rent, currency)
+    fmt_priciest_rent = format_currency_amount(priciest_rent, currency)
+
+    # Build the prose section
+    prose_section = f'''<div class="card neighborhood-guide">
+            <h2>Living in {neighborhood}, {city}</h2>
+            <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 14px;">
+                {neighborhood} is {tier_desc}, with a cost of living index of <strong>{nhood_coli}</strong> — that is <strong>{sign}{pct_diff:.0f}%</strong> compared to the {city} average. {tier_context} Estimated rent for a one-bedroom apartment here is around <strong>{fmt_rent}/month</strong>, compared to a range of {fmt_cheapest_rent} in {cheapest_name} to {fmt_priciest_rent} in {priciest_name}.
+            </p>
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Monthly Budget Breakdown</h3>
+            <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 14px;">
+                For a typical resident of {neighborhood}, housing takes up roughly <strong>{nhood_housing_pct}%</strong> of monthly expenses. Food and groceries account for about <strong>{nhood_food_pct}%</strong>, while transportation costs around <strong>{nhood_transport_pct}%</strong>. To live comfortably here — meaning rent stays at or below 30% of gross income — you would need an annual salary of approximately <strong>{fmt_comfortable}</strong> before tax.
+            </p>
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Typical Salaries in {neighborhood}</h3>
+            <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 8px;">
+                Salaries in {neighborhood} reflect the local cost of living. Based on the neighborhood COLI of {nhood_coli}:
+            </p>
+            <ul style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.85; margin-bottom: 14px; padding-left: 20px;">
+                {job_salary_lines}
+            </ul>
+            <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75;">
+                After tax and deductions of <strong>{nhood_total_ded_rate}%</strong> in {country}, take-home pay for someone earning {fmt_comfortable} would be roughly <strong>{format_currency_amount(comfortable_annual * (1 - nhood_total_ded_rate / 100), currency)}/year</strong>. Use the <a href="/" style="color: var(--accent, #2563eb);">salary converter</a> to calculate an exact figure for your situation, including expat-specific tax adjustments.
+            </p>
+        </div>'''
+
+    # Data sources section with authoritative external links
+    country_sources = {
+        'United States': [
+            ('U.S. Bureau of Labor Statistics', 'https://www.bls.gov/cpi/'),
+            ('U.S. Census Bureau', 'https://www.census.gov/topics/income-poverty.html'),
+        ],
+        'United Kingdom': [
+            ('UK Office for National Statistics', 'https://www.ons.gov.uk/economy/inflationandpriceindices'),
+            ('HM Revenue &amp; Customs', 'https://www.gov.uk/government/organisations/hm-revenue-customs'),
+        ],
+        'Germany': [
+            ('Statistisches Bundesamt (Destatis)', 'https://www.destatis.de/EN/Themes/Prices/_node.html'),
+            ('Bundesagentur für Arbeit', 'https://www.arbeitsagentur.de/'),
+        ],
+        'Japan': [
+            ('Statistics Bureau of Japan', 'https://www.stat.go.jp/english/data/cpi/index.html'),
+            ('Ministry of Health, Labour and Welfare', 'https://www.mhlw.go.jp/english/'),
+        ],
+        'France': [
+            ('INSEE (Institut national de la statistique)', 'https://www.insee.fr/en/accueil'),
+            ('Ministère de l\'Économie', 'https://www.economie.gouv.fr/'),
+        ],
+        'Australia': [
+            ('Australian Bureau of Statistics', 'https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation'),
+            ('Australian Taxation Office', 'https://www.ato.gov.au/'),
+        ],
+        'Canada': [
+            ('Statistics Canada', 'https://www.statcan.gc.ca/en/subjects-start/prices_and_price_indexes'),
+            ('Canada Revenue Agency', 'https://www.canada.ca/en/revenue-agency.html'),
+        ],
+        'Singapore': [
+            ('Singapore Department of Statistics', 'https://www.singstat.gov.sg/'),
+            ('Inland Revenue Authority of Singapore', 'https://www.iras.gov.sg/'),
+        ],
+        'UAE': [
+            ('Federal Competitiveness and Statistics Centre', 'https://fcsc.gov.ae/en-us'),
+        ],
+        'South Korea': [
+            ('Statistics Korea (KOSTAT)', 'https://kostat.go.kr/portal/eng/index.action'),
+        ],
+        'Spain': [
+            ('Instituto Nacional de Estadística (INE)', 'https://www.ine.es/en/index.htm'),
+        ],
+        'Italy': [
+            ('Istituto Nazionale di Statistica (ISTAT)', 'https://www.istat.it/en/'),
+        ],
+        'Switzerland': [
+            ('Swiss Federal Statistical Office', 'https://www.bfs.admin.ch/bfs/en/home.html'),
+        ],
+        'Netherlands': [
+            ('Statistics Netherlands (CBS)', 'https://www.cbs.nl/en-gb'),
+        ],
+    }
+    # Get country-specific + universal sources
+    c_sources = country_sources.get(country, [])
+    # Always add OECD
+    all_sources = c_sources + [('OECD Better Life Index', 'https://www.oecdbetterlifeindex.org/')]
+    source_links = ' · '.join([f'<a href="{url}" target="_blank" rel="noopener noreferrer" style="color: var(--accent, #2563eb); text-decoration: none;">{name}</a>' for name, url in all_sources])
+    sources_section = f'''<div style="margin-top: 24px; padding: 16px; background: var(--stat-card-bg, #f5f5f7); border-radius: 12px; font-size: 0.78rem; color: var(--text-secondary, #86868b); line-height: 1.7;">
+            <strong>Data Sources:</strong> Cost of living indices based on crowd-sourced price data and official statistics. Tax calculations follow {CURRENT_YEAR} rates. Sources include {source_links}. Figures are estimates and may vary based on individual circumstances.
+        </div>'''
 
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost of Living in {neighborhood}, {city} — salary:converter</title>
+    <title>{neighborhood}, {city}: Salary Needed &amp; Cost of Living {CURRENT_YEAR} — salary:converter</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Cost of Living in {neighborhood}, {city}">
+    <meta property="og:title" content="{neighborhood}, {city}: Salary Needed &amp; Cost of Living {CURRENT_YEAR}">
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
@@ -3883,6 +4020,8 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         </section>
         {share_bar_html}
 
+        {prose_section}
+
         <div class="card">
             <h2>Key Stats</h2>
             <div class="stats-grid">
@@ -3983,6 +4122,8 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
                 <p>{avg_comparison}</p>
             </div>
         </div>
+
+        {sources_section}
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
