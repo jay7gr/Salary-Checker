@@ -2103,7 +2103,7 @@ def generate_city_page(city, comparison_pairs):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cost of Living in {city} {CURRENT_YEAR} — Rent, Salary & Neighborhood Guide</title>
-    <meta name="description" content="How expensive is {city}? Ranked #{rank} of {total_cities} cities. See rent by neighborhood, salary needed to live comfortably, and tax rates. {len(neighborhoods)} neighborhoods compared.">
+    <meta name="description" content="How expensive is {city}? Ranked #{rank} of {total_cities} cities. Compare {len(neighborhoods)} neighborhoods with rent, salary needed for singles & families, and tax rates.">
     <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -2698,7 +2698,7 @@ def generate_comparison_page(city1, city2):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{city1} vs {city2}: Which Is Cheaper? Cost of Living Comparison {CURRENT_YEAR}</title>
-    <meta name="description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city}. Compare rent, groceries, taxes, and what salary you'd need in each city. Neighborhood-level data included.">
+    <meta name="description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city}. Compare rent, taxes, and salary needed for singles & families. Neighborhood-level data for both cities.">
     <meta name="keywords" content="{city1} vs {city2}, cost of living comparison, salary comparison, {city1} {city2} relocation, {city1} or {city2}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -3734,7 +3734,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     comfortable_annual = (monthly_rent_local * 12) / 0.30
     fmt_comfortable = format_currency_amount(comfortable_annual, currency)
 
-    meta_desc = f'Living in {neighborhood}, {city}? You need ~{fmt_comfortable}/yr to be comfortable. 1BR rent: ~{fmt_rent}/mo ({sign}{pct_diff:.0f}% vs city avg). Full expense breakdown inside.'
+    meta_desc = f'Living in {neighborhood}, {city}? You need ~{fmt_comfortable}/yr to be comfortable. 1BR rent: ~{fmt_rent}/mo ({sign}{pct_diff:.0f}% vs city avg). Single & family salary breakdowns inside.'
 
     # Pick 3 representative job titles and show local salaries
     representative_jobs = ['Software Engineer', 'Teacher', 'Nurse']

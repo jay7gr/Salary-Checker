@@ -358,9 +358,9 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     title = f"What Salary Do You Need in {display_name}? 2026 Cost Breakdown"
 
     if is_nb:
-        desc = f"Living in {neighborhood_name}, {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. See after-tax take-home and full expense breakdown."
+        desc = f"Living in {neighborhood_name}, {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. Single & family breakdowns with after-tax take-home."
     else:
-        desc = f"Living in {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. See after-tax take-home, rent, and full expense breakdown for 2026."
+        desc = f"Living in {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. Single & family breakdowns with rent and full expenses for 2026."
 
     city_slug = to_slug(city_name)
     country = city_to_country.get(city_name, '')
