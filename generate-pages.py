@@ -2102,8 +2102,8 @@ def generate_city_page(city, comparison_pairs):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cost of Living in {city}, {country} — Salary Comparison & Neighborhood Guide {CURRENT_YEAR}</title>
-    <meta name="description" content="Compare salaries and cost of living in {city}. COLI index: {coli} (rank #{rank}/{total_cities}). Explore {len(neighborhoods)} neighborhoods, tax rates, and equivalent salaries across cities.">
+    <title>Cost of Living in {city} {CURRENT_YEAR} — Rent, Salary & Neighborhood Guide</title>
+    <meta name="description" content="How expensive is {city}? Ranked #{rank} of {total_cities} cities. See rent by neighborhood, salary needed to live comfortably, and tax rates. {len(neighborhoods)} neighborhoods compared.">
     <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -2111,13 +2111,13 @@ def generate_city_page(city, comparison_pairs):
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/city/{slug}">
-    <meta property="og:title" content="Cost of Living in {city} — Salary & Neighborhood Guide {CURRENT_YEAR}">
-    <meta property="og:description" content="COLI index: {coli} (#{rank}/{total_cities}). Compare salaries, explore {len(neighborhoods)} neighborhoods, and see what your salary is worth in {city}.">
+    <meta property="og:title" content="Cost of Living in {city} {CURRENT_YEAR} — Rent, Salary & Neighborhood Guide">
+    <meta property="og:description" content="How expensive is {city}? Ranked #{rank} of {total_cities}. See rent, salary needed, and {len(neighborhoods)} neighborhoods compared.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Cost of Living in {city} — Salary & Neighborhood Guide {CURRENT_YEAR}">
-    <meta name="twitter:description" content="COLI index: {coli} (#{rank}/{total_cities}). Compare salaries, explore neighborhoods, and plan your move to {city}.">
+    <meta name="twitter:title" content="Cost of Living in {city} {CURRENT_YEAR} — Rent, Salary & Neighborhood Guide">
+    <meta name="twitter:description" content="How expensive is {city}? Ranked #{rank} of {total_cities}. See rent, salary needed, and neighborhoods compared.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
     <script type="application/ld+json">
     {{
@@ -2697,8 +2697,8 @@ def generate_comparison_page(city1, city2):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}</title>
-    <meta name="description" content="Compare cost of living between {city1} (COLI: {coli1}) and {city2} (COLI: {coli2}). {cheaper_city} is {pct_cheaper:.0f}% cheaper. See salary equivalents, neighborhoods, and tax rates.">
+    <title>{city1} vs {city2}: Which Is Cheaper? Cost of Living Comparison {CURRENT_YEAR}</title>
+    <meta name="description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city}. Compare rent, groceries, taxes, and what salary you'd need in each city. Neighborhood-level data included.">
     <meta name="keywords" content="{city1} vs {city2}, cost of living comparison, salary comparison, {city1} {city2} relocation, {city1} or {city2}">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -2706,13 +2706,13 @@ def generate_comparison_page(city1, city2):
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/compare/{slug1}-vs-{slug2}">
-    <meta property="og:title" content="{city1} vs {city2}: Cost of Living & Salary Comparison {CURRENT_YEAR}">
-    <meta property="og:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper. Compare salaries, neighborhoods, tax rates, and more.">
+    <meta property="og:title" content="{city1} vs {city2}: Which Is Cheaper? Cost of Living {CURRENT_YEAR}">
+    <meta property="og:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city}. Compare rent, groceries, taxes, and salary equivalents.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{city1} vs {city2}: Salary & Cost of Living {CURRENT_YEAR}">
-    <meta name="twitter:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper. Full comparison with neighborhood data.">
+    <meta name="twitter:title" content="{city1} vs {city2}: Which Is Cheaper? {CURRENT_YEAR}">
+    <meta name="twitter:description" content="{cheaper_city} is {pct_cheaper:.0f}% cheaper than {more_expensive_city}. Full comparison with neighborhood data.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
     <script type="application/ld+json">
     {{
@@ -3734,7 +3734,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     comfortable_annual = (monthly_rent_local * 12) / 0.30
     fmt_comfortable = format_currency_amount(comfortable_annual, currency)
 
-    meta_desc = f'{neighborhood}, {city} cost of living: COLI {nhood_coli} ({sign}{pct_diff:.0f}% vs avg). 1BR rent ~{fmt_rent}/mo. You need ~{fmt_comfortable}/yr to live comfortably. Compare salaries and expenses.'
+    meta_desc = f'Living in {neighborhood}, {city}? You need ~{fmt_comfortable}/yr to be comfortable. 1BR rent: ~{fmt_rent}/mo ({sign}{pct_diff:.0f}% vs city avg). Full expense breakdown inside.'
 
     # Pick 3 representative job titles and show local salaries
     representative_jobs = ['Software Engineer', 'Teacher', 'Nurse']
@@ -3864,13 +3864,13 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{neighborhood}, {city}: Salary Needed &amp; Cost of Living {CURRENT_YEAR} — salary:converter</title>
+    <title>{neighborhood}, {city}: How Much Do You Need to Earn? ({CURRENT_YEAR})</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{neighborhood}, {city}: Salary Needed &amp; Cost of Living {CURRENT_YEAR}">
+    <meta property="og:title" content="{neighborhood}, {city}: How Much Do You Need to Earn? ({CURRENT_YEAR})">
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
