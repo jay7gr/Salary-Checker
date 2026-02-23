@@ -1339,34 +1339,123 @@
             color: var(--text-primary);
         }
 
-        .childcare-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        /* Household Section */
+        .household-section { text-align: center; }
+        .household-mode-toggle {
+            display: inline-flex;
+            gap: 0;
+            background: var(--stat-card-bg);
+            border-radius: 12px;
+            padding: 4px;
             margin-bottom: 16px;
         }
-        .childcare-toggle-label {
+        .mode-btn {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .mode-btn.active {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .mode-btn:hover:not(.active) { color: var(--text-primary); }
+        .family-options {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .chip-group label {
+            display: block;
             font-size: 0.82rem;
             font-weight: 500;
             color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .chips { display: flex; gap: 6px; justify-content: center; }
+        .chip {
+            padding: 8px 18px;
+            border: 1px solid var(--input-border);
+            border-radius: 10px;
+            background: var(--input-bg);
+            color: var(--text-body);
+            font-size: 0.88rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: color 0.2s;
+            transition: all 0.2s;
+            font-family: inherit;
         }
-        .childcare-toggle-label.active {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .childcare-toggle-thumb {
-            width: 18px;
-            height: 18px;
+        .chip.active {
             background: var(--accent);
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.2s;
+            color: white;
+            border-color: var(--accent);
         }
+        .chip:hover:not(.active) {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Citation Sources */
+        .citation-sources { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+        .citation-sources strong { font-size: 0.78rem; color: var(--text-primary); }
+        .citation-sources ul { list-style: none; padding: 0; margin: 6px 0 0; }
+        .citation-sources li { font-size: 0.75rem; color: var(--text-secondary); padding: 2px 0; line-height: 1.5; }
+        .citation-sources li a { color: var(--accent); text-decoration: none; }
+        .citation-sources li a:hover { text-decoration: underline; }
+        .citation-sources sup, .fbc-section-label sup, .fbc-row sup { color: var(--accent); font-weight: 600; font-size: 0.6rem; margin-left: 2px; }
+
+        /* Contact Modal */
+        .contact-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            z-index: 9999; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+        }
+        .contact-overlay.open { display: flex; animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .contact-modal {
+            background: var(--card-bg); border-radius: 16px; padding: 32px 28px;
+            max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); position: relative;
+            animation: modalSlideUp 0.25s ease-out;
+        }
+        @keyframes modalSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .contact-modal-close {
+            position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+            border: none; border-radius: 8px; background: var(--stat-card-bg);
+            color: var(--text-secondary); cursor: pointer; font-size: 1.1rem;
+            display: flex; align-items: center; justify-content: center; transition: background 0.15s;
+        }
+        .contact-modal-close:hover { background: var(--input-border); }
+        .contact-modal h2 { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+        .contact-subtitle { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px; }
+        .contact-form { text-align: left; }
+        .contact-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) { .contact-form-grid { grid-template-columns: 1fr; } }
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+        .contact-form textarea:focus { outline: none; border-color: var(--accent); box-shadow: var(--focus-shadow); }
+        .contact-form .btn { width: 100%; margin-top: 8px; }
+        .contact-success { padding: 20px; background: var(--stat-card-bg); border-radius: 12px; color: var(--text-primary); font-weight: 500; font-size: 0.95rem; text-align: center; }
 
         .afford-card-row.separator {
             border-top: 1px dashed var(--border);
@@ -1399,6 +1488,210 @@
         }
         .afford-note a:hover {
             text-decoration-style: solid;
+        }
+
+        /* Result subtitle */
+        .result-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            line-height: 1.5;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Verdict Banner */
+        .verdict-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-size: 0.92rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        .verdict-banner.better {
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+        .verdict-banner.worse {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+        }
+        .verdict-banner.similar {
+            background: #fefce8;
+            border: 1px solid #fde68a;
+            color: #854d0e;
+        }
+        .verdict-banner.neutral {
+            background: #f0f4ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+        [data-theme="dark"] .verdict-banner.better {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+        [data-theme="dark"] .verdict-banner.worse {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+        [data-theme="dark"] .verdict-banner.similar {
+            background: rgba(234, 179, 8, 0.15);
+            border-color: rgba(234, 179, 8, 0.3);
+            color: #fde68a;
+        }
+        [data-theme="dark"] .verdict-banner.neutral {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+        }
+        .verdict-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Full Breakdown Section */
+        .full-breakdown-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        .breakdown-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        .breakdown-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 768px) {
+            .breakdown-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        .breakdown-note {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            line-height: 1.4;
+        }
+        .breakdown-note a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 2px;
+        }
+
+        /* Full Breakdown Card */
+        .full-breakdown-card {
+            background: var(--stat-card-bg, #f9fafb);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: left;
+        }
+        .fbc-city {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .fbc-section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        .fbc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 4px 0;
+            font-size: 0.82rem;
+            color: var(--text-body);
+        }
+        .fbc-row.gross {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .fbc-row.subtotal {
+            font-weight: 600;
+            padding-top: 8px;
+            margin-top: 4px;
+            border-top: 1px solid var(--border);
+        }
+        .fbc-row.total {
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding-top: 10px;
+            margin-top: 6px;
+            border-top: 2px solid var(--border);
+        }
+        .fbc-val {
+            text-align: right;
+            white-space: nowrap;
+        }
+        .fbc-val.negative {
+            color: #ef4444;
+        }
+        .fbc-row.total .fbc-val.positive {
+            color: #22c55e;
+        }
+        .fbc-row.total .fbc-val.negative {
+            color: #ef4444;
+        }
+
+        /* COLI Reference (demoted) */
+        .coli-reference {
+            margin-top: 20px;
+            padding: 14px;
+            background: var(--stat-card-bg, #f9fafb);
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .coli-ref-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .coli-ref-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 6px 0;
+        }
+        .coli-ref-note {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Disposable chart bars */
+        .chart-bar-fill.disp-positive {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+        .chart-bar-fill.disp-negative {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
         }
 
         .ded-take-home-equiv {
@@ -2000,6 +2293,7 @@
                 <a href="/compare/"><span>⚖️</span>Compare Cities</a>
                 <a href="/blog/"><span>📝</span>Read our Blog</a>
                 <a href="https://salary-converter.com/widget"><span>🧩</span>Free Widget</a>
+                <a href="#" onclick="openContactModal(); return false;"><span>📩</span>Contact Us</a>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
                 <span class="toggle-thumb">
@@ -2018,16 +2312,63 @@
 
         <div class="error-message" id="error"></div>
 
+        <div class="form-section household-section" id="householdSection">
+            <h2>👥 Household</h2>
+            <div class="household-mode-toggle" id="householdModeToggle">
+                <button class="mode-btn active" data-mode="single" type="button">Single</button>
+                <button class="mode-btn" data-mode="family" type="button">Family</button>
+            </div>
+            <div class="family-options" id="familyOptions" style="display:none;">
+                <div class="chip-group">
+                    <label>Working Adults</label>
+                    <div class="chips" id="adultsChips">
+                        <button class="chip" data-value="1" type="button">1</button>
+                        <button class="chip active" data-value="2" type="button">2</button>
+                    </div>
+                </div>
+                <div class="chip-group">
+                    <label>Children</label>
+                    <div class="chips" id="childrenChips">
+                        <button class="chip" data-value="0" type="button">0</button>
+                        <button class="chip active" data-value="1" type="button">1</button>
+                        <button class="chip" data-value="2" type="button">2</button>
+                        <button class="chip" data-value="3" type="button">3</button>
+                        <button class="chip" data-value="4" type="button">4</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-section">
             <h2>📍 Current Location</h2>
+            <div id="singleSalaryRow">
             <div class="two-column">
                 <div class="form-group">
-                    <label for="currentSalary">Current Salary</label>
+                    <label for="currentSalary" id="salaryLabel">Your Salary</label>
                     <input type="text" id="currentSalary" placeholder="e.g. $60,000">
                 </div>
                 <div class="form-group">
                     <label for="currentCity">Current City</label>
                     <select id="currentCity">
+                        <option value="">Select a city...</option>
+                    </select>
+                </div>
+            </div>
+            </div><!-- /singleSalaryRow -->
+            <div id="familySalaryInputs" style="display:none;">
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="adult1Salary">Adult 1 Salary</label>
+                        <input type="text" id="adult1Salary" placeholder="e.g. 80,000" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label for="adult2Salary">Adult 2 Salary</label>
+                        <input type="text" id="adult2Salary" placeholder="e.g. 45,000" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="familyCity">Current City</label>
+                    <select id="familyCity">
                         <option value="">Select a city...</option>
                     </select>
                 </div>
@@ -2094,67 +2435,49 @@
         </div>
 
         <div class="button-group">
-            <button class="btn btn-calculate" id="calculateBtn">Check Equivalent Salary</button>
+            <button class="btn btn-calculate" id="calculateBtn">Calculate True Equivalent</button>
             <button class="btn btn-reset" id="resetBtn">Reset</button>
         </div>
 
         <div class="result-box" id="resultBox">
-            <div class="result-title" id="resultTitle">Your Equivalent Salary</div>
+            <!-- 1. Headline -->
+            <div class="result-title" id="resultTitle">Your True Equivalent Salary</div>
             <div class="result-amount" id="resultAmount"></div>
-            <div class="coli-badge" id="coliBadge"></div>
-            <div class="result-breakdown">
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Exchange Rate:</span>
-                    <span class="breakdown-value" id="exchangeRate"></span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Cost of Living Adjustment:</span>
-                    <span class="breakdown-value" id="colAdjustment"></span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Your Buying Power:</span>
-                    <span class="breakdown-value" id="buyingPower"></span>
-                </div>
+            <div class="result-subtitle" id="resultSubtitle"></div>
+
+            <!-- 2. Verdict Banner -->
+            <div class="verdict-banner" id="verdictBanner" style="display: none;">
+                <span class="verdict-icon" id="verdictIcon"></span>
+                <span id="verdictText"></span>
             </div>
-            <div class="comparison-note" id="comparisonNote"></div>
+
+            <!-- Childcare toggle removed — replaced by Household section -->
+
+            <!-- 4. Full Breakdown Cards -->
+            <div class="full-breakdown-section" id="fullBreakdownSection" style="display: none;">
+                <div class="breakdown-title">Full Breakdown: Gross to Disposable</div>
+                <div class="breakdown-cards" id="breakdownCards"></div>
+                <div class="breakdown-note" id="breakdownNote"></div>
+            </div>
+
+            <!-- 5. Offer Comparison -->
             <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
-            <!-- Affordability Verdict -->
-            <div class="affordability-section" id="affordabilitySection" style="display: none;">
-                <div class="afford-title">Affordability Verdict</div>
-                <div class="childcare-toggle" id="childcareToggle" style="display: none;">
-                    <span class="childcare-toggle-label active" id="noChildcareLabel" onclick="if(includeChildcare) toggleChildcare()">Without Childcare</span>
-                    <div class="expat-toggle-track" onclick="toggleChildcare()">
-                        <div class="childcare-toggle-thumb"></div>
-                    </div>
-                    <span class="childcare-toggle-label" id="childcareLabel" onclick="if(!includeChildcare) toggleChildcare()">With Childcare</span>
-                </div>
-                <div class="afford-verdict" id="affordVerdict"></div>
-                <div class="afford-cards" id="affordCards"></div>
-                <div class="afford-note" id="affordNote">Disposable = take-home minus rent, groceries, utilities, transport &amp; healthcare. All costs adjusted for neighborhood. These living costs are already factored into the COLI (Cost of Living Index) adjusted salary above — COLI measures relative price levels across cities (New York = 100) — this breakdown shows where your money goes. Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.</div>
-            </div>
-
-            <!-- Tax & Deductions Estimation -->
-            <div class="tax-section" id="taxSection" style="display: none;">
-                <div class="tax-title">Tax &amp; Deductions Breakdown</div>
-                <div class="tax-comparison" id="taxComparison"></div>
-                <div style="font-size: 0.7rem; color: var(--text-secondary, #aeaeb2); margin-top: 8px; line-height: 1.4;">Includes income tax, social security, and local taxes.</div>
-            </div>
-
-            <!-- Estimated Rent -->
-            <div class="rent-section" id="rentSection" style="display: none;">
-                <div class="rent-title">Estimated Monthly Rent (1BR)</div>
-                <div class="rent-comparison" id="rentComparison"></div>
-                <div class="rent-note">Based on city averages adjusted for neighborhood cost multiplier. Actual rents vary by listing.</div>
-            </div>
-
-            <!-- Visual Chart -->
+            <!-- 6. Visual Chart -->
             <div class="chart-section" id="chartSection" style="display: none;">
                 <div class="chart-title">Visual Comparison</div>
                 <div class="chart-bars" id="chartBars"></div>
             </div>
 
+            <!-- 7. How We Calculated This -->
             <div class="explanation-section" id="explanationSection"></div>
+
+            <!-- 8. COLI Reference (demoted) -->
+            <div class="coli-reference" id="coliReference" style="display: none;">
+                <div class="coli-ref-label">For reference: COLI-only equivalent</div>
+                <div class="coli-ref-amount" id="coliRefAmount"></div>
+                <div class="coli-ref-note">This simpler number only adjusts for cost-of-living index and exchange rate, without accounting for taxes or specific expenses.</div>
+            </div>
 
             <!-- Salary Ranges by Job Title -->
             <div class="salary-ranges-section" id="salaryRangesSection" style="display: none;">
@@ -2547,6 +2870,36 @@
         </section>
     </div>
 
+    <div class="contact-overlay" id="contactOverlay">
+        <div class="contact-modal">
+            <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Close">&times;</button>
+            <h2>Contact Us</h2>
+            <p class="contact-subtitle">Have feedback, found a data error, or want to suggest a feature?</p>
+            <form id="contactForm" class="contact-form">
+                <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+                <input type="hidden" name="subject" value="salary-converter.com Contact Form">
+                <div class="contact-form-grid">
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 8px;">
+                    <label for="contactMessage">Message</label>
+                    <textarea id="contactMessage" name="message" rows="4" placeholder="Your message..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-calculate" style="margin-top: 12px;">Send Message</button>
+            </form>
+            <div id="contactSuccess" style="display:none;" class="contact-success">
+                Thank you! We'll get back to you soon.
+            </div>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <div class="site-footer-logo">salary<span>:</span>converter</div>
         <div class="site-footer-text" id="footer-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</div>
@@ -2557,6 +2910,7 @@
             <a href="/salary-needed/">Salary Needed</a>
             <a href="/blog/">Blog</a>
             <a href="/widget">Widget</a>
+            <a href="#" onclick="openContactModal(); return false;">Contact</a>
         </div>
     </footer>
 
@@ -3262,16 +3616,118 @@
             return {items, total, totalRate, net: income - total};
         }
 
-        let includeChildcare = false;
+        function reverseGrossFromNet(targetNet, countryCode, cityName, neighborhood) {
+            if (targetNet <= 0) return 0;
+            let lo = targetNet;
+            let hi = targetNet * 3;
+            let testDed = calculateAllDeductions(hi, countryCode, cityName, neighborhood);
+            while (testDed.net < targetNet) {
+                hi *= 2;
+                testDed = calculateAllDeductions(hi, countryCode, cityName, neighborhood);
+            }
+            for (let i = 0; i < 100; i++) {
+                const mid = (lo + hi) / 2;
+                const midDed = calculateAllDeductions(mid, countryCode, cityName, neighborhood);
+                if (midDed.net < targetNet) {
+                    lo = mid;
+                } else {
+                    hi = mid;
+                }
+                if (hi - lo < 1) break;
+            }
+            return Math.round((lo + hi) / 2);
+        }
 
-        function toggleChildcare() {
-            includeChildcare = !includeChildcare;
-            document.getElementById('noChildcareLabel').classList.toggle('active', !includeChildcare);
-            document.getElementById('childcareLabel').classList.toggle('active', includeChildcare);
-            const thumb = document.querySelector('.childcare-toggle-thumb');
-            thumb.style.transform = includeChildcare ? 'translateX(20px)' : 'translateX(0)';
-            // Re-trigger calculation
-            document.getElementById('calculateBtn').click();
+        // Household state
+        const householdState = { mode: 'single', adults: 2, children: 1 };
+
+        function getHousehold() {
+            return {
+                mode: householdState.mode,
+                adults: householdState.mode === 'single' ? 1 : householdState.adults,
+                children: householdState.mode === 'single' ? 0 : householdState.children
+            };
+        }
+
+        function setHouseholdMode(mode) {
+            householdState.mode = mode;
+            document.querySelectorAll('#householdModeToggle .mode-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+            document.getElementById('familyOptions').style.display = mode === 'family' ? '' : 'none';
+            updateSalaryFields();
+        }
+
+        function updateSalaryFields() {
+            const h = getHousehold();
+            const singleRow = document.getElementById('singleSalaryRow');
+            const familyInputs = document.getElementById('familySalaryInputs');
+            const salaryLabel = document.getElementById('salaryLabel');
+
+            if (h.mode === 'single') {
+                singleRow.style.display = '';
+                familyInputs.style.display = 'none';
+                salaryLabel.textContent = 'Your Salary';
+            } else if (h.adults === 1) {
+                singleRow.style.display = '';
+                familyInputs.style.display = 'none';
+                salaryLabel.textContent = 'Household Income';
+            } else {
+                singleRow.style.display = 'none';
+                familyInputs.style.display = '';
+                // Sync family city with current city
+                const cc = document.getElementById('currentCity').value;
+                if (cc) document.getElementById('familyCity').value = cc;
+            }
+        }
+
+        const RENT_MULTIPLIERS = { '1BR': 1.0, '2BR': 1.4, '3BR': 1.8 };
+
+        function calculateExpenses(cityName, neighMult, currencyCode, household) {
+            const rent1BR = cityRent1BR[cityName];
+            const costs = cityLivingCosts[cityName];
+            const usdToLocalRate = exchangeRates[currencyCode] / exchangeRates['USD'];
+            if (!rent1BR && !costs) return null;
+
+            const h = household || { mode: 'single', adults: 1, children: 0 };
+            const extraAdults = Math.max(0, h.adults - 1);
+            const numChildren = h.children;
+
+            // Rent sizing
+            let rentKey;
+            if (h.mode === 'single') {
+                rentKey = '1BR';
+            } else if (numChildren <= 1) {
+                rentKey = '2BR';
+            } else {
+                rentKey = '3BR';
+            }
+            const rentMult = RENT_MULTIPLIERS[rentKey];
+            const rentLabel = rentKey;
+
+            // Rent: full neighborhood multiplier (rent is directly neighborhood-dependent)
+            const annualRent = rent1BR ? rent1BR * rentMult * neighMult * usdToLocalRate * 12 : 0;
+            let groceries = 0, utilities = 0, transport = 0, healthcare = 0, childcare = 0;
+
+            if (costs) {
+                const groceryScale = 1 + (0.5 * extraAdults) + (0.3 * numChildren);
+                const utilityScale = 1 + (0.3 * extraAdults) + (0.15 * numChildren);
+                const transportScale = h.adults;
+                const healthScale = 1 + (0.7 * extraAdults) + (0.3 * numChildren);
+
+                // Groceries: dampened neighborhood multiplier (supermarkets don't vary as much as rent)
+                const groceryNeighMult = 1 + (neighMult - 1) * 0.5;
+                groceries = costs.groceries * groceryScale * groceryNeighMult * usdToLocalRate * 12;
+                // Utilities, transport, healthcare, childcare: no neighborhood multiplier
+                // (utility rates, transit passes, doctor fees, and nursery fees are city-wide, not street-level)
+                utilities = costs.utilities * utilityScale * usdToLocalRate * 12;
+                transport = costs.transport * transportScale * usdToLocalRate * 12;
+                healthcare = costs.healthcare * healthScale * usdToLocalRate * 12;
+                childcare = numChildren > 0 ? costs.childcare * numChildren * usdToLocalRate * 12 : 0;
+            }
+
+            const total = annualRent + groceries + utilities + transport + healthcare + childcare;
+            return { rent: annualRent, groceries, utilities, transport, healthcare, childcare, total, hasRent: !!rent1BR, hasLivingCosts: !!costs, rentLabel };
         }
 
         function toggleSalaryRanges() {
@@ -4285,12 +4741,26 @@
 
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => {
-            const rawSalary = document.getElementById('currentSalary').value
-                .replace(/,/g, '')
-                .replace(/[^\d.]/g, '');
-            const salary = parseFloat(rawSalary);
+            const household = getHousehold();
+            let salary, salary2 = null;
 
-            const currentCity = document.getElementById('currentCity').value;
+            if (household.mode === 'family' && household.adults === 2) {
+                const raw1 = document.getElementById('adult1Salary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                const raw2 = document.getElementById('adult2Salary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                salary = parseFloat(raw1);
+                salary2 = parseFloat(raw2);
+                if (!salary || salary <= 0) { showError('Please enter Adult 1 salary', 'adult1Salary'); return; }
+                if (!salary2 || salary2 <= 0) { showError('Please enter Adult 2 salary', 'adult2Salary'); return; }
+            } else {
+                const rawSalary = document.getElementById('currentSalary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                salary = parseFloat(rawSalary);
+                if (!salary || salary <= 0) { showError('Please enter your salary', 'currentSalary'); return; }
+            }
+
+            // Read city from the correct field
+            const currentCity = (household.mode === 'family' && household.adults === 2)
+                ? (document.getElementById('familyCity').value || document.getElementById('currentCity').value)
+                : document.getElementById('currentCity').value;
             const currentCurrency = document.getElementById('currentCurrency').value;
             const targetCity = document.getElementById('targetCity').value;
             const targetCurrency = document.getElementById('targetCurrency').value;
@@ -4303,10 +4773,8 @@
             const targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
             const hasOffer = targetSalaryOffer !== null && targetSalaryOffer > 0;
 
-            if (!salary || salary <= 0) {
-                showError('Please enter your salary', 'salary');
-                return;
-            }
+            // For family mode, total salary is combined
+            const totalSalary = salary2 ? salary + salary2 : salary;
             if (!currentCity) {
                 showError('Please select your current city', 'currentCity');
                 return;
@@ -4352,122 +4820,330 @@
             const GBPtoTarget = exchangeRates[targetCurrency];
             const exchangeRate = currentToGBP * GBPtoTarget;
 
-            // Calculate equivalent salary
-            // Formula: Salary × (Target COLI / Current COLI) × Exchange Rate
+            // === COLI-only equivalent (for reference) ===
             const colRatio = targetCOLI / currentCOLI;
-            const equivalentSalary = salary * colRatio * exchangeRate;
+            const coliEquivalentSalary = totalSalary * colRatio * exchangeRate;
 
-            // Salary used for target-side affordability: actual offer if provided, else COLI equivalent
-            const affordabilitySalary = hasOffer ? targetSalaryOffer : equivalentSalary;
-
-            // Format currency
+            // === Format helpers ===
             const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: targetCurrency,
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
+                style: 'currency', currency: targetCurrency,
+                minimumFractionDigits: 0, maximumFractionDigits: 0
             });
-
-            const formattedAmount = formatter.format(equivalentSalary);
-
-            // Calculate differences
-            const difference = ((equivalentSalary / (salary * exchangeRate)) - 1) * 100;
-            const diffText = difference > 0
-                ? `${difference.toFixed(1)}% higher`
-                : `${Math.abs(difference).toFixed(1)}% lower`;
-
-            // Format original salary in current currency
-            const formattedOriginalCurrent = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: currentCurrency,
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(salary);
-
-            // Location labels (city + neighborhood if selected)
+            const fmtCurr = (amount, cur) => new Intl.NumberFormat('en-US', {
+                style: 'currency', currency: cur,
+                minimumFractionDigits: 0, maximumFractionDigits: 0
+            }).format(amount);
+            const formattedOriginalCurrent = fmtCurr(totalSalary, currentCurrency);
             const currentLabel = currentNeighborhood ? `${currentNeighborhood}, ${currentCity}` : currentCity;
             const targetLabel = targetNeighborhood ? `${targetNeighborhood}, ${targetCity}` : targetCity;
 
-            // Update result heading with target city
-            document.getElementById('resultTitle').textContent = `Your Equivalent Salary in ${targetCity}`;
-            document.getElementById('resultAmount').textContent = formattedAmount;
-            document.getElementById('exchangeRate').textContent = `1 ${currentCurrency} = ${exchangeRate.toFixed(2)} ${targetCurrency}`;
+            // === TRUE EQUIVALENT SALARY CALCULATION ===
+            const currentCountry = cityToCountry[currentCity];
+            const targetCountry = cityToCountry[targetCity];
 
-            // COLI multiplier badge
-            const coliBadge = document.getElementById('coliBadge');
-            const coliPctDiff = Math.abs((colRatio - 1) * 100).toFixed(0);
-            if (colRatio < 0.98) {
-                coliBadge.className = 'coli-badge badge-cheaper';
-                coliBadge.textContent = `${colRatio.toFixed(2)}x — ${targetCity} is ${coliPctDiff}% cheaper`;
-            } else if (colRatio > 1.02) {
-                coliBadge.className = 'coli-badge badge-pricier';
-                coliBadge.textContent = `${colRatio.toFixed(2)}x — ${targetCity} is ${coliPctDiff}% more expensive`;
+            // Step 1: Current city deductions + expenses
+            const currentExpenses = calculateExpenses(currentCity, currentNeighMult, currentCurrency, household);
+            const targetExpenses = calculateExpenses(targetCity, targetNeighMult, targetCurrency, household);
+
+            let trueEquivalentSalary;
+            let currentDisposable = null, targetDisposable = null;
+            let currentDed = null, currentDed2 = null;
+            let targetAdult1Gross = null, targetAdult2Gross = null;
+            let combinedCurrentTakeHome = 0;
+
+            if (household.mode === 'family' && household.adults === 2) {
+                // Family mode with 2 working adults: tax each salary separately
+                currentDed = (currentCountry) ? calculateAllDeductions(salary, currentCountry, currentCity, currentNeighborhood) : null;
+                currentDed2 = (currentCountry) ? calculateAllDeductions(salary2, currentCountry, currentCity, currentNeighborhood) : null;
+                if (currentDed && currentDed2) combinedCurrentTakeHome = currentDed.net + currentDed2.net;
             } else {
-                coliBadge.className = 'coli-badge badge-similar';
-                coliBadge.textContent = `~1.0x — similar cost of living`;
+                // Single mode or family with 1 adult
+                currentDed = (currentCountry) ? calculateAllDeductions(salary, currentCountry, currentCity, currentNeighborhood) : null;
+                if (currentDed) combinedCurrentTakeHome = currentDed.net;
             }
 
-            // Breakdown details
-            document.getElementById('colAdjustment').textContent = colRatio < 0.98
-                ? `${colRatio.toFixed(2)}x — ${targetCity} is ${coliPctDiff}% cheaper`
-                : colRatio > 1.02
-                    ? `${colRatio.toFixed(2)}x — ${targetCity} is ${coliPctDiff}% more expensive`
-                    : `${colRatio.toFixed(2)}x — similar cost of living`;
-            document.getElementById('buyingPower').textContent = `Equivalent to ${formattedOriginalCurrent} in ${currentLabel} — same lifestyle, different cost`;
+            const hasFullData = !!(currentDed && currentCountry && targetCountry && currentExpenses && targetExpenses);
+            const hasTaxData = !!(currentDed && currentCountry && targetCountry);
 
-            // Comparison note
-            const absDiff = Math.abs(difference).toFixed(1);
-            let note;
-            if (hasOffer) {
-                const formattedOffer = formatter.format(targetSalaryOffer);
-                const offerVsColi = ((targetSalaryOffer - equivalentSalary) / equivalentSalary) * 100;
-                const offerAbsPct = Math.abs(offerVsColi).toFixed(0);
-                let offerDirText;
-                if (offerVsColi > 2) {
-                    offerDirText = `<span class="offer-above">${offerAbsPct}% above</span>`;
-                } else if (offerVsColi < -2) {
-                    offerDirText = `<span class="offer-below">${offerAbsPct}% below</span>`;
+            if (hasFullData) {
+                currentDisposable = combinedCurrentTakeHome - currentExpenses.total;
+                const targetDisposableNeeded = currentDisposable * exchangeRate;
+                const targetTakeHomeNeeded = targetDisposableNeeded + targetExpenses.total;
+
+                if (household.mode === 'family' && household.adults === 2) {
+                    // Split target take-home by salary ratio, reverse-engineer each
+                    const totalInput = salary + salary2;
+                    const ratio1 = salary / totalInput;
+                    const ratio2 = salary2 / totalInput;
+                    const targetTH1 = targetTakeHomeNeeded * ratio1;
+                    const targetTH2 = targetTakeHomeNeeded * ratio2;
+                    targetAdult1Gross = reverseGrossFromNet(Math.max(targetTH1, 0), targetCountry, targetCity, targetNeighborhood);
+                    targetAdult2Gross = reverseGrossFromNet(Math.max(targetTH2, 0), targetCountry, targetCity, targetNeighborhood);
+                    trueEquivalentSalary = targetAdult1Gross + targetAdult2Gross;
                 } else {
-                    offerDirText = `<span class="offer-match">right at</span>`;
+                    trueEquivalentSalary = reverseGrossFromNet(Math.max(targetTakeHomeNeeded, 0), targetCountry, targetCity, targetNeighborhood);
                 }
-                note = `
-                    To maintain your <strong>${formattedOriginalCurrent}</strong> lifestyle in ${currentLabel},
-                    you'd need <strong>${formattedAmount}</strong> in ${targetLabel}.
-                    Your offer of <strong>${formattedOffer}</strong> is ${offerDirText} this benchmark.
-                `;
-            } else if (difference < -2) {
-                note = `
-                    Living in ${targetLabel} is <strong>cheaper</strong> than ${currentLabel}.
-                    You only need <strong>${formattedAmount}</strong> to maintain the same lifestyle you have on <strong>${formattedOriginalCurrent}</strong>.
-                    That's ${absDiff}% less — your money goes further.
-                `;
-            } else if (difference > 2) {
-                note = `
-                    Living in ${targetLabel} is <strong>more expensive</strong> than ${currentLabel}.
-                    You'd need <strong>${formattedAmount}</strong> to maintain the same lifestyle you have on <strong>${formattedOriginalCurrent}</strong>.
-                    That's ${absDiff}% more — plan your budget accordingly.
-                `;
+            } else if (hasTaxData) {
+                const targetTakeHomeNeeded = combinedCurrentTakeHome * exchangeRate;
+                if (household.mode === 'family' && household.adults === 2) {
+                    const totalInput = salary + salary2;
+                    const ratio1 = salary / totalInput;
+                    const targetTH1 = targetTakeHomeNeeded * ratio1;
+                    const targetTH2 = targetTakeHomeNeeded * (1 - ratio1);
+                    targetAdult1Gross = reverseGrossFromNet(Math.max(targetTH1, 0), targetCountry, targetCity, targetNeighborhood);
+                    targetAdult2Gross = reverseGrossFromNet(Math.max(targetTH2, 0), targetCountry, targetCity, targetNeighborhood);
+                    trueEquivalentSalary = targetAdult1Gross + targetAdult2Gross;
+                } else {
+                    trueEquivalentSalary = reverseGrossFromNet(Math.max(targetTakeHomeNeeded, 0), targetCountry, targetCity, targetNeighborhood);
+                }
             } else {
-                note = `
-                    Cost of living is <strong>similar</strong> between ${currentLabel} and ${targetLabel}.
-                    You'd need roughly the same salary — <strong>${formattedAmount}</strong> — to maintain your lifestyle.
-                `;
+                trueEquivalentSalary = coliEquivalentSalary;
             }
-            document.getElementById('comparisonNote').innerHTML = note;
 
-            // Offer comparison callout
+            const formattedAmount = formatter.format(trueEquivalentSalary);
+
+            // Salary used for target-side analysis
+            const affordabilitySalary = hasOffer ? targetSalaryOffer : trueEquivalentSalary;
+            const isFamily2 = household.mode === 'family' && household.adults === 2;
+            const isFamily = household.mode === 'family';
+
+            // For target-side deductions: if 2 adults and no offer, use each adult's gross; else use combined
+            let targetDed = null, targetDed2 = null, combinedTargetTakeHome = 0;
+            if (isFamily2 && !hasOffer) {
+                targetDed = (targetCountry) ? calculateAllDeductions(targetAdult1Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                targetDed2 = (targetCountry) ? calculateAllDeductions(targetAdult2Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
+            } else if (isFamily2 && hasOffer) {
+                // Split offer by same ratio
+                const totalInput = salary + salary2;
+                const offerSplit1 = targetSalaryOffer * (salary / totalInput);
+                const offerSplit2 = targetSalaryOffer * (salary2 / totalInput);
+                targetDed = (targetCountry) ? calculateAllDeductions(offerSplit1, targetCountry, targetCity, targetNeighborhood) : null;
+                targetDed2 = (targetCountry) ? calculateAllDeductions(offerSplit2, targetCountry, targetCity, targetNeighborhood) : null;
+                if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
+            } else {
+                targetDed = (targetCountry) ? calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, targetNeighborhood) : null;
+                if (targetDed) combinedTargetTakeHome = targetDed.net;
+            }
+
+            // Calculate target disposable on actual salary
+            if (hasFullData && combinedTargetTakeHome > 0) {
+                targetDisposable = combinedTargetTakeHome - targetExpenses.total;
+            }
+
+            // === 1. HEADLINE ===
+            const isHouseholdMode = isFamily;
+            const headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
+            document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
+            document.getElementById('resultAmount').textContent = formattedAmount;
+
+            let subtitleHtml = '';
+            if (isFamily2) {
+                subtitleHtml = `Adult 1: <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2: <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong>`;
+                if (hasFullData) subtitleHtml += `<br><span style="font-size:0.82rem;color:var(--text-secondary);">To maintain the same household disposable income from <strong>${fmtCurr(totalSalary, currentCurrency)}</strong> in ${currentLabel}.</span>`;
+            } else {
+                subtitleHtml = hasFullData
+                    ? `To maintain the same disposable income you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, accounting for taxes, rent, and living costs.`
+                    : hasTaxData
+                        ? `To maintain the same take-home pay you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, accounting for taxes.`
+                        : `Based on cost-of-living index comparison (limited data available).`;
+            }
+            document.getElementById('resultSubtitle').innerHTML = subtitleHtml;
+
+            // === 2. VERDICT BANNER ===
+            const verdictBanner = document.getElementById('verdictBanner');
+            if (hasFullData && currentDisposable !== null && targetDisposable !== null) {
+                const diffPct = currentDisposable !== 0
+                    ? ((targetDisposable - currentDisposable * exchangeRate) / Math.abs(currentDisposable * exchangeRate)) * 100
+                    : 0;
+                const absDiffPct = Math.abs(diffPct).toFixed(0);
+                let verdictClass, verdictIcon, verdictText;
+
+                if (hasOffer) {
+                    const fmtOffer = formatter.format(targetSalaryOffer);
+                    if (diffPct > 5) {
+                        verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
+                        verdictText = `Your ${fmtOffer} offer gives you ~${absDiffPct}% MORE disposable income than you currently have in ${currentCity}`;
+                    } else if (diffPct < -5) {
+                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
+                        verdictText = `Your ${fmtOffer} offer gives you ~${absDiffPct}% LESS disposable income than you currently have in ${currentCity}`;
+                    } else {
+                        verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
+                        verdictText = `Your ${fmtOffer} offer maintains roughly the same disposable income \u2014 within ~${absDiffPct}%`;
+                    }
+                } else {
+                    verdictClass = 'neutral'; verdictIcon = '\u2139\uFE0F';
+                    const needPrefix = isHouseholdMode ? 'Your household needs' : 'You need';
+                    verdictText = `${needPrefix} ${formattedAmount} in ${targetLabel} to maintain your current disposable income of ${fmtCurr(currentDisposable, currentCurrency)}/yr`;
+                }
+                verdictBanner.className = 'verdict-banner ' + verdictClass;
+                document.getElementById('verdictIcon').textContent = verdictIcon;
+                document.getElementById('verdictText').innerHTML = verdictText;
+                verdictBanner.style.display = '';
+            } else {
+                verdictBanner.style.display = 'none';
+            }
+
+            // === 3. FULL BREAKDOWN CARDS ===
+            const breakdownSection = document.getElementById('fullBreakdownSection');
+            if (currentDed && targetDed) {
+                function buildFullBreakdownCard(label, gross, ded, ded2, expenses, disposable, currency, isOffer, hh) {
+                    const fmtLocal = (amount) => fmtCurr(amount, currency);
+                    const dispClass = (disposable !== null && disposable >= 0) ? 'positive' : 'negative';
+                    const isFam2 = hh && hh.mode === 'family' && hh.adults === 2;
+                    const grossLabel = isOffer ? 'Gross Salary (your offer)' : (isFam2 ? 'Household Gross' : 'Gross Salary');
+
+                    let html = `<div class="full-breakdown-card">
+                        <div class="fbc-city">${label}</div>
+                        <div class="fbc-row gross"><span>${grossLabel}</span><span class="fbc-val">${fmtLocal(gross)}</span></div>`;
+
+                    if (isFam2 && ded && ded2) {
+                        html += `<div class="fbc-section-label">Taxes &amp; Deductions<sup>2</sup></div>`;
+                        html += `<div style="font-size:0.72rem;color:var(--text-secondary);padding:2px 0 4px;font-style:italic;">Adult 1 (${fmtLocal(ded.net + ded.total)} gross)</div>`;
+                        for (const item of ded.items) {
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                        }
+                        html += `<div style="font-size:0.72rem;color:var(--text-secondary);padding:6px 0 4px;font-style:italic;">Adult 2 (${fmtLocal(ded2.net + ded2.total)} gross)</div>`;
+                        for (const item of ded2.items) {
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                        }
+                        const combinedNet = ded.net + ded2.net;
+                        html += `<div class="fbc-row subtotal"><span>Combined Take-Home</span><span class="fbc-val">${fmtLocal(combinedNet)}</span></div>`;
+                    } else {
+                        html += `<div class="fbc-section-label">Taxes &amp; Deductions<sup>2</sup></div>`;
+                        for (const item of ded.items) {
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                        }
+                        html += `<div class="fbc-row subtotal"><span>Take-Home Pay</span><span class="fbc-val">${fmtLocal(ded.net)}</span></div>`;
+                    }
+
+                    if (expenses) {
+                        const rentLbl = expenses.rentLabel || '1BR';
+                        html += `<div class="fbc-section-label">Living Expenses (Annual)<sup>1</sup></div>`;
+                        if (expenses.hasRent) {
+                            html += `<div class="fbc-row expense"><span>Rent (${rentLbl})</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.rent)}</span></div>`;
+                        }
+                        if (expenses.hasLivingCosts) {
+                            html += `<div class="fbc-row expense"><span>Groceries</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.groceries)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Utilities</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.utilities)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Transport</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.transport)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Healthcare</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.healthcare)}</span></div>`;
+                            if (hh && hh.children > 0 && expenses.childcare > 0) {
+                                const childLabel = hh.children === 1 ? 'Childcare (1 child)' : `Childcare (${hh.children} children)`;
+                                html += `<div class="fbc-row expense"><span>${childLabel}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.childcare)}</span></div>`;
+                            }
+                        }
+                        if (disposable !== null) {
+                            const dispLabel = (hh && hh.mode === 'family') ? 'Household Disposable Income' : 'Disposable Income';
+                            html += `<div class="fbc-row total"><span>${dispLabel}</span><span class="fbc-val ${dispClass}">${fmtLocal(disposable)}</span></div>`;
+                        }
+                    }
+                    html += `</div>`;
+                    return html;
+                }
+
+                const currentDispForCard = hasFullData ? combinedCurrentTakeHome - currentExpenses.total : null;
+                const targetDispForCard = hasFullData ? combinedTargetTakeHome - targetExpenses.total : null;
+
+                // Determine gross amounts for cards
+                const currentGrossForCard = isFamily2 ? (salary + salary2) : salary;
+                const targetGrossForCard = isFamily2 && !hasOffer ? (targetAdult1Gross + targetAdult2Gross) : affordabilitySalary;
+
+                document.getElementById('breakdownCards').innerHTML =
+                    buildFullBreakdownCard(currentLabel, currentGrossForCard, currentDed, currentDed2, currentExpenses, currentDispForCard, currentCurrency, false, household) +
+                    buildFullBreakdownCard(targetLabel, targetGrossForCard, targetDed, targetDed2, targetExpenses, targetDispForCard, targetCurrency, hasOffer, household);
+
+                // Dynamic citations
+                const COUNTRY_TAX_SOURCES = {
+                    'US': {name: 'IRS', url: 'https://www.irs.gov/'},
+                    'GB': {name: 'HMRC', url: 'https://www.gov.uk/government/organisations/hm-revenue-customs'},
+                    'DE': {name: 'Bundesministerium der Finanzen', url: 'https://www.bundesfinanzministerium.de/'},
+                    'FR': {name: 'Direction Générale des Finances Publiques', url: 'https://www.impots.gouv.fr/'},
+                    'JP': {name: 'National Tax Agency', url: 'https://www.nta.go.jp/english/'},
+                    'AU': {name: 'Australian Taxation Office', url: 'https://www.ato.gov.au/'},
+                    'CA': {name: 'Canada Revenue Agency', url: 'https://www.canada.ca/en/revenue-agency.html'},
+                    'SG': {name: 'IRAS', url: 'https://www.iras.gov.sg/'},
+                    'AE': {name: 'Federal Tax Authority', url: 'https://tax.gov.ae/'},
+                    'CH': {name: 'Federal Tax Administration', url: 'https://www.estv.admin.ch/'},
+                    'NL': {name: 'Belastingdienst', url: 'https://www.belastingdienst.nl/'},
+                    'ES': {name: 'Agencia Tributaria', url: 'https://www.agenciatributaria.es/'},
+                    'IT': {name: 'Agenzia delle Entrate', url: 'https://www.agenziaentrate.gov.it/'},
+                    'KR': {name: 'National Tax Service', url: 'https://www.nts.go.kr/'},
+                    'SE': {name: 'Skatteverket', url: 'https://www.skatteverket.se/'},
+                    'NO': {name: 'Skatteetaten', url: 'https://www.skatteetaten.no/'},
+                    'DK': {name: 'Skattestyrelsen', url: 'https://skat.dk/'},
+                    'IN': {name: 'Income Tax Department', url: 'https://www.incometax.gov.in/'},
+                    'BR': {name: 'Receita Federal', url: 'https://www.gov.br/receitafederal/'},
+                    'MX': {name: 'SAT', url: 'https://www.sat.gob.mx/'},
+                    'HK': {name: 'Inland Revenue Department', url: 'https://www.ird.gov.hk/'},
+                    'NZ': {name: 'Inland Revenue', url: 'https://www.ird.govt.nz/'},
+                    'IE': {name: 'Revenue Commissioners', url: 'https://www.revenue.ie/'},
+                    'AT': {name: 'BMF Austria', url: 'https://www.bmf.gv.at/'},
+                    'BE': {name: 'SPF Finances', url: 'https://finances.belgium.be/'},
+                    'PL': {name: 'KAS', url: 'https://www.podatki.gov.pl/'},
+                    'CZ': {name: 'Finanční správa', url: 'https://www.financnisprava.cz/'},
+                    'PT': {name: 'Autoridade Tributária', url: 'https://www.portaldasfinancas.gov.pt/'},
+                    'TH': {name: 'Revenue Department', url: 'https://www.rd.go.th/'},
+                    'MY': {name: 'LHDN', url: 'https://www.hasil.gov.my/'},
+                    'PH': {name: 'Bureau of Internal Revenue', url: 'https://www.bir.gov.ph/'},
+                    'ID': {name: 'DJP', url: 'https://www.pajak.go.id/'},
+                    'VN': {name: 'General Dept. of Taxation', url: 'https://www.gdt.gov.vn/'},
+                    'TW': {name: 'National Taxation Bureau', url: 'https://www.ntbt.gov.tw/'},
+                    'IL': {name: 'Israel Tax Authority', url: 'https://taxes.gov.il/'},
+                    'ZA': {name: 'SARS', url: 'https://www.sars.gov.za/'},
+                    'TR': {name: 'Revenue Administration', url: 'https://www.gib.gov.tr/'},
+                    'QA': {name: 'General Tax Authority', url: 'https://www.gta.gov.qa/'},
+                    'SA': {name: 'ZATCA', url: 'https://zatca.gov.sa/'},
+                    'EG': {name: 'Egyptian Tax Authority', url: 'https://www.eta.gov.eg/'},
+                    'KE': {name: 'KRA', url: 'https://www.kra.go.ke/'},
+                    'NG': {name: 'FIRS', url: 'https://www.firs.gov.ng/'},
+                    'CO': {name: 'DIAN', url: 'https://www.dian.gov.co/'},
+                    'CL': {name: 'SII', url: 'https://www.sii.cl/'},
+                    'PE': {name: 'SUNAT', url: 'https://www.sunat.gob.pe/'},
+                    'AR': {name: 'AFIP', url: 'https://www.afip.gob.ar/'},
+                    'RO': {name: 'ANAF', url: 'https://www.anaf.ro/'},
+                    'HU': {name: 'NAV', url: 'https://nav.gov.hu/'},
+                    'PA': {name: 'DGI Panama', url: 'https://dgi.mef.gob.pa/'},
+                    'CN': {name: 'State Taxation Administration', url: 'https://www.chinatax.gov.cn/'},
+                };
+                const cSrc = COUNTRY_TAX_SOURCES[currentCountry] || {name: 'Local tax authority', url: '#'};
+                const tSrc = COUNTRY_TAX_SOURCES[targetCountry] || {name: 'Local tax authority', url: '#'};
+                let citationHtml = '<div class="citation-sources"><strong>Data Sources:</strong><ul>';
+                citationHtml += '<li><sup>1</sup> Rent &amp; Living Costs: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo Cost of Living Index</a> (2025)</li>';
+                citationHtml += `<li><sup>2</sup> Tax Rates: <a href="${cSrc.url}" target="_blank" rel="noopener">${cSrc.name}</a>`;
+                if (targetCountry !== currentCountry) {
+                    citationHtml += ` &amp; <a href="${tSrc.url}" target="_blank" rel="noopener">${tSrc.name}</a>`;
+                }
+                citationHtml += ' (2025/26 rates)</li>';
+                citationHtml += '<li><sup>3</sup> Exchange Rates: <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/" target="_blank" rel="noopener">European Central Bank (ECB)</a></li>';
+                citationHtml += '<li>Cost of Living Index: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a> &amp; <a href="https://www.oecdbetterlifeindex.org/" target="_blank" rel="noopener">OECD Better Life Index</a></li>';
+                citationHtml += '</ul></div>';
+
+                const noteEl = document.getElementById('breakdownNote');
+                if (!hasFullData) {
+                    noteEl.innerHTML = 'Full living cost data not available for one or both cities. Tax comparison shown only.' + citationHtml;
+                } else {
+                    noteEl.innerHTML = 'All living costs adjusted for neighborhood. Annual estimates based on city averages.' + citationHtml;
+                }
+                breakdownSection.style.display = '';
+            } else {
+                breakdownSection.style.display = 'none';
+            }
+
+            // === 5. OFFER COMPARISON ===
             const offerCompEl = document.getElementById('offerComparison');
             if (hasOffer) {
                 const formattedOffer = formatter.format(targetSalaryOffer);
-                const offerVsColi = ((targetSalaryOffer - equivalentSalary) / equivalentSalary) * 100;
-                const offerAbsPct = Math.abs(offerVsColi).toFixed(0);
+                const formattedTrueEquiv = formatter.format(trueEquivalentSalary);
+                const offerVsTrue = ((targetSalaryOffer - trueEquivalentSalary) / trueEquivalentSalary) * 100;
+                const offerAbsPct = Math.abs(offerVsTrue).toFixed(0);
                 let offerLine;
-                if (offerVsColi > 2) {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-above">${offerAbsPct}% above</span> the COLI-equivalent of ${formattedAmount}. The affordability analysis below uses your actual offer.`;
-                } else if (offerVsColi < -2) {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-below">${offerAbsPct}% below</span> the COLI-equivalent of ${formattedAmount}. The affordability analysis below uses your actual offer.`;
+                if (offerVsTrue > 2) {
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-above">${offerAbsPct}% above</span> the true equivalent of ${formattedTrueEquiv}. You'd come out ahead.`;
+                } else if (offerVsTrue < -2) {
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-below">${offerAbsPct}% below</span> the true equivalent of ${formattedTrueEquiv}. You'd have less disposable income than today.`;
                 } else {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the COLI-equivalent ${formattedAmount}. The affordability analysis below uses your actual offer.`;
+                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the true equivalent ${formattedTrueEquiv}. Essentially a match.`;
                 }
                 offerCompEl.innerHTML = offerLine;
                 offerCompEl.style.display = '';
@@ -4475,442 +5151,125 @@
                 offerCompEl.style.display = 'none';
             }
 
-            // Build step-by-step explanation
-            const salaryInGBP = salary * currentToGBP;
-            const formattedGBP = new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: 'GBP',
-                minimumFractionDigits: 0, maximumFractionDigits: 0
-            }).format(salaryInGBP);
-
-            const convertedNoAdj = salary * exchangeRate;
-            const formattedConverted = new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: targetCurrency,
-                minimumFractionDigits: 0, maximumFractionDigits: 0
-            }).format(convertedNoAdj);
-
-            // Build neighborhood explanation steps (only if neighborhoods selected)
-            let neighborhoodSteps = '';
-            let stepCount = 3;
-
-            if (currentNeighborhood || targetNeighborhood) {
-                stepCount++;
-                let neighText = '<strong>Neighborhood adjustment:</strong> ';
-                const parts = [];
-                if (currentNeighborhood) {
-                    const pct = ((currentNeighMult - 1) * 100);
-                    const sign = pct >= 0 ? '+' : '';
-                    parts.push(`${currentNeighborhood} in ${currentCity} is <strong>${sign}${pct.toFixed(0)}%</strong> vs the city average (adjusted COLI: ${currentCOLI.toFixed(1)})`);
-                }
-                if (targetNeighborhood) {
-                    const pct = ((targetNeighMult - 1) * 100);
-                    const sign = pct >= 0 ? '+' : '';
-                    parts.push(`${targetNeighborhood} in ${targetCity} is <strong>${sign}${pct.toFixed(0)}%</strong> vs the city average (adjusted COLI: ${targetCOLI.toFixed(1)})`);
-                }
-                neighText += parts.join('. ') + '.';
-
-                neighborhoodSteps = `
-                    <div class="explanation-step">
-                        <div class="step-number">${stepCount}</div>
-                        <div class="step-text">${neighText}</div>
-                    </div>
-                `;
-            }
-
-            const formulaStep = stepCount + 1;
-            const meaningStep = stepCount + 2;
-
-            // Build formula text based on whether neighborhoods are used
-            let formulaText = `${formattedOriginalCurrent} × ${colRatio.toFixed(2)} (cost of living`;
-            if (currentNeighborhood || targetNeighborhood) {
-                formulaText += `, incl. neighborhood`;
-            }
-            formulaText += `) × ${exchangeRate.toFixed(2)} (exchange rate) = <strong>${formattedAmount}</strong>`;
-
-            const explanation = `
-                <div class="explanation-title">How we calculated this</div>
-                <div class="explanation-step">
-                    <div class="step-number">1</div>
-                    <div class="step-text">
-                        <strong>Your salary:</strong> ${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})
-                    </div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">2</div>
-                    <div class="step-text">
-                        <strong>Currency conversion:</strong> ${formattedOriginalCurrent} → ${formattedConverted} at a rate of 1 ${currentCurrency} = ${exchangeRate.toFixed(4)} ${targetCurrency}
-                    </div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">3</div>
-                    <div class="step-text">
-                        <strong>City cost of living:</strong> ${currentCity} has a base cost index of <strong>${baseCOLICurrent}</strong> and ${targetCity} has <strong>${baseCOLITarget}</strong> (New York = 100 baseline).${currentNeighborhood || targetNeighborhood ? '' : ` The ratio is <strong>${colRatio.toFixed(2)}x</strong>.`}
-                    </div>
-                </div>
-                ${neighborhoodSteps}
-                <div class="explanation-step">
-                    <div class="step-number">${formulaStep}</div>
-                    <div class="step-text">
-                        <strong>Final formula:</strong> ${formulaText}
-                    </div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">${meaningStep}</div>
-                    <div class="step-text">
-                        <strong>What this means:</strong> ${difference < -2 ? `${targetCity} is cheaper. Your ${formattedOriginalCurrent} ${currentCity} lifestyle costs only ${formattedAmount} there — you'd have the same purchasing power with less income.` : difference > 2 ? `${targetCity} is pricier. Your ${formattedOriginalCurrent} ${currentCity} lifestyle would cost ${formattedAmount} there — you'd need more income to keep the same standard of living.` : `Cost of living is similar. Your ${formattedOriginalCurrent} in ${currentCity} is equivalent to ${formattedAmount} in ${targetCity} — nearly the same purchasing power.`}
-                    </div>
-                </div>
-            `;
-            document.getElementById('explanationSection').innerHTML = explanation;
-
-            // === TAX & DEDUCTIONS BREAKDOWN ===
-            const currentCountry = cityToCountry[currentCity];
-            const targetCountry = cityToCountry[targetCity];
-            const taxSection = document.getElementById('taxSection');
-            let currentDed = null;
-            let targetDed = null;
-
-            if (currentCountry && targetCountry) {
-                currentDed = calculateAllDeductions(salary, currentCountry, currentCity, currentNeighborhood);
-                targetDed = calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, targetNeighborhood);
-
-                function buildDedCard(cityLabel, grossFormatted, ded, currency, equivNet, equivCurrency) {
-                    const maxRate = Math.max(...ded.items.map(i => i.rate), 1);
-                    let bars = '';
-                    for (const item of ded.items) {
-                        const barW = Math.max(Math.round((item.rate / maxRate) * 100), 2);
-                        const color = deductionColors[item.key] || '#6b7280';
-                        bars += `<div class="ded-bar-row">
-                            <div class="ded-bar-label">${item.label}</div>
-                            <div class="ded-bar-track"><div class="ded-bar-fill" style="width:${barW}%;background:${color};"></div></div>
-                            <div class="ded-bar-pct">${item.rate}%</div>
-                        </div>`;
-                    }
-                    const fmtNet = new Intl.NumberFormat('en-US', {
-                        style: 'currency', currency: currency,
-                        minimumFractionDigits: 0, maximumFractionDigits: 0
-                    }).format(ded.net);
-                    let equivLine = '';
-                    if (equivNet != null && equivCurrency && equivCurrency !== currency) {
-                        const fmtEquiv = new Intl.NumberFormat('en-US', {
-                            style: 'currency', currency: equivCurrency,
-                            minimumFractionDigits: 0, maximumFractionDigits: 0
-                        }).format(equivNet);
-                        equivLine = `<div class="ded-take-home-equiv">\u2248 ${fmtEquiv} in ${equivCurrency}</div>`;
-                    }
-                    return `<div class="tax-card" style="text-align:left;">
-                        <div class="tax-card-city">${cityLabel}</div>
-                        <div class="tax-card-gross" style="margin-bottom:12px;">Gross: ${grossFormatted}</div>
-                        ${bars}
-                        <div class="ded-total-row">
-                            <div class="ded-total-label">Total: ${ded.totalRate}%</div>
-                            <div class="ded-take-home">${fmtNet}</div>
-                        </div>
-                        ${equivLine}
-                        <div style="font-size:0.7rem; color:var(--text-secondary); margin-top:4px; text-align:right;">Est. Take-Home/yr</div>
-                    </div>`;
-                }
-
-                const targetNetInCurrentCurr = targetDed.net / exchangeRate;
-                const targetGrossFormatted = hasOffer
-                    ? formatter.format(targetSalaryOffer) + ' (your offer)'
-                    : formattedAmount;
-                document.getElementById('taxComparison').innerHTML =
-                    buildDedCard(currentLabel, formattedOriginalCurrent, currentDed, currentCurrency) +
-                    buildDedCard(targetLabel, targetGrossFormatted, targetDed, targetCurrency, targetNetInCurrentCurr, currentCurrency);
-                taxSection.style.display = '';
-            } else {
-                taxSection.style.display = 'none';
-            }
-
-            // === ESTIMATED RENT ===
-            const rentSection = document.getElementById('rentSection');
-            const currentBaseRent = cityRent1BR[currentCity];
-            const targetBaseRent = cityRent1BR[targetCity];
-            let currentRentUSD = 0;
-            let targetRentUSD = 0;
-            let hasRentData = false;
-
-            if (currentBaseRent && targetBaseRent) {
-                hasRentData = true;
-                currentRentUSD = currentBaseRent * currentNeighMult;
-                targetRentUSD = targetBaseRent * targetNeighMult;
-                // Convert to local currencies
-                const currentRentLocal = currentRentUSD * (exchangeRates[currentCurrency] / exchangeRates['USD']);
-                const targetRentLocal = targetRentUSD * (exchangeRates[targetCurrency] / exchangeRates['USD']);
-
-                const fmtRent = (amount, currency) => new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: currency,
-                    minimumFractionDigits: 0, maximumFractionDigits: 0
-                }).format(amount);
-
-                const fmtUSD = (amount) => new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: 'USD',
-                    minimumFractionDigits: 0, maximumFractionDigits: 0
-                }).format(amount);
-
-                function buildRentCard(label, rentLocal, rentUSD, currency) {
-                    const usdLine = currency !== 'USD'
-                        ? `<div class="rent-card-usd">\u2248 ${fmtUSD(rentUSD)}/mo</div>`
-                        : '';
-                    return `<div class="rent-card">
-                        <div class="rent-card-city">${label}</div>
-                        <div class="rent-card-amount">${fmtRent(rentLocal, currency)}</div>
-                        ${usdLine}
-                        <div class="rent-card-label">per month (1BR avg)</div>
-                    </div>`;
-                }
-
-                document.getElementById('rentComparison').innerHTML =
-                    buildRentCard(currentLabel, currentRentLocal, currentRentUSD, currentCurrency) +
-                    buildRentCard(targetLabel, targetRentLocal, targetRentUSD, targetCurrency);
-                rentSection.style.display = '';
-            } else {
-                rentSection.style.display = 'none';
-            }
-
-            // === AFFORDABILITY VERDICT ===
-            const affordSection = document.getElementById('affordabilitySection');
-            const fmtCurr = (amount, cur) => new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: cur,
-                minimumFractionDigits: 0, maximumFractionDigits: 0
-            }).format(amount);
-
-            if (currentDed && targetDed && hasRentData) {
-                // Convert everything to current currency for apples-to-apples
-                const usdToCurrentRate = exchangeRates[currentCurrency] / exchangeRates['USD'];
-                const currentTakeHome = currentDed.net;
-                const targetTakeHome = targetDed.net / exchangeRate;
-                const currentAnnualRent = currentRentUSD * usdToCurrentRate * 12;
-                const targetAnnualRent = targetRentUSD * usdToCurrentRate * 12;
-
-                // Look up living costs
-                const currentCosts = cityLivingCosts[currentCity];
-                const targetCosts = cityLivingCosts[targetCity];
-                const hasLivingCosts = currentCosts && targetCosts;
-
-                let currentDisposable, targetDisposable;
-                let costBreakdown = null;
-
-                if (hasLivingCosts) {
-                    // All costs in monthly USD → multiply by neighborhood mult, convert to current currency, annualize
-                    const currentGroceries = currentCosts.groceries * currentNeighMult * usdToCurrentRate * 12;
-                    const targetGroceries = targetCosts.groceries * targetNeighMult * usdToCurrentRate * 12;
-
-                    const currentUtilities = currentCosts.utilities * currentNeighMult * usdToCurrentRate * 12;
-                    const targetUtilities = targetCosts.utilities * targetNeighMult * usdToCurrentRate * 12;
-
-                    const currentTransport = currentCosts.transport * currentNeighMult * usdToCurrentRate * 12;
-                    const targetTransport = targetCosts.transport * targetNeighMult * usdToCurrentRate * 12;
-
-                    const currentHealthcare = currentCosts.healthcare * currentNeighMult * usdToCurrentRate * 12;
-                    const targetHealthcare = targetCosts.healthcare * targetNeighMult * usdToCurrentRate * 12;
-
-                    const currentChildcare = includeChildcare ? currentCosts.childcare * currentNeighMult * usdToCurrentRate * 12 : 0;
-                    const targetChildcare = includeChildcare ? targetCosts.childcare * targetNeighMult * usdToCurrentRate * 12 : 0;
-
-                    const currentTotalLiving = currentGroceries + currentUtilities + currentTransport + currentHealthcare + currentChildcare;
-                    const targetTotalLiving = targetGroceries + targetUtilities + targetTransport + targetHealthcare + targetChildcare;
-
-                    currentDisposable = currentTakeHome - currentAnnualRent - currentTotalLiving;
-                    targetDisposable = targetTakeHome - targetAnnualRent - targetTotalLiving;
-
-                    costBreakdown = {
-                        current: { rent: currentAnnualRent, groceries: currentGroceries, utilities: currentUtilities, transport: currentTransport, healthcare: currentHealthcare, childcare: currentChildcare },
-                        target: { rent: targetAnnualRent, groceries: targetGroceries, utilities: targetUtilities, transport: targetTransport, healthcare: targetHealthcare, childcare: targetChildcare }
-                    };
-                } else {
-                    // Fallback: rent only
-                    currentDisposable = currentTakeHome - currentAnnualRent;
-                    targetDisposable = targetTakeHome - targetAnnualRent;
-                }
-
-                const diffPct = currentDisposable !== 0
-                    ? ((targetDisposable - currentDisposable) / Math.abs(currentDisposable)) * 100
-                    : 0;
-
-                let verdictClass, verdictIcon, verdictText;
-                const absDiff = Math.abs(diffPct).toFixed(0);
-                const costPhrase = hasLivingCosts ? 'after taxes and living costs' : 'after rent and taxes';
-
-                if (hasOffer) {
-                    const fmtOffer = formatter.format(targetSalaryOffer);
-                    if (diffPct > 10) {
-                        verdictClass = 'better';
-                        verdictIcon = '\uD83D\uDFE2';
-                        verdictText = `With your ${fmtOffer} offer, you'd have ~${absDiff}% more disposable income in ${targetCity} ${costPhrase}`;
-                    } else if (diffPct < -10) {
-                        verdictClass = 'worse';
-                        verdictIcon = '\uD83D\uDD34';
-                        verdictText = `With your ${fmtOffer} offer, you'd have ~${absDiff}% less disposable income in ${targetCity} ${costPhrase}`;
-                    } else {
-                        verdictClass = 'similar';
-                        verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `With your ${fmtOffer} offer, disposable income is within ~${absDiff}% — too close to call`;
-                    }
-                } else {
-                    if (diffPct > 10) {
-                        verdictClass = 'better';
-                        verdictIcon = '\uD83D\uDFE2';
-                        verdictText = `You'd have ~${absDiff}% more spending power in ${targetCity} ${costPhrase}`;
-                    } else if (diffPct < -10) {
-                        verdictClass = 'worse';
-                        verdictIcon = '\uD83D\uDD34';
-                        verdictText = `You'd have ~${absDiff}% less spending power in ${targetCity} ${costPhrase}`;
-                    } else {
-                        verdictClass = 'similar';
-                        verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `Within ~${absDiff}% — too close to call. Consider lifestyle preferences and other factors.`;
-                    }
-                }
-
-                document.getElementById('affordVerdict').className = 'afford-verdict ' + verdictClass;
-                document.getElementById('affordVerdict').innerHTML =
-                    `<span class="afford-verdict-icon">${verdictIcon}</span><span>${verdictText}</span>`;
-
-                function buildAffordCard(label, takeHome, costs, disposable, localCur, toLocalRate) {
-                    const dispClass = disposable >= 0 ? 'positive' : 'negative';
-                    const showLocal = localCur && localCur !== currentCurrency;
-                    const loc = (amt) => showLocal ? ` <span class="afford-local">(${fmtCurr(amt * toLocalRate, localCur)})</span>` : '';
-
-                    let rows = `<div class="afford-card-row">
-                            <span>Take-home/yr</span>
-                            <span class="afford-card-val">${fmtCurr(takeHome, currentCurrency)}${loc(takeHome)}</span>
-                        </div>
-                        <div class="afford-card-row separator">
-                            <span>Rent/yr (1BR)</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.rent, currentCurrency)}${loc(costs.rent)}</span>
-                        </div>`;
-
-                    if (hasLivingCosts) {
-                        rows += `<div class="afford-card-row">
-                            <span>Groceries/yr</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.groceries, currentCurrency)}${loc(costs.groceries)}</span>
-                        </div>
-                        <div class="afford-card-row">
-                            <span>Utilities/yr</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.utilities, currentCurrency)}${loc(costs.utilities)}</span>
-                        </div>
-                        <div class="afford-card-row">
-                            <span>Transport/yr</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.transport, currentCurrency)}${loc(costs.transport)}</span>
-                        </div>
-                        <div class="afford-card-row">
-                            <span>Healthcare/yr</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.healthcare, currentCurrency)}${loc(costs.healthcare)}</span>
-                        </div>`;
-                        if (includeChildcare) {
-                            rows += `<div class="afford-card-row">
-                            <span>Childcare/yr</span>
-                            <span class="afford-card-val deduction">\u2212 ${fmtCurr(costs.childcare, currentCurrency)}${loc(costs.childcare)}</span>
-                        </div>`;
-                        }
-                    }
-
-                    rows += `<div class="afford-card-row total">
-                            <span>Disposable</span>
-                            <span class="afford-card-val ${dispClass}">${fmtCurr(disposable, currentCurrency)}${loc(disposable)}</span>
-                        </div>`;
-
-                    return `<div class="afford-card">
-                        <div class="afford-card-city">${label}</div>
-                        ${rows}
-                    </div>`;
-                }
-
-                const currentCostsObj = costBreakdown ? costBreakdown.current : { rent: currentAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
-                const targetCostsObj = costBreakdown ? costBreakdown.target : { rent: targetAnnualRent, groceries: 0, utilities: 0, transport: 0, healthcare: 0, childcare: 0 };
-
-                // Rate to convert from currentCurrency amounts to target local currency
-                const toTargetLocalRate = exchangeRates[targetCurrency] / exchangeRates[currentCurrency];
-
-                document.getElementById('affordCards').innerHTML =
-                    buildAffordCard(currentLabel, currentTakeHome, currentCostsObj, currentDisposable, null, null) +
-                    buildAffordCard(targetLabel, targetTakeHome, targetCostsObj, targetDisposable, targetCurrency, toTargetLocalRate);
-
-                // Show/hide childcare toggle
-                document.getElementById('childcareToggle').style.display = hasLivingCosts ? 'flex' : 'none';
-
-                // Update note based on data availability and offer mode
-                const noteEl = document.getElementById('affordNote');
-                const sources = ' Sources: <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://data.oecd.org/healthres/health-spending.htm" target="_blank" rel="noopener">OECD</a>.';
-                const costsList = 'Disposable = take-home minus rent, groceries, utilities, transport' + (includeChildcare ? ', childcare' : '') + ' &amp; healthcare. All costs adjusted for neighborhood.';
-                if (hasOffer) {
-                    if (hasLivingCosts) {
-                        noteEl.innerHTML = 'Based on your actual salary offer. ' + costsList + sources;
-                    } else {
-                        noteEl.innerHTML = 'Based on your actual salary offer. Full living cost data not available for one or both cities. Showing rent only.' + sources;
-                    }
-                } else {
-                    if (hasLivingCosts) {
-                        noteEl.innerHTML = 'Based on the COLI (Cost of Living Index) equivalent salary — COLI measures relative price levels across cities (New York = 100). Enter your actual salary offer above for a personalized verdict. ' + costsList + sources;
-                    } else {
-                        noteEl.innerHTML = 'Based on the COLI-equivalent salary. Enter your actual salary offer above for a personalized verdict. Full living cost data not available for one or both cities. Showing rent only.' + sources;
-                    }
-                }
-
-                affordSection.style.display = '';
-            } else {
-                affordSection.style.display = 'none';
-            }
-
-            // === VISUAL CHART ===
+            // === 6. VISUAL CHART ===
             const chartSection = document.getElementById('chartSection');
-            const maxSalary = Math.max(salary, equivalentSalary);
-            const currentPct = (salary / maxSalary) * 100;
-            const targetPct = (equivalentSalary / maxSalary) * 100;
+            const currentInTarget = totalSalary * exchangeRate;
+            const targetGrossVal = hasOffer ? targetSalaryOffer : trueEquivalentSalary;
+            const maxGross = Math.max(currentInTarget, targetGrossVal);
+            const currentGrossPct = (currentInTarget / maxGross) * 100;
+            const targetGrossPct = (targetGrossVal / maxGross) * 100;
 
             let chartHTML = `
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">GROSS SALARY (in ${targetCurrency})</div>
                 <div class="chart-bar-row">
                     <div class="chart-bar-label">${currentCity}</div>
                     <div class="chart-bar-track">
-                        <div class="chart-bar-fill current" style="width: ${currentPct}%">${formattedOriginalCurrent}</div>
+                        <div class="chart-bar-fill current" style="width: ${currentGrossPct}%">${formatter.format(currentInTarget)}</div>
                     </div>
                 </div>
                 <div class="chart-bar-row">
                     <div class="chart-bar-label">${targetCity}</div>
                     <div class="chart-bar-track">
-                        <div class="chart-bar-fill target" style="width: ${targetPct}%">${formattedAmount}</div>
+                        <div class="chart-bar-fill target" style="width: ${targetGrossPct}%">${formatter.format(targetGrossVal)}</div>
                     </div>
-                </div>
-            `;
+                </div>`;
 
             if (currentDed && targetDed) {
-                const netCurrentVal = currentDed.net;
-                const netTargetVal = targetDed.net;
-                const maxNet = Math.max(netCurrentVal, netTargetVal);
-                const netCurrentPct = (netCurrentVal / maxNet) * 100;
-                const netTargetPct = (netTargetVal / maxNet) * 100;
-
-                const fmtNetC = new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: currentCurrency,
-                    minimumFractionDigits: 0, maximumFractionDigits: 0
-                }).format(netCurrentVal);
-                const fmtNetT = new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: targetCurrency,
-                    minimumFractionDigits: 0, maximumFractionDigits: 0
-                }).format(netTargetVal);
-
+                const currentNetInTarget = combinedCurrentTakeHome * exchangeRate;
+                const targetNetVal = combinedTargetTakeHome;
+                const maxNet = Math.max(currentNetInTarget, targetNetVal);
                 chartHTML += `
-                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e5ea;">
-                        <div style="font-size: 0.75rem; color: #86868b; margin-bottom: 8px; font-weight: 500;">AFTER TAX (ESTIMATED)</div>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">TAKE-HOME (in ${targetCurrency})</div>
                     </div>
                     <div class="chart-bar-row">
                         <div class="chart-bar-label">${currentCity}</div>
                         <div class="chart-bar-track">
-                            <div class="chart-bar-fill tax-current" style="width: ${netCurrentPct}%">${fmtNetC}</div>
+                            <div class="chart-bar-fill tax-current" style="width: ${(currentNetInTarget / maxNet * 100)}%">${formatter.format(currentNetInTarget)}</div>
                         </div>
                     </div>
                     <div class="chart-bar-row">
                         <div class="chart-bar-label">${targetCity}</div>
                         <div class="chart-bar-track">
-                            <div class="chart-bar-fill tax-target" style="width: ${netTargetPct}%">${fmtNetT}</div>
+                            <div class="chart-bar-fill tax-target" style="width: ${(targetNetVal / maxNet * 100)}%">${formatter.format(targetNetVal)}</div>
                         </div>
-                    </div>
-                `;
-            }
+                    </div>`;
 
+                if (hasFullData && currentDisposable !== null && targetDisposable !== null) {
+                    const currentDispInTarget = currentDisposable * exchangeRate;
+                    if (currentDispInTarget > 0 || targetDisposable > 0) {
+                        const maxDisp = Math.max(currentDispInTarget, targetDisposable, 1);
+                        chartHTML += `
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">DISPOSABLE INCOME (in ${targetCurrency})</div>
+                            </div>
+                            <div class="chart-bar-row">
+                                <div class="chart-bar-label">${currentCity}</div>
+                                <div class="chart-bar-track">
+                                    <div class="chart-bar-fill ${currentDispInTarget >= 0 ? 'disp-positive' : 'disp-negative'}" style="width: ${Math.max((currentDispInTarget / maxDisp * 100), 2)}%">${formatter.format(currentDispInTarget)}</div>
+                                </div>
+                            </div>
+                            <div class="chart-bar-row">
+                                <div class="chart-bar-label">${targetCity}</div>
+                                <div class="chart-bar-track">
+                                    <div class="chart-bar-fill ${targetDisposable >= 0 ? 'disp-positive' : 'disp-negative'}" style="width: ${Math.max((targetDisposable / maxDisp * 100), 2)}%">${formatter.format(targetDisposable)}</div>
+                                </div>
+                            </div>`;
+                    }
+                }
+            }
             document.getElementById('chartBars').innerHTML = chartHTML;
             chartSection.style.display = '';
+
+            // === 7. HOW WE CALCULATED THIS ===
+            const salaryDesc = isFamily2
+                ? `Adult 1: ${fmtCurr(salary, currentCurrency)} + Adult 2: ${fmtCurr(salary2, currentCurrency)} (${formattedOriginalCurrent} total)`
+                : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
+            const dedDesc = isFamily2
+                ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
+                : `${currentDed ? currentDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${currentDed ? fmtCurr(currentDed.net, currentCurrency) + ' take-home' : 'unknown take-home'}`;
+            const expDesc = currentExpenses ? `${fmtCurr(currentExpenses.total, currentCurrency)}/yr in ${currentExpenses.rentLabel || '1BR'} rent and living costs${household.children > 0 ? ' (incl. childcare for ' + household.children + ')' : ''}` : 'Expense data not available';
+            const grossDesc = isFamily2
+                ? `Adult 1 needs <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2 needs <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong> = <strong>${formattedAmount}</strong>`
+                : `you need a gross salary of <strong>${formattedAmount}</strong>`;
+
+            const explanation = `
+                <div class="explanation-title">How we calculated this</div>
+                <div class="explanation-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text"><strong>${isFamily ? 'Household income:' : 'Your salary:'}</strong> ${salaryDesc}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text"><strong>Current deductions:</strong> ${dedDesc}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text"><strong>Current expenses:</strong> ${expDesc}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">4</div>
+                    <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 this is what we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">5</div>
+                    <div class="step-text"><strong>Target city expenses:</strong> ${targetExpenses ? targetExpenses.rentLabel + ' rent + living costs in ' + targetLabel + ' total ' + fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'unknown'}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">6</div>
+                    <div class="step-text"><strong>Target take-home needed:</strong> ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) + ' (' + fmtCurr(currentDisposable * exchangeRate, targetCurrency) + ' disposable + ' + fmtCurr(targetExpenses.total, targetCurrency) + ' expenses)' : 'Cannot calculate'}</div>
+                </div>
+                <div class="explanation-step">
+                    <div class="step-number">7</div>
+                    <div class="step-text"><strong>Reverse-engineer gross:</strong> To take home ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) : '?'} in ${targetCity}, ${grossDesc}</div>
+                </div>
+            `;
+            document.getElementById('explanationSection').innerHTML = explanation;
+
+            // === 8. COLI REFERENCE (demoted) ===
+            const coliRef = document.getElementById('coliReference');
+            document.getElementById('coliRefAmount').textContent = formatter.format(coliEquivalentSalary);
+            coliRef.style.display = '';
 
             // === SALARY RANGES BY JOB TITLE ===
             const rangesSection = document.getElementById('salaryRangesSection');
@@ -4988,6 +5347,12 @@
             if (currentNeighborhood) shareParams.set('fromN', currentNeighborhood);
             if (targetNeighborhood) shareParams.set('toN', targetNeighborhood);
             if (hasOffer) shareParams.set('offer', targetSalaryOffer);
+            if (household.mode === 'family') {
+                shareParams.set('mode', 'family');
+                shareParams.set('adults', household.adults);
+                shareParams.set('children', household.children);
+                if (salary2) shareParams.set('salary2', salary2);
+            }
             history.replaceState(null, '', '?' + shareParams.toString());
 
             // Populate share bar
@@ -4995,7 +5360,7 @@
             const shareUrl = window.location.origin + '/?' + shareParams.toString();
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
-            const shareText = 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' = ' + formattedAmount + ' in ' + targetLabel2 + ' — salary:converter';
+            const shareText = 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) — salary:converter';
             shareBar.setAttribute('data-share-text', shareText);
             shareBar.setAttribute('data-share-url', shareUrl);
 
@@ -5021,13 +5386,17 @@
             document.getElementById('targetSalary').value = '';
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
-            document.getElementById('taxSection').style.display = 'none';
-            document.getElementById('rentSection').style.display = 'none';
-            document.getElementById('affordabilitySection').style.display = 'none';
             document.getElementById('chartSection').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
+            // Reset household state
+            setHouseholdMode('single');
+            householdState.adults = 2; householdState.children = 1;
+            document.querySelectorAll('#adultsChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '2'); });
+            document.querySelectorAll('#childrenChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '1'); });
+            document.getElementById('adult1Salary').value = '';
+            document.getElementById('adult2Salary').value = '';
             history.replaceState(null, '', window.location.pathname);
         });
 
@@ -5119,16 +5488,137 @@
         populateSelects();
         createQuickButtons();
 
+        // Populate family city dropdown (mirrors currentCity)
+        (function(){
+            const fc = document.getElementById('familyCity');
+            const cc = document.getElementById('currentCity');
+            for (const opt of cc.options) {
+                const o = document.createElement('option');
+                o.value = opt.value; o.textContent = opt.textContent;
+                fc.appendChild(o);
+            }
+            // Sync family city changes with neighborhoods
+            fc.addEventListener('change', function() {
+                cc.value = fc.value;
+                cc.dispatchEvent(new Event('change'));
+            });
+            cc.addEventListener('change', function() {
+                fc.value = cc.value;
+            });
+        })();
+
+        // Household mode toggle listeners
+        document.querySelectorAll('#householdModeToggle .mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => setHouseholdMode(btn.dataset.mode));
+        });
+        document.querySelectorAll('#adultsChips .chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#adultsChips .chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                householdState.adults = parseInt(chip.dataset.value);
+                updateSalaryFields();
+            });
+        });
+        document.querySelectorAll('#childrenChips .chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#childrenChips .chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                householdState.children = parseInt(chip.dataset.value);
+            });
+        });
+
+        // Format adult salary inputs with commas
+        ['adult1Salary', 'adult2Salary'].forEach(id => {
+            document.getElementById(id).addEventListener('input', (e) => {
+                let value = e.target.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                if (value === '') { e.target.value = ''; return; }
+                const parts = value.split('.');
+                let intPart = parts[0].replace(/^0+(?=\d)/, '');
+                let formatted = Number(intPart).toLocaleString('en-US');
+                if (parts[1] !== undefined) formatted += '.' + parts[1].slice(0, 2);
+                e.target.value = formatted;
+            });
+        });
+
+        // Contact modal open/close
+        function openContactModal() {
+            document.getElementById('contactOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            // Close burger menu if open
+            const dd = document.getElementById('navDropdown');
+            if (dd) dd.classList.remove('open');
+        }
+        function closeContactModal() {
+            document.getElementById('contactOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        // Close on overlay background click
+        document.getElementById('contactOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeContactModal();
+        });
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('contactOverlay').classList.contains('open')) {
+                closeContactModal();
+            }
+        });
+
+        // Contact form handler (Web3Forms)
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const btn = contactForm.querySelector('button[type="submit"]');
+                const origText = btn.textContent;
+                btn.textContent = 'Sending...'; btn.disabled = true;
+                try {
+                    const resp = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST', body: new FormData(contactForm),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (resp.ok) {
+                        contactForm.style.display = 'none';
+                        document.getElementById('contactSuccess').style.display = '';
+                    } else {
+                        btn.textContent = 'Error \u2014 Try Again'; btn.disabled = false;
+                        setTimeout(() => { btn.textContent = origText; }, 3000);
+                    }
+                } catch(err) {
+                    btn.textContent = 'Error \u2014 Try Again'; btn.disabled = false;
+                    setTimeout(() => { btn.textContent = origText; }, 3000);
+                }
+            });
+        }
+
         // URL parameter support — auto-populate and calculate from shared links
         (function(){
             var params = new URLSearchParams(window.location.search);
             var from = params.get('from'), to = params.get('to'), sal = params.get('salary');
+            // Restore household mode from URL
+            var mode = params.get('mode');
+            if (mode === 'family') {
+                setHouseholdMode('family');
+                var adults = parseInt(params.get('adults')) || 2;
+                var children = parseInt(params.get('children')) || 1;
+                householdState.adults = adults;
+                householdState.children = children;
+                document.querySelectorAll('#adultsChips .chip').forEach(c => { c.classList.toggle('active', parseInt(c.dataset.value) === adults); });
+                document.querySelectorAll('#childrenChips .chip').forEach(c => { c.classList.toggle('active', parseInt(c.dataset.value) === children); });
+                updateSalaryFields();
+                var sal2 = params.get('salary2');
+                if (adults === 2 && sal && sal2) {
+                    document.getElementById('adult1Salary').value = sal;
+                    document.getElementById('adult2Salary').value = sal2;
+                }
+            }
             if (from && to && sal) {
                 document.getElementById('currentCity').value = from;
                 document.getElementById('currentCity').dispatchEvent(new Event('change'));
                 document.getElementById('targetCity').value = to;
                 document.getElementById('targetCity').dispatchEvent(new Event('change'));
-                document.getElementById('currentSalary').value = sal;
+                if (!(mode === 'family' && (parseInt(params.get('adults')) || 2) === 2)) {
+                    document.getElementById('currentSalary').value = sal;
+                }
                 var fromN = params.get('fromN'), toN = params.get('toN'), offer = params.get('offer');
                 setTimeout(function(){
                     if (fromN) document.getElementById('currentNeighborhood').value = fromN;
