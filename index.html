@@ -1256,7 +1256,8 @@
         }
 
         /* Household Section */
-        .household-section { text-align: center; }
+        .household-section { text-align: center; padding-bottom: 12px; margin-bottom: 0; }
+        .household-section + .form-section { padding-top: 16px; }
         .household-mode-toggle {
             display: inline-flex;
             gap: 0;
@@ -1602,13 +1603,6 @@
             line-height: 1.4;
         }
 
-        /* Disposable chart bars */
-        .chart-bar-fill.disp-positive {
-            background: linear-gradient(90deg, #22c55e, #16a34a);
-        }
-        .chart-bar-fill.disp-negative {
-            background: linear-gradient(90deg, #ef4444, #dc2626);
-        }
 
         .ded-take-home-equiv {
             font-size: 0.78rem;
@@ -1784,72 +1778,6 @@
             font-style: italic;
         }
 
-        /* === VISUAL CHART SECTION === */
-        .chart-section {
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border);
-        }
-
-        .chart-bars {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chart-bar-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .chart-bar-label {
-            width: 120px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            flex-shrink: 0;
-            text-align: right;
-        }
-
-        .chart-bar-track {
-            flex: 1;
-            height: 28px;
-            background: var(--stat-card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .chart-bar-fill {
-            height: 100%;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-            min-width: 40px;
-            transition: width 0.8s ease-out;
-        }
-
-        .chart-bar-fill.current {
-            background: linear-gradient(90deg, #2563eb, #3b82f6);
-        }
-
-        .chart-bar-fill.target {
-            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
-        }
-
-        .chart-bar-fill.tax-current {
-            background: linear-gradient(90deg, #22c55e, #4ade80);
-        }
-
-        .chart-bar-fill.tax-target {
-            background: linear-gradient(90deg, #f59e0b, #fbbf24);
-        }
 
         /* === SALARY RANGES SECTION === */
         .salary-ranges-section {
@@ -2341,11 +2269,28 @@
                     <div class="currency-hint" id="targetCurrencyHint"></div>
                 </div>
             </div>
-            <div class="form-group" style="margin-top: 8px;">
-                <label for="targetSalary">Salary Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
-                <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
+            <div id="singleOfferRow">
+                <div class="form-group" style="margin-top: 8px;">
+                    <label for="targetSalary">Salary Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                    <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
+                    <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
+                        Have an actual offer? Enter it for a personalized comparison.
+                    </div>
+                </div>
+            </div>
+            <div id="familyOfferInputs" style="display:none;">
+                <div class="two-column" style="margin-top: 8px;">
+                    <div class="form-group">
+                        <label for="offer1Salary">Adult 1 Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                        <input type="text" id="offer1Salary" placeholder="e.g. 80,000" inputmode="numeric">
+                    </div>
+                    <div class="form-group">
+                        <label for="offer2Salary">Adult 2 Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                        <input type="text" id="offer2Salary" placeholder="e.g. 45,000" inputmode="numeric">
+                    </div>
+                </div>
                 <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
-                    Have an actual offer? Enter it for a personalized comparison.
+                    Have actual offers? Enter them for a personalized comparison.
                 </div>
             </div>
             <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
@@ -2378,11 +2323,6 @@
                 <div class="breakdown-note" id="breakdownNote"></div>
             </div>
 
-            <!-- 6. Visual Chart -->
-            <div class="chart-section" id="chartSection" style="display: none;">
-                <div class="chart-title">Visual Comparison</div>
-                <div class="chart-bars" id="chartBars"></div>
-            </div>
 
             <!-- 7. How We Calculated This -->
             <div class="explanation-section" id="explanationSection"></div>
@@ -3444,18 +3384,26 @@
             const singleRow = document.getElementById('singleSalaryRow');
             const familyInputs = document.getElementById('familySalaryInputs');
             const salaryLabel = document.getElementById('salaryLabel');
+            const singleOfferRow = document.getElementById('singleOfferRow');
+            const familyOfferInputs = document.getElementById('familyOfferInputs');
 
             if (h.mode === 'single') {
                 singleRow.style.display = '';
                 familyInputs.style.display = 'none';
                 salaryLabel.textContent = 'Your Salary';
+                singleOfferRow.style.display = '';
+                familyOfferInputs.style.display = 'none';
             } else if (h.adults === 1) {
                 singleRow.style.display = '';
                 familyInputs.style.display = 'none';
                 salaryLabel.textContent = 'Household Income';
+                singleOfferRow.style.display = '';
+                familyOfferInputs.style.display = 'none';
             } else {
                 singleRow.style.display = 'none';
                 familyInputs.style.display = '';
+                singleOfferRow.style.display = 'none';
+                familyOfferInputs.style.display = '';
                 // Sync family city with current city
                 const cc = document.getElementById('currentCity').value;
                 if (cc) document.getElementById('familyCity').value = cc;
@@ -4505,9 +4453,8 @@
             e.target.value = formatted;
         });
 
-        // Format target salary input with commas as user types
-        const targetSalaryInput = document.getElementById('targetSalary');
-        targetSalaryInput.addEventListener('input', (e) => {
+        // Format salary offer inputs with commas as user types
+        function formatSalaryInput(e) {
             let value = e.target.value.replace(/,/g, '').replace(/[^\d.]/g, '');
             if (value === '') { e.target.value = ''; return; }
             const parts = value.split('.');
@@ -4518,7 +4465,10 @@
                 formatted += '.' + parts[1].slice(0, 2);
             }
             e.target.value = formatted;
-        });
+        }
+        document.getElementById('targetSalary').addEventListener('input', formatSalaryInput);
+        document.getElementById('offer1Salary').addEventListener('input', formatSalaryInput);
+        document.getElementById('offer2Salary').addEventListener('input', formatSalaryInput);
 
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => {
@@ -4548,10 +4498,26 @@
             const currentNeighborhood = document.getElementById('currentNeighborhood').value;
             const targetNeighborhood = document.getElementById('targetNeighborhood').value;
 
-            // Read optional target salary offer
-            const rawTargetSalary = document.getElementById('targetSalary').value
-                .replace(/,/g, '').replace(/[^\d.]/g, '');
-            const targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
+            // Read optional target salary offer(s)
+            let targetSalaryOffer = null;
+            let offer1 = null, offer2 = null;
+            const isFamily2Offer = household.mode === 'family' && household.adults === 2;
+
+            if (isFamily2Offer) {
+                const raw1 = document.getElementById('offer1Salary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                const raw2 = document.getElementById('offer2Salary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
+                offer1 = raw1 ? parseFloat(raw1) : null;
+                offer2 = raw2 ? parseFloat(raw2) : null;
+                if (offer1 !== null || offer2 !== null) {
+                    offer1 = offer1 || 0;
+                    offer2 = offer2 || 0;
+                    targetSalaryOffer = offer1 + offer2;
+                }
+            } else {
+                const rawTargetSalary = document.getElementById('targetSalary').value
+                    .replace(/,/g, '').replace(/[^\d.]/g, '');
+                targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
+            }
             const hasOffer = targetSalaryOffer !== null && targetSalaryOffer > 0;
 
             // For family mode, total salary is combined
@@ -4695,12 +4661,9 @@
                 targetDed2 = (targetCountry) ? calculateAllDeductions(targetAdult2Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
                 if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
             } else if (isFamily2 && hasOffer) {
-                // Split offer by same ratio
-                const totalInput = salary + salary2;
-                const offerSplit1 = targetSalaryOffer * (salary / totalInput);
-                const offerSplit2 = targetSalaryOffer * (salary2 / totalInput);
-                targetDed = (targetCountry) ? calculateAllDeductions(offerSplit1, targetCountry, targetCity, targetNeighborhood) : null;
-                targetDed2 = (targetCountry) ? calculateAllDeductions(offerSplit2, targetCountry, targetCity, targetNeighborhood) : null;
+                // Use actual per-adult offers (not ratio split)
+                targetDed = (targetCountry) ? calculateAllDeductions(offer1 || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                targetDed2 = (targetCountry) ? calculateAllDeductions(offer2 || 0, targetCountry, targetCity, targetNeighborhood) : null;
                 if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
             } else {
                 targetDed = (targetCountry) ? calculateAllDeductions(affordabilitySalary, targetCountry, targetCity, targetNeighborhood) : null;
@@ -4931,81 +4894,15 @@
                 } else {
                     offerLine = `Your offer of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the true equivalent ${formattedTrueEquiv}. Essentially a match.`;
                 }
+                // Show per-adult breakdown for family 2-adult mode
+                if (isFamily2 && offer1 !== null && offer2 !== null) {
+                    offerLine += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Adult 1: ${formatter.format(offer1)} + Adult 2: ${formatter.format(offer2)}</div>`;
+                }
                 offerCompEl.innerHTML = offerLine;
                 offerCompEl.style.display = '';
             } else {
                 offerCompEl.style.display = 'none';
             }
-
-            // === 6. VISUAL CHART ===
-            const chartSection = document.getElementById('chartSection');
-            const currentInTarget = totalSalary * exchangeRate;
-            const targetGrossVal = hasOffer ? targetSalaryOffer : trueEquivalentSalary;
-            const maxGross = Math.max(currentInTarget, targetGrossVal);
-            const currentGrossPct = (currentInTarget / maxGross) * 100;
-            const targetGrossPct = (targetGrossVal / maxGross) * 100;
-
-            let chartHTML = `
-                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">GROSS SALARY (in ${targetCurrency})</div>
-                <div class="chart-bar-row">
-                    <div class="chart-bar-label">${currentCity}</div>
-                    <div class="chart-bar-track">
-                        <div class="chart-bar-fill current" style="width: ${currentGrossPct}%">${formatter.format(currentInTarget)}</div>
-                    </div>
-                </div>
-                <div class="chart-bar-row">
-                    <div class="chart-bar-label">${targetCity}</div>
-                    <div class="chart-bar-track">
-                        <div class="chart-bar-fill target" style="width: ${targetGrossPct}%">${formatter.format(targetGrossVal)}</div>
-                    </div>
-                </div>`;
-
-            if (currentDed && targetDed) {
-                const currentNetInTarget = combinedCurrentTakeHome * exchangeRate;
-                const targetNetVal = combinedTargetTakeHome;
-                const maxNet = Math.max(currentNetInTarget, targetNetVal);
-                chartHTML += `
-                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
-                        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">TAKE-HOME (in ${targetCurrency})</div>
-                    </div>
-                    <div class="chart-bar-row">
-                        <div class="chart-bar-label">${currentCity}</div>
-                        <div class="chart-bar-track">
-                            <div class="chart-bar-fill tax-current" style="width: ${(currentNetInTarget / maxNet * 100)}%">${formatter.format(currentNetInTarget)}</div>
-                        </div>
-                    </div>
-                    <div class="chart-bar-row">
-                        <div class="chart-bar-label">${targetCity}</div>
-                        <div class="chart-bar-track">
-                            <div class="chart-bar-fill tax-target" style="width: ${(targetNetVal / maxNet * 100)}%">${formatter.format(targetNetVal)}</div>
-                        </div>
-                    </div>`;
-
-                if (hasFullData && currentDisposable !== null && targetDisposable !== null) {
-                    const currentDispInTarget = currentDisposable * exchangeRate;
-                    if (currentDispInTarget > 0 || targetDisposable > 0) {
-                        const maxDisp = Math.max(currentDispInTarget, targetDisposable, 1);
-                        chartHTML += `
-                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
-                                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">DISPOSABLE INCOME (in ${targetCurrency})</div>
-                            </div>
-                            <div class="chart-bar-row">
-                                <div class="chart-bar-label">${currentCity}</div>
-                                <div class="chart-bar-track">
-                                    <div class="chart-bar-fill ${currentDispInTarget >= 0 ? 'disp-positive' : 'disp-negative'}" style="width: ${Math.max((currentDispInTarget / maxDisp * 100), 2)}%">${formatter.format(currentDispInTarget)}</div>
-                                </div>
-                            </div>
-                            <div class="chart-bar-row">
-                                <div class="chart-bar-label">${targetCity}</div>
-                                <div class="chart-bar-track">
-                                    <div class="chart-bar-fill ${targetDisposable >= 0 ? 'disp-positive' : 'disp-negative'}" style="width: ${Math.max((targetDisposable / maxDisp * 100), 2)}%">${formatter.format(targetDisposable)}</div>
-                                </div>
-                            </div>`;
-                    }
-                }
-            }
-            document.getElementById('chartBars').innerHTML = chartHTML;
-            chartSection.style.display = '';
 
             // === 7. HOW WE CALCULATED THIS ===
             const salaryDesc = isFamily2
@@ -5132,7 +5029,14 @@
             shareParams.set('salary', salary);
             if (currentNeighborhood) shareParams.set('fromN', currentNeighborhood);
             if (targetNeighborhood) shareParams.set('toN', targetNeighborhood);
-            if (hasOffer) shareParams.set('offer', targetSalaryOffer);
+            if (hasOffer) {
+                if (isFamily2 && offer1 !== null && offer2 !== null) {
+                    shareParams.set('offer1', offer1);
+                    shareParams.set('offer2', offer2);
+                } else {
+                    shareParams.set('offer', targetSalaryOffer);
+                }
+            }
             if (household.mode === 'family') {
                 shareParams.set('mode', 'family');
                 shareParams.set('adults', household.adults);
@@ -5170,9 +5074,10 @@
             document.getElementById('currentNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetSalary').value = '';
+            document.getElementById('offer1Salary').value = '';
+            document.getElementById('offer2Salary').value = '';
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
-            document.getElementById('chartSection').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
@@ -5405,11 +5310,14 @@
                 if (!(mode === 'family' && (parseInt(params.get('adults')) || 2) === 2)) {
                     document.getElementById('currentSalary').value = sal;
                 }
-                var fromN = params.get('fromN'), toN = params.get('toN'), offer = params.get('offer');
+                var fromN = params.get('fromN'), toN = params.get('toN');
+                var offer = params.get('offer'), offer1Param = params.get('offer1'), offer2Param = params.get('offer2');
                 setTimeout(function(){
                     if (fromN) document.getElementById('currentNeighborhood').value = fromN;
                     if (toN) document.getElementById('targetNeighborhood').value = toN;
                     if (offer) document.getElementById('targetSalary').value = offer;
+                    if (offer1Param) document.getElementById('offer1Salary').value = offer1Param;
+                    if (offer2Param) document.getElementById('offer2Salary').value = offer2Param;
                     window._fromUrlParams = true;
                     document.getElementById('calculateBtn').click();
                 }, 150);
