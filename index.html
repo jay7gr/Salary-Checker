@@ -1321,6 +1321,41 @@
             color: var(--accent);
         }
 
+        /* Remote worker toggle */
+        .remote-toggle { margin-top: 14px; }
+        .remote-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .remote-label input { display: none; }
+        .remote-check {
+            width: 20px; height: 20px;
+            border: 2px solid var(--input-border);
+            border-radius: 6px;
+            background: var(--input-bg);
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.15s;
+        }
+        .remote-label input:checked + .remote-check {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .remote-label input:checked + .remote-check::after {
+            content: '\2713';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
         /* Citation Sources */
         .citation-sources { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
         .citation-sources strong { font-size: 0.78rem; color: var(--text-primary); }
@@ -1573,6 +1608,37 @@
         }
         .fbc-row.total .fbc-val.negative {
             color: #ef4444;
+        }
+
+        /* Expense % difference badges */
+        .exp-pct {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .exp-pct.pct-cheaper {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+        .exp-pct.pct-pricier {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+        .exp-pct.pct-similar {
+            background: rgba(156, 163, 175, 0.1);
+            color: var(--text-secondary);
+        }
+        [data-theme="dark"] .exp-pct.pct-cheaper {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+        [data-theme="dark"] .exp-pct.pct-pricier {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
         }
 
         /* COLI Reference (demoted) */
@@ -2181,6 +2247,13 @@
                         <button class="chip" data-value="4" type="button">4</button>
                     </div>
                 </div>
+            </div>
+            <div class="remote-toggle" id="remoteToggle">
+                <label class="remote-label">
+                    <input type="checkbox" id="remoteCheckbox">
+                    <span class="remote-check"></span>
+                    <span>I work remotely <span style="color:var(--text-secondary);font-weight:400;">— compare my purchasing power</span></span>
+                </label>
             </div>
         </div>
 
@@ -3363,13 +3436,14 @@
         }
 
         // Household state
-        const householdState = { mode: 'single', adults: 2, children: 1 };
+        const householdState = { mode: 'single', adults: 2, children: 1, remote: false };
 
         function getHousehold() {
             return {
                 mode: householdState.mode,
                 adults: householdState.mode === 'single' ? 1 : householdState.adults,
-                children: householdState.mode === 'single' ? 0 : householdState.children
+                children: householdState.mode === 'single' ? 0 : householdState.children,
+                remote: householdState.remote
             };
         }
 
@@ -3410,6 +3484,11 @@
                 // Sync family city with current city
                 const cc = document.getElementById('currentCity').value;
                 if (cc) document.getElementById('familyCity').value = cc;
+            }
+            // Remote mode: hide target salary inputs (we use the same salary)
+            if (householdState.remote) {
+                singleOfferRow.style.display = 'none';
+                familyOfferInputs.style.display = 'none';
             }
         }
 
@@ -4660,8 +4739,20 @@
             const hasFullData = !!(currentDed && currentCountry && targetCountry && currentExpenses && targetExpenses);
             const hasTaxData = !!(currentDed && currentCountry && targetCountry);
 
+            // Calculate current disposable (used in both normal and remote mode)
             if (hasFullData) {
                 currentDisposable = combinedCurrentTakeHome - currentExpenses.total;
+            }
+
+            const isFamily2Early = household.mode === 'family' && household.adults === 2;
+            if (household.remote) {
+                // === REMOTE MODE: same salary, compare purchasing power ===
+                const targetGrossSingle = salary * exchangeRate;
+                const targetGross2 = salary2 ? salary2 * exchangeRate : 0;
+                trueEquivalentSalary = isFamily2Early ? targetGrossSingle + targetGross2 : targetGrossSingle;
+                targetAdult1Gross = targetGrossSingle;
+                if (isFamily2Early) targetAdult2Gross = targetGross2;
+            } else if (hasFullData) {
                 const targetDisposableNeeded = currentDisposable * exchangeRate;
                 const targetTakeHomeNeeded = targetDisposableNeeded + targetExpenses.total;
 
@@ -4702,9 +4793,19 @@
             const isFamily2 = household.mode === 'family' && household.adults === 2;
             const isFamily = household.mode === 'family';
 
-            // For target-side deductions: if 2 adults and no offer, use each adult's gross; else use combined
+            // For target-side deductions
             let targetDed = null, targetDed2 = null, combinedTargetTakeHome = 0;
-            if (isFamily2 && !hasOffer) {
+            if (household.remote) {
+                // Remote mode: tax the converted salary in the target country
+                if (isFamily2) {
+                    targetDed = (targetCountry) ? calculateAllDeductions(targetAdult1Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                    targetDed2 = (targetCountry) ? calculateAllDeductions(targetAdult2Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                    if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
+                } else {
+                    targetDed = (targetCountry) ? calculateAllDeductions(targetAdult1Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
+                    if (targetDed) combinedTargetTakeHome = targetDed.net;
+                }
+            } else if (isFamily2 && !hasOffer) {
                 targetDed = (targetCountry) ? calculateAllDeductions(targetAdult1Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
                 targetDed2 = (targetCountry) ? calculateAllDeductions(targetAdult2Gross || 0, targetCountry, targetCity, targetNeighborhood) : null;
                 if (targetDed && targetDed2) combinedTargetTakeHome = targetDed.net + targetDed2.net;
@@ -4725,12 +4826,23 @@
 
             // === 1. HEADLINE ===
             const isHouseholdMode = isFamily;
-            const headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
+            let headlinePrefix;
+            if (household.remote) {
+                headlinePrefix = isHouseholdMode ? 'Your Household Purchasing Power in' : 'Your Purchasing Power in';
+            } else {
+                headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
+            }
             document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
             document.getElementById('resultAmount').textContent = formattedAmount;
 
             let subtitleHtml = '';
-            if (isFamily2) {
+            if (household.remote) {
+                if (isFamily2) {
+                    subtitleHtml = `Your household income of <strong>${formattedOriginalCurrent}</strong> (${currentCurrency}), converted and taxed in ${targetCity} after living costs.`;
+                } else {
+                    subtitleHtml = `Your <strong>${formattedOriginalCurrent}</strong> (${currentCurrency}) salary, converted and taxed in ${targetCity} after living costs.`;
+                }
+            } else if (isFamily2) {
                 subtitleHtml = `Adult 1: <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2: <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong>`;
                 if (hasFullData) subtitleHtml += `<br><span style="font-size:0.82rem;color:var(--text-secondary);">To maintain the same household disposable income from <strong>${fmtCurr(totalSalary, currentCurrency)}</strong> in ${currentLabel}.</span>`;
             } else {
@@ -4751,7 +4863,24 @@
                 const absThPct = Math.abs(thDiffPct).toFixed(0);
                 let verdictClass, verdictIcon, verdictText;
 
-                if (hasOffer) {
+                if (household.remote) {
+                    // Remote mode verdict: compare disposable income
+                    const currentDispInTarget = currentDisposable * exchangeRate;
+                    const dispDiffPct = currentDispInTarget !== 0 ? ((targetDisposable - currentDispInTarget) / Math.abs(currentDispInTarget)) * 100 : 0;
+                    const absPct = Math.abs(dispDiffPct).toFixed(0);
+                    const fmtDiff = formatter.format(Math.abs(targetDisposable - currentDispInTarget));
+
+                    if (dispDiffPct > 5) {
+                        verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
+                        verdictText = `Your money goes further \u2014 you'd have ~${absPct}% more disposable income (${fmtDiff}/yr more) in ${targetLabel}`;
+                    } else if (dispDiffPct < -5) {
+                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
+                        verdictText = `Your money doesn't go as far \u2014 you'd have ~${absPct}% less disposable income (${fmtDiff}/yr less) in ${targetLabel}`;
+                    } else {
+                        verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
+                        verdictText = `Similar purchasing power \u2014 your disposable income would change by ~${absPct}% in ${targetLabel}`;
+                    }
+                } else if (hasOffer) {
                     const fmtOffer = formatter.format(targetSalaryOffer);
                     if (targetDisposable > 0 && thDiffPct >= -2) {
                         // Affordable and at or above parity
@@ -4784,7 +4913,16 @@
             // === 3. FULL BREAKDOWN CARDS ===
             const breakdownSection = document.getElementById('fullBreakdownSection');
             if (currentDed && targetDed) {
-                function buildFullBreakdownCard(label, gross, ded, ded2, expenses, disposable, currency, isOffer, hh) {
+                function pctBadge(currentVal, targetVal) {
+                    if (!currentVal || currentVal <= 0 || !targetVal) return '';
+                    const pct = ((targetVal - currentVal) / currentVal) * 100;
+                    const absPct = Math.abs(pct).toFixed(0);
+                    if (absPct < 3) return '<span class="exp-pct pct-similar">~same</span>';
+                    if (pct > 0) return `<span class="exp-pct pct-pricier">+${absPct}%</span>`;
+                    return `<span class="exp-pct pct-cheaper">\u2212${absPct}%</span>`;
+                }
+
+                function buildFullBreakdownCard(label, gross, ded, ded2, expenses, disposable, currency, isOffer, hh, compareExpenses) {
                     const fmtLocal = (amount) => fmtCurr(amount, currency);
                     const dispClass = (disposable !== null && disposable >= 0) ? 'positive' : 'negative';
                     const isFam2 = hh && hh.mode === 'family' && hh.adults === 2;
@@ -4818,16 +4956,22 @@
                         const rentLbl = expenses.rentLabel || '1BR';
                         html += `<div class="fbc-section-label">Living Expenses (Annual)<sup>1</sup></div>`;
                         if (expenses.hasRent) {
-                            html += `<div class="fbc-row expense"><span>Rent (${rentLbl})</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.rent)}</span></div>`;
+                            const rentBadge = compareExpenses ? pctBadge(compareExpenses.rent, expenses.rent) : '';
+                            html += `<div class="fbc-row expense"><span>Rent (${rentLbl}) ${rentBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.rent)}</span></div>`;
                         }
                         if (expenses.hasLivingCosts) {
-                            html += `<div class="fbc-row expense"><span>Groceries</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.groceries)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Utilities</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.utilities)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Transport</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.transport)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Healthcare</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.healthcare)}</span></div>`;
+                            const gBadge = compareExpenses ? pctBadge(compareExpenses.groceries, expenses.groceries) : '';
+                            const uBadge = compareExpenses ? pctBadge(compareExpenses.utilities, expenses.utilities) : '';
+                            const tBadge = compareExpenses ? pctBadge(compareExpenses.transport, expenses.transport) : '';
+                            const hBadge = compareExpenses ? pctBadge(compareExpenses.healthcare, expenses.healthcare) : '';
+                            html += `<div class="fbc-row expense"><span>Groceries ${gBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.groceries)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Utilities ${uBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.utilities)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Transport ${tBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.transport)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Healthcare ${hBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.healthcare)}</span></div>`;
                             if (hh && hh.children > 0 && expenses.childcare > 0) {
+                                const cBadge = compareExpenses ? pctBadge(compareExpenses.childcare, expenses.childcare) : '';
                                 const childLabel = hh.children === 1 ? 'Childcare (1 child)' : `Childcare (${hh.children} children)`;
-                                html += `<div class="fbc-row expense"><span>${childLabel}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.childcare)}</span></div>`;
+                                html += `<div class="fbc-row expense"><span>${childLabel} ${cBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.childcare)}</span></div>`;
                             }
                         }
                         if (disposable !== null) {
@@ -4844,11 +4988,29 @@
 
                 // Determine gross amounts for cards
                 const currentGrossForCard = isFamily2 ? (salary + salary2) : salary;
-                const targetGrossForCard = isFamily2 && !hasOffer ? (targetAdult1Gross + targetAdult2Gross) : affordabilitySalary;
+                const targetGrossForCard = household.remote
+                    ? (isFamily2 ? (targetAdult1Gross + targetAdult2Gross) : targetAdult1Gross)
+                    : (isFamily2 && !hasOffer ? (targetAdult1Gross + targetAdult2Gross) : affordabilitySalary);
+
+                // Currency-convert current expenses to target currency for % comparison badges
+                let compareExps = null;
+                if (currentExpenses && targetExpenses) {
+                    compareExps = {
+                        rent: currentExpenses.rent * exchangeRate,
+                        groceries: currentExpenses.groceries * exchangeRate,
+                        utilities: currentExpenses.utilities * exchangeRate,
+                        transport: currentExpenses.transport * exchangeRate,
+                        healthcare: currentExpenses.healthcare * exchangeRate,
+                        childcare: currentExpenses.childcare * exchangeRate,
+                        total: currentExpenses.total * exchangeRate
+                    };
+                }
+
+                const targetCardLabel = household.remote ? `${targetLabel} (same salary, local taxes)` : targetLabel;
 
                 document.getElementById('breakdownCards').innerHTML =
-                    buildFullBreakdownCard(currentLabel, currentGrossForCard, currentDed, currentDed2, currentExpenses, currentDispForCard, currentCurrency, false, household) +
-                    buildFullBreakdownCard(targetLabel, targetGrossForCard, targetDed, targetDed2, targetExpenses, targetDispForCard, targetCurrency, hasOffer, household);
+                    buildFullBreakdownCard(currentLabel, currentGrossForCard, currentDed, currentDed2, currentExpenses, currentDispForCard, currentCurrency, false, household, null) +
+                    buildFullBreakdownCard(targetCardLabel, targetGrossForCard, targetDed, targetDed2, targetExpenses, targetDispForCard, targetCurrency, hasOffer, household, compareExps);
 
                 // Dynamic citations
                 const COUNTRY_TAX_SOURCES = {
@@ -4929,7 +5091,7 @@
 
             // === 5. OFFER COMPARISON ===
             const offerCompEl = document.getElementById('offerComparison');
-            if (hasOffer) {
+            if (hasOffer && !household.remote) {
                 const formattedOffer = formatter.format(targetSalaryOffer);
                 const formattedTrueEquiv = formatter.format(trueEquivalentSalary);
                 const offerVsTrue = ((targetSalaryOffer - trueEquivalentSalary) / trueEquivalentSalary) * 100;
@@ -4953,48 +5115,91 @@
             }
 
             // === 7. HOW WE CALCULATED THIS ===
-            const salaryDesc = isFamily2
-                ? `Adult 1: ${fmtCurr(salary, currentCurrency)} + Adult 2: ${fmtCurr(salary2, currentCurrency)} (${formattedOriginalCurrent} total)`
-                : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
-            const dedDesc = isFamily2
-                ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
-                : `${currentDed ? currentDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${currentDed ? fmtCurr(currentDed.net, currentCurrency) + ' take-home' : 'unknown take-home'}`;
-            const expDesc = currentExpenses ? `${fmtCurr(currentExpenses.total, currentCurrency)}/yr in ${currentExpenses.rentLabel || '1BR'} rent and living costs${household.children > 0 ? ' (incl. childcare for ' + household.children + ')' : ''}` : 'Expense data not available';
-            const grossDesc = isFamily2
-                ? `Adult 1 needs <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2 needs <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong> = <strong>${formattedAmount}</strong>`
-                : `you need a gross salary of <strong>${formattedAmount}</strong>`;
+            let explanation;
+            if (household.remote) {
+                const salaryDesc = isFamily2
+                    ? `Adult 1: ${fmtCurr(salary, currentCurrency)} + Adult 2: ${fmtCurr(salary2, currentCurrency)} (${formattedOriginalCurrent} total)`
+                    : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
+                const convertedDesc = `${formattedAmount} (${targetCurrency}) at ${exchangeRate.toFixed(4)} exchange rate`;
+                const targetDedDesc = isFamily2
+                    ? `Adult 1: ${targetDed ? targetDed.totalRate + '%' : '?'}, Adult 2: ${targetDed2 ? targetDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedTargetTakeHome, targetCurrency)}`
+                    : `${targetDed ? targetDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${targetDed ? fmtCurr(targetDed.net, targetCurrency) + ' take-home' : 'unknown take-home'}`;
+                const currentDispDesc = hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr' : 'Cannot calculate';
+                const targetDispDesc = hasFullData && targetDisposable !== null ? fmtCurr(targetDisposable, targetCurrency) + '/yr' : 'Cannot calculate';
 
-            const explanation = `
-                <div class="explanation-title">How we calculated this</div>
-                <div class="explanation-step">
-                    <div class="step-number">1</div>
-                    <div class="step-text"><strong>${isFamily ? 'Household income:' : 'Your salary:'}</strong> ${salaryDesc}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">2</div>
-                    <div class="step-text"><strong>Current deductions:</strong> ${dedDesc}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">3</div>
-                    <div class="step-text"><strong>Current expenses:</strong> ${expDesc}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">4</div>
-                    <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 this is what we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">5</div>
-                    <div class="step-text"><strong>Target city expenses:</strong> ${targetExpenses ? targetExpenses.rentLabel + ' rent + living costs in ' + targetLabel + ' total ' + fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'unknown'}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">6</div>
-                    <div class="step-text"><strong>Target take-home needed:</strong> ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) + ' (' + fmtCurr(currentDisposable * exchangeRate, targetCurrency) + ' disposable + ' + fmtCurr(targetExpenses.total, targetCurrency) + ' expenses)' : 'Cannot calculate'}</div>
-                </div>
-                <div class="explanation-step">
-                    <div class="step-number">7</div>
-                    <div class="step-text"><strong>Reverse-engineer gross:</strong> To take home ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) : '?'} in ${targetCity}, ${grossDesc}</div>
-                </div>
-            `;
+                explanation = `
+                    <div class="explanation-title">How we calculated this</div>
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-text"><strong>${isFamily ? 'Household income:' : 'Your salary:'}</strong> ${salaryDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-text"><strong>Current city taxes:</strong> ${isFamily2
+                            ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
+                            : `${currentDed ? currentDed.totalRate + '% in taxes' : '?'}, leaving ${fmtCurr(combinedCurrentTakeHome, currentCurrency)} take-home`}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-text"><strong>Current expenses:</strong> ${currentExpenses ? fmtCurr(currentExpenses.total, currentCurrency) + '/yr' : 'N/A'} \u2192 <strong>Current disposable:</strong> ${currentDispDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">4</div>
+                        <div class="step-text"><strong>Same salary converted:</strong> ${convertedDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">5</div>
+                        <div class="step-text"><strong>Target city taxes:</strong> ${targetDedDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">6</div>
+                        <div class="step-text"><strong>Target expenses:</strong> ${targetExpenses ? fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'N/A'} \u2192 <strong>Target disposable:</strong> ${targetDispDesc}</div>
+                    </div>
+                `;
+            } else {
+                const salaryDesc = isFamily2
+                    ? `Adult 1: ${fmtCurr(salary, currentCurrency)} + Adult 2: ${fmtCurr(salary2, currentCurrency)} (${formattedOriginalCurrent} total)`
+                    : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
+                const dedDesc = isFamily2
+                    ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
+                    : `${currentDed ? currentDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${currentDed ? fmtCurr(currentDed.net, currentCurrency) + ' take-home' : 'unknown take-home'}`;
+                const expDesc = currentExpenses ? `${fmtCurr(currentExpenses.total, currentCurrency)}/yr in ${currentExpenses.rentLabel || '1BR'} rent and living costs${household.children > 0 ? ' (incl. childcare for ' + household.children + ')' : ''}` : 'Expense data not available';
+                const grossDesc = isFamily2
+                    ? `Adult 1 needs <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2 needs <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong> = <strong>${formattedAmount}</strong>`
+                    : `you need a gross salary of <strong>${formattedAmount}</strong>`;
+
+                explanation = `
+                    <div class="explanation-title">How we calculated this</div>
+                    <div class="explanation-step">
+                        <div class="step-number">1</div>
+                        <div class="step-text"><strong>${isFamily ? 'Household income:' : 'Your salary:'}</strong> ${salaryDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">2</div>
+                        <div class="step-text"><strong>Current deductions:</strong> ${dedDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">3</div>
+                        <div class="step-text"><strong>Current expenses:</strong> ${expDesc}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">4</div>
+                        <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 this is what we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">5</div>
+                        <div class="step-text"><strong>Target city expenses:</strong> ${targetExpenses ? targetExpenses.rentLabel + ' rent + living costs in ' + targetLabel + ' total ' + fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'unknown'}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">6</div>
+                        <div class="step-text"><strong>Target take-home needed:</strong> ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) + ' (' + fmtCurr(currentDisposable * exchangeRate, targetCurrency) + ' disposable + ' + fmtCurr(targetExpenses.total, targetCurrency) + ' expenses)' : 'Cannot calculate'}</div>
+                    </div>
+                    <div class="explanation-step">
+                        <div class="step-number">7</div>
+                        <div class="step-text"><strong>Reverse-engineer gross:</strong> To take home ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) : '?'} in ${targetCity}, ${grossDesc}</div>
+                    </div>
+                `;
+            }
             document.getElementById('explanationSection').innerHTML = explanation;
 
             // === 8. COLI REFERENCE (demoted) ===
@@ -5091,6 +5296,7 @@
                 shareParams.set('children', household.children);
                 if (salary2) shareParams.set('salary2', salary2);
             }
+            if (household.remote) shareParams.set('remote', '1');
             history.replaceState(null, '', '?' + shareParams.toString());
 
             // Populate share bar
@@ -5098,7 +5304,9 @@
             const shareUrl = window.location.origin + '/?' + shareParams.toString();
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
-            const shareText = 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) — salary:converter';
+            const shareText = household.remote
+                ? 'My ' + formattedOriginalCurrent + ' salary goes ' + (targetDisposable > currentDisposable * exchangeRate ? 'further' : 'less far') + ' in ' + targetLabel2 + ' \u2014 salary:converter'
+                : 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) \u2014 salary:converter';
             shareBar.setAttribute('data-share-text', shareText);
             shareBar.setAttribute('data-share-url', shareUrl);
 
@@ -5132,6 +5340,8 @@
             // Reset household state
             setHouseholdMode('single');
             householdState.adults = 2; householdState.children = 1;
+            householdState.remote = false;
+            document.getElementById('remoteCheckbox').checked = false;
             document.querySelectorAll('#adultsChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '2'); });
             document.querySelectorAll('#childrenChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '1'); });
             document.getElementById('adult1Salary').value = '';
@@ -5266,6 +5476,12 @@
             });
         });
 
+        // Remote worker checkbox
+        document.getElementById('remoteCheckbox').addEventListener('change', function() {
+            householdState.remote = this.checked;
+            updateSalaryFields();
+        });
+
         // Format adult salary inputs with commas
         ['adult1Salary', 'adult2Salary'].forEach(id => {
             document.getElementById(id).addEventListener('input', (e) => {
@@ -5349,6 +5565,13 @@
                     document.getElementById('adult1Salary').value = sal;
                     document.getElementById('adult2Salary').value = sal2;
                 }
+            }
+            // Restore remote mode from URL
+            var remote = params.get('remote');
+            if (remote === '1') {
+                document.getElementById('remoteCheckbox').checked = true;
+                householdState.remote = true;
+                updateSalaryFields();
             }
             if (from && to && sal) {
                 document.getElementById('currentCity').value = from;
