@@ -2348,13 +2348,14 @@
             <div class="result-amount" id="resultAmount"></div>
             <div class="result-subtitle" id="resultSubtitle"></div>
 
-            <!-- 2. Verdict Banner -->
+            <!-- 2. Offer Comparison (is your offer enough?) -->
+            <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
+
+            <!-- 3. Verdict Banner (affordable + take-home comparison) -->
             <div class="verdict-banner" id="verdictBanner" style="display: none;">
                 <span class="verdict-icon" id="verdictIcon"></span>
                 <span id="verdictText"></span>
             </div>
-
-            <!-- Childcare toggle removed — replaced by Household section -->
 
             <!-- 4. Full Breakdown Cards -->
             <div class="full-breakdown-section" id="fullBreakdownSection" style="display: none;">
@@ -2362,9 +2363,6 @@
                 <div class="breakdown-cards" id="breakdownCards"></div>
                 <div class="breakdown-note" id="breakdownNote"></div>
             </div>
-
-            <!-- 5. Offer Comparison -->
-            <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
             <!-- 6. Visual Chart -->
             <div class="chart-section" id="chartSection" style="display: none;">
@@ -4719,31 +4717,36 @@
             }
             document.getElementById('resultSubtitle').innerHTML = subtitleHtml;
 
-            // === 2. VERDICT BANNER ===
+            // === 3. VERDICT BANNER (affordable + take-home comparison) ===
             const verdictBanner = document.getElementById('verdictBanner');
-            if (hasFullData && currentDisposable !== null && targetDisposable !== null) {
-                const diffPct = currentDisposable !== 0
-                    ? ((targetDisposable - currentDisposable * exchangeRate) / Math.abs(currentDisposable * exchangeRate)) * 100
-                    : 0;
-                const absDiffPct = Math.abs(diffPct).toFixed(0);
+            if (hasFullData && combinedCurrentTakeHome > 0 && combinedTargetTakeHome > 0) {
+                // Compare take-home pay (stable metric — avoids extreme % on small disposable residuals)
+                const currentTHinTarget = combinedCurrentTakeHome * exchangeRate;
+                const thDiffPct = ((combinedTargetTakeHome - currentTHinTarget) / currentTHinTarget) * 100;
+                const absThPct = Math.abs(thDiffPct).toFixed(0);
                 let verdictClass, verdictIcon, verdictText;
 
                 if (hasOffer) {
                     const fmtOffer = formatter.format(targetSalaryOffer);
-                    if (diffPct > 5) {
+                    if (targetDisposable > 0 && thDiffPct >= -2) {
+                        // Affordable and at or above parity
                         verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
-                        verdictText = `Your ${fmtOffer} offer gives you ~${absDiffPct}% MORE disposable income than you currently have in ${currentCity}`;
-                    } else if (diffPct < -5) {
-                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
-                        verdictText = `Your ${fmtOffer} offer gives you ~${absDiffPct}% LESS disposable income than you currently have in ${currentCity}`;
-                    } else {
+                        const moreOrLess = thDiffPct >= 0 ? 'more' : 'less';
+                        verdictText = `Your ${fmtOffer} offer is affordable \u2014 you'd have ~${absThPct}% ${moreOrLess} take-home pay than your current equivalent`;
+                    } else if (targetDisposable > 0 && thDiffPct < -2) {
+                        // Affordable but below parity
                         verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `Your ${fmtOffer} offer maintains roughly the same disposable income \u2014 within ~${absDiffPct}%`;
+                        verdictText = `Your ${fmtOffer} offer is affordable, but you'd have ~${absThPct}% less take-home pay \u2014 you'd save less each month`;
+                    } else {
+                        // Not affordable — expenses exceed take-home
+                        const shortfall = formatter.format(Math.abs(targetDisposable));
+                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
+                        verdictText = `Your ${fmtOffer} offer may be tight \u2014 living expenses would exceed take-home by ${shortfall}/yr`;
                     }
                 } else {
                     verdictClass = 'neutral'; verdictIcon = '\u2139\uFE0F';
                     const needPrefix = isHouseholdMode ? 'Your household needs' : 'You need';
-                    verdictText = `${needPrefix} ${formattedAmount} in ${targetLabel} to maintain your current disposable income of ${fmtCurr(currentDisposable, currentCurrency)}/yr`;
+                    verdictText = `${needPrefix} ${formattedAmount} in ${targetLabel} to maintain your current take-home pay relative to expenses`;
                 }
                 verdictBanner.className = 'verdict-banner ' + verdictClass;
                 document.getElementById('verdictIcon').textContent = verdictIcon;
