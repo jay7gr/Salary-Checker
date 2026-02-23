@@ -2271,26 +2271,29 @@
             </div>
             <div id="singleOfferRow">
                 <div class="form-group" style="margin-top: 8px;">
-                    <label for="targetSalary">Salary Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
-                    <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
+                    <label for="targetSalary">Target City Salary <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                    <div style="position:relative;">
+                        <span id="offerCurrencyBadge" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--text-secondary);pointer-events:none;display:none;"></span>
+                        <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
+                    </div>
                     <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
-                        Have an actual offer? Enter it for a personalized comparison.
+                        Have a target salary or offer? Enter it for a personalized comparison.
                     </div>
                 </div>
             </div>
             <div id="familyOfferInputs" style="display:none;">
                 <div class="two-column" style="margin-top: 8px;">
                     <div class="form-group">
-                        <label for="offer1Salary">Adult 1 Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                        <label for="offer1Salary">Adult 1 Target Salary <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
                         <input type="text" id="offer1Salary" placeholder="e.g. 80,000" inputmode="numeric">
                     </div>
                     <div class="form-group">
-                        <label for="offer2Salary">Adult 2 Offer <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                        <label for="offer2Salary">Adult 2 Target Salary <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
                         <input type="text" id="offer2Salary" placeholder="e.g. 45,000" inputmode="numeric">
                     </div>
                 </div>
-                <div style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
-                    Have actual offers? Enter them for a personalized comparison.
+                <div id="familyOfferCurrencyHint" style="font-size:0.75rem;color:var(--text-secondary);margin-top:4px;">
+                    Have target salaries or offers? Enter them for a personalized comparison.
                 </div>
             </div>
             <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
@@ -2307,7 +2310,7 @@
             <div class="result-amount" id="resultAmount"></div>
             <div class="result-subtitle" id="resultSubtitle"></div>
 
-            <!-- 2. Offer Comparison (is your offer enough?) -->
+            <!-- 2. Target Salary Comparison (is your target salary enough?) -->
             <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
             <!-- 3. Verdict Banner (affordable + take-home comparison) -->
@@ -4291,6 +4294,48 @@
             } else {
                 hint.classList.remove('show');
             }
+
+            // Update offer input currency hints when target currency changes
+            if (currencySelectId === 'targetCurrency') {
+                updateOfferCurrencyHints();
+            }
+        }
+
+        // Show target currency in offer input placeholders and hints
+        function updateOfferCurrencyHints() {
+            const tc = document.getElementById('targetCurrency').value;
+            const badge = document.getElementById('offerCurrencyBadge');
+            const familyHint = document.getElementById('familyOfferCurrencyHint');
+            const offer1 = document.getElementById('offer1Salary');
+            const offer2 = document.getElementById('offer2Salary');
+            const singleOffer = document.getElementById('targetSalary');
+
+            if (tc) {
+                const sym = getCurrencySymbol(tc);
+                badge.textContent = sym;
+                badge.style.display = '';
+                singleOffer.style.paddingLeft = `${sym.length * 10 + 16}px`;
+                singleOffer.placeholder = `e.g. 45,000`;
+                offer1.placeholder = `e.g. 80,000 (${tc})`;
+                offer2.placeholder = `e.g. 45,000 (${tc})`;
+                familyHint.textContent = `Enter target salaries in ${tc}. Uses the target currency selected above.`;
+            } else {
+                badge.style.display = 'none';
+                singleOffer.style.paddingLeft = '';
+                singleOffer.placeholder = 'e.g. 45,000';
+                offer1.placeholder = 'e.g. 80,000';
+                offer2.placeholder = 'e.g. 45,000';
+                familyHint.textContent = 'Have target salaries or offers? Enter them for a personalized comparison.';
+            }
+        }
+
+        // Get currency symbol from code
+        function getCurrencySymbol(code) {
+            try {
+                return (0).toLocaleString('en-US', { style: 'currency', currency: code, minimumFractionDigits: 0, maximumFractionDigits: 0 }).replace(/\d/g, '').trim();
+            } catch(e) {
+                return code;
+            }
         }
 
         // Populate neighborhood dropdown when a city is selected
@@ -4362,6 +4407,9 @@
         document.getElementById('targetCity').addEventListener('change', (e) => {
             suggestCurrency(e.target.value, 'targetCurrency', 'targetCurrencyHint');
             populateNeighborhoods(e.target.value, 'targetNeighborhood', 'targetNeighborhoodGroup');
+        });
+        document.getElementById('targetCurrency').addEventListener('change', () => {
+            updateOfferCurrencyHints();
         });
 
         // Create quick select buttons
@@ -4709,16 +4757,16 @@
                         // Affordable and at or above parity
                         verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
                         const moreOrLess = thDiffPct >= 0 ? 'more' : 'less';
-                        verdictText = `Your ${fmtOffer} offer is affordable \u2014 you'd have ~${absThPct}% ${moreOrLess} take-home pay than your current equivalent`;
+                        verdictText = `Your ${fmtOffer} target salary is affordable \u2014 you'd have ~${absThPct}% ${moreOrLess} take-home pay than your current equivalent`;
                     } else if (targetDisposable > 0 && thDiffPct < -2) {
                         // Affordable but below parity
                         verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `Your ${fmtOffer} offer is affordable, but you'd have ~${absThPct}% less take-home pay \u2014 you'd save less each month`;
+                        verdictText = `Your ${fmtOffer} target salary is affordable, but you'd have ~${absThPct}% less take-home pay \u2014 you'd save less each month`;
                     } else {
                         // Not affordable — expenses exceed take-home
                         const shortfall = formatter.format(Math.abs(targetDisposable));
                         verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
-                        verdictText = `Your ${fmtOffer} offer may be tight \u2014 living expenses would exceed take-home by ${shortfall}/yr`;
+                        verdictText = `Your ${fmtOffer} target salary may be tight \u2014 living expenses would exceed take-home by ${shortfall}/yr`;
                     }
                 } else {
                     verdictClass = 'neutral'; verdictIcon = '\u2139\uFE0F';
@@ -4740,7 +4788,7 @@
                     const fmtLocal = (amount) => fmtCurr(amount, currency);
                     const dispClass = (disposable !== null && disposable >= 0) ? 'positive' : 'negative';
                     const isFam2 = hh && hh.mode === 'family' && hh.adults === 2;
-                    const grossLabel = isOffer ? 'Gross Salary (your offer)' : (isFam2 ? 'Household Gross' : 'Gross Salary');
+                    const grossLabel = isOffer ? 'Gross Salary (your target)' : (isFam2 ? 'Household Gross' : 'Gross Salary');
 
                     let html = `<div class="full-breakdown-card">
                         <div class="fbc-city">${label}</div>
@@ -4888,11 +4936,11 @@
                 const offerAbsPct = Math.abs(offerVsTrue).toFixed(0);
                 let offerLine;
                 if (offerVsTrue > 2) {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-above">${offerAbsPct}% above</span> the true equivalent of ${formattedTrueEquiv}. You'd come out ahead.`;
+                    offerLine = `Your target salary of ${formattedOffer} is <span class="offer-above">${offerAbsPct}% above</span> the true equivalent of ${formattedTrueEquiv}. You'd come out ahead.`;
                 } else if (offerVsTrue < -2) {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-below">${offerAbsPct}% below</span> the true equivalent of ${formattedTrueEquiv}. You'd have less disposable income than today.`;
+                    offerLine = `Your target salary of ${formattedOffer} is <span class="offer-below">${offerAbsPct}% below</span> the true equivalent of ${formattedTrueEquiv}. You'd have less disposable income than today.`;
                 } else {
-                    offerLine = `Your offer of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the true equivalent ${formattedTrueEquiv}. Essentially a match.`;
+                    offerLine = `Your target salary of ${formattedOffer} is <span class="offer-match">within ${offerAbsPct}%</span> of the true equivalent ${formattedTrueEquiv}. Essentially a match.`;
                 }
                 // Show per-adult breakdown for family 2-adult mode
                 if (isFamily2 && offer1 !== null && offer2 !== null) {
