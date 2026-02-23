@@ -4209,7 +4209,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         rc_s2 = slugify(rc_n2)
         related_comp_links += f'<a href="/compare/{city_slug}/{rc_s1}-vs-{rc_s2}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{rc_n1} vs {rc_n2}</a>\n'
 
-    meta_desc = f'{n1} vs {n2} in {city}: compare cost of living, rent, and salary equivalents. {more_affordable} is {diff_pct:.0f}% more affordable.'
+    meta_desc = f'{more_affordable} is {diff_pct:.0f}% cheaper than {more_expensive} in {city}. Compare rent, groceries, and salary equivalents neighborhood by neighborhood.'
 
     # Share bar
     share_text = f'{n1} vs {n2} in {city}: {more_affordable} is {diff_pct:.0f}% more affordable — salary:converter'
@@ -4220,13 +4220,13 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{n1} vs {n2}, {city} — Cost of Living Comparison</title>
+    <title>{n1} vs {n2}, {city}: Which Is Cheaper? Neighborhood Comparison {CURRENT_YEAR}</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="{n1} vs {n2}, {city} — Cost of Living Comparison">
+    <meta property="og:title" content="{n1} vs {n2}, {city}: Which Is Cheaper? Neighborhood Comparison {CURRENT_YEAR}">
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">

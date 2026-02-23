@@ -213,6 +213,87 @@ def fix_compare_pages():
 
 
 # =============================================================================
+# 2B. NEIGHBORHOOD COMPARISON PAGES  (compare/{city}/{n1}-vs-{n2}.html)
+# =============================================================================
+def fix_neighborhood_compare_pages():
+    """Update neighborhood comparison titles to 'Which Is Cheaper?' format."""
+
+    for city_dir in glob.glob(os.path.join(BASE, 'compare', '*')):
+        if not os.path.isdir(city_dir):
+            continue
+
+        city_slug = os.path.basename(city_dir)
+
+        for filepath in glob.glob(os.path.join(city_dir, '*.html')):
+            if os.path.basename(filepath) == 'index.html':
+                continue
+
+            try:
+                with open(filepath, 'r', encoding='utf-8') as fh:
+                    content = fh.read()
+
+                # Idempotency check
+                if 'Which Is Cheaper?' in content:
+                    stats['skipped'] += 1
+                    continue
+
+                # Extract neighborhoods and city from existing title
+                # Format: "{N1} vs {N2}, {City} — Cost of Living Comparison"
+                m = re.search(r'<title>(.+?) vs (.+?),\s*(.+?)\s*[—–]\s*Cost of Living Comparison</title>', content)
+                if not m:
+                    stats['skipped'] += 1
+                    continue
+
+                n1 = m.group(1).strip()
+                n2 = m.group(2).strip()
+                city = m.group(3).strip()
+
+                # Extract cheaper neighborhood and percentage from description
+                # Format: "{N2} is X% more affordable"
+                # Note: neighborhood names can have hyphens (Saint-Denis), parentheses, dots, etc.
+                desc_m = re.search(r'([\w][\w\s\(\)\-\.\']+?) is (\d+)% more affordable', content)
+                if desc_m:
+                    cheaper = desc_m.group(1).strip()
+                    pct = desc_m.group(2)
+                    expensive = n1 if cheaper == n2 else n2
+                else:
+                    # Fallback: no percentage found
+                    cheaper = None
+                    pct = None
+                    expensive = None
+
+                # New title
+                new_title_text = f'{n1} vs {n2}, {city}: Which Is Cheaper? Neighborhood Comparison 2026'
+                old_title = r'<title>[^<]+</title>'
+                content = re.sub(old_title, lambda _m: f'<title>{new_title_text}</title>', content, count=1)
+
+                # New description
+                if cheaper and pct:
+                    new_desc_text = f'{cheaper} is {pct}% cheaper than {expensive} in {city}. Compare rent, groceries, and salary equivalents neighborhood by neighborhood.'
+                else:
+                    new_desc_text = f'{n1} vs {n2} in {city}: which neighborhood is cheaper? Compare rent, cost of living, and salary equivalents side by side.'
+
+                old_desc = r'(<meta name="description" content=")[^"]*(")'
+                content = re.sub(old_desc, lambda _m: _m.group(1) + new_desc_text + _m.group(2), content, count=1)
+
+                # OG title
+                old_og_title = r'(<meta property="og:title" content=")[^"]*(")'
+                content = re.sub(old_og_title, lambda _m: _m.group(1) + new_title_text + _m.group(2), content, count=1)
+
+                # OG description
+                old_og_desc = r'(<meta property="og:description" content=")[^"]*(")'
+                content = re.sub(old_og_desc, lambda _m: _m.group(1) + new_desc_text + _m.group(2), content, count=1)
+
+                with open(filepath, 'w', encoding='utf-8') as fh:
+                    fh.write(content)
+                stats['updated'] += 1
+
+            except Exception as e:
+                print(f'  ERROR {filepath}: {e}')
+                stats['errors'] += 1
+
+
+# =============================================================================
 # 3. NEIGHBORHOOD PAGES  (city/{city}/{neighborhood}.html)
 # =============================================================================
 def fix_neighborhood_pages():
@@ -368,6 +449,11 @@ if __name__ == '__main__':
     prev = stats.copy()
     print('\n2. Compare pages...')
     fix_compare_pages()
+    print(f'   Updated: {stats["updated"] - prev["updated"]}, Skipped: {stats["skipped"] - prev["skipped"]}, Errors: {stats["errors"] - prev["errors"]}')
+
+    prev = stats.copy()
+    print('\n2b. Neighborhood comparison pages...')
+    fix_neighborhood_compare_pages()
     print(f'   Updated: {stats["updated"] - prev["updated"]}, Skipped: {stats["skipped"] - prev["skipped"]}, Errors: {stats["errors"] - prev["errors"]}')
 
     prev = stats.copy()
