@@ -1355,6 +1355,13 @@
             font-size: 14px;
             font-weight: 700;
         }
+        .commute-sub {
+            margin-top: 10px;
+            padding-left: 30px;
+        }
+        .commute-label {
+            font-size: 0.85rem !important;
+        }
 
         /* Citation Sources */
         .citation-sources { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
@@ -2252,8 +2259,15 @@
                 <label class="remote-label">
                     <input type="checkbox" id="remoteCheckbox">
                     <span class="remote-check"></span>
-                    <span>I work remotely <span style="color:var(--text-secondary);font-weight:400;">— compare my purchasing power</span></span>
+                    <span>I keep my salary remotely <span style="color:var(--text-secondary);font-weight:400;">— I earn in one city but live in another</span></span>
                 </label>
+                <div class="commute-sub" id="commuteSub" style="display:none;">
+                    <label class="remote-label commute-label">
+                        <input type="checkbox" id="noCommuteCheckbox">
+                        <span class="remote-check"></span>
+                        <span>I don't commute <span style="color:var(--text-secondary);font-weight:400;">— remove transport costs</span></span>
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -3436,14 +3450,15 @@
         }
 
         // Household state
-        const householdState = { mode: 'single', adults: 2, children: 1, remote: false };
+        const householdState = { mode: 'single', adults: 2, children: 1, remote: false, noCommute: false };
 
         function getHousehold() {
             return {
                 mode: householdState.mode,
                 adults: householdState.mode === 'single' ? 1 : householdState.adults,
                 children: householdState.mode === 'single' ? 0 : householdState.children,
-                remote: householdState.remote
+                remote: householdState.remote,
+                noCommute: householdState.noCommute
             };
         }
 
@@ -3532,7 +3547,7 @@
                 // Utilities, transport, healthcare, childcare: no neighborhood multiplier
                 // (utility rates, transit passes, doctor fees, and nursery fees are city-wide, not street-level)
                 utilities = costs.utilities * utilityScale * usdToLocalRate * 12;
-                transport = costs.transport * transportScale * usdToLocalRate * 12;
+                transport = h.noCommute ? 0 : costs.transport * transportScale * usdToLocalRate * 12;
                 healthcare = costs.healthcare * healthScale * usdToLocalRate * 12;
                 childcare = numChildren > 0 ? costs.childcare * numChildren * usdToLocalRate * 12 : 0;
             }
@@ -5006,7 +5021,9 @@
                     };
                 }
 
-                const targetCardLabel = household.remote ? `${targetLabel} (same salary, local taxes)` : targetLabel;
+                const targetCardLabel = household.remote
+                    ? `${targetLabel} (same salary, local taxes${household.noCommute ? ', no commute' : ''})`
+                    : targetLabel;
 
                 document.getElementById('breakdownCards').innerHTML =
                     buildFullBreakdownCard(currentLabel, currentGrossForCard, currentDed, currentDed2, currentExpenses, currentDispForCard, currentCurrency, false, household, null) +
@@ -5141,7 +5158,7 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">3</div>
-                        <div class="step-text"><strong>Current expenses:</strong> ${currentExpenses ? fmtCurr(currentExpenses.total, currentCurrency) + '/yr' : 'N/A'} \u2192 <strong>Current disposable:</strong> ${currentDispDesc}</div>
+                        <div class="step-text"><strong>Current expenses:</strong> ${currentExpenses ? fmtCurr(currentExpenses.total, currentCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} \u2192 <strong>Current disposable:</strong> ${currentDispDesc}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">4</div>
@@ -5153,7 +5170,7 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">6</div>
-                        <div class="step-text"><strong>Target expenses:</strong> ${targetExpenses ? fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'N/A'} \u2192 <strong>Target disposable:</strong> ${targetDispDesc}</div>
+                        <div class="step-text"><strong>Target expenses:</strong> ${targetExpenses ? fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} \u2192 <strong>Target disposable:</strong> ${targetDispDesc}</div>
                     </div>
                 `;
             } else {
@@ -5297,6 +5314,7 @@
                 if (salary2) shareParams.set('salary2', salary2);
             }
             if (household.remote) shareParams.set('remote', '1');
+            if (household.noCommute) shareParams.set('noCommute', '1');
             history.replaceState(null, '', '?' + shareParams.toString());
 
             // Populate share bar
@@ -5341,7 +5359,10 @@
             setHouseholdMode('single');
             householdState.adults = 2; householdState.children = 1;
             householdState.remote = false;
+            householdState.noCommute = false;
             document.getElementById('remoteCheckbox').checked = false;
+            document.getElementById('noCommuteCheckbox').checked = false;
+            document.getElementById('commuteSub').style.display = 'none';
             document.querySelectorAll('#adultsChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '2'); });
             document.querySelectorAll('#childrenChips .chip').forEach(c => { c.classList.toggle('active', c.dataset.value === '1'); });
             document.getElementById('adult1Salary').value = '';
@@ -5479,7 +5500,18 @@
         // Remote worker checkbox
         document.getElementById('remoteCheckbox').addEventListener('change', function() {
             householdState.remote = this.checked;
+            document.getElementById('commuteSub').style.display = this.checked ? 'block' : 'none';
+            if (!this.checked) {
+                // Reset commute sub-option when remote is unchecked
+                document.getElementById('noCommuteCheckbox').checked = false;
+                householdState.noCommute = false;
+            }
             updateSalaryFields();
+        });
+
+        // No commute checkbox
+        document.getElementById('noCommuteCheckbox').addEventListener('change', function() {
+            householdState.noCommute = this.checked;
         });
 
         // Format adult salary inputs with commas
@@ -5571,7 +5603,13 @@
             if (remote === '1') {
                 document.getElementById('remoteCheckbox').checked = true;
                 householdState.remote = true;
+                document.getElementById('commuteSub').style.display = 'block';
                 updateSalaryFields();
+            }
+            var noCommute = params.get('noCommute');
+            if (noCommute === '1') {
+                document.getElementById('noCommuteCheckbox').checked = true;
+                householdState.noCommute = true;
             }
             if (from && to && sal) {
                 document.getElementById('currentCity').value = from;
