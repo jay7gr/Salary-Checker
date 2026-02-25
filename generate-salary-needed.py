@@ -584,6 +584,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
         }}
         * {{ margin:0; padding:0; box-sizing:border-box; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
         body {{ font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif; background:var(--bg); color:var(--text-primary); min-height:100vh; }}
         .page-container {{ max-width:800px; margin:0 auto; padding:24px 20px 60px; }}
         .breadcrumb {{ font-size:0.8rem; color:var(--text-secondary); margin-bottom:24px; }}
@@ -856,6 +857,7 @@ index_page = f'''<!DOCTYPE html>
         [data-theme="dark"] {{ --bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--shadow:0 2px 20px rgba(0,0,0,0.3);--border:#38383a;--border-light:#2c2c2e; }}
         *{{margin:0;padding:0;box-sizing:border-box}}
         html,body{{overflow-x:hidden}}
+        html{{touch-action:manipulation;-ms-touch-action:manipulation}}
         body{{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text-primary);min-height:100vh}}
         .page{{max-width:900px;margin:0 auto;padding:32px 20px 60px}}
         h1{{font-size:2rem;font-weight:700;letter-spacing:-1px;margin-bottom:8px}}

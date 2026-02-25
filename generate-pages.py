@@ -2357,6 +2357,7 @@ def generate_city_page(city, comparison_pairs):
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -2956,6 +2957,7 @@ def generate_comparison_page(city1, city2):
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -3343,6 +3345,7 @@ def generate_city_index():
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -3548,6 +3551,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -4146,6 +4150,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -4464,6 +4469,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -4791,6 +4797,7 @@ def generate_blog_undervalued_neighborhoods():
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -5003,6 +5010,7 @@ def generate_blog_salary_goes_furthest():
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -5228,6 +5236,7 @@ def generate_blog_major_cities_breakdown():
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
         html, body {{ overflow-x: hidden; }}
+        html {{ touch-action: manipulation; -ms-touch-action: manipulation; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
