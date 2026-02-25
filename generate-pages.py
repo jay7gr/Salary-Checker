@@ -1649,7 +1649,9 @@ GA4_SNIPPET = '''
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-MMZSM2Z96B');
-    </script>'''
+    </script>
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>'''
 
 # Map cities to relevant blog articles for cross-linking
 cityBlogLinks = {

@@ -37,7 +37,9 @@ GA4_SNIPPET = '''
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-MMZSM2Z96B');
-    </script>'''
+    </script>
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>'''
 
 # Read index.html
 with open(os.path.join(BASE_DIR, 'index.html'), 'r', encoding='utf-8') as f:
