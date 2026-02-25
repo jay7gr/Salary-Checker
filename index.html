@@ -4708,7 +4708,9 @@
                 btn1.className = 'quick-btn';
                 btn1.textContent = city;
                 btn1.addEventListener('click', () => {
-                    document.getElementById('currentCity').value = city;
+                    const sel = document.getElementById('currentCity');
+                    sel.value = city;
+                    sel.dispatchEvent(new Event('change'));
                     document.querySelectorAll('#currentCityQuick .quick-btn').forEach(b => b.classList.remove('active'));
                     btn1.classList.add('active');
                     suggestCurrency(city, 'currentCurrency', 'currentCurrencyHint');
@@ -5651,7 +5653,9 @@
         (function(){
             const fc = document.getElementById('familyCity');
             const cc = document.getElementById('currentCity');
-            for (const opt of cc.options) {
+            // Skip the first option (duplicate "Select a city...") since familyCity already has one
+            for (let i = 1; i < cc.options.length; i++) {
+                const opt = cc.options[i];
                 const o = document.createElement('option');
                 o.value = opt.value; o.textContent = opt.textContent;
                 fc.appendChild(o);
