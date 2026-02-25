@@ -2356,6 +2356,7 @@ def generate_city_page(city, comparison_pairs):
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -2464,9 +2465,10 @@ def generate_city_page(city, comparison_pairs):
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 16px;
             border-top: 1px solid var(--border);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;
         }}
         .page-footer a:hover {{ color: var(--accent); }}
         .tax-bar {{
@@ -2953,6 +2955,7 @@ def generate_comparison_page(city1, city2):
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -3076,9 +3079,10 @@ def generate_comparison_page(city1, city2):
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 16px;
             border-top: 1px solid var(--border);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;
         }}
         .page-footer a:hover {{ color: var(--accent); }}
         @media (max-width: 768px) {{
@@ -3338,6 +3342,7 @@ def generate_city_index():
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -3398,9 +3403,10 @@ def generate_city_index():
         table tr:hover td {{ background: var(--table-stripe); }}
         .page-footer {{
             text-align: center; padding: 32px 0 16px; border-top: 1px solid var(--border);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;
         }}
         .page-footer a:hover {{ color: var(--accent); }}
         .col-currency {{ }}
@@ -3541,6 +3547,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -3632,9 +3639,10 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         .page-footer {{
             text-align: center; padding: 32px 0 16px; margin-top: 24px;
             border-top: 1px solid var(--border);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
         }}
         .page-footer a {{
-            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none; margin: 0 12px;
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;
         }}
         .page-footer a:hover {{ color: var(--accent); }}
         @media (max-width: 768px) {{
@@ -4137,6 +4145,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -4178,8 +4187,8 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         .faq-item {{ margin-bottom: 20px; }}
         .faq-item h3 {{ font-size: 1rem; font-weight: 600; margin-bottom: 8px; }}
         .faq-item p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
-        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }}
         @media (max-width: 600px) {{
             .hero h1 {{ font-size: 1.5rem; }}
             .stats-grid {{ grid-template-columns: 1fr 1fr; }}
@@ -4454,6 +4463,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -4500,8 +4510,8 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); font-size: 0.9rem; margin-bottom: 16px; }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
-        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }}
         @media (max-width: 600px) {{
             .hero h1 {{ font-size: 1.3rem; }}
             .vs-grid {{ grid-template-columns: 1fr 40px 1fr; }}
@@ -4780,6 +4790,7 @@ def generate_blog_undervalued_neighborhoods():
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -4813,8 +4824,8 @@ def generate_blog_undervalued_neighborhoods():
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
-        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
@@ -4991,6 +5002,7 @@ def generate_blog_salary_goes_furthest():
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -5024,8 +5036,8 @@ def generate_blog_salary_goes_furthest():
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
-        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
@@ -5215,6 +5227,7 @@ def generate_blog_major_cities_breakdown():
 {GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html, body {{ overflow-x: hidden; }}
 {THEME_CSS_VARS}
         body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-primary); -webkit-font-smoothing: antialiased; transition: background 0.3s, color 0.3s; }}
         .container {{ max-width: 800px; margin: 0 auto; padding: 40px 20px; }}
@@ -5248,8 +5261,8 @@ def generate_blog_major_cities_breakdown():
         .cta-box h2 {{ color: white; margin-bottom: 8px; }}
         .cta-box p {{ color: rgba(255,255,255,0.85); }}
         .cta-btn {{ display: inline-block; background: white; color: #2563eb; padding: 12px 28px; border-radius: 100px; font-weight: 600; text-decoration: none; font-size: 0.9rem; }}
-        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }}
-        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }}
+        .page-footer {{ text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }}
+        .page-footer a {{ font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }}
         @media (max-width: 600px) {{
             article {{ padding: 24px; }}
             article h1 {{ font-size: 1.5rem; }}
