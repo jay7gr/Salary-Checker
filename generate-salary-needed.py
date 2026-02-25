@@ -29,7 +29,6 @@ GA4_SNIPPET = '''
             'analytics_storage': 'granted'
         });
     </script>
-    <script src="/consent.js" defer></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
     <script>
