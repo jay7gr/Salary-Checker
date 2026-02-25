@@ -75,33 +75,33 @@
 }
     </script>
 
-    <!-- Google Consent Mode v2 -->
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'functionality_storage': 'denied',
-        'personalization_storage': 'denied',
-        'security_storage': 'granted',
-        'wait_for_update': 500
-      });
-
-      gtag('set', 'ads_data_redaction', true);
-      gtag('set', 'url_passthrough', true);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
     </script>
-
-    <!-- Google Analytics -->
+    <script src="/consent.js" defer></script>
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-MMZSM2Z96B', { 'anonymize_ip': true });
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
     </script>
 
     <style>
@@ -626,6 +626,7 @@
                 <div class="nav-links">
                     <a href="https://salary-converter.com">Tool</a>
                     <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
                 </div>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">

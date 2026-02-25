@@ -75,7 +75,7 @@
 }
     </script>
 
-    <!-- Google Consent Mode v2 -->
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -83,15 +83,18 @@
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
-            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','US-CA','US-VA','US-CO','US-CT','US-UT','US-TX','US-OR','US-MT','US-IA','US-IN','US-TN','US-DE','US-NH','US-NJ','US-NE','US-MN','US-MD','US-KY','US-RI','BR','KR','JP','ZA','CA','AU','NZ','AR','IL','TR','TH','SG','IN','PH','KE','NG','AE','QA','BH','EG','CL','CO','PE','UY']
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
         });
         gtag('consent', 'default', {
-            'ad_storage': 'denied', 'ad_user_data': 'denied',
-            'ad_personalization': 'denied', 'analytics_storage': 'denied'
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
         });
     </script>
-
+    <script src="/consent.js" defer></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
     <script>
@@ -1067,6 +1070,7 @@
             <div class="footer-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
             </div>
         </div>
     </footer>

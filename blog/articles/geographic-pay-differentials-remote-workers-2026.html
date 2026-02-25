@@ -75,30 +75,26 @@
 }
     </script>
 
-    <!-- Google Consent Mode v2 — deny by default for GDPR/CCPA/equivalent regions -->
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
-
-        // Deny consent by default for regions with privacy laws (GDPR, CCPA, LGPD, POPIA, PDPA, etc.)
         gtag('consent', 'default', {
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
-            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','US-CA','US-VA','US-CO','US-CT','US-UT','US-TX','US-OR','US-MT','US-IA','US-IN','US-TN','US-DE','US-NH','US-NJ','US-NE','US-MN','US-MD','US-KY','US-RI','BR','KR','JP','ZA','CA','AU','NZ','AR','IL','TR','TH','SG','IN','PH','KE','NG','AE','QA','BH','EG','CL','CO','PE','UY']
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
         });
-
-        // Deny consent by default for all other regions
         gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied'
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
         });
     </script>
-    <!-- End Consent Mode — add your cookie banner script below -->
-
+    <script src="/consent.js" defer></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
     <script>
@@ -649,6 +645,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
                     <span class="toggle-thumb">
                         <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>

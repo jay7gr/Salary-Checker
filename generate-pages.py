@@ -16,7 +16,11 @@ from datetime import date
 coliData = {
     'New York': 100, 'San Francisco': 97.6, 'Los Angeles': 76.3, 'Chicago': 73.2,
     'Miami': 80.1, 'Austin': 64.8, 'Seattle': 79.5, 'Denver': 65.7, 'Boston': 82.4,
-    'Washington DC': 79.8, 'Houston': 60.2, 'Toronto': 62.3, 'Vancouver': 65.4,
+    'Washington DC': 79.8, 'Houston': 60.2,
+    'Charlotte': 59.8, 'Las Vegas': 58.2, 'Tampa': 64.5, 'Raleigh': 58.6,
+    'Dallas': 62.5, 'Atlanta': 63.2, 'Philadelphia': 68.8, 'Phoenix': 58.9,
+    'San Diego': 77.5, 'Nashville': 62.8, 'Minneapolis': 61.4, 'Portland': 67.2,
+    'Toronto': 62.3, 'Vancouver': 65.4,
     'Montreal': 52.1, 'Mexico City': 32.5, 'Cancún': 35.8, 'Panama City': 42.3,
     'London': 87.5, 'Paris': 46.9, 'Amsterdam': 82.6, 'Berlin': 51.2, 'Munich': 61.5,
     'Dublin': 72.8, 'Brussels': 50.3, 'Luxembourg City': 68.4, 'Zurich': 122.4,
@@ -57,6 +61,9 @@ cityToCurrency = {
     'New York': 'USD', 'San Francisco': 'USD', 'Los Angeles': 'USD',
     'Chicago': 'USD', 'Miami': 'USD', 'Austin': 'USD', 'Seattle': 'USD',
     'Denver': 'USD', 'Boston': 'USD', 'Washington DC': 'USD', 'Houston': 'USD',
+    'Charlotte': 'USD', 'Las Vegas': 'USD', 'Tampa': 'USD', 'Raleigh': 'USD',
+    'Dallas': 'USD', 'Atlanta': 'USD', 'Philadelphia': 'USD', 'Phoenix': 'USD',
+    'San Diego': 'USD', 'Nashville': 'USD', 'Minneapolis': 'USD', 'Portland': 'USD',
     'Toronto': 'CAD', 'Vancouver': 'CAD', 'Montreal': 'CAD',
     'Mexico City': 'MXN', 'Cancún': 'MXN', 'Panama City': 'USD',
     'London': 'GBP', 'Edinburgh': 'GBP',
@@ -169,6 +176,141 @@ cityNeighborhoods = {
                 'Upper Kirby': 1.05, 'EaDo': 0.95, 'Katy': 0.82,
                 'Sugar Land': 0.85, 'Spring': 0.78, 'Pearland': 0.80,
                 'West University Place': 1.22, 'Bellaire': 1.08, 'Memorial': 1.18, 'Tanglewood': 1.25, 'Rice Village': 1.1, 'Galleria': 1.15, 'Clear Lake': 0.85, 'Cypress': 0.78, 'Kingwood': 0.82, 'The Woodlands': 0.92, 'Pasadena (TX)': 0.72, 'Friendswood': 0.82
+            },
+            'Charlotte': {
+                'South End': 1.22, 'Uptown': 1.25, 'NoDa': 1.12, 'Plaza Midwood': 1.08,
+                'Dilworth': 1.15, 'Myers Park': 1.35, 'Ballantyne': 0.92, 'SouthPark': 1.18,
+                'Huntersville': 0.78, 'Cornelius': 0.80, 'Davidson': 0.82, 'Matthews': 0.75,
+                'Mint Hill': 0.72, 'Indian Trail': 0.70, 'Mooresville': 0.75, 'Concord': 0.72,
+                'Pineville': 0.73, 'Fort Mill (SC)': 0.76, 'Rock Hill (SC)': 0.68,
+                'Lake Norman': 0.88, 'Elizabeth': 1.12, 'Cherry': 1.10, 'Sedgefield': 1.02,
+                'Montford': 0.95, 'Cotswold': 1.05, 'Eastover': 1.30, 'Steele Creek': 0.78,
+                'University City': 0.80, 'Highland Creek': 0.76, 'Wesley Heights': 1.08
+            },
+            'Las Vegas': {
+                'The Strip Area': 1.25, 'Downtown / Fremont': 0.92, 'Summerlin': 1.28,
+                'Henderson': 1.10, 'Green Valley': 1.08, 'Anthem (Henderson)': 1.15,
+                'Centennial Hills': 1.02, 'North Las Vegas': 0.72, 'Spring Valley': 0.88,
+                'Enterprise': 0.90, 'Southern Highlands': 1.12, 'Mountains Edge': 0.95,
+                'Aliante': 0.78, 'Providence': 0.82, 'Boulder City': 0.85,
+                'Inspirada': 1.05, 'Rhodes Ranch': 0.92, 'Skye Canyon': 1.00,
+                'Lake Las Vegas': 1.32, 'Chinatown': 0.82, 'Arts District': 0.95,
+                'Paradise': 0.88, 'Sunrise Manor': 0.70, 'Whitney Ranch': 0.98,
+                'Southwest': 0.90, 'Lone Mountain': 1.05, 'Silverado Ranch': 0.92,
+                'MacDonald Highlands': 1.38, 'Queensridge': 1.35, 'Tule Springs': 0.80
+            },
+            'Tampa': {
+                'Downtown Tampa': 1.22, 'Channelside': 1.20, 'Harbour Island': 1.30,
+                'Hyde Park': 1.35, 'SoHo (South Howard)': 1.25, 'Bayshore': 1.28,
+                'Davis Islands': 1.32, 'Westshore': 1.05, 'Seminole Heights': 1.02,
+                'Ybor City': 0.90, 'Brandon': 0.78, 'Riverview': 0.75,
+                'Wesley Chapel': 0.80, 'New Tampa': 0.88, 'Temple Terrace': 0.82,
+                'Plant City': 0.68, 'Clearwater': 0.92, 'St. Petersburg': 0.98,
+                'Dunedin': 0.88, 'Safety Harbor': 0.85, 'Carrollwood': 0.90,
+                'Westchase': 0.95, 'Lutz': 0.82, 'Valrico': 0.75,
+                "Town 'n' Country": 0.80, 'Palma Ceia': 1.38, 'Beach Park': 1.15,
+                'Fishhawk': 0.85, 'South Tampa': 1.18, 'Waterfront (St. Pete)': 1.10
+            },
+            'Raleigh': {
+                'Downtown Raleigh': 1.20, 'North Hills': 1.18, 'Glenwood South': 1.22,
+                'Cameron Village': 1.15, 'Five Points': 1.12, 'Cary': 1.05,
+                'Apex': 0.92, 'Holly Springs': 0.85, 'Fuquay-Varina': 0.78,
+                'Wake Forest': 0.82, 'Knightdale': 0.75, 'Garner': 0.72,
+                'Clayton': 0.70, 'Morrisville': 0.98, 'Durham': 0.95,
+                'Chapel Hill': 1.25, 'Carrboro': 1.10, 'Brier Creek': 1.02,
+                'Midtown': 1.12, 'Oakwood': 1.15, 'Boylan Heights': 1.10,
+                'ITB (Inside the Beltline)': 1.18, 'North Raleigh': 0.90,
+                'West Raleigh': 0.92, 'Falls of Neuse': 0.88, 'Wendell': 0.72,
+                'Zebulon': 0.68, 'RTP Area': 1.00, 'Hillsborough': 0.80, 'Wakefield': 0.95
+            },
+            'Dallas': {
+                'Highland Park': 1.40, 'University Park': 1.35, 'Turtle Creek': 1.32, 'Uptown': 1.28,
+                'Preston Hollow': 1.25, 'Downtown': 1.20, 'Knox-Henderson': 1.18, 'Victory Park': 1.18,
+                'Design District': 1.15, 'Oak Lawn': 1.12, 'Lakewood': 1.10, 'Lower Greenville': 1.08,
+                'Southlake': 1.08, 'Deep Ellum': 1.05, 'Bishop Arts': 1.02, 'Addison': 0.95,
+                'Frisco': 0.92, 'Prosper': 0.90, 'Plano': 0.88, 'Coppell': 0.88,
+                'Richardson': 0.85, 'Flower Mound': 0.85, 'McKinney': 0.82, 'Carrollton': 0.82,
+                'Rockwall': 0.80, 'Allen': 0.80, 'Irving': 0.78, 'Lewisville': 0.78,
+                'Arlington': 0.75, 'Denton': 0.75
+            },
+            'Atlanta': {
+                'Buckhead': 1.35, 'Midtown': 1.25, 'Ansley Park': 1.22, 'Virginia-Highland': 1.18,
+                'Inman Park': 1.15, 'Poncey-Highland': 1.12, 'West Midtown': 1.12, 'Old Fourth Ward': 1.08,
+                'Druid Hills': 1.08, 'Brookhaven': 1.05, 'Downtown': 1.05, 'Grant Park': 1.02,
+                'Vinings': 1.00, 'Reynoldstown': 1.00, 'Decatur': 0.95, 'East Atlanta Village': 0.92,
+                'Sandy Springs': 0.92, 'Avondale Estates': 0.92, 'Kirkwood': 0.90, 'Johns Creek': 0.90,
+                'Dunwoody': 0.88, 'Alpharetta': 0.88, 'Roswell': 0.85, 'Smyrna': 0.82,
+                'Chamblee': 0.82, 'Peachtree City': 0.80, 'Marietta': 0.78, 'Tucker': 0.78,
+                'Duluth': 0.75, 'Kennesaw': 0.72
+            },
+            'Philadelphia': {
+                'Rittenhouse Square': 1.35, 'Society Hill': 1.28, 'Center City': 1.25,
+                'Fitler Square': 1.22, 'Bryn Mawr (Main Line)': 1.22, 'Old City': 1.20,
+                'Wayne (Main Line)': 1.18, 'Ardmore (Main Line)': 1.15, 'Fishtown': 1.12,
+                'Queen Village': 1.12, 'University City': 1.10, 'Northern Liberties': 1.08,
+                'Bella Vista': 1.08, 'Spring Garden': 1.08, 'Graduate Hospital': 1.05,
+                'East Passyunk': 1.05, 'Chestnut Hill': 1.02, 'Conshohocken': 1.02,
+                'Fairmount': 1.00, 'King of Prussia': 0.92, 'South Philadelphia': 0.88,
+                'Haddonfield (NJ)': 0.88, 'West Chester': 0.88, 'Brewerytown': 0.88,
+                'Manayunk': 0.85, 'Media': 0.85, 'Mount Airy': 0.82, 'Roxborough': 0.80,
+                'Cherry Hill (NJ)': 0.80, 'Norristown': 0.68
+            },
+            'Phoenix': {
+                'Paradise Valley': 1.40, 'Scottsdale (Old Town)': 1.30, 'Biltmore': 1.28,
+                'Arcadia': 1.25, 'Scottsdale (North)': 1.22, 'North Scottsdale': 1.18,
+                'Camelback East': 1.15, 'Downtown Phoenix': 1.12, 'Roosevelt Row': 1.08,
+                'Cave Creek': 1.05, 'Tempe (Downtown)': 1.05, 'Encanto': 1.02,
+                'Central Phoenix': 0.95, 'Fountain Hills': 0.95, 'Ahwatukee': 0.88,
+                'Tempe (South)': 0.88, 'Chandler': 0.85, 'Gilbert': 0.82,
+                'North Phoenix': 0.82, 'Goodyear': 0.80, 'Mesa (Central)': 0.78,
+                'Peoria': 0.78, 'Anthem': 0.78, 'Glendale': 0.75, 'Queen Creek': 0.75,
+                'South Mountain': 0.72, 'Mesa (East)': 0.72, 'Surprise': 0.72,
+                'Sun City': 0.70, 'Avondale': 0.70
+            },
+            'San Diego': {
+                'Coronado': 1.40, 'Rancho Santa Fe': 1.40, 'Del Mar': 1.38, 'La Jolla': 1.35,
+                'Gaslamp Quarter': 1.22, 'Downtown': 1.20, 'Solana Beach': 1.18, 'Little Italy': 1.18,
+                'Point Loma': 1.15, 'Carmel Valley': 1.15, 'Encinitas': 1.12, 'Pacific Beach': 1.12,
+                'Mission Beach': 1.10, 'Hillcrest': 1.08, 'Carlsbad': 1.08, 'North Park': 1.05,
+                'Ocean Beach': 1.02, 'Normal Heights': 0.98, 'University City': 0.95,
+                'Poway': 0.92, 'Mission Valley': 0.92, 'Clairemont': 0.88,
+                'Kearny Mesa': 0.85, 'Oceanside': 0.82, 'San Marcos': 0.78, 'City Heights': 0.78,
+                'Chula Vista': 0.75, 'Escondido': 0.75, 'El Cajon': 0.72, 'National City': 0.68
+            },
+            'Nashville': {
+                'Belle Meade': 1.38, 'Oak Hill': 1.30, 'The Gulch': 1.30, 'Downtown / SoBro': 1.28,
+                '12South': 1.25, 'Germantown': 1.22, 'Green Hills': 1.20, 'Hillsboro Village': 1.18,
+                'Midtown': 1.15, 'Belmont-Hillsboro': 1.15, 'Brentwood': 1.15,
+                'East Nashville': 1.12, 'West End': 1.10, 'Wedgewood-Houston': 1.10,
+                'Music Row': 1.08, 'The Nations': 1.05, 'Franklin': 1.05,
+                'Sylvan Park': 1.02, 'Berry Hill': 0.95, 'Mt. Juliet': 0.82,
+                'Hendersonville': 0.80, 'Donelson': 0.78, 'Murfreesboro': 0.75,
+                'Goodlettsville': 0.75, 'Gallatin': 0.72, 'Hermitage': 0.72,
+                'Madison': 0.70, 'Lebanon': 0.70, 'Antioch': 0.68, 'Whites Creek': 0.65
+            },
+            'Minneapolis': {
+                'Kenwood': 1.30, 'Edina': 1.28, 'North Loop': 1.25, 'Linden Hills': 1.22,
+                'Lowry Hill': 1.20, 'Downtown Minneapolis': 1.18, 'Lake Harriet': 1.18,
+                'Uptown': 1.12, 'Northeast (NE)': 1.08, 'St. Paul (Summit Hill)': 1.08,
+                'Southwest Minneapolis': 1.05, 'St. Paul (Highland Park)': 1.02,
+                'St. Paul (Cathedral Hill)': 1.00, 'Whittier': 0.95, 'Minnetonka': 0.95,
+                'St. Paul (Mac-Groveland)': 0.95, 'Prospect Park': 0.92, 'Longfellow': 0.92,
+                'Plymouth': 0.92, 'Eden Prairie': 0.92, 'St. Paul (Downtown)': 0.90,
+                'Nokomis': 0.90, 'Seward': 0.88, 'Bloomington': 0.88, 'Dinkytown': 0.85,
+                'Maple Grove': 0.85, 'Powderhorn': 0.82, 'Eagan': 0.82,
+                'Phillips': 0.75, 'Brooklyn Park': 0.72
+            },
+            'Portland': {
+                'Pearl District': 1.30, 'Lake Oswego': 1.28, 'Nob Hill / NW 23rd': 1.22,
+                'South Waterfront': 1.18, 'Downtown Portland': 1.15, 'West Linn': 1.15,
+                'Laurelhurst': 1.12, 'Alberta Arts District': 1.10, 'Irvington': 1.08,
+                'Hawthorne': 1.08, 'Mississippi District': 1.05, 'Division': 1.05,
+                'Goose Hollow': 1.05, 'Sellwood-Moreland': 1.02, 'Buckman': 1.00,
+                'Sunnyside': 0.98, 'Woodstock': 0.92, 'Brooklyn': 0.90,
+                'Kenton': 0.88, 'Foster-Powell': 0.88, 'St. Johns': 0.85,
+                'Montavilla': 0.85, 'Beaverton': 0.82, 'Milwaukie': 0.82,
+                'Hillsboro': 0.80, 'Tigard': 0.78, 'Cully': 0.78,
+                'Lents': 0.75, 'Oregon City': 0.72, 'Gresham': 0.70
             },
             'Toronto': {
                 'Yorkville': 1.30, 'King West': 1.22, 'Liberty Village': 1.10,
@@ -827,8 +969,11 @@ cityNeighborhoods = {
 # City to region mapping for organization
 cityRegions = {
     'North America': ['New York', 'San Francisco', 'Los Angeles', 'Chicago', 'Miami', 'Austin',
-                      'Seattle', 'Denver', 'Boston', 'Washington DC', 'Houston', 'Toronto',
-                      'Vancouver', 'Montreal', 'Mexico City', 'Cancún', 'Panama City'],
+                      'Seattle', 'Denver', 'Boston', 'Washington DC', 'Houston',
+                      'Charlotte', 'Las Vegas', 'Tampa', 'Raleigh',
+                      'Dallas', 'Atlanta', 'Philadelphia', 'Phoenix',
+                      'San Diego', 'Nashville', 'Minneapolis', 'Portland',
+                      'Toronto', 'Vancouver', 'Montreal', 'Mexico City', 'Cancún', 'Panama City'],
     'Western Europe': ['London', 'Paris', 'Amsterdam', 'Berlin', 'Munich', 'Dublin', 'Brussels',
                        'Luxembourg City', 'Zurich', 'Geneva', 'Edinburgh', 'Nice'],
     'Southern Europe': ['Madrid', 'Barcelona', 'Valencia', 'Málaga', 'Lisbon', 'Porto', 'Rome',
@@ -852,6 +997,12 @@ cityCountry = {
     'Chicago': 'United States', 'Miami': 'United States', 'Austin': 'United States',
     'Seattle': 'United States', 'Denver': 'United States', 'Boston': 'United States',
     'Washington DC': 'United States', 'Houston': 'United States',
+    'Charlotte': 'United States', 'Las Vegas': 'United States',
+    'Tampa': 'United States', 'Raleigh': 'United States',
+    'Dallas': 'United States', 'Atlanta': 'United States',
+    'Philadelphia': 'United States', 'Phoenix': 'United States',
+    'San Diego': 'United States', 'Nashville': 'United States',
+    'Minneapolis': 'United States', 'Portland': 'United States',
     'Toronto': 'Canada', 'Vancouver': 'Canada', 'Montreal': 'Canada',
     'Mexico City': 'Mexico', 'Cancún': 'Mexico', 'Panama City': 'Panama',
     'London': 'United Kingdom', 'Edinburgh': 'United Kingdom',
@@ -1167,6 +1318,18 @@ cityDeductions = {
     'Boston': {'state_tax': {'rate': 9.0, 'label': 'State Income Tax (MA)'}},
     'Washington DC': {'state_tax': {'rate': 8.5, 'label': 'District Income Tax (DC)'}},
     'Houston': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (TX)'}},
+    'Charlotte': {'state_tax': {'rate': 4.5, 'label': 'State Income Tax (NC)'}},
+    'Las Vegas': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (NV)'}},
+    'Tampa': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (FL)'}},
+    'Raleigh': {'state_tax': {'rate': 4.5, 'label': 'State Income Tax (NC)'}},
+    'Dallas': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (TX)'}},
+    'Atlanta': {'state_tax': {'rate': 5.49, 'label': 'State Income Tax (GA)'}},
+    'Philadelphia': {'state_tax': {'rate': 3.07, 'label': 'State Income Tax (PA)'}},
+    'Phoenix': {'state_tax': {'rate': 2.5, 'label': 'State Income Tax (AZ)'}},
+    'San Diego': {'state_tax': {'rate': 9.3, 'label': 'State Income Tax (CA)'}},
+    'Nashville': {'state_tax': {'rate': 0, 'label': 'No State Income Tax (TN)'}},
+    'Minneapolis': {'state_tax': {'rate': 7.85, 'label': 'State Income Tax (MN)'}},
+    'Portland': {'state_tax': {'rate': 9.9, 'label': 'State Income Tax (OR)'}},
     # Swiss cantonal+municipal tax (approximate effective rates for mid-range earners)
     'Zurich': {'cantonal_tax': {'rate': 22, 'label': 'Cantonal + Municipal Tax (Zürich)'}},
     'Geneva': {'cantonal_tax': {'rate': 26, 'label': 'Cantonal + Municipal Tax (Genève)'}},
@@ -1375,7 +1538,11 @@ def calculate_all_deductions(income, country_name, city_name, is_expat=False, ne
 cityRent1BR = {
     'New York': 3500, 'San Francisco': 3200, 'Los Angeles': 2400, 'Chicago': 2000,
     'Miami': 2500, 'Austin': 1800, 'Seattle': 2200, 'Denver': 1900, 'Boston': 2800,
-    'Washington DC': 2400, 'Houston': 1600, 'Toronto': 2000, 'Vancouver': 2100,
+    'Washington DC': 2400, 'Houston': 1600,
+    'Charlotte': 1500, 'Las Vegas': 1400, 'Tampa': 1700, 'Raleigh': 1450,
+    'Dallas': 1550, 'Atlanta': 1650, 'Philadelphia': 1550, 'Phoenix': 1450,
+    'San Diego': 2600, 'Nashville': 1700, 'Minneapolis': 1550, 'Portland': 1800,
+    'Toronto': 2000, 'Vancouver': 2100,
     'Montreal': 1400, 'Mexico City': 700, 'Cancún': 600, 'Panama City': 1000,
     'London': 2500, 'Paris': 1400, 'Amsterdam': 1800, 'Berlin': 1200, 'Munich': 1500,
     'Dublin': 2000, 'Brussels': 1100, 'Luxembourg City': 1800, 'Zurich': 2800,
@@ -1452,6 +1619,37 @@ salaryRanges = {
 CURRENT_YEAR = date.today().year
 TOTAL_NEIGHBORHOODS = sum(len(v) for v in cityNeighborhoods.values())
 ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
+
+# Google Analytics 4 + Consent Mode v2 snippet (injected into all page templates)
+GA4_SNIPPET = '''
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    </script>
+    <script src="/consent.js" defer></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
+    </script>'''
 
 # Map cities to relevant blog articles for cross-linking
 cityBlogLinks = {
@@ -2153,6 +2351,7 @@ def generate_city_page(city, comparison_pairs):
         "mainEntity": [{faq_schema_list}]
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -2464,6 +2663,7 @@ def generate_city_page(city, comparison_pairs):
             <a href="/city/">All Cities</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
 {THEME_JS}
@@ -2748,6 +2948,7 @@ def generate_comparison_page(city1, city2):
         "mainEntity": [{comp_faq_schema_list}]
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -3063,6 +3264,7 @@ def generate_comparison_page(city1, city2):
             <a href="/city/{slug2}">{city2}</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
 {THEME_JS}
@@ -3131,6 +3333,7 @@ def generate_city_index():
         }}
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -3253,6 +3456,7 @@ def generate_city_index():
             <a href="/">Salary Converter</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
 
@@ -3332,6 +3536,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         "numberOfItems": {total}
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -3481,6 +3686,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
 
@@ -3926,6 +4132,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
         ]
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -4242,6 +4449,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         ]
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -4567,6 +4775,7 @@ def generate_blog_undervalued_neighborhoods():
         "url": "https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world"
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -4777,6 +4986,7 @@ def generate_blog_salary_goes_furthest():
         "url": "https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition"
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}
@@ -5000,6 +5210,7 @@ def generate_blog_major_cities_breakdown():
         "url": "https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown"
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 {THEME_CSS_VARS}

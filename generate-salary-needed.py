@@ -8,6 +8,37 @@ import os, re, json, math, html as html_mod
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# Google Analytics 4 + Consent Mode v2 snippet (injected into all page templates)
+GA4_SNIPPET = '''
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    </script>
+    <script src="/consent.js" defer></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
+    </script>'''
+
 # Read index.html
 with open(os.path.join(BASE_DIR, 'index.html'), 'r', encoding='utf-8') as f:
     index_html = f.read()
@@ -533,6 +564,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <script type="application/ld+json">
     {breadcrumb_schema}
     </script>
+{GA4_SNIPPET}
     <style>
         :root {{
             --bg: #f5f5f7; --card-bg: #ffffff; --text-primary: #1d1d1f;
@@ -698,6 +730,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
             {footer_city_link}
             <a href="/salary-needed/">All Cities</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
 
@@ -814,6 +847,7 @@ index_page = f'''<!DOCTYPE html>
         "url": "https://salary-converter.com/salary-needed/"
     }}
     </script>
+{GA4_SNIPPET}
     <style>
         :root {{ --bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;--shadow:0 2px 20px rgba(0,0,0,0.06);--border:#e5e5ea;--border-light:#f0f0f2; }}
         [data-theme="dark"] {{ --bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--shadow:0 2px 20px rgba(0,0,0,0.3);--border:#38383a;--border-light:#2c2c2e; }}
@@ -845,6 +879,7 @@ index_page = f'''<!DOCTYPE html>
             <a href="/city/">All Cities</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
         </footer>
     </div>
     <script>

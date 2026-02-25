@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — salary:converter</title>
+    <meta name="description" content="Privacy policy for salary-converter.com. Learn how we handle your data, cookies, and advertising preferences.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/privacy/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salary-converter.com/privacy/">
+    <meta property="og:title" content="Privacy Policy — salary:converter">
+    <meta property="og:description" content="Privacy policy for salary-converter.com. Learn how we handle your data, cookies, and advertising preferences.">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+
+    <!-- Twitter/X Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Privacy Policy — salary:converter">
+    <meta name="twitter:description" content="Privacy policy for salary-converter.com.">
+
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    </script>
+    <script src="/consent.js" defer></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+            --nav-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-primary);
+        }
+
+        /* ========== NAV ========== */
+        .nav {
+            background: var(--nav-bg, rgba(255, 255, 255, 0.85));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .nav-logo span {
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 38px;
+            height: 22px;
+            background: var(--border);
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .theme-toggle:hover {
+            background: var(--text-secondary);
+        }
+        .theme-toggle .toggle-thumb {
+            position: absolute;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: #60a5fa;
+        }
+        [data-theme="dark"] .theme-toggle .toggle-thumb {
+            transform: translateX(16px);
+            box-shadow: 0 0 0 2px #93c5fd, 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .theme-toggle .toggle-icon {
+            width: 11px;
+            height: 11px;
+        }
+        .theme-toggle .icon-sun {
+            color: #f59e0b;
+        }
+        .theme-toggle .icon-moon {
+            display: none;
+            color: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            display: none;
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            display: block;
+            color: #3b82f6;
+        }
+
+        /* ========== BACK LINK ========== */
+        .back-link {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 24px 0;
+        }
+
+        .back-link a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: opacity 0.2s;
+        }
+
+        .back-link a:hover {
+            opacity: 0.7;
+        }
+
+        /* ========== ARTICLE ========== */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 24px 80px;
+        }
+
+        .article-header {
+            margin-bottom: 40px;
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ========== ARTICLE CONTENT ========== */
+        .article-content {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 48px 52px;
+        }
+
+        .article-content h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin-top: 36px;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .article-content p {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .article-content ul, .article-content ol {
+            margin-bottom: 20px;
+            padding-left: 28px;
+        }
+
+        .article-content li {
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .article-content a:hover {
+            opacity: 0.8;
+        }
+
+        .article-content strong {
+            font-weight: 600;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .footer-logo span {
+            color: #2563eb;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ========== MOBILE ========== */
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 1.9rem;
+                letter-spacing: -0.8px;
+            }
+
+            .article-content {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+
+            .article-content h2 {
+                font-size: 1.4rem;
+                margin-top: 36px;
+            }
+
+            .article-content h3 {
+                font-size: 1.1rem;
+            }
+
+            .article-content p,
+            .article-content li {
+                font-size: 1rem;
+            }
+
+            .nav-links a.nav-link-text {
+                display: none;
+            }
+
+            .theme-toggle {
+                position: fixed !important;
+                top: 16px !important;
+                right: 16px !important;
+                z-index: 10001 !important;
+            }
+
+            .back-link {
+                padding: 20px 20px 0;
+            }
+
+            .article-container {
+                padding: 24px 20px 60px;
+            }
+        }
+    </style>
+    <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link-text">Tool</a>
+                <a href="/blog/" class="nav-link-text">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+                    <span class="toggle-thumb">
+                        <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back Link -->
+    <div class="back-link">
+        <a href="/">&larr; Back to Tool</a>
+    </div>
+
+    <!-- Privacy Policy -->
+    <article class="article-container">
+        <header class="article-header">
+            <h1>Privacy Policy</h1>
+            <div class="article-meta">
+                <span>Last updated: February 2026</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <h2>Who We Are</h2>
+            <p>salary-converter.com is a free salary comparison tool that helps users understand how their salary translates between cities, adjusted for cost of living, taxes, and currency differences. We are committed to transparency about how we handle your data.</p>
+
+            <h2>What Data We Collect</h2>
+
+            <h3>Information You Provide</h3>
+            <p>When you use our salary converter, the cities and salary figures you enter are processed entirely in your browser. We do not store, transmit, or have access to the salary information you enter into the tool.</p>
+
+            <h3>Automatically Collected Information</h3>
+            <p>We use Google Analytics 4 (GA4) to understand how visitors use our site. This includes:</p>
+            <ul>
+                <li>Pages visited and time spent on each page</li>
+                <li>Device type, browser, and operating system</li>
+                <li>Approximate geographic location (country/region level)</li>
+                <li>Referral source (how you found our site)</li>
+            </ul>
+            <p>Analytics data is collected in aggregate and cannot be used to personally identify you.</p>
+
+            <h2>Cookies and Consent</h2>
+
+            <h3>Essential Cookies</h3>
+            <p>We use a consent preference cookie (<strong>sc_consent</strong>) to remember your cookie choices. This cookie is set only if you interact with our consent banner and expires after 365 days.</p>
+
+            <h3>Analytics</h3>
+            <p>Google Analytics cookies are used on all pages to help us understand site usage patterns. These cookies do not collect personally identifiable information. Analytics runs regardless of your consent preferences because it is essential to maintaining and improving our service.</p>
+
+            <h3>Advertising Cookies</h3>
+            <p>If you are visiting from a region where consent is required (EU/EEA countries, UK, Switzerland, Brazil, or Canada), we will show you a consent banner before any advertising cookies are set. You may:</p>
+            <ul>
+                <li><strong>Accept</strong> all cookies, including advertising</li>
+                <li>Choose <strong>More Options</strong> to toggle advertising cookies on or off individually</li>
+                <li><strong>Reject All</strong> advertising cookies</li>
+            </ul>
+            <p>If you are not in a strict consent region, advertising cookies may be set by default to support our ability to offer this tool for free.</p>
+
+            <h3>Consent Regions</h3>
+            <p>We show the consent banner to visitors from the following regions, in compliance with local data protection laws (GDPR, UK GDPR, LGPD, PIPEDA):</p>
+            <ul>
+                <li><strong>EU/EEA:</strong> Austria, Belgium, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Ireland, Italy, Latvia, Lithuania, Luxembourg, Malta, Netherlands, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, Iceland, Liechtenstein, Norway</li>
+                <li><strong>Other:</strong> United Kingdom, Switzerland, Brazil, Canada</li>
+            </ul>
+
+            <h2>Third-Party Services</h2>
+            <p>We use the following third-party services:</p>
+            <ul>
+                <li><strong>Google Analytics 4</strong> (analytics) &mdash; <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+                <li><strong>Google Ads</strong> (advertising, where consented) &mdash; <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google Ads Privacy</a></li>
+                <li><strong>Cloudflare</strong> (hosting and CDN) &mdash; <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a></li>
+                <li><strong>api.country.is</strong> (anonymous IP-to-country lookup for consent region detection)</li>
+            </ul>
+
+            <h2>Data Retention</h2>
+            <p>Google Analytics data is retained for 14 months, after which it is automatically deleted. We do not maintain any separate user database.</p>
+
+            <h2>Your Rights</h2>
+            <p>Depending on your location, you may have the following rights:</p>
+            <ul>
+                <li><strong>Right to access</strong> &mdash; request a copy of data we hold about you</li>
+                <li><strong>Right to erasure</strong> &mdash; request deletion of your data</li>
+                <li><strong>Right to withdraw consent</strong> &mdash; you can clear the <strong>sc_consent</strong> cookie from your browser at any time to reset your preferences</li>
+                <li><strong>Right to object</strong> &mdash; opt out of advertising cookies via the consent banner</li>
+            </ul>
+            <p>Since we do not collect personally identifiable information, most data requests can be addressed by clearing your browser cookies.</p>
+
+            <h2>Children's Privacy</h2>
+            <p>Our service is not directed at children under 16. We do not knowingly collect personal information from children.</p>
+
+            <h2>Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated revision date.</p>
+
+            <h2>Contact</h2>
+            <p>If you have questions about this privacy policy or your data, please reach out via the contact options on our site.</p>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">salary<span>:</span>converter</div>
+            <p class="footer-text">Compare salaries across cities and countries with real cost-of-living data.</p>
+            <div class="footer-links">
+                <a href="/">Tool</a>
+                <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
+            </div>
+        </div>
+    </footer>
+    <script>
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
+    </script>
+    <script src="/chat.js?v=2"></script>
+</body>
+</html>

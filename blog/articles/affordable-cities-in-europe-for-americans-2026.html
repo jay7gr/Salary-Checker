@@ -75,49 +75,33 @@
 }
     </script>
 
-    <!-- Google Consent Mode v2 -->
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'functionality_storage': 'denied',
-        'personalization_storage': 'denied',
-        'security_storage': 'granted',
-        'regions': [
-          'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR',
-          'DE','GR','HU','IE','IT','LV','LT','LU','MT','NL',
-          'PL','PT','RO','SK','SI','ES','SE',
-          'IS','LI','NO',
-          'GB',
-          'US-CA','US-CO','US-CT','US-DE','US-IN','US-IA','US-MT',
-          'US-NE','US-NH','US-NJ','US-OR','US-TN','US-TX','US-UT','US-VA',
-          'BR','ZA','JP','KR','AU','NZ','CA'
-        ]
-      });
-
-      gtag('consent', 'default', {
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted',
-        'analytics_storage': 'granted',
-        'functionality_storage': 'granted',
-        'personalization_storage': 'granted',
-        'security_storage': 'granted'
-      });
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
     </script>
-
-    <!-- Google Analytics -->
+    <script src="/consent.js" defer></script>
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-MMZSM2Z96B');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
     </script>
 
     <style>
@@ -755,6 +739,7 @@
             <div class="nav-links">
                 <a href="https://salary-converter.com">Tool</a>
                 <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
                     <span class="toggle-thumb">
                         <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
