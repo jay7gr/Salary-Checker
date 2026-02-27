@@ -5377,6 +5377,19 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
                 n2_slug = slugify(n2)
                 urls.append(f'https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}')
 
+    # Salary-needed hub + city pages + neighborhood pages
+    urls.append('https://salary-converter.com/salary-needed/')
+    for city in coliData:
+        slug = slugify(city)
+        urls.append(f'https://salary-converter.com/salary-needed/{slug}')
+        if city in cityNeighborhoods:
+            for nhood in cityNeighborhoods[city]:
+                nhood_slug = slugify(nhood)
+                urls.append(f'https://salary-converter.com/salary-needed/{slug}/{nhood_slug}')
+
+    # Privacy page
+    urls.append('https://salary-converter.com/privacy/')
+
     # Split into chunks and write individual sitemaps
     num_chunks = (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
     sitemap_files = []
