@@ -861,12 +861,44 @@ def build_final_page():
 
     elems.append(Paragraph('<b>Data Sources &amp; Methodology</b>', style_subsection))
     elems.append(Paragraph(
-        'Cost of Living Index (COLI) values are based on a composite of consumer price data, benchmarked '
-        'to New York City = 100. Rent figures represent average 1-bedroom city-center apartments converted '
-        'to USD at current exchange rates. Salary ranges are researched global baselines from industry '
-        'surveys, job postings, and government labor statistics. Tax brackets use officially published '
-        '2025/2026 rates for each jurisdiction. Neighborhood rent multipliers are derived from local '
-        'real estate listings and rental market data.',
+        '<b>Cost of Living Index (COLI):</b> Benchmarked to New York City = 100. Derived from '
+        '<a href="https://www.numbeo.com/cost-of-living/" color="blue">Numbeo</a> and '
+        '<a href="https://www.expatistan.com/cost-of-living" color="blue">Expatistan</a> '
+        'crowd-sourced price surveys, cross-referenced with national statistics agencies.',
+        style_body
+    ))
+    elems.append(Spacer(1, 4))
+    elems.append(Paragraph(
+        '<b>Rent:</b> Average 1-bedroom city-center apartments from '
+        '<a href="https://www.numbeo.com/property-investment/" color="blue">Numbeo Property Prices</a>, '
+        'converted to USD at current exchange rates.',
+        style_body
+    ))
+    elems.append(Spacer(1, 4))
+    elems.append(Paragraph(
+        '<b>Salary Ranges:</b> Global baselines compiled from the '
+        '<a href="https://www.bls.gov/oes/" color="blue">U.S. Bureau of Labor Statistics (OES)</a>, '
+        '<a href="https://www.glassdoor.com/Salaries/index.htm" color="blue">Glassdoor</a>, '
+        '<a href="https://www.payscale.com/research/US/Country=United_States/Salary" color="blue">PayScale</a>, '
+        'and the <a href="https://www.roberthalf.com/salary-guide" color="blue">Robert Half Salary Guide</a>.',
+        style_body
+    ))
+    elems.append(Spacer(1, 4))
+    elems.append(Paragraph(
+        '<b>Tax Brackets:</b> 2026 published rates from '
+        '<a href="https://www.oecd.org/tax/tax-policy/taxing-wages-brochure.pdf" color="blue">OECD Taxing Wages</a> '
+        'and national tax authorities including IRS, HMRC, ATO, CRA, and others.',
+        style_body
+    ))
+    elems.append(Spacer(1, 4))
+    elems.append(Paragraph(
+        '<b>Exchange Rates:</b> Daily reference rates from the '
+        '<a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" color="blue">European Central Bank</a>.',
+        style_body
+    ))
+    elems.append(Spacer(1, 4))
+    elems.append(Paragraph(
+        '<b>Neighborhood Rent Multipliers:</b> Derived from local rental market indices and property listing data.',
         style_body
     ))
     elems.append(Spacer(1, 8))
