@@ -387,12 +387,18 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
 
     is_nb = neighborhood_name is not None
     display_name = f"{neighborhood_name}, {city_name}" if is_nb else city_name
-    title = f"What Salary Do You Need in {display_name}? 2026 Cost Breakdown"
+    comf_fmt = format_currency(data['gross_comfortable'], data['currency'])
+    min_fmt = format_currency(data['gross_get_by'], data['currency'])
+    rent_fmt = format_currency(data['monthly_rent_local'], data['currency'])
+    tax_rate = data['effective_tax_rate']
 
-    if is_nb:
-        desc = f"Living in {neighborhood_name}, {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. Single & family breakdowns with after-tax take-home."
-    else:
-        desc = f"Living in {city_name} costs {format_currency(data['gross_get_by'], data['currency'])}/yr minimum, or {format_currency(data['gross_comfortable'], data['currency'])}/yr to be comfortable. Single & family breakdowns with rent and full expenses for 2026."
+    title = f"Salary Needed in {display_name}: {comf_fmt}/yr (2026)"
+    if len(title) > 60:
+        title = f"{display_name}: {comf_fmt}/yr Needed (2026)"
+
+    desc = f"Minimum: {min_fmt}/yr. Comfortable: {comf_fmt}/yr. Rent: {rent_fmt}/mo. Tax rate: {tax_rate}%. Full single & family breakdown."
+    if len(desc) > 155:
+        desc = f"Min: {min_fmt}/yr. Comfortable: {comf_fmt}/yr. Full single & family breakdown."
 
     city_slug = to_slug(city_name)
     country = city_to_country.get(city_name, '')
@@ -539,7 +545,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{title} — salary:converter</title>
+    <title>{title}</title>
     <meta name="description" content="{desc}">
     <meta name="keywords" content="salary needed {display_name}, minimum salary {display_name}, cost of living {display_name}, {display_name} salary 2026, what salary {city_name}">
     <meta name="robots" content="index, follow">
