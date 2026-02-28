@@ -1774,7 +1774,7 @@
 
         <!-- Household section -->
         <div class="form-section household-section" id="householdSection">
-            <h2>\U0001f465 Household</h2>
+            <h2>👥 Household</h2>
             <div class="household-mode-toggle" id="householdModeToggle">
                 <button class="mode-btn active" data-mode="single" type="button">Single</button>
                 <button class="mode-btn" data-mode="family" type="button">Family</button>
@@ -1802,13 +1802,13 @@
                 <label class="remote-label">
                     <input type="checkbox" id="remoteCheckbox">
                     <span class="remote-check"></span>
-                    <span>I keep my salary remotely <span style="color:var(--text-secondary);font-weight:400;">\u2014 I earn in one city but live in another</span></span>
+                    <span>I keep my salary remotely <span style="color:var(--text-secondary);font-weight:400;">— I earn in one city but live in another</span></span>
                 </label>
                 <div class="commute-sub" id="commuteSub" style="display:none;">
                     <label class="remote-label commute-label">
                         <input type="checkbox" id="noCommuteCheckbox">
                         <span class="remote-check"></span>
-                        <span>I don\u2019t commute <span style="color:var(--text-secondary);font-weight:400;">\u2014 remove transport costs</span></span>
+                        <span>I don't commute <span style="color:var(--text-secondary);font-weight:400;">— remove transport costs</span></span>
                     </label>
                 </div>
             </div>
@@ -1816,7 +1816,7 @@
 
         <!-- Current Location form section -->
         <div class="form-section">
-            <h2>\U0001f4cd Current Location</h2>
+            <h2>📍 Current Location</h2>
             <div id="singleSalaryRow">
             <div class="two-column">
                 <div class="form-group">
@@ -1868,12 +1868,12 @@
                     <div class="currency-hint" id="currentCurrencyHint"></div>
                 </div>
             </div>
-            <p class="info-text">\u2139\ufe0f Select or type to choose your current location</p>
+            <p class="info-text">ℹ️ Select or type to choose your current location</p>
         </div>
 
         <!-- Comparable Location form section -->
         <div class="form-section">
-            <h2>\u2708\ufe0f Comparable Location <span class="section-subtitle">(what if I were to move to this city?)</span></h2>
+            <h2>✈️ Comparable Location <span class="section-subtitle">(what if I were to move to this city?)</span></h2>
             <div class="two-column">
                 <div class="form-group">
                     <label for="targetCity">Target City</label>
@@ -1928,7 +1928,7 @@
                     Have target salaries or offers? Enter them for a personalized comparison.
                 </div>
             </div>
-            <p class="info-text">\u2139\ufe0f Choose where you\u2019d like to compare your salary</p>
+            <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
         </div>
 
         <!-- Buttons -->
@@ -1964,7 +1964,7 @@
                 <div class="ranges-list" id="rangesList"></div>
                 <div class="ranges-toggle" id="rangesToggle" onclick="toggleSalaryRanges()" style="display: none;">
                     <span id="rangesToggleText">Show all roles</span>
-                    <span class="toggle-arrow">\u25bc</span>
+                    <span class="toggle-arrow">▼</span>
                 </div>
             </div>
             <div class="share-bar" id="resultShareBar" data-share-text="" data-share-url="">
@@ -4327,31 +4327,31 @@
                     const fmtDiff = formatter.format(Math.abs(targetDisposable - currentDispInTarget));
 
                     if (dispDiffPct > 5) {
-                        verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
-                        verdictText = `Your money goes further \u2014 you'd have ~${absPct}% more disposable income (${fmtDiff}/yr more) in ${targetLabel}`;
+                        verdictClass = 'better'; verdictIcon = '🟢';
+                        verdictText = `Your money goes further — you'd have ~${absPct}% more disposable income (${fmtDiff}/yr more) in ${targetLabel}`;
                     } else if (dispDiffPct < -5) {
-                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
-                        verdictText = `Your money doesn't go as far \u2014 you'd have ~${absPct}% less disposable income (${fmtDiff}/yr less) in ${targetLabel}`;
+                        verdictClass = 'worse'; verdictIcon = '🔴';
+                        verdictText = `Your money doesn't go as far — you'd have ~${absPct}% less disposable income (${fmtDiff}/yr less) in ${targetLabel}`;
                     } else {
-                        verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `Similar purchasing power \u2014 your disposable income would change by ~${absPct}% in ${targetLabel}`;
+                        verdictClass = 'similar'; verdictIcon = '🟡';
+                        verdictText = `Similar purchasing power — your disposable income would change by ~${absPct}% in ${targetLabel}`;
                     }
                 } else if (hasOffer) {
                     const fmtOffer = formatter.format(targetSalaryOffer);
                     if (targetDisposable > 0 && thDiffPct >= -2) {
                         // Affordable and at or above parity
-                        verdictClass = 'better'; verdictIcon = '\uD83D\uDFE2';
+                        verdictClass = 'better'; verdictIcon = '🟢';
                         const moreOrLess = thDiffPct >= 0 ? 'more' : 'less';
-                        verdictText = `Your ${fmtOffer} target salary is affordable \u2014 you'd have ~${absThPct}% ${moreOrLess} take-home pay than your current equivalent`;
+                        verdictText = `Your ${fmtOffer} target salary is affordable — you'd have ~${absThPct}% ${moreOrLess} take-home pay than your current equivalent`;
                     } else if (targetDisposable > 0 && thDiffPct < -2) {
                         // Affordable but below parity
-                        verdictClass = 'similar'; verdictIcon = '\uD83D\uDFE1';
-                        verdictText = `Your ${fmtOffer} target salary is affordable, but you'd have ~${absThPct}% less take-home pay \u2014 you'd save less each month`;
+                        verdictClass = 'similar'; verdictIcon = '🟡';
+                        verdictText = `Your ${fmtOffer} target salary is affordable, but you'd have ~${absThPct}% less take-home pay — you'd save less each month`;
                     } else {
                         // Not affordable — expenses exceed take-home
                         const shortfall = formatter.format(Math.abs(targetDisposable));
-                        verdictClass = 'worse'; verdictIcon = '\uD83D\uDD34';
-                        verdictText = `Your ${fmtOffer} target salary may be tight \u2014 living expenses would exceed take-home by ${shortfall}/yr`;
+                        verdictClass = 'worse'; verdictIcon = '🔴';
+                        verdictText = `Your ${fmtOffer} target salary may be tight — living expenses would exceed take-home by ${shortfall}/yr`;
                     }
                 } else {
                     verdictClass = 'neutral'; verdictIcon = '\u2139\uFE0F';
@@ -4375,7 +4375,7 @@
                     const absPct = Math.abs(pct).toFixed(0);
                     if (absPct < 3) return '<span class="exp-pct pct-similar">~same</span>';
                     if (pct > 0) return `<span class="exp-pct pct-pricier">+${absPct}%</span>`;
-                    return `<span class="exp-pct pct-cheaper">\u2212${absPct}%</span>`;
+                    return `<span class="exp-pct pct-cheaper">−${absPct}%</span>`;
                 }
 
                 function buildFullBreakdownCard(label, gross, ded, ded2, expenses, disposable, currency, isOffer, hh, compareExpenses) {
@@ -4392,18 +4392,18 @@
                         html += `<div class="fbc-section-label">Taxes &amp; Deductions<sup>2</sup></div>`;
                         html += `<div style="font-size:0.72rem;color:var(--text-secondary);padding:2px 0 4px;font-style:italic;">Adult 1 (${fmtLocal(ded.net + ded.total)} gross)</div>`;
                         for (const item of ded.items) {
-                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">− ${fmtLocal(item.amount)}</span></div>`;
                         }
                         html += `<div style="font-size:0.72rem;color:var(--text-secondary);padding:6px 0 4px;font-style:italic;">Adult 2 (${fmtLocal(ded2.net + ded2.total)} gross)</div>`;
                         for (const item of ded2.items) {
-                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">− ${fmtLocal(item.amount)}</span></div>`;
                         }
                         const combinedNet = ded.net + ded2.net;
                         html += `<div class="fbc-row subtotal"><span>Combined Take-Home</span><span class="fbc-val">${fmtLocal(combinedNet)}</span></div>`;
                     } else {
                         html += `<div class="fbc-section-label">Taxes &amp; Deductions<sup>2</sup></div>`;
                         for (const item of ded.items) {
-                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">\u2212 ${fmtLocal(item.amount)}</span></div>`;
+                            html += `<div class="fbc-row deduction"><span>${item.label} (${item.rate}%)</span><span class="fbc-val negative">− ${fmtLocal(item.amount)}</span></div>`;
                         }
                         html += `<div class="fbc-row subtotal"><span>Take-Home Pay</span><span class="fbc-val">${fmtLocal(ded.net)}</span></div>`;
                     }
@@ -4413,21 +4413,21 @@
                         html += `<div class="fbc-section-label">Living Expenses (Annual)<sup>1</sup></div>`;
                         if (expenses.hasRent) {
                             const rentBadge = compareExpenses ? pctBadge(compareExpenses.rent, expenses.rent) : '';
-                            html += `<div class="fbc-row expense"><span>Rent (${rentLbl}) ${rentBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.rent)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Rent (${rentLbl}) ${rentBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.rent)}</span></div>`;
                         }
                         if (expenses.hasLivingCosts) {
                             const gBadge = compareExpenses ? pctBadge(compareExpenses.groceries, expenses.groceries) : '';
                             const uBadge = compareExpenses ? pctBadge(compareExpenses.utilities, expenses.utilities) : '';
                             const tBadge = compareExpenses ? pctBadge(compareExpenses.transport, expenses.transport) : '';
                             const hBadge = compareExpenses ? pctBadge(compareExpenses.healthcare, expenses.healthcare) : '';
-                            html += `<div class="fbc-row expense"><span>Groceries ${gBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.groceries)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Utilities ${uBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.utilities)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Transport ${tBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.transport)}</span></div>`;
-                            html += `<div class="fbc-row expense"><span>Healthcare ${hBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.healthcare)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Groceries ${gBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.groceries)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Utilities ${uBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.utilities)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Transport ${tBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.transport)}</span></div>`;
+                            html += `<div class="fbc-row expense"><span>Healthcare ${hBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.healthcare)}</span></div>`;
                             if (hh && hh.children > 0 && expenses.childcare > 0) {
                                 const cBadge = compareExpenses ? pctBadge(compareExpenses.childcare, expenses.childcare) : '';
                                 const childLabel = hh.children === 1 ? 'Childcare (1 child)' : `Childcare (${hh.children} children)`;
-                                html += `<div class="fbc-row expense"><span>${childLabel} ${cBadge}</span><span class="fbc-val negative">\u2212 ${fmtLocal(expenses.childcare)}</span></div>`;
+                                html += `<div class="fbc-row expense"><span>${childLabel} ${cBadge}</span><span class="fbc-val negative">− ${fmtLocal(expenses.childcare)}</span></div>`;
                             }
                         }
                         if (disposable !== null) {
@@ -4580,7 +4580,7 @@
                     : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
                 const convertedDesc = `${formattedAmount} (${targetCurrency}) at ${exchangeRate.toFixed(4)} exchange rate`;
                 const targetDedDesc = isFamily2
-                    ? `Adult 1: ${targetDed ? targetDed.totalRate + '%' : '?'}, Adult 2: ${targetDed2 ? targetDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedTargetTakeHome, targetCurrency)}`
+                    ? `Adult 1: ${targetDed ? targetDed.totalRate + '%' : '?'}, Adult 2: ${targetDed2 ? targetDed2.totalRate + '%' : '?'} → combined take-home ${fmtCurr(combinedTargetTakeHome, targetCurrency)}`
                     : `${targetDed ? targetDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${targetDed ? fmtCurr(targetDed.net, targetCurrency) + ' take-home' : 'unknown take-home'}`;
                 const currentDispDesc = hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr' : 'Cannot calculate';
                 const targetDispDesc = hasFullData && targetDisposable !== null ? fmtCurr(targetDisposable, targetCurrency) + '/yr' : 'Cannot calculate';
@@ -4594,12 +4594,12 @@
                     <div class="explanation-step">
                         <div class="step-number">2</div>
                         <div class="step-text"><strong>Current city taxes:</strong> ${isFamily2
-                            ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
+                            ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} → combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
                             : `${currentDed ? currentDed.totalRate + '% in taxes' : '?'}, leaving ${fmtCurr(combinedCurrentTakeHome, currentCurrency)} take-home`}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">3</div>
-                        <div class="step-text"><strong>Current expenses:</strong> ${currentExpenses ? fmtCurr(currentExpenses.total, currentCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} \u2192 <strong>Current disposable:</strong> ${currentDispDesc}</div>
+                        <div class="step-text"><strong>Current expenses:</strong> ${currentExpenses ? fmtCurr(currentExpenses.total, currentCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} → <strong>Current disposable:</strong> ${currentDispDesc}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">4</div>
@@ -4611,7 +4611,7 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">6</div>
-                        <div class="step-text"><strong>Target expenses:</strong> ${targetExpenses ? fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} \u2192 <strong>Target disposable:</strong> ${targetDispDesc}</div>
+                        <div class="step-text"><strong>Target expenses:</strong> ${targetExpenses ? fmtCurr(targetExpenses.total, targetCurrency) + '/yr' : 'N/A'}${household.noCommute ? ' (no transport)' : ''} → <strong>Target disposable:</strong> ${targetDispDesc}</div>
                     </div>
                 `;
             } else {
@@ -4619,7 +4619,7 @@
                     ? `Adult 1: ${fmtCurr(salary, currentCurrency)} + Adult 2: ${fmtCurr(salary2, currentCurrency)} (${formattedOriginalCurrent} total)`
                     : `${formattedOriginalCurrent} in ${currentLabel} (${currentCurrency})`;
                 const dedDesc = isFamily2
-                    ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} \u2192 combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
+                    ? `Adult 1: ${currentDed ? currentDed.totalRate + '%' : '?'}, Adult 2: ${currentDed2 ? currentDed2.totalRate + '%' : '?'} → combined take-home ${fmtCurr(combinedCurrentTakeHome, currentCurrency)}`
                     : `${currentDed ? currentDed.totalRate + '% in taxes & social charges' : 'Tax data not available'}, leaving ${currentDed ? fmtCurr(currentDed.net, currentCurrency) + ' take-home' : 'unknown take-home'}`;
                 const expDesc = currentExpenses ? `${fmtCurr(currentExpenses.total, currentCurrency)}/yr in ${currentExpenses.rentLabel || '1BR'} rent and living costs${household.children > 0 ? ' (incl. childcare for ' + household.children + ')' : ''}` : 'Expense data not available';
                 const grossDesc = isFamily2
@@ -4642,7 +4642,7 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">4</div>
-                        <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 this is what we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
+                        <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr — this is what we match in ' + targetCity : 'Cannot calculate — incomplete data'}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">5</div>
@@ -4764,8 +4764,8 @@
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
             const shareText = household.remote
-                ? 'My ' + formattedOriginalCurrent + ' salary goes ' + (targetDisposable > currentDisposable * exchangeRate ? 'further' : 'less far') + ' in ' + targetLabel2 + ' \u2014 salary:converter'
-                : 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) \u2014 salary:converter';
+                ? 'My ' + formattedOriginalCurrent + ' salary goes ' + (targetDisposable > currentDisposable * exchangeRate ? 'further' : 'less far') + ' in ' + targetLabel2 + ' — salary:converter'
+                : 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) — salary:converter';
             shareBar.setAttribute('data-share-text', shareText);
             shareBar.setAttribute('data-share-url', shareUrl);
 
