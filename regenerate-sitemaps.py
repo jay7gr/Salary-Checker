@@ -21,6 +21,7 @@ PRIORITY = {
     'widget': 1,
     'city': 2,
     'rankings': 3,
+    'salary': 3,
     'compare': 4,
     'salary-needed': 5,
     'blog': 6,
