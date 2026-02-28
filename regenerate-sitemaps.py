@@ -20,10 +20,11 @@ PRIORITY = {
     '': 0,           # homepage
     'widget': 1,
     'city': 2,
-    'compare': 3,
-    'salary-needed': 4,
-    'blog': 5,
-    'privacy': 6,
+    'rankings': 3,
+    'compare': 4,
+    'salary-needed': 5,
+    'blog': 6,
+    'privacy': 7,
 }
 
 def html_to_url(filepath):

@@ -1620,6 +1620,9 @@ CURRENT_YEAR = date.today().year
 TOTAL_NEIGHBORHOODS = sum(len(v) for v in cityNeighborhoods.values())
 ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
 
+# Wise affiliate link (replace with real invite link when approved)
+WISE_LINK = 'https://wise.com/invite/u/placeholder'
+
 # Google Analytics 4 + Consent Mode v2 snippet (injected into all page templates)
 GA4_SNIPPET = '''
     <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
@@ -2634,6 +2637,20 @@ def generate_city_page(city, comparison_pairs):
 
         {comp_section}
 
+        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
+            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
+                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving to {city}?</h3>
+                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Open a multi-currency account to manage {currency} and your home currency. No hidden fees, real exchange rate.</p>
+                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
+                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
+                        Open a Wise Account &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
             <p>Use our free converter tool with {ROUNDED_NEIGHBORHOODS:,}+ neighborhood adjustments</p>
@@ -2675,6 +2692,303 @@ def generate_city_page(city, comparison_pairs):
 </body>
 </html>'''
 
+    return html
+
+
+# ============================================================
+# NEIGHBORHOOD HUB PAGE TEMPLATE (Cheapest / Most Expensive)
+# ============================================================
+
+def generate_neighborhood_hub_page(city, mode='cheapest'):
+    """Generate a cheapest or most-expensive neighborhoods hub page for a city.
+    mode: 'cheapest' or 'most-expensive'
+    """
+    slug = slugify(city)
+    country = cityCountry.get(city, '')
+    currency = cityToCurrency.get(city, 'USD')
+    coli = coliData[city]
+    rent = cityRent1BR.get(city, 0)
+    neighborhoods = cityNeighborhoods.get(city, {})
+
+    if not neighborhoods:
+        return ''
+
+    # Sort neighborhoods
+    is_cheapest = mode == 'cheapest'
+    sorted_nhoods = sorted(neighborhoods.items(), key=lambda x: x[1], reverse=not is_cheapest)
+    total_nhoods = len(sorted_nhoods)
+
+    # Key data points
+    cheapest_name, cheapest_mult = sorted(neighborhoods.items(), key=lambda x: x[1])[0]
+    most_exp_name, most_exp_mult = sorted(neighborhoods.items(), key=lambda x: x[1])[-1]
+    cheapest_rent = round(rent * cheapest_mult)
+    most_exp_rent = round(rent * most_exp_mult)
+    featured_name = sorted_nhoods[0][0]  # #1 on this page
+    featured_rent = round(rent * sorted_nhoods[0][1])
+
+    # Title & meta
+    if is_cheapest:
+        page_title = f"{min(10, total_nhoods)} Cheapest Neighborhoods in {city} ({CURRENT_YEAR})"
+        page_desc = f"Find the most affordable neighborhoods in {city}. {cheapest_name} starts at ${cheapest_rent:,}/mo. Ranked by cost index with rent &amp; salary data."
+        hero_label = "Cheapest Neighborhoods"
+        hero_stat_label = "Cheapest Rent"
+        hero_stat_value = f"${cheapest_rent:,}/mo"
+        table_label = "% Below Avg"
+        url_path = f"city/{slug}/cheapest-neighborhoods"
+        opposite_label = f"Most Expensive Neighborhoods in {city}"
+        opposite_url = f"/city/{slug}/most-expensive-neighborhoods"
+    else:
+        page_title = f"{min(10, total_nhoods)} Most Expensive Neighborhoods in {city} ({CURRENT_YEAR})"
+        page_desc = f"Discover the priciest neighborhoods in {city}. {most_exp_name} reaches ${most_exp_rent:,}/mo. Full rankings with rent &amp; cost data."
+        hero_label = "Most Expensive Neighborhoods"
+        hero_stat_label = "Highest Rent"
+        hero_stat_value = f"${most_exp_rent:,}/mo"
+        table_label = "% Above Avg"
+        url_path = f"city/{slug}/most-expensive-neighborhoods"
+        opposite_label = f"Cheapest Neighborhoods in {city}"
+        opposite_url = f"/city/{slug}/cheapest-neighborhoods"
+
+    canonical_url = f"https://salary-converter.com/{url_path}"
+    share_text = f"{page_title} | salary:converter"
+    share_bar = build_share_bar(share_text, canonical_url)
+
+    # Build table rows
+    table_rows = ''
+    for i, (name, mult) in enumerate(sorted_nhoods):
+        n_slug = slugify(name)
+        n_rent = round(rent * mult)
+        pct_diff = round((mult - 1.0) * 100)
+        if pct_diff > 0:
+            pct_class = 'color: #ef4444; font-weight: 600;'
+            pct_text = f'+{pct_diff}%'
+        elif pct_diff < 0:
+            pct_class = 'color: #22c55e; font-weight: 600;'
+            pct_text = f'{pct_diff}%'
+        else:
+            pct_class = 'color: var(--text-secondary); font-weight: 600;'
+            pct_text = 'Avg'
+
+        table_rows += f'''
+                        <tr>
+                            <td style="text-align:center; color:var(--text-secondary);">{i+1}</td>
+                            <td><a href="/city/{slug}/{n_slug}" style="color: var(--accent); text-decoration: none; font-weight: 500;">{name}</a></td>
+                            <td style="text-align:center;">${n_rent:,}/mo</td>
+                            <td style="text-align:center;">{mult:.2f}x</td>
+                            <td style="text-align:right;"><span style="{pct_class}">{pct_text}</span></td>
+                        </tr>'''
+
+    # FAQ schema
+    if is_cheapest:
+        faq1_q = f"What is the cheapest neighborhood in {city}?"
+        faq1_a = f"The cheapest neighborhood in {city} is {cheapest_name}, with an estimated 1-bedroom rent of ${cheapest_rent:,}/month \u2014 {abs(round((cheapest_mult - 1.0) * 100))}% below the city average."
+        faq2_q = f"What is the average rent in {city}?"
+        faq2_a = f"The average 1-bedroom rent in {city} is approximately ${rent:,}/month. Rents range from ${cheapest_rent:,}/mo ({cheapest_name}) to ${most_exp_rent:,}/mo ({most_exp_name})."
+        faq3_q = f"How many neighborhoods does {city} have?"
+        faq3_a = f"Our database covers {total_nhoods} neighborhoods in {city}, each with detailed cost-of-living and salary data."
+    else:
+        faq1_q = f"What is the most expensive neighborhood in {city}?"
+        faq1_a = f"The most expensive neighborhood in {city} is {most_exp_name}, with an estimated 1-bedroom rent of ${most_exp_rent:,}/month \u2014 {round((most_exp_mult - 1.0) * 100)}% above the city average."
+        faq2_q = f"How much more expensive is {most_exp_name} than the city average?"
+        faq2_a = f"{most_exp_name} is approximately {round((most_exp_mult - 1.0) * 100)}% more expensive than the {city} average. 1-bedroom rent is ${most_exp_rent:,}/mo vs ${rent:,}/mo city-wide."
+        faq3_q = f"How many neighborhoods does {city} have?"
+        faq3_a = f"Our database covers {total_nhoods} neighborhoods in {city}, each with detailed cost-of-living and salary data."
+
+    import json
+    faq_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": faq1_q, "acceptedAnswer": {"@type": "Answer", "text": faq1_a}},
+            {"@type": "Question", "name": faq2_q, "acceptedAnswer": {"@type": "Answer", "text": faq2_a}},
+            {"@type": "Question", "name": faq3_q, "acceptedAnswer": {"@type": "Answer", "text": faq3_a}},
+        ]
+    })
+
+    breadcrumb_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Cities", "item": "https://salary-converter.com/city/"},
+            {"@type": "ListItem", "position": 3, "name": city, "item": f"https://salary-converter.com/city/{slug}"},
+            {"@type": "ListItem", "position": 4, "name": hero_label},
+        ]
+    })
+
+    # Wise CTA
+    wise_cta = f'''
+        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
+            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
+                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving to {city}?</h3>
+                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Open a multi-currency account to manage {currency} and your home currency. No hidden fees, real exchange rate.</p>
+                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
+                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
+                        Open a Wise Account &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>'''
+
+    html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>{page_title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="description" content="{page_desc}">
+    <link rel="canonical" href="{canonical_url}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{page_title}">
+    <meta property="og:description" content="{page_desc}">
+    <meta property="og:url" content="{canonical_url}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{page_title}">
+    <meta name="twitter:description" content="{page_desc}">
+    <script type="application/ld+json">{breadcrumb_schema}</script>
+    <script type="application/ld+json">{faq_schema}</script>
+{GA4_SNIPPET}
+    <style>
+{THEME_CSS_VARS}
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }}
+        .page-wrapper {{ max-width: 900px; margin: 0 auto; padding: 32px 24px 60px; }}
+        .nav-bar {{ display: flex; align-items: center; justify-content: space-between; padding: 16px 0 24px; border-bottom: 1px solid var(--border-light); margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }}
+        .nav-bar a {{ color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; font-weight: 500; }}
+        .nav-bar a:hover {{ color: var(--accent); }}
+        .logo {{ font-size: 1rem; font-weight: 700; color: var(--text-primary) !important; letter-spacing: -0.5px; }}
+        .breadcrumb {{ font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 24px; }}
+        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
+        .hero {{ margin-bottom: 24px; }}
+        .hero h1 {{ font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
+        .hero p {{ font-size: 0.9rem; color: var(--text-body); }}
+        .stat-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }}
+        .stat-card {{ background: var(--stat-card-bg); border-radius: 12px; padding: 16px; text-align: center; }}
+        .stat-card .label {{ font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); margin-bottom: 4px; }}
+        .stat-card .value {{ font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }}
+        .content-card {{ background: var(--card-bg); border-radius: 16px; padding: 28px 24px; box-shadow: var(--shadow); margin-bottom: 20px; }}
+        .content-card h2 {{ font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; }}
+        .content-card p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.6; margin-bottom: 12px; }}
+        table {{ width: 100%; border-collapse: collapse; font-size: 0.85rem; }}
+        th {{ text-align: left; padding: 10px 8px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); border-bottom: 2px solid var(--border); }}
+        td {{ padding: 10px 8px; border-bottom: 1px solid var(--border-light); }}
+        tr:nth-child(even) {{ background: var(--table-stripe); }}
+        .similar-cities {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+        .similar-city-link {{ display: inline-block; padding: 8px 16px; background: var(--stat-card-bg); border-radius: 8px; color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: background 0.2s; }}
+        .similar-city-link:hover {{ background: var(--border); }}
+        .page-footer {{ margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }}
+        .page-footer a {{ font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; }}
+        .page-footer a:hover {{ color: var(--accent); }}
+        .faq-item {{ margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }}
+        .faq-item:last-child {{ border-bottom: none; margin-bottom: 0; padding-bottom: 0; }}
+        .faq-item h3 {{ font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }}
+        .faq-item p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.7; margin: 0; }}
+{THEME_TOGGLE_CSS}
+        @media (max-width: 600px) {{
+            .page-wrapper {{ padding: 16px 16px 48px; }}
+            .hero h1 {{ font-size: 1.3rem; }}
+            .stat-grid {{ grid-template-columns: 1fr; }}
+            table {{ font-size: 0.8rem; }}
+            th, td {{ padding: 8px 6px; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar">
+            <a href="/" class="logo">salary:converter</a>
+            <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <a href="/city/">Cities</a>
+                <a href="/compare/">Compare</a>
+                <a href="/blog/">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+                    <span class="toggle-thumb">
+                        <svg class="toggle-icon icon-sun" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                        <svg class="toggle-icon icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                    </span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{slug}">{city}</a> &rsaquo; {hero_label}
+        </div>
+
+        <div class="hero">
+            <h1>{hero_label} in {city}</h1>
+            <p>All {total_nhoods} neighborhoods in {city} ranked by cost of living index. Updated {CURRENT_YEAR}.</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="label">{hero_stat_label}</div>
+                <div class="value">{hero_stat_value}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">City Avg Rent</div>
+                <div class="value">${rent:,}/mo</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Neighborhoods</div>
+                <div class="value">{total_nhoods}</div>
+            </div>
+        </div>
+
+        {share_bar}
+
+        <section class="content-card">
+            <h2>{hero_label} in {city} &mdash; Full Rankings</h2>
+            <div style="overflow-x:auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align:center; width:40px;">#</th>
+                        <th>Neighborhood</th>
+                        <th style="text-align:center;">1BR Rent</th>
+                        <th style="text-align:center;">Index</th>
+                        <th style="text-align:right;">vs Avg</th>
+                    </tr>
+                </thead>
+                <tbody>{table_rows}
+                </tbody>
+            </table>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Rent estimates based on city average of ${rent:,}/mo adjusted by neighborhood cost index. Index 1.00 = city average.</p>
+        </section>
+
+{wise_cta}
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item"><h3>{faq1_q}</h3><p>{faq1_a}</p></div>
+            <div class="faq-item"><h3>{faq2_q}</h3><p>{faq2_a}</p></div>
+            <div class="faq-item"><h3>{faq3_q}</h3><p>{faq3_a}</p></div>
+        </section>
+
+        <section class="content-card">
+            <h2>Explore More</h2>
+            <div class="similar-cities">
+                <a href="{opposite_url}" class="similar-city-link">{opposite_label}</a>
+                <a href="/city/{slug}" class="similar-city-link">{city} Cost of Living Guide</a>
+                <a href="/salary-needed/{slug}" class="similar-city-link">Salary Needed in {city}</a>
+                <a href="/city/" class="similar-city-link">All Cities</a>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/city/{slug}">{city}</a>
+            <a href="/city/">Cities</a>
+            <a href="/compare/">Compare</a>
+            <a href="/blog/">Blog</a>
+        </footer>
+    </div>
+{THEME_JS}
+{SHARE_JS}
+</body>
+</html>'''
     return html
 
 
@@ -3239,6 +3553,20 @@ def generate_comparison_page(city1, city2):
         </section>
 
         {neigh_section}
+
+        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
+            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
+                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving between {city1} and {city2}?</h3>
+                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Save up to 6x on international transfers. Send money at the real exchange rate with no hidden fees.</p>
+                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
+                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
+                        Compare Transfer Fees &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section class="cta-section">
             <h2>Get Your Exact Number</h2>
@@ -5362,6 +5690,9 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
         for nhood in nhoods:
             nhood_slug = slugify(nhood)
             urls.append(f'https://salary-converter.com/city/{city_slug}/{nhood_slug}')
+        # Cheapest/most-expensive neighborhood hub pages
+        urls.append(f'https://salary-converter.com/city/{city_slug}/cheapest-neighborhoods')
+        urls.append(f'https://salary-converter.com/city/{city_slug}/most-expensive-neighborhoods')
 
     # City-vs-city comparison pages
     for city1, city2 in comparison_pairs:
@@ -5499,6 +5830,21 @@ if __name__ == '__main__':
             nhood_count += 1
     print(f"  Done: {nhood_count} neighborhood pages created in /city/{{city}}/")
 
+    # Generate cheapest/most-expensive neighborhood hub pages
+    hub_count = 0
+    for city in cityNeighborhoods:
+        city_slug = slugify(city)
+        nhood_dir = os.path.join(city_dir, city_slug)
+        os.makedirs(nhood_dir, exist_ok=True)
+        for mode in ('cheapest', 'most-expensive'):
+            filepath = os.path.join(nhood_dir, f'{mode}-neighborhoods.html')
+            html = generate_neighborhood_hub_page(city, mode)
+            if html:
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    f.write(html)
+                hub_count += 1
+    print(f"  Done: {hub_count} neighborhood hub pages (cheapest + most expensive)")
+
     # Generate comparison pages (city vs city)
     print(f"Generating {len(comparison_pairs)} city comparison pages...")
     for city1, city2 in comparison_pairs:
@@ -5557,10 +5903,11 @@ if __name__ == '__main__':
     print(f"  Done: Sitemap index + {chunk_count} sitemaps ({url_count} URLs)")
 
     # Summary
-    total_pages = len(coliData) + nhood_count + len(comparison_pairs) + nhood_comp_count + len(blog_articles) + 2
+    total_pages = len(coliData) + nhood_count + hub_count + len(comparison_pairs) + nhood_comp_count + len(blog_articles) + 2
     print(f"\nTotal pages generated: {total_pages}")
     print(f"  City pages: {len(coliData)}")
     print(f"  Neighborhood pages: {nhood_count}")
+    print(f"  Neighborhood hub pages: {hub_count}")
     print(f"  City comparisons: {len(comparison_pairs)}")
     print(f"  Neighborhood comparisons: {nhood_comp_count}")
     print(f"  Blog articles: {len(blog_articles)}")
