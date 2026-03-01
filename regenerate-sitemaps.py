@@ -18,14 +18,15 @@ BASE_URL = 'https://salary-converter.com'
 # Priority order for URL sorting (homepage first, then hubs, then pages)
 PRIORITY = {
     '': 0,           # homepage
-    'widget': 1,
-    'city': 2,
-    'rankings': 3,
-    'salary': 3,
-    'compare': 4,
-    'salary-needed': 5,
-    'blog': 6,
-    'privacy': 7,
+    'retire': 1,
+    'widget': 2,
+    'city': 3,
+    'rankings': 4,
+    'salary': 4,
+    'compare': 5,
+    'salary-needed': 6,
+    'blog': 7,
+    'privacy': 8,
 }
 
 def html_to_url(filepath):

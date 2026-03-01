@@ -752,9 +752,10 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
             <a href="/">Salary Converter</a>
             {footer_city_link}
             <a href="/salary-needed/">All Cities</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
-        
+
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
         </footer>
@@ -906,9 +907,10 @@ index_page = f'''<!DOCTYPE html>
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
             <a href="/compare/">City Comparisons</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
-        
+
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
         </footer>

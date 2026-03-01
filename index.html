@@ -2235,6 +2235,7 @@
                 <a href="/compare/"><span>⚖️</span>Compare Cities</a>
                 <a href="/salary-needed/"><span>💰</span>Salary Needed</a>
                 <a href="/salary/"><span>💼</span>Salaries by Job</a>
+                <a href="/retire/"><span>🌴</span>Retire Abroad</a>
                 <a href="/blog/"><span>📝</span>Read our Blog</a>
                 <a href="https://salary-converter.com/widget"><span>🧩</span>Free Widget</a>
                 <a href="#" onclick="openContactModal(); return false;"><span>📩</span>Contact Us</a>
@@ -2483,6 +2484,13 @@
             <div id="dataSourcesFootnote" style="display:none; margin-top:20px; padding:16px 20px; background:var(--stat-card-bg, #f9f9fb); border-radius:12px; border:1px solid var(--border-light, #f0f0f2);">
                 <p style="font-size:0.78rem; font-weight:600; color:var(--text-secondary, #86868b); margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px;">Data Sources</p>
                 <p style="font-size:0.78rem; color:var(--text-secondary, #86868b); line-height:1.6; margin:0;">Cost of living indices from <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Numbeo</a> &amp; <a href="https://www.expatistan.com/cost-of-living" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Expatistan</a>. Tax rates via <a href="https://www.oecd.org/tax/tax-policy/taxing-wages-brochure.pdf" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">OECD</a>. Exchange rates from <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">ECB</a>. NYC baseline COLI&nbsp;=&nbsp;100. <a href="/about/" style="color:var(--accent);">Read our methodology&nbsp;&rarr;</a></p>
+            </div>
+
+            <!-- Retire Abroad Cross-Promo -->
+            <div id="retireCrossPromo" style="display:none; margin-top:16px; padding:18px 20px; background:linear-gradient(135deg, rgba(37, 99, 235, 0.06), rgba(124, 58, 237, 0.06)); border-radius:14px; text-align:center;">
+                <p style="font-size:0.88rem; color:var(--text-primary); font-weight:600; margin:0 0 6px;">🌴 Have savings? Find where they'll last longest</p>
+                <p style="font-size:0.78rem; color:var(--text-secondary); margin:0 0 10px;">Our new tool analyzes 113 cities for retirement — with visa info, tax data &amp; quality of life scores.</p>
+                <a href="/retire/" style="display:inline-block; padding:8px 20px; background:var(--accent); color:#fff; border-radius:10px; text-decoration:none; font-size:0.82rem; font-weight:600;">Try Retire Abroad Calculator &rarr;</a>
             </div>
         </div>
     </div>
@@ -2759,6 +2767,7 @@
             <a href="/city/">Cities</a>
             <a href="/compare/">City Comparisons</a>
             <a href="/salary-needed/">Salary Needed</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
@@ -5558,6 +5567,7 @@
             const resultBox = document.getElementById('resultBox');
             resultBox.classList.add('show');
             document.getElementById('dataSourcesFootnote').style.display = 'block';
+            document.getElementById('retireCrossPromo').style.display = 'block';
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
@@ -5590,6 +5600,7 @@
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
             document.getElementById('dataSourcesFootnote').style.display = 'none';
+            document.getElementById('retireCrossPromo').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));

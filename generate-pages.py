@@ -2524,6 +2524,7 @@ def generate_city_page(city, comparison_pairs):
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -2683,9 +2684,10 @@ def generate_city_page(city, comparison_pairs):
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
             <a href="/compare/">City Comparisons</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
-        
+
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
         </footer>
@@ -2985,8 +2987,9 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
             <a href="/city/{slug}">{city}</a>
             <a href="/city/">Cities</a>
             <a href="/compare/">Compare</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
-        
+
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
@@ -3448,6 +3451,7 @@ def generate_comparison_page(city1, city2):
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -3606,6 +3610,7 @@ def generate_comparison_page(city1, city2):
             <a href="/city/{slug1}">{city1}</a>
             <a href="/city/{slug2}">{city2}</a>
             <a href="/compare/">City Comparisons</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
         
@@ -3772,6 +3777,7 @@ def generate_city_index():
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -3804,6 +3810,7 @@ def generate_city_index():
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/compare/">City Comparisons</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
         
@@ -4009,6 +4016,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -4040,6 +4048,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
         
@@ -4572,6 +4581,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -4697,6 +4707,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/">Salary Converter</a>
             <a href="/city/{city_slug}">{city}</a>
             <a href="/city/">All Cities</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
@@ -4902,6 +4913,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -5015,6 +5027,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <a href="/">Salary Converter</a>
             <a href="/city/{city_slug}">{city}</a>
             <a href="/compare/">All Comparisons</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
@@ -5201,6 +5214,7 @@ def generate_blog_undervalued_neighborhoods():
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -5253,6 +5267,7 @@ def generate_blog_undervalued_neighborhoods():
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
         
@@ -5417,6 +5432,7 @@ def generate_blog_salary_goes_furthest():
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -5485,6 +5501,7 @@ def generate_blog_salary_goes_furthest():
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
         
@@ -5647,6 +5664,7 @@ def generate_blog_major_cities_breakdown():
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
+                <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 {THEME_TOGGLE_HTML}
             </div>
@@ -5678,6 +5696,7 @@ def generate_blog_major_cities_breakdown():
 
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
+            <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
         
