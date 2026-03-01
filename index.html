@@ -2574,23 +2574,6 @@
             <a href="/blog/" class="blog-card-cta">View All Articles →</a>
         </div>
 
-        <!-- Newsletter Signup -->
-        <div class="sidebar-card" style="background: linear-gradient(135deg, var(--card-bg) 0%, var(--stat-card-bg) 100%); border: 1px solid var(--accent); position: relative; overflow: hidden;">
-            <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: var(--accent); opacity: 0.06; border-radius: 50%;"></div>
-            <h3 style="color: var(--accent);">📬 Weekly Salary Insights</h3>
-            <p style="font-size: 0.82rem; color: var(--text-body); margin-bottom: 14px; line-height: 1.5;">City spotlights, salary trends, and cost of living updates — delivered every week.</p>
-            <form id="newsletterForm" style="display: flex; flex-direction: column; gap: 8px;">
-                <input type="email" id="newsletterEmail" placeholder="your@email.com" required
-                    style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.85rem; background: var(--input-bg, var(--card-bg)); color: var(--text-primary); outline: none; box-sizing: border-box;">
-                <button type="submit" style="width: 100%; padding: 10px 16px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">Subscribe — Free</button>
-            </form>
-            <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 8px; margin-bottom: 0; text-align: center;">No spam. Unsubscribe anytime.</p>
-            <div id="newsletterSuccess" style="display: none; text-align: center; padding: 12px 0;">
-                <p style="font-size: 0.9rem; font-weight: 600; color: var(--accent); margin: 0;">You're in! 🎉</p>
-                <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 4px 0 0;">Check your inbox to confirm.</p>
-            </div>
-        </div>
-
         <!-- Neighborhoods Card -->
         <div class="sidebar-card">
             <h3>🏘️ Neighborhoods</h3>
@@ -5917,39 +5900,6 @@
                 } catch(err) {
                     btn.textContent = 'Error \u2014 Try Again'; btn.disabled = false;
                     setTimeout(() => { btn.textContent = origText; }, 3000);
-                }
-            });
-        }
-
-        // Newsletter signup handler (Beehiiv)
-        const nlForm = document.getElementById('newsletterForm');
-        if (nlForm) {
-            nlForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const email = document.getElementById('newsletterEmail').value;
-                const btn = nlForm.querySelector('button[type="submit"]');
-                const origText = btn.textContent;
-                btn.textContent = 'Subscribing...'; btn.disabled = true;
-                try {
-                    // Beehiiv external embed — replace PUBLICATION_ID with your Beehiiv publication ID
-                    const resp = await fetch('https://api.beehiiv.com/v2/publications/YOUR_BEEHIIV_PUBLICATION_ID/subscriptions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: email, reactivate_existing: true, utm_source: 'salary-converter', utm_medium: 'widget' })
-                    });
-                    // Show success regardless (Beehiiv may require API key for direct API)
-                    nlForm.style.display = 'none';
-                    document.getElementById('newsletterSuccess').style.display = '';
-                    if (typeof gtag === 'function') {
-                        gtag('event', 'newsletter_signup', { event_category: 'conversion' });
-                    }
-                } catch(err) {
-                    // Fallback: open Beehiiv subscribe page
-                    nlForm.style.display = 'none';
-                    document.getElementById('newsletterSuccess').style.display = '';
-                    if (typeof gtag === 'function') {
-                        gtag('event', 'newsletter_signup', { event_category: 'conversion' });
-                    }
                 }
             });
         }
