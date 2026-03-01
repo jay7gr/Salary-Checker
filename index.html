@@ -2478,6 +2478,12 @@
                 <button class="share-btn" data-platform="copy" aria-label="Copy link" type="button"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
                 <button class="share-btn" data-platform="email" aria-label="Share via email" type="button"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             </div>
+
+            <!-- Data Sources Footnote -->
+            <div id="dataSourcesFootnote" style="display:none; margin-top:20px; padding:16px 20px; background:var(--stat-card-bg, #f9f9fb); border-radius:12px; border:1px solid var(--border-light, #f0f0f2);">
+                <p style="font-size:0.78rem; font-weight:600; color:var(--text-secondary, #86868b); margin:0 0 6px; text-transform:uppercase; letter-spacing:0.5px;">Data Sources</p>
+                <p style="font-size:0.78rem; color:var(--text-secondary, #86868b); line-height:1.6; margin:0;">Cost of living indices from <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Numbeo</a> &amp; <a href="https://www.expatistan.com/cost-of-living" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Expatistan</a>. Tax rates via <a href="https://www.oecd.org/tax/tax-policy/taxing-wages-brochure.pdf" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">OECD</a>. Exchange rates from <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">ECB</a>. NYC baseline COLI&nbsp;=&nbsp;100. <a href="/about/" style="color:var(--accent);">Read our methodology&nbsp;&rarr;</a></p>
+            </div>
         </div>
     </div>
 
@@ -5551,6 +5557,7 @@
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
             resultBox.classList.add('show');
+            document.getElementById('dataSourcesFootnote').style.display = 'block';
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
@@ -5582,6 +5589,7 @@
             document.getElementById('offer2Salary').value = '';
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
+            document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
