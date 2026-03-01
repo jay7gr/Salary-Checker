@@ -1,0 +1,1048 @@
+<!-- salary-nav-v1 --><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Free Embeddable Salary Converter Widget — salary:converter</title>
+    <meta name="description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/widget/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salary-converter.com/widget/">
+    <meta property="og:title" content="Free Embeddable Salary Converter Widget — salary:converter">
+    <meta property="og:description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:site_name" content="salary:converter">
+
+    <!-- Twitter/X Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Free Embeddable Salary Converter Widget — salary:converter">
+    <meta name="twitter:description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://salary-converter.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Widget",
+                "item": "https://salary-converter.com/widget/"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google Consent Mode v2 -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
+    </script>
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            overflow-x: hidden;
+        }
+        html {
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+            --nav-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-primary);
+        }
+
+        /* ========== NAV ========== */
+        .nav {
+            background: var(--nav-bg, rgba(255, 255, 255, 0.85));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .nav-logo span {
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 38px;
+            height: 22px;
+            background: var(--border);
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .theme-toggle:hover {
+            background: var(--text-secondary);
+        }
+        .theme-toggle .toggle-thumb {
+            position: absolute;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: #60a5fa;
+        }
+        [data-theme="dark"] .theme-toggle .toggle-thumb {
+            transform: translateX(16px);
+            box-shadow: 0 0 0 2px #93c5fd, 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .theme-toggle .toggle-icon {
+            width: 11px;
+            height: 11px;
+        }
+        .theme-toggle .icon-sun {
+            color: #f59e0b;
+        }
+        .theme-toggle .icon-moon {
+            display: none;
+            color: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            display: none;
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            display: block;
+            color: #3b82f6;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            background: rgba(37, 99, 235, 0.08);
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+
+        [data-theme="dark"] .hero-badge {
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        /* ========== FEATURES ========== */
+        .features-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px 28px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* ========== PREVIEW ========== */
+        .preview-section {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .preview-wrapper {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .preview-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .preview-toolbar-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .preview-toggle {
+            display: flex;
+            background: var(--stat-card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .preview-toggle-btn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preview-toggle-btn.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .preview-iframe-wrap {
+            position: relative;
+        }
+
+        .preview-iframe-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 800px;
+            border: none;
+        }
+
+        .preview-iframe-wrap.dark-preview {
+            background: #000;
+        }
+
+        /* ========== EMBED CODE ========== */
+        .embed-section {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .embed-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            padding: 48px 44px;
+        }
+
+        .embed-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
+        }
+
+        .embed-card > p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .size-btn {
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 8px 20px;
+            border: 2px solid var(--border);
+            background: none;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .size-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .size-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .code-block-wrap {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            padding: 24px;
+            border-radius: 14px;
+            overflow-x: auto;
+            white-space: pre;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .code-block .tag { color: #f38ba8; }
+        .code-block .attr { color: #a6e3a1; }
+        .code-block .val { color: #f9e2af; }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 7px 16px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #cdd6f4;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+
+        .embed-note {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ========== FAQ ========== */
+        .faq-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+        }
+
+        .faq-list {
+            list-style: none;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 24px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            gap: 16px;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-chevron {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            color: var(--text-secondary);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 0 24px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* ========== BOTTOM CTA ========== */
+        .bottom-cta {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 0 24px 80px;
+            text-align: center;
+        }
+
+        .bottom-cta-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            padding: 56px 44px;
+        }
+
+        .bottom-cta-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
+        }
+
+        .bottom-cta-card p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+        }
+
+        .bottom-cta-card .hero-cta {
+            font-size: 0.95rem;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .footer-logo span {
+            color: #2563eb;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ========== MOBILE ========== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 48px 20px 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+                letter-spacing: -0.8px;
+            }
+
+            .hero p {
+                font-size: 1.05rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .preview-section {
+                padding: 0 16px 60px;
+            }
+
+            .preview-iframe-wrap iframe {
+                height: 600px;
+            }
+
+            .embed-card {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+
+            .embed-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .code-block {
+                font-size: 0.75rem;
+                padding: 18px;
+            }
+
+            .size-options {
+                flex-wrap: wrap;
+            }
+
+            .faq-section {
+                padding: 0 20px 60px;
+            }
+
+            .bottom-cta-card {
+                padding: 40px 24px;
+                border-radius: 20px;
+            }
+
+            .bottom-cta-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .nav-links a.nav-link-text {
+                display: none;
+            }
+
+            .theme-toggle {
+                position: fixed !important;
+                top: 16px !important;
+                right: 16px !important;
+                z-index: 10001 !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+    <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link-text">Tool</a>
+                <a href="/blog/" class="nav-link-text">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+                    <span class="toggle-thumb">
+                        <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">Free &amp; Open</div>
+        <h1>Free Salary Converter Widget for Your Website</h1>
+        <p>Embed our salary comparison tool on your blog, career site, or HR platform. Free, responsive, and dark mode ready.</p>
+        <a href="#embed-code" class="hero-cta">Get the Embed Code &#8595;</a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title">Why Use Our Widget?</h2>
+        <p class="section-subtitle">Everything your readers need to compare salaries across cities, built into a single embed.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon" aria-hidden="true">&#127758;</span>
+                <h3>113 Cities Worldwide</h3>
+                <p>Compare salaries across major cities globally, with real cost-of-living adjustments, tax estimates, and currency conversion.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" aria-hidden="true">&#127769;</span>
+                <h3>Dark Mode Support</h3>
+                <p>Automatically adapts to your site's color scheme. Light theme, dark theme, or system preference &mdash; it just works.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" aria-hidden="true">&#128241;</span>
+                <h3>Fully Responsive</h3>
+                <p>Looks great on desktop, tablet, and mobile. The widget scales to fit any container width seamlessly.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" aria-hidden="true">&#9889;</span>
+                <h3>Zero Dependencies</h3>
+                <p>A single iframe embed. No JavaScript libraries, no build steps, no API keys. Copy, paste, and you're live.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Preview Section -->
+    <section class="preview-section">
+        <h2 class="section-title">Live Preview</h2>
+        <p class="section-subtitle">Try the widget right here. This is exactly what your visitors will see.</p>
+        <div class="preview-wrapper">
+            <div class="preview-toolbar">
+                <span class="preview-toolbar-label">Preview</span>
+                <div class="preview-toggle">
+                    <button class="preview-toggle-btn active" data-mode="light" type="button">Light</button>
+                    <button class="preview-toggle-btn" data-mode="dark" type="button">Dark</button>
+                </div>
+            </div>
+            <div class="preview-iframe-wrap" id="previewWrap">
+                <iframe src="/embed.html" width="100%" height="800" frameborder="0" title="Salary Converter Widget Preview" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Embed Code Section -->
+    <section class="embed-section" id="embed-code">
+        <div class="embed-card">
+            <h2>Get the Embed Code</h2>
+            <p>Choose a size, copy the code, and paste it into your HTML. That's it.</p>
+
+            <div class="size-options">
+                <button class="size-btn" data-height="600" type="button">Small (600px)</button>
+                <button class="size-btn active" data-height="800" type="button">Medium (800px)</button>
+                <button class="size-btn" data-height="1000" type="button">Large (1000px)</button>
+            </div>
+
+            <div class="code-block-wrap">
+                <pre class="code-block" id="codeBlock"><span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
+  <span class="attr">width</span>=<span class="val">"100%"</span>
+  <span class="attr">height</span>=<span class="val">"<span id="codeHeight">800</span>"</span>
+  <span class="attr">frameborder</span>=<span class="val">"0"</span>
+  <span class="attr">style</span>=<span class="val">"border:none; border-radius:12px;"</span>
+  <span class="attr">title</span>=<span class="val">"Salary Converter Widget"</span><span class="tag">&gt;&lt;/iframe&gt;</span></pre>
+                <button class="copy-btn" id="copyBtn" type="button">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span id="copyLabel">Copy Code</span>
+                </button>
+            </div>
+
+            <p class="embed-note">The widget loads in an isolated iframe and will not affect your page's performance or styles. Works with any CMS, static site, or no-code builder.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about embedding the widget.</p>
+        <ul class="faq-list">
+            <li class="faq-item">
+                <button class="faq-question" type="button">
+                    Is the widget really free?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Yes, completely free with no usage limits, no API keys, and no registration required. You can embed it on as many pages as you like.</div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <button class="faq-question" type="button">
+                    Can I customize the colors?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">The widget automatically supports light and dark mode based on the user's system preferences. It will seamlessly match most site designs out of the box.</div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <button class="faq-question" type="button">
+                    Will it slow down my site?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">No. The widget loads inside an isolated iframe, so it won't block your page's rendering or interfere with your scripts and styles. You can also add <code>loading="lazy"</code> to the iframe to defer loading until the user scrolls to it.</div>
+                </div>
+            </li>
+            <li class="faq-item">
+                <button class="faq-question" type="button">
+                    Do I need to credit salary:converter?
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Attribution is appreciated but not required. If you'd like to credit us, a simple link to <strong>salary-converter.com</strong> alongside the widget is a great way to do it.</div>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta">
+        <div class="bottom-cta-card">
+            <h2>Ready to Embed?</h2>
+            <p>Add real salary comparison data to your site in under 60 seconds.</p>
+            <a href="#embed-code" class="hero-cta">Get the Embed Code &#8595;</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">salary<span>:</span>converter</div>
+            <p class="footer-text">Compare salaries across cities and countries with real cost-of-living data.</p>
+            <div class="footer-links">
+                <a href="/">Tool</a>
+                <a href="/salary/">Salaries</a>
+                <a href="/blog/">Blog</a>
+                <a href="/privacy/">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        /* ---- Theme toggle ---- */
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+
+        /* ---- Preview light/dark toggle ---- */
+        var previewBtns = document.querySelectorAll('.preview-toggle-btn');
+        var previewWrap = document.getElementById('previewWrap');
+        var previewIframe = previewWrap.querySelector('iframe');
+
+        previewBtns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+                previewBtns.forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                var mode = btn.getAttribute('data-mode');
+                if(mode === 'dark'){
+                    previewWrap.classList.add('dark-preview');
+                    previewIframe.src = '/embed.html?theme=dark';
+                } else {
+                    previewWrap.classList.remove('dark-preview');
+                    previewIframe.src = '/embed.html?theme=light';
+                }
+            });
+        });
+
+        /* ---- Size options ---- */
+        var currentHeight = 800;
+        var sizeBtns = document.querySelectorAll('.size-btn');
+        var codeHeightEl = document.getElementById('codeHeight');
+
+        sizeBtns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+                sizeBtns.forEach(function(b){ b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentHeight = parseInt(btn.getAttribute('data-height'), 10);
+                codeHeightEl.textContent = currentHeight;
+            });
+        });
+
+        /* ---- Copy to clipboard ---- */
+        var copyBtn = document.getElementById('copyBtn');
+        var copyLabel = document.getElementById('copyLabel');
+
+        copyBtn.addEventListener('click', function(){
+            var code = '<iframe src="https://salary-converter.com/embed.html" width="100%" height="' + currentHeight + '" frameborder="0" style="border:none; border-radius:12px;" title="Salary Converter Widget"></iframe>';
+            navigator.clipboard.writeText(code).then(function(){
+                copyBtn.classList.add('copied');
+                copyLabel.textContent = 'Copied!';
+                setTimeout(function(){
+                    copyBtn.classList.remove('copied');
+                    copyLabel.textContent = 'Copy Code';
+                }, 2000);
+            }).catch(function(){
+                /* Fallback for older browsers */
+                var ta = document.createElement('textarea');
+                ta.value = code;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); copyBtn.classList.add('copied'); copyLabel.textContent = 'Copied!'; setTimeout(function(){ copyBtn.classList.remove('copied'); copyLabel.textContent = 'Copy Code'; }, 2000); } catch(e){}
+                document.body.removeChild(ta);
+            });
+        });
+
+        /* ---- FAQ accordion ---- */
+        document.querySelectorAll('.faq-question').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                var item = btn.closest('.faq-item');
+                var answer = item.querySelector('.faq-answer');
+                var isOpen = item.classList.contains('open');
+
+                /* Close all others */
+                document.querySelectorAll('.faq-item.open').forEach(function(other){
+                    if(other !== item){
+                        other.classList.remove('open');
+                        other.querySelector('.faq-answer').style.maxHeight = '0';
+                    }
+                });
+
+                if(isOpen){
+                    item.classList.remove('open');
+                    answer.style.maxHeight = '0';
+                } else {
+                    item.classList.add('open');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+    })();
+    </script>
+    <script src="/chat.js?v=2"></script>
+</body>
+</html>

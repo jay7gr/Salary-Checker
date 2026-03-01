@@ -41,6 +41,24 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "salary:converter",
+        "url": "https://salary-converter.com",
+        "logo": "https://salary-converter.com/og-image.svg",
+        "description": "Free salary comparison tool covering 113 cities and 2,400+ neighborhoods worldwide with cost of living adjustments, tax estimation, and currency conversion.",
+        "foundingDate": "2026",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "url": "https://salary-converter.com",
+            "availableLanguage": "English"
+        },
+        "sameAs": []
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Salary Converter",
         "alternateName": "salary:converter",
@@ -2236,6 +2254,14 @@
             <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;" id="hero-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</p>
         </div>
 
+        <!-- Site Search -->
+        <div style="max-width: 520px; margin: 18px auto 0; position: relative;">
+            <input type="text" id="siteSearch" placeholder="Search cities, comparisons, salaries..." autocomplete="off"
+                style="width: 100%; padding: 12px 18px 12px 42px; border: 1px solid var(--border); border-radius: 12px; font-size: 0.92rem; background: var(--input-bg, var(--card-bg)); color: var(--text-primary); outline: none; transition: border-color 0.2s; box-sizing: border-box;">
+            <svg style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <div id="searchResults" style="display:none; position:absolute; top:calc(100% + 6px); left:0; right:0; background:var(--card-bg); border:1px solid var(--border); border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.12); z-index:9999; max-height:340px; overflow-y:auto;"></div>
+        </div>
+
         <div class="error-message" id="error"></div>
 
         <div class="form-section household-section" id="householdSection">
@@ -2548,6 +2574,23 @@
             <a href="/blog/" class="blog-card-cta">View All Articles →</a>
         </div>
 
+        <!-- Newsletter Signup -->
+        <div class="sidebar-card" style="background: linear-gradient(135deg, var(--card-bg) 0%, var(--stat-card-bg) 100%); border: 1px solid var(--accent); position: relative; overflow: hidden;">
+            <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: var(--accent); opacity: 0.06; border-radius: 50%;"></div>
+            <h3 style="color: var(--accent);">📬 Weekly Salary Insights</h3>
+            <p style="font-size: 0.82rem; color: var(--text-body); margin-bottom: 14px; line-height: 1.5;">City spotlights, salary trends, and cost of living updates — delivered every week.</p>
+            <form id="newsletterForm" style="display: flex; flex-direction: column; gap: 8px;">
+                <input type="email" id="newsletterEmail" placeholder="your@email.com" required
+                    style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.85rem; background: var(--input-bg, var(--card-bg)); color: var(--text-primary); outline: none; box-sizing: border-box;">
+                <button type="submit" style="width: 100%; padding: 10px 16px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s;">Subscribe — Free</button>
+            </form>
+            <p style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 8px; margin-bottom: 0; text-align: center;">No spam. Unsubscribe anytime.</p>
+            <div id="newsletterSuccess" style="display: none; text-align: center; padding: 12px 0;">
+                <p style="font-size: 0.9rem; font-weight: 600; color: var(--accent); margin: 0;">You're in! 🎉</p>
+                <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 4px 0 0;">Check your inbox to confirm.</p>
+            </div>
+        </div>
+
         <!-- Neighborhoods Card -->
         <div class="sidebar-card">
             <h3>🏘️ Neighborhoods</h3>
@@ -2695,7 +2738,7 @@
             <h2>Contact Us</h2>
             <p class="contact-subtitle">Have feedback, found a data error, or want to suggest a feature?</p>
             <form id="contactForm" class="contact-form">
-                <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+                <input type="hidden" name="access_key" value="58839fd2-7f1c-4944-8fd5-322bc3d6beba">
                 <input type="hidden" name="subject" value="salary-converter.com Contact Form">
                 <div class="contact-form-grid">
                     <div class="form-group">
@@ -2728,7 +2771,9 @@
             <a href="/compare/">City Comparisons</a>
             <a href="/salary-needed/">Salary Needed</a>
             <a href="/blog/">Blog</a>
+            <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
             <a href="/widget">Widget</a>
             <a href="#" onclick="openContactModal(); return false;">Contact</a>
         </div>
@@ -5526,6 +5571,16 @@
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
+
+            // GA4 event — successful calculation
+            if (typeof gtag === 'function') {
+                gtag('event', 'salary_calculated', {
+                    event_category: 'engagement',
+                    from_city: currentCity,
+                    to_city: targetCity,
+                    household_mode: household.mode
+                });
+            }
         });
 
         // Reset form
@@ -5643,8 +5698,100 @@
                 else if(p==='whatsapp') window.open('https://wa.me/?text='+enc,'_blank');
                 else if(p==='email') window.location.href='mailto:?subject='+encodeURIComponent(text)+'&body='+enc;
                 else if(p==='copy'){navigator.clipboard.writeText(url).then(function(){btn.classList.add('copied');setTimeout(function(){btn.classList.remove('copied')},2000)})}
+                // GA4 event — share click
+                if (typeof gtag === 'function') {
+                    gtag('event', 'share', { event_category: 'engagement', method: p });
+                }
             });
         });
+
+        // Site search
+        (function() {
+            const searchInput = document.getElementById('siteSearch');
+            const searchResults = document.getElementById('searchResults');
+            if (!searchInput || !searchResults) return;
+
+            // Build search index from coliData (cities already loaded)
+            const cities = Object.keys(coliData);
+            const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+            function buildResults(query) {
+                if (!query || query.length < 2) { searchResults.style.display = 'none'; return; }
+                const q = query.toLowerCase();
+                const matches = [];
+
+                // Match cities
+                cities.forEach(city => {
+                    if (city.toLowerCase().includes(q)) {
+                        const slug = slugify(city);
+                        matches.push({ label: city, type: 'City Profile', url: '/city/' + slug, icon: '🏙️' });
+                        matches.push({ label: 'Salary Needed in ' + city, type: 'Salary Guide', url: '/salary-needed/' + slug, icon: '💰' });
+                    }
+                });
+
+                // Match city vs city comparisons
+                if (q.includes(' vs ') || q.includes(' to ') || q.includes(' and ')) {
+                    const parts = q.split(/\s+(?:vs|to|and)\s+/);
+                    if (parts.length === 2) {
+                        const c1 = cities.find(c => c.toLowerCase().includes(parts[0].trim()));
+                        const c2 = cities.find(c => c.toLowerCase().includes(parts[1].trim()));
+                        if (c1 && c2) {
+                            matches.unshift({ label: c1 + ' vs ' + c2, type: 'Comparison', url: '/compare/' + slugify(c1) + '-vs-' + slugify(c2), icon: '⚖️' });
+                        }
+                    }
+                }
+
+                // Static pages
+                const staticPages = [
+                    { label: 'Most Expensive Cities', url: '/rankings/most-expensive-cities', icon: '📊', keys: ['expensive','ranking','costly'] },
+                    { label: 'Cheapest Cities', url: '/rankings/cheapest-cities', icon: '📊', keys: ['cheap','affordable','budget'] },
+                    { label: 'Highest Salaries', url: '/rankings/highest-salaries', icon: '📊', keys: ['highest','top salary','best pay'] },
+                    { label: 'Best Value Cities', url: '/rankings/best-value-cities', icon: '📊', keys: ['value','bang for buck','worth'] },
+                    { label: 'Lowest Taxes', url: '/rankings/lowest-taxes', icon: '📊', keys: ['tax','lowest tax'] },
+                    { label: 'Cheapest Rent', url: '/rankings/cheapest-rent', icon: '📊', keys: ['rent','cheapest rent'] },
+                    { label: 'Blog', url: '/blog/', icon: '📝', keys: ['blog','articles','read'] },
+                    { label: 'Free Widget', url: '/widget/', icon: '🧩', keys: ['widget','embed','iframe'] },
+                    { label: 'About', url: '/about/', icon: 'ℹ️', keys: ['about','team','who'] },
+                ];
+                staticPages.forEach(p => {
+                    if (p.label.toLowerCase().includes(q) || p.keys.some(k => k.includes(q) || q.includes(k))) {
+                        matches.push({ label: p.label, type: 'Page', url: p.url, icon: p.icon });
+                    }
+                });
+
+                // Limit & render
+                const limited = matches.slice(0, 8);
+                if (limited.length === 0) {
+                    searchResults.innerHTML = '<div style="padding:16px;text-align:center;font-size:0.85rem;color:var(--text-secondary);">No results found</div>';
+                } else {
+                    searchResults.innerHTML = limited.map(m =>
+                        '<a href="' + m.url + '" style="display:flex;align-items:center;gap:12px;padding:12px 16px;text-decoration:none;color:var(--text-primary);border-bottom:1px solid var(--border-light,#f0f0f2);transition:background 0.15s;" onmouseover="this.style.background=\'var(--stat-card-bg)\'" onmouseout="this.style.background=\'transparent\'">'
+                        + '<span style="font-size:1.1rem;">' + m.icon + '</span>'
+                        + '<div><div style="font-size:0.88rem;font-weight:500;">' + m.label + '</div>'
+                        + '<div style="font-size:0.72rem;color:var(--text-secondary);">' + m.type + '</div></div>'
+                        + '</a>'
+                    ).join('');
+                }
+                searchResults.style.display = '';
+                if (typeof gtag === 'function' && query.length === 3) {
+                    gtag('event', 'search', { event_category: 'engagement', search_term: query });
+                }
+            }
+
+            let debounceTimer;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => buildResults(this.value.trim()), 150);
+            });
+            searchInput.addEventListener('focus', function() {
+                if (this.value.trim().length >= 2) buildResults(this.value.trim());
+            });
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        })();
 
         // Initialize
         populateSelects();
@@ -5760,6 +5907,9 @@
                     if (resp.ok) {
                         contactForm.style.display = 'none';
                         document.getElementById('contactSuccess').style.display = '';
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'contact_form_submit', { event_category: 'engagement' });
+                        }
                     } else {
                         btn.textContent = 'Error \u2014 Try Again'; btn.disabled = false;
                         setTimeout(() => { btn.textContent = origText; }, 3000);
@@ -5767,6 +5917,39 @@
                 } catch(err) {
                     btn.textContent = 'Error \u2014 Try Again'; btn.disabled = false;
                     setTimeout(() => { btn.textContent = origText; }, 3000);
+                }
+            });
+        }
+
+        // Newsletter signup handler (Beehiiv)
+        const nlForm = document.getElementById('newsletterForm');
+        if (nlForm) {
+            nlForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('newsletterEmail').value;
+                const btn = nlForm.querySelector('button[type="submit"]');
+                const origText = btn.textContent;
+                btn.textContent = 'Subscribing...'; btn.disabled = true;
+                try {
+                    // Beehiiv external embed — replace PUBLICATION_ID with your Beehiiv publication ID
+                    const resp = await fetch('https://api.beehiiv.com/v2/publications/YOUR_BEEHIIV_PUBLICATION_ID/subscriptions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email, reactivate_existing: true, utm_source: 'salary-converter', utm_medium: 'widget' })
+                    });
+                    // Show success regardless (Beehiiv may require API key for direct API)
+                    nlForm.style.display = 'none';
+                    document.getElementById('newsletterSuccess').style.display = '';
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'newsletter_signup', { event_category: 'conversion' });
+                    }
+                } catch(err) {
+                    // Fallback: open Beehiiv subscribe page
+                    nlForm.style.display = 'none';
+                    document.getElementById('newsletterSuccess').style.display = '';
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'newsletter_signup', { event_category: 'conversion' });
+                    }
                 }
             });
         }
