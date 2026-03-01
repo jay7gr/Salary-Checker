@@ -544,7 +544,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title}</title>
     <meta name="description" content="{desc}">
     <meta name="keywords" content="salary needed {display_name}, minimum salary {display_name}, cost of living {display_name}, {display_name} salary 2026, what salary {city_name}">
@@ -754,6 +754,9 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
             <a href="/salary-needed/">All Cities</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 
@@ -842,7 +845,7 @@ index_page = f'''<!DOCTYPE html>
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Salary Do You Need? 2026 — Compare {city_count} Cities — salary:converter</title>
     <meta name="description" content="Find out the minimum salary to live comfortably in {city_count} cities worldwide. Neighborhood-level data for 2,000+ locations. Updated for 2026.">
     <meta name="keywords" content="salary needed, minimum salary, cost of living, salary by city, comfortable salary 2026">
@@ -905,6 +908,9 @@ index_page = f'''<!DOCTYPE html>
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
     <script>

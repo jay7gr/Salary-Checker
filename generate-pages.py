@@ -2303,7 +2303,7 @@ def generate_city_page(city, comparison_pairs):
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})</title>
     <meta name="description" content="1BR rent: ${rent:,}/mo. Ranked #{rank}/{total_cities} globally. {len(neighborhoods)} neighborhoods ranked.">
     <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
@@ -2685,6 +2685,9 @@ def generate_city_page(city, comparison_pairs):
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -2983,6 +2986,10 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
             <a href="/city/">Cities</a>
             <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -3214,7 +3221,7 @@ def generate_comparison_page(city1, city2):
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{city1} vs {city2}: {pct_cheaper:.0f}% Cost Difference ({CURRENT_YEAR})</title>
     <meta name="description" content="Rent: ${rent1:,}/mo vs ${rent2:,}/mo. {cheaper_city} is {pct_cheaper:.0f}% cheaper overall. Salary equivalents, taxes & 2,000+ neighborhoods compared.">
     <meta name="keywords" content="{city1} vs {city2}, cost of living comparison, salary comparison, {city1} {city2} relocation, {city1} or {city2}">
@@ -3601,6 +3608,9 @@ def generate_comparison_page(city1, city2):
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -3641,7 +3651,7 @@ def generate_city_index():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cost of Living by City {CURRENT_YEAR} — Compare {len(coliData)} Cities Worldwide | salary:converter</title>
     <meta name="description" content="Compare cost of living across {len(coliData)} cities worldwide. See COLI indices, salary equivalents, neighborhood data, and tax rates for every city we track.">
     <meta name="keywords" content="cost of living by city, city comparison, COLI index, cost of living ranking {CURRENT_YEAR}, cheapest cities, most expensive cities">
@@ -3796,6 +3806,9 @@ def generate_city_index():
             <a href="/compare/">City Comparisons</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 
@@ -3852,7 +3865,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Comparisons — {total:,} Cost of Living & Salary Comparisons {CURRENT_YEAR}</title>
     <meta name="description" content="Compare cost of living and salaries between any two cities. {total:,} city-to-city comparisons with neighborhoods, tax rates, and purchasing power.">
     <meta name="author" content="salary:converter">
@@ -4029,6 +4042,9 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <a href="/city/">All Cities</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
+        
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 
@@ -4412,7 +4428,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{neighborhood}, {city}: {fmt_rent}/mo Rent ({CURRENT_YEAR})</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
@@ -4682,6 +4698,10 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/city/{city_slug}">{city}</a>
             <a href="/city/">All Cities</a>
             <a href="/blog/">Blog</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -4771,7 +4791,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{n1} vs {n2}, {city}: {diff_pct:.0f}% Cost Difference ({CURRENT_YEAR})</title>
     <meta name="description" content="{meta_desc}">
     <meta name="robots" content="index, follow">
@@ -4996,6 +5016,10 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <a href="/city/{city_slug}">{city}</a>
             <a href="/compare/">All Comparisons</a>
             <a href="/blog/">Blog</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -5098,7 +5122,7 @@ def generate_blog_undervalued_neighborhoods():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index. Data-driven analysis of {total:,} neighborhoods across 101 cities.">
     <meta name="robots" content="index, follow">
@@ -5231,6 +5255,10 @@ def generate_blog_undervalued_neighborhoods():
             <a href="/">Salary Converter</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -5311,7 +5339,7 @@ def generate_blog_salary_goes_furthest():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Discover which neighborhoods give you the most purchasing power. Analysis of {total:,} neighborhoods across 101 cities worldwide.">
     <meta name="robots" content="index, follow">
@@ -5459,6 +5487,10 @@ def generate_blog_salary_goes_furthest():
             <a href="/">Salary Converter</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
@@ -5537,7 +5569,7 @@ def generate_blog_major_cities_breakdown():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR}) — salary:converter</title>
     <meta name="description" content="Detailed neighborhood-level cost of living breakdown for New York, London, Tokyo, Singapore, Dubai, Paris, Sydney, Berlin, Bangkok, and S&#227;o Paulo.">
     <meta name="robots" content="index, follow">
@@ -5648,6 +5680,10 @@ def generate_blog_major_cities_breakdown():
             <a href="/">Salary Converter</a>
             <a href="/blog/">Blog</a>
             <a href="/city/">All Cities</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
         </footer>
     </div>
 {THEME_JS}
