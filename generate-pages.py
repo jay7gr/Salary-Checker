@@ -1621,7 +1621,7 @@ TOTAL_NEIGHBORHOODS = sum(len(v) for v in cityNeighborhoods.values())
 ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
 
 # Wise affiliate link (replace with real invite link when approved)
-WISE_LINK = 'https://wise.com/invite/u/placeholder'
+WISE_LINK = 'https://wise.com/invite/drhc/iason-georgiosi'
 
 # Google Analytics 4 + Consent Mode v2 snippet (injected into all page templates)
 GA4_SNIPPET = '''

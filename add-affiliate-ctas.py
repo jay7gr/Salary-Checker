@@ -16,7 +16,7 @@ import glob
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Affiliate link — replace with real Wise invite link when approved
-WISE_LINK = 'https://wise.com/invite/u/placeholder'
+WISE_LINK = 'https://wise.com/invite/drhc/iason-georgiosi'
 
 # City → currency code lookup (for city page messaging)
 CITY_CURRENCY = {
