@@ -8,7 +8,7 @@
     <title>Retire Abroad Calculator 2026 — Find Where Your Savings Last Longest</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Find the best place to retire abroad. Enter your savings, age &amp; preferences — get 3 personalized city recommendations with full financial breakdowns. 113 cities, real tax data. Free.">
+    <meta name="description" content="Find the best place to retire abroad. Enter your savings, age &amp; preferences — get 3 personalized city recommendations with full financial breakdowns. 182 cities, real tax data. Free.">
     <meta name="keywords" content="retire abroad, retirement calculator, best places to retire, retirement destination finder, cost of living retirement, expat retirement, retirement savings calculator">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
@@ -29,7 +29,7 @@
     <!-- Twitter/X Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Retire Abroad Calculator 2026 — Find Where Your Savings Last Longest">
-    <meta name="twitter:description" content="Enter your savings, age &amp; preferences — get 3 personalized retirement destination recommendations. 113 cities, real tax data. Free.">
+    <meta name="twitter:description" content="Enter your savings, age &amp; preferences — get 3 personalized retirement destination recommendations. 182 cities, real tax data. Free.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
 
     <!-- JSON-LD -->
@@ -39,7 +39,7 @@
         "@type": "WebApplication",
         "name": "Retire Abroad Calculator",
         "url": "https://salary-converter.com/retire/",
-        "description": "Find the best city to retire abroad based on your savings, passive income, age, and lifestyle preferences. Covers 113 cities with real tax data, visa eligibility, and quality of life scores.",
+        "description": "Find the best city to retire abroad based on your savings, passive income, age, and lifestyle preferences. Covers 182 cities with real tax data, visa eligibility, and quality of life scores.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -151,6 +151,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--bg);
+            color: var(--text-primary);
             min-height: 100vh;
             padding: 20px 12px;
             display: flex;
@@ -392,6 +393,51 @@
         }
         .currency-input-wrap select:focus { box-shadow: none; }
 
+        /* Custom currency dropdown */
+        .currency-dropdown-wrap { position: relative; }
+        .currency-dropdown-btn {
+            display: flex; align-items: center; gap: 6px;
+            border: none; border-left: 1px solid var(--border-light); border-radius: 0;
+            padding: 8px 14px; font-size: 0.85rem; font-weight: 600;
+            background: var(--stat-card-bg); color: var(--text-primary);
+            cursor: pointer; white-space: nowrap; min-width: 90px;
+        }
+        .currency-dropdown-btn:hover { background: var(--dropdown-hover); }
+        .currency-arrow { font-size: 0.7rem; opacity: 0.6; margin-left: 2px; }
+        .currency-dropdown-list {
+            position: absolute; top: 100%; right: 0; z-index: 100;
+            width: 260px; max-height: 280px; overflow-y: auto;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            margin-top: 4px; padding: 6px;
+        }
+        .currency-search {
+            width: 100%; padding: 8px 10px; border: 1px solid var(--border-light);
+            border-radius: 8px; font-size: 0.82rem; margin-bottom: 4px;
+            background: var(--input-bg); color: var(--text-primary);
+        }
+        .currency-dropdown-list ul { list-style: none; padding: 0; margin: 0; }
+        .currency-dropdown-list li {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 10px; border-radius: 8px; cursor: pointer;
+            font-size: 0.82rem; color: var(--text-primary);
+        }
+        .currency-dropdown-list li:hover { background: var(--dropdown-hover); }
+        .currency-dropdown-list li.selected { background: var(--accent); color: #fff; }
+        .currency-dropdown-list li .cur-code { font-weight: 600; min-width: 36px; }
+        .currency-dropdown-list li .cur-name { color: var(--text-secondary); font-size: 0.78rem; }
+        .currency-dropdown-list li.selected .cur-name { color: rgba(255,255,255,0.8); }
+
+        /* Tooltip */
+        .tooltip-trigger {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: var(--border); color: var(--text-secondary);
+            font-size: 0.7rem; font-weight: 700; cursor: help;
+            margin-left: 6px; vertical-align: middle; position: relative;
+        }
+        .tooltip-trigger:hover { background: var(--accent); color: #fff; }
+
         /* Large savings input */
         .big-input {
             font-size: 1.8rem !important;
@@ -549,6 +595,43 @@
             opacity: 0.5;
         }
 
+        /* ── Deal-breaker thresholds ── */
+        .threshold-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .threshold-label {
+            font-size: 0.85rem;
+            min-width: 130px;
+            color: var(--text-primary);
+        }
+        .threshold-slider {
+            flex: 1;
+            max-width: 200px;
+        }
+        .threshold-val {
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 36px;
+            color: var(--text-secondary);
+        }
+        .must-have-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
+        .must-have-check input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+        }
+
         /* ── Buttons ── */
         .btn {
             display: inline-flex;
@@ -689,9 +772,13 @@
             display: inline-block;
             padding: 4px 10px;
             border-radius: 100px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 600;
             margin-top: 10px;
+            max-width: 100%;
+            text-align: center;
+            line-height: 1.3;
+            word-break: break-word;
         }
         .rec-visa-badge.eligible { background: var(--success-bg); color: var(--success-color); }
         .rec-visa-badge.possible { background: var(--warning-bg); color: var(--warning-color); }
@@ -1052,7 +1139,7 @@
                 <div class="subtitle">retire abroad</div>
                 <div style="width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin: 10px auto 0;"></div>
             </div>
-            <p>Find where your savings will last longest. 113 cities, real data.</p>
+            <p>Find where your savings will last longest. 182 cities, real data.</p>
         </div>
 
         <!-- Wizard Progress -->
@@ -1067,16 +1154,28 @@
         <!-- ═══════ STEP 1: FINANCES ═══════ -->
         <div class="wizard-panel active" id="step1">
             <div class="form-section">
-                <h2>How much do you have?</h2>
+                <h2>Your retirement finances</h2>
                 <p>Your total savings and any recurring passive income (pension, dividends, rental income, Social Security).</p>
 
                 <div class="form-row single">
                     <div class="form-group">
-                        <label>Total Savings</label>
+                        <label>Retirement Savings</label>
                         <div class="currency-input-wrap">
                             <input type="text" id="savingsInput" class="big-input" placeholder="500,000" inputmode="numeric" autocomplete="off">
-                            <select id="currencySelect"></select>
+                            <div class="currency-dropdown-wrap" id="currencyDropdownWrap">
+                                <button type="button" class="currency-dropdown-btn" id="currencyDropdownBtn" aria-haspopup="listbox" aria-expanded="false">
+                                    <span id="currencyFlag">🇺🇸</span>
+                                    <span id="currencyCode">USD</span>
+                                    <span class="currency-arrow">&#9662;</span>
+                                </button>
+                                <div class="currency-dropdown-list" id="currencyDropdownList" role="listbox" style="display:none;">
+                                    <input type="text" class="currency-search" id="currencySearch" placeholder="Search currency..." autocomplete="off">
+                                    <ul id="currencyOptions"></ul>
+                                </div>
+                            </div>
+                            <select id="currencySelect" style="display:none;"></select>
                         </div>
+                        <span class="hint">Total amount saved for retirement (401k, IRA, savings, investments)</span>
                     </div>
                 </div>
 
@@ -1090,12 +1189,12 @@
                         <span class="hint">Pension, dividends, rental income, Social Security</span>
                     </div>
                     <div class="form-group">
-                        <label>Expected Annual Return on Savings</label>
+                        <label>Investment Growth Rate <span class="tooltip-trigger" title="If you plan to keep your savings invested (stocks, bonds, etc.), this estimates your annual growth. Set to 0% if you'll keep it in a savings account.">?</span></label>
                         <div style="display:flex;align-items:center;gap:10px;">
                             <input type="range" id="returnRate" min="0" max="10" step="0.5" value="3">
                             <span class="slider-value" id="returnRateValue">3%</span>
                         </div>
-                        <span class="hint">Conservative: 2-3% | Moderate: 4-6% | Aggressive: 7%+</span>
+                        <span class="hint">Expected yearly return on invested savings. Leave at 3% if unsure.</span>
                     </div>
                 </div>
             </div>
@@ -1125,13 +1224,24 @@
                         <div class="toggle-group" id="householdToggle">
                             <button class="toggle-btn active" data-val="single">Single</button>
                             <button class="toggle-btn" data-val="couple">Couple</button>
+                            <button class="toggle-btn" data-val="family">Family</button>
+                        </div>
+                        <div id="childrenGroup" style="display:none;margin-top:10px;">
+                            <label style="font-size:0.85rem;margin-bottom:6px;display:block;">Number of Children</label>
+                            <div class="toggle-group" id="childrenToggle">
+                                <button class="toggle-btn active" data-val="1">1</button>
+                                <button class="toggle-btn" data-val="2">2</button>
+                                <button class="toggle-btn" data-val="3">3</button>
+                                <button class="toggle-btn" data-val="4">4</button>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Citizenship</label>
+                        <label>Citizenship / Tax Residency</label>
                         <select id="citizenshipSelect">
                             <option value="">Select your citizenship...</option>
                         </select>
+                        <span class="hint">Helps estimate visa eligibility and potential tax obligations</span>
                     </div>
                 </div>
 
@@ -1181,10 +1291,20 @@
                     <div class="chip" data-region="south_asia">🇮🇳 South Asia</div>
                 </div>
 
+                <label style="margin-top:18px;display:block;font-weight:600;">What kind of place?</label>
+                <p style="font-size:0.85rem;color:var(--text-secondary);margin:4px 0 8px;">Select all that interest you, or skip to see everything.</p>
+                <div class="chip-group" id="lifestyleChips">
+                    <div class="chip" data-lifestyle="major_city">🏙️ Big City</div>
+                    <div class="chip" data-lifestyle="smaller_city">🏘️ Small Town</div>
+                    <div class="chip" data-lifestyle="beach">🏖️ Beach / Coastal</div>
+                    <div class="chip" data-lifestyle="mountain">🏔️ Mountain / Nature</div>
+                </div>
+
                 <div class="form-group" style="margin-top:12px;">
                     <label>Or search for a specific country or city</label>
                     <input type="text" id="locationSearch" placeholder="e.g. Portugal, Lisbon, Thailand...">
                     <div id="locationResults" style="display:none;"></div>
+                    <span class="hint" style="margin-top:6px;display:block;">This tool covers 182 cities across 88 countries. <a href="#" onclick="document.getElementById('cityListModal').style.display='flex';return false;" style="color:var(--accent);">View full city list</a></span>
                 </div>
             </div>
 
@@ -1241,13 +1361,44 @@
                         <div class="rank-label">🎭 Culture &amp; Nightlife</div>
                         <div class="rank-handle">⠿</div>
                     </li>
+                    <li class="rank-item" data-factor="charm" draggable="true">
+                        <div class="rank-num">9</div>
+                        <div class="rank-label">🏛️ City Charm &amp; Architecture</div>
+                        <div class="rank-handle">⠿</div>
+                    </li>
                 </ul>
 
                 <div style="margin-top:20px;">
                     <label style="font-size:0.85rem;font-weight:600;color:var(--text-primary);">Housing Preference</label>
                     <div class="toggle-group" id="housingToggle" style="margin-top:8px;">
                         <button class="toggle-btn active" data-val="rent">Rent</button>
+                        <button class="toggle-btn" data-val="buy">Buy</button>
                         <button class="toggle-btn" data-val="both">Show Both</button>
+                    </div>
+                </div>
+
+                <div id="dealBreakers" style="margin-top:24px;">
+                    <label style="font-weight:600;">Deal-Breakers <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                    <p style="font-size:0.82rem;color:var(--text-secondary);margin:4px 0 12px;">Set minimum scores — cities below these thresholds will be excluded.</p>
+                    <div class="threshold-row">
+                        <span class="threshold-label">🛡️ Safety min:</span>
+                        <input type="range" min="0" max="80" value="0" id="minSafety" class="threshold-slider">
+                        <span class="threshold-val" id="minSafetyVal">Off</span>
+                    </div>
+                    <div class="threshold-row">
+                        <span class="threshold-label">🏥 Healthcare min:</span>
+                        <input type="range" min="0" max="80" value="0" id="minHealthcare" class="threshold-slider">
+                        <span class="threshold-val" id="minHealthcareVal">Off</span>
+                    </div>
+                    <div class="threshold-row">
+                        <span class="threshold-label">🗣️ English min:</span>
+                        <input type="range" min="0" max="80" value="0" id="minEnglish" class="threshold-slider">
+                        <span class="threshold-val" id="minEnglishVal">Off</span>
+                    </div>
+                    <div id="mustHaves" style="margin-top:12px;">
+                        <label class="must-have-check"><input type="checkbox" id="mustVisa"> Must have retirement visa program</label>
+                        <label class="must-have-check"><input type="checkbox" id="mustEnglish50"> Must have good English (50+)</label>
+                        <label class="must-have-check"><input type="checkbox" id="mustBeach"> Must be beach/coastal</label>
                     </div>
                 </div>
             </div>
@@ -1310,6 +1461,12 @@
             <div class="cross-promo">
                 <p>Need to compare salaries instead?</p>
                 <a href="/">Compare salaries across 2,000+ neighborhoods &rarr;</a>
+            </div>
+
+            <!-- City pool disclaimer -->
+            <div class="hint" style="margin-top:16px;text-align:center;">
+                Based on data from 182 cities across 88 countries. Results are limited to cities in our database.
+                <a href="#" onclick="document.getElementById('cityListModal').style.display='flex';return false;" style="color:var(--accent);">View full city list</a>
             </div>
 
             <!-- Data sources -->
@@ -1484,7 +1641,76 @@ const coliData = {
             'Medellín': 20.4,
             'Montevideo': 32.5,
             'San José (CR)': 31.2,
-            'Playa del Carmen': 30.8
+            'Playa del Carmen': 30.8,
+            'Faro': 35,
+            'Canggu': 28,
+            'Koh Samui': 32,
+            'Da Nang': 25,
+            'Hoi An': 23,
+            'Hua Hin': 30,
+            'Puerto Vallarta': 30,
+            'Tulum': 38,
+            'Mazatlán': 26,
+            'Cádiz': 42,
+            'Taormina': 52,
+            'Kotor': 35,
+            'Cascais': 45,
+            'Las Palmas': 40,
+            'Santa Cruz de Tenerife': 38,
+            'Paphos': 38,
+            'Limassol': 45,
+            'Nha Trang': 22,
+            'Siargao': 22,
+            'El Nido': 25,
+            'Essaouira': 22,
+            'Punta Cana': 35,
+            'Zanzibar': 25,
+            'Cuenca': 28,
+            'Da Lat': 20,
+            'Ubud': 26,
+            'Innsbruck': 62,
+            'Interlaken': 82,
+            'San Cristóbal de las Casas': 20,
+            'Oaxaca': 24,
+            'Antigua Guatemala': 28,
+            'Pokhara': 18,
+            'Luang Prabang': 22,
+            'Colombo': 28,
+            'Accra': 32,
+            'Tunis': 25,
+            'Tangier': 28,
+            'Amman': 38,
+            'Beirut': 35,
+            'Muscat': 45,
+            'Batumi': 25,
+            'Yerevan': 28,
+            'Vientiane': 25,
+            'Yangon': 22,
+            'Kampala': 28,
+            'Addis Ababa': 28,
+            'Dakar': 35,
+            'Kathmandu': 22,
+            'Bratislava': 42,
+            'Ljubljana': 45,
+            'Vilnius': 38,
+            'Plovdiv': 28,
+            'Sofia': 32,
+            'Belgrade': 30,
+            'Sarajevo': 28,
+            'Tirana': 28,
+            'Funchal': 35,
+            'Palma de Mallorca': 48,
+            'Mérida': 25,
+            'Quito': 30,
+            'La Paz': 22,
+            'Santo Domingo': 32,
+            'San Juan': 55,
+            'Chiang Rai': 25,
+            'Ipoh': 24,
+            'Dumaguete': 20,
+            'Jeju': 48,
+            'Taichung': 38,
+            'Vung Tau': 24
         };
 
 const exchangeRates = {
@@ -1532,7 +1758,28 @@ const exchangeRates = {
             'QAR': 4.84,
             'SAR': 4.98,
             'PAB': 1.328,
-            'RON': 5.62
+            'RON': 5.62,
+            'GTQ': 10.28,
+            'NPR': 176.5,
+            'LKR': 410,
+            'GHS': 16.8,
+            'TND': 4.12,
+            'JOD': 0.94,
+            'LBP': 119000,
+            'OMR': 0.512,
+            'AMD': 513,
+            'LAK': 27800,
+            'MMK': 2795,
+            'TZS': 3350,
+            'UGX': 4885,
+            'ETB': 76.5,
+            'XOF': 805,
+            'BGN': 2.41,
+            'RSD': 144,
+            'BAM': 2.41,
+            'ALL': 125,
+            'DOP': 78.5,
+            'BOB': 9.2
         };
 
 const cityToCurrency = {
@@ -1585,7 +1832,25 @@ const cityToCurrency = {
             'São Paulo': 'BRL', 'Buenos Aires': 'ARS',
             'Bogotá': 'COP', 'Medellín': 'COP',
             'Lima': 'PEN', 'Santiago': 'CLP', 'Montevideo': 'UYU',
-            'San José (CR)': 'CRC', 'Playa del Carmen': 'MXN'
+            'San José (CR)': 'CRC', 'Playa del Carmen': 'MXN',
+            'Faro': 'EUR', 'Canggu': 'IDR', 'Koh Samui': 'THB', 'Da Nang': 'VND',
+            'Hoi An': 'VND', 'Hua Hin': 'THB', 'Puerto Vallarta': 'MXN', 'Tulum': 'MXN',
+            'Mazatlán': 'MXN', 'Cádiz': 'EUR', 'Taormina': 'EUR', 'Kotor': 'EUR',
+            'Cascais': 'EUR', 'Las Palmas': 'EUR', 'Santa Cruz de Tenerife': 'EUR', 'Paphos': 'EUR',
+            'Limassol': 'EUR', 'Nha Trang': 'VND', 'Siargao': 'PHP', 'El Nido': 'PHP',
+            'Essaouira': 'MAD', 'Punta Cana': 'DOP', 'Zanzibar': 'TZS', 'Cuenca': 'USD',
+            'Da Lat': 'VND', 'Ubud': 'IDR', 'Innsbruck': 'EUR', 'Interlaken': 'CHF',
+            'San Cristóbal de las Casas': 'MXN', 'Oaxaca': 'MXN', 'Antigua Guatemala': 'GTQ', 'Pokhara': 'NPR',
+            'Luang Prabang': 'LAK', 'Colombo': 'LKR', 'Accra': 'GHS', 'Tunis': 'TND',
+            'Tangier': 'MAD', 'Amman': 'JOD', 'Beirut': 'LBP', 'Muscat': 'OMR',
+            'Batumi': 'GEL', 'Yerevan': 'AMD', 'Vientiane': 'LAK', 'Yangon': 'MMK',
+            'Kampala': 'UGX', 'Addis Ababa': 'ETB', 'Dakar': 'XOF', 'Kathmandu': 'NPR',
+            'Bratislava': 'EUR', 'Ljubljana': 'EUR', 'Vilnius': 'EUR', 'Plovdiv': 'BGN',
+            'Sofia': 'BGN', 'Belgrade': 'RSD', 'Sarajevo': 'BAM', 'Tirana': 'ALL',
+            'Funchal': 'EUR', 'Palma de Mallorca': 'EUR', 'Mérida': 'MXN', 'Quito': 'USD',
+            'La Paz': 'BOB', 'Santo Domingo': 'DOP', 'San Juan': 'USD', 'Chiang Rai': 'THB',
+            'Ipoh': 'MYR', 'Dumaguete': 'PHP', 'Jeju': 'KRW', 'Taichung': 'TWD',
+            'Vung Tau': 'VND'
         };
 
 const cityToCountry = {
@@ -1621,7 +1886,25 @@ const cityToCountry = {
             'Marrakech': 'MA', 'Casablanca': 'MA',
             'São Paulo': 'BR', 'Buenos Aires': 'AR', 'Bogotá': 'CO', 'Medellín': 'CO',
             'Lima': 'PE', 'Santiago': 'CL', 'Montevideo': 'UY',
-            'San José (CR)': 'CR', 'Playa del Carmen': 'MX'
+            'San José (CR)': 'CR', 'Playa del Carmen': 'MX',
+            'Faro': 'PT', 'Canggu': 'ID', 'Koh Samui': 'TH', 'Da Nang': 'VN',
+            'Hoi An': 'VN', 'Hua Hin': 'TH', 'Puerto Vallarta': 'MX', 'Tulum': 'MX',
+            'Mazatlán': 'MX', 'Cádiz': 'ES', 'Taormina': 'IT', 'Kotor': 'ME',
+            'Cascais': 'PT', 'Las Palmas': 'ES', 'Santa Cruz de Tenerife': 'ES', 'Paphos': 'CY',
+            'Limassol': 'CY', 'Nha Trang': 'VN', 'Siargao': 'PH', 'El Nido': 'PH',
+            'Essaouira': 'MA', 'Punta Cana': 'DO', 'Zanzibar': 'TZ', 'Cuenca': 'EC',
+            'Da Lat': 'VN', 'Ubud': 'ID', 'Innsbruck': 'AT', 'Interlaken': 'CH',
+            'San Cristóbal de las Casas': 'MX', 'Oaxaca': 'MX', 'Antigua Guatemala': 'GT', 'Pokhara': 'NP',
+            'Luang Prabang': 'LA', 'Colombo': 'LK', 'Accra': 'GH', 'Tunis': 'TN',
+            'Tangier': 'MA', 'Amman': 'JO', 'Beirut': 'LB', 'Muscat': 'OM',
+            'Batumi': 'GE', 'Yerevan': 'AM', 'Vientiane': 'LA', 'Yangon': 'MM',
+            'Kampala': 'UG', 'Addis Ababa': 'ET', 'Dakar': 'SN', 'Kathmandu': 'NP',
+            'Bratislava': 'SK', 'Ljubljana': 'SI', 'Vilnius': 'LT', 'Plovdiv': 'BG',
+            'Sofia': 'BG', 'Belgrade': 'RS', 'Sarajevo': 'BA', 'Tirana': 'AL',
+            'Funchal': 'PT', 'Palma de Mallorca': 'ES', 'Mérida': 'MX', 'Quito': 'EC',
+            'La Paz': 'BO', 'Santo Domingo': 'DO', 'San Juan': 'US', 'Chiang Rai': 'TH',
+            'Ipoh': 'MY', 'Dumaguete': 'PH', 'Jeju': 'KR', 'Taichung': 'TW',
+            'Vung Tau': 'VN'
         };
 
 const taxBrackets = {
@@ -1781,7 +2064,76 @@ const cityRent1BR = {
             'Marrakech': 350, 'Casablanca': 400,
             'São Paulo': 600, 'Buenos Aires': 400, 'Bogotá': 400, 'Lima': 450,
             'Santiago': 550, 'Medellín': 350, 'Montevideo': 500,
-            'San José (CR)': 550, 'Playa del Carmen': 500
+            'San José (CR)': 550, 'Playa del Carmen': 500,
+            'Faro': 650,
+            'Canggu': 350,
+            'Koh Samui': 400,
+            'Da Nang': 300,
+            'Hoi An': 250,
+            'Hua Hin': 350,
+            'Puerto Vallarta': 500,
+            'Tulum': 650,
+            'Mazatlán': 350,
+            'Cádiz': 600,
+            'Taormina': 750,
+            'Kotor': 450,
+            'Cascais': 800,
+            'Las Palmas': 650,
+            'Santa Cruz de Tenerife': 600,
+            'Paphos': 550,
+            'Limassol': 700,
+            'Nha Trang': 250,
+            'Siargao': 300,
+            'El Nido': 350,
+            'Essaouira': 250,
+            'Punta Cana': 500,
+            'Zanzibar': 350,
+            'Cuenca': 350,
+            'Da Lat': 200,
+            'Ubud': 300,
+            'Innsbruck': 900,
+            'Interlaken': 1400,
+            'San Cristóbal de las Casas': 250,
+            'Oaxaca': 350,
+            'Antigua Guatemala': 400,
+            'Pokhara': 150,
+            'Luang Prabang': 250,
+            'Colombo': 350,
+            'Accra': 450,
+            'Tunis': 250,
+            'Tangier': 300,
+            'Amman': 450,
+            'Beirut': 400,
+            'Muscat': 700,
+            'Batumi': 300,
+            'Yerevan': 350,
+            'Vientiane': 250,
+            'Yangon': 300,
+            'Kampala': 350,
+            'Addis Ababa': 400,
+            'Dakar': 450,
+            'Kathmandu': 200,
+            'Bratislava': 650,
+            'Ljubljana': 700,
+            'Vilnius': 550,
+            'Plovdiv': 300,
+            'Sofia': 450,
+            'Belgrade': 400,
+            'Sarajevo': 350,
+            'Tirana': 350,
+            'Funchal': 550,
+            'Palma de Mallorca': 850,
+            'Mérida': 350,
+            'Quito': 400,
+            'La Paz': 250,
+            'Santo Domingo': 450,
+            'San Juan': 900,
+            'Chiang Rai': 250,
+            'Ipoh': 250,
+            'Dumaguete': 200,
+            'Jeju': 600,
+            'Taichung': 450,
+            'Vung Tau': 250
         };
 
 const cityLivingCosts = {
@@ -1897,7 +2249,76 @@ const cityLivingCosts = {
             'Medellín': {groceries:180,utilities:120,transport:60,healthcare:35,childcare:545},
             'Montevideo': {groceries:280,utilities:260,transport:72,healthcare:70,childcare:520},
             'San José (CR)': {groceries:280,utilities:180,transport:60,healthcare:70,childcare:695},
-            'Playa del Carmen': {groceries:260,utilities:140,transport:28,healthcare:45,childcare:210}
+            'Playa del Carmen': {groceries:260,utilities:140,transport:28,healthcare:45,childcare:210},
+            'Faro': {groceries: 250, utilities: 100, transport: 40, healthcare: 60, childcare: 400},
+            'Canggu': {groceries: 200, utilities: 60, transport: 15, healthcare: 35, childcare: 180},
+            'Koh Samui': {groceries: 220, utilities: 80, transport: 30, healthcare: 45, childcare: 350},
+            'Da Nang': {groceries: 150, utilities: 50, transport: 15, healthcare: 30, childcare: 200},
+            'Hoi An': {groceries: 130, utilities: 45, transport: 10, healthcare: 25, childcare: 150},
+            'Hua Hin': {groceries: 200, utilities: 70, transport: 25, healthcare: 40, childcare: 300},
+            'Puerto Vallarta': {groceries: 220, utilities: 60, transport: 25, healthcare: 55, childcare: 350},
+            'Tulum': {groceries: 280, utilities: 70, transport: 30, healthcare: 60, childcare: 400},
+            'Mazatlán': {groceries: 180, utilities: 50, transport: 20, healthcare: 40, childcare: 250},
+            'Cádiz': {groceries: 270, utilities: 110, transport: 45, healthcare: 70, childcare: 450},
+            'Taormina': {groceries: 320, utilities: 130, transport: 45, healthcare: 80, childcare: 500},
+            'Kotor': {groceries: 220, utilities: 80, transport: 30, healthcare: 45, childcare: 300},
+            'Cascais': {groceries: 280, utilities: 110, transport: 45, healthcare: 65, childcare: 450},
+            'Las Palmas': {groceries: 260, utilities: 90, transport: 40, healthcare: 60, childcare: 400},
+            'Santa Cruz de Tenerife': {groceries: 250, utilities: 85, transport: 35, healthcare: 60, childcare: 380},
+            'Paphos': {groceries: 250, utilities: 100, transport: 35, healthcare: 55, childcare: 350},
+            'Limassol': {groceries: 280, utilities: 110, transport: 40, healthcare: 65, childcare: 400},
+            'Nha Trang': {groceries: 120, utilities: 40, transport: 10, healthcare: 25, childcare: 130},
+            'Siargao': {groceries: 150, utilities: 50, transport: 10, healthcare: 20, childcare: 120},
+            'El Nido': {groceries: 170, utilities: 55, transport: 12, healthcare: 22, childcare: 130},
+            'Essaouira': {groceries: 130, utilities: 40, transport: 10, healthcare: 25, childcare: 150},
+            'Punta Cana': {groceries: 250, utilities: 80, transport: 30, healthcare: 50, childcare: 300},
+            'Zanzibar': {groceries: 150, utilities: 45, transport: 15, healthcare: 30, childcare: 150},
+            'Cuenca': {groceries: 180, utilities: 50, transport: 15, healthcare: 40, childcare: 250},
+            'Da Lat': {groceries: 110, utilities: 35, transport: 8, healthcare: 20, childcare: 100},
+            'Ubud': {groceries: 180, utilities: 55, transport: 12, healthcare: 30, childcare: 160},
+            'Innsbruck': {groceries: 350, utilities: 160, transport: 55, healthcare: 90, childcare: 600},
+            'Interlaken': {groceries: 450, utilities: 200, transport: 80, healthcare: 120, childcare: 800},
+            'San Cristóbal de las Casas': {groceries: 120, utilities: 35, transport: 10, healthcare: 30, childcare: 150},
+            'Oaxaca': {groceries: 150, utilities: 40, transport: 12, healthcare: 35, childcare: 200},
+            'Antigua Guatemala': {groceries: 170, utilities: 45, transport: 15, healthcare: 35, childcare: 200},
+            'Pokhara': {groceries: 80, utilities: 25, transport: 8, healthcare: 15, childcare: 80},
+            'Luang Prabang': {groceries: 120, utilities: 40, transport: 10, healthcare: 20, childcare: 100},
+            'Colombo': {groceries: 160, utilities: 45, transport: 15, healthcare: 35, childcare: 200},
+            'Accra': {groceries: 200, utilities: 70, transport: 25, healthcare: 50, childcare: 300},
+            'Tunis': {groceries: 140, utilities: 40, transport: 12, healthcare: 30, childcare: 200},
+            'Tangier': {groceries: 160, utilities: 50, transport: 15, healthcare: 35, childcare: 200},
+            'Amman': {groceries: 240, utilities: 80, transport: 30, healthcare: 55, childcare: 350},
+            'Beirut': {groceries: 220, utilities: 60, transport: 25, healthcare: 50, childcare: 350},
+            'Muscat': {groceries: 280, utilities: 100, transport: 40, healthcare: 70, childcare: 500},
+            'Batumi': {groceries: 150, utilities: 45, transport: 12, healthcare: 30, childcare: 200},
+            'Yerevan': {groceries: 170, utilities: 50, transport: 12, healthcare: 35, childcare: 200},
+            'Vientiane': {groceries: 130, utilities: 40, transport: 10, healthcare: 25, childcare: 120},
+            'Yangon': {groceries: 130, utilities: 35, transport: 10, healthcare: 25, childcare: 150},
+            'Kampala': {groceries: 150, utilities: 45, transport: 15, healthcare: 35, childcare: 180},
+            'Addis Ababa': {groceries: 160, utilities: 40, transport: 12, healthcare: 35, childcare: 200},
+            'Dakar': {groceries: 220, utilities: 60, transport: 20, healthcare: 50, childcare: 300},
+            'Kathmandu': {groceries: 100, utilities: 30, transport: 8, healthcare: 20, childcare: 100},
+            'Bratislava': {groceries: 270, utilities: 130, transport: 40, healthcare: 65, childcare: 450},
+            'Ljubljana': {groceries: 280, utilities: 130, transport: 45, healthcare: 70, childcare: 500},
+            'Vilnius': {groceries: 240, utilities: 110, transport: 35, healthcare: 55, childcare: 400},
+            'Plovdiv': {groceries: 170, utilities: 70, transport: 20, healthcare: 35, childcare: 250},
+            'Sofia': {groceries: 200, utilities: 80, transport: 30, healthcare: 45, childcare: 300},
+            'Belgrade': {groceries: 190, utilities: 80, transport: 25, healthcare: 40, childcare: 280},
+            'Sarajevo': {groceries: 170, utilities: 70, transport: 20, healthcare: 35, childcare: 250},
+            'Tirana': {groceries: 170, utilities: 65, transport: 18, healthcare: 35, childcare: 250},
+            'Funchal': {groceries: 230, utilities: 90, transport: 35, healthcare: 55, childcare: 350},
+            'Palma de Mallorca': {groceries: 300, utilities: 120, transport: 45, healthcare: 75, childcare: 500},
+            'Mérida': {groceries: 160, utilities: 45, transport: 12, healthcare: 35, childcare: 220},
+            'Quito': {groceries: 190, utilities: 50, transport: 15, healthcare: 45, childcare: 280},
+            'La Paz': {groceries: 120, utilities: 35, transport: 10, healthcare: 25, childcare: 150},
+            'Santo Domingo': {groceries: 200, utilities: 65, transport: 25, healthcare: 45, childcare: 280},
+            'San Juan': {groceries: 320, utilities: 140, transport: 45, healthcare: 85, childcare: 550},
+            'Chiang Rai': {groceries: 150, utilities: 50, transport: 12, healthcare: 30, childcare: 200},
+            'Ipoh': {groceries: 140, utilities: 45, transport: 12, healthcare: 25, childcare: 180},
+            'Dumaguete': {groceries: 120, utilities: 40, transport: 8, healthcare: 20, childcare: 100},
+            'Jeju': {groceries: 300, utilities: 120, transport: 40, healthcare: 65, childcare: 500},
+            'Taichung': {groceries: 230, utilities: 80, transport: 25, healthcare: 45, childcare: 350},
+            'Vung Tau': {groceries: 130, utilities: 40, transport: 10, healthcare: 25, childcare: 140}
         };
 
 
@@ -1998,7 +2419,76 @@ const retireSafetyIndex = {
   'Lima': 30, 'Santiago': 36, 'Medellín': 46,
   'Montevideo': 53, // [E]
   'San José': 38, // [E] Costa Rica
-  'Playa del Carmen': 40 // [E]
+  'Playa del Carmen': 40, // [E]
+            'Faro': 72,
+            'Canggu': 55,
+            'Koh Samui': 60,
+            'Da Nang': 65,
+            'Hoi An': 68,
+            'Hua Hin': 62,
+            'Puerto Vallarta': 48,
+            'Tulum': 45,
+            'Mazatlán': 42,
+            'Cádiz': 70,
+            'Taormina': 72,
+            'Kotor': 74,
+            'Cascais': 78,
+            'Las Palmas': 68,
+            'Santa Cruz de Tenerife': 70,
+            'Paphos': 78,
+            'Limassol': 75,
+            'Nha Trang': 62,
+            'Siargao': 55,
+            'El Nido': 58,
+            'Essaouira': 58,
+            'Punta Cana': 50,
+            'Zanzibar': 48,
+            'Cuenca': 55,
+            'Da Lat': 68,
+            'Ubud': 62,
+            'Innsbruck': 82,
+            'Interlaken': 85,
+            'San Cristóbal de las Casas': 42,
+            'Oaxaca': 45,
+            'Antigua Guatemala': 42,
+            'Pokhara': 55,
+            'Luang Prabang': 60,
+            'Colombo': 52,
+            'Accra': 45,
+            'Tunis': 48,
+            'Tangier': 52,
+            'Amman': 62,
+            'Beirut': 35,
+            'Muscat': 78,
+            'Batumi': 62,
+            'Yerevan': 65,
+            'Vientiane': 58,
+            'Yangon': 42,
+            'Kampala': 38,
+            'Addis Ababa': 32,
+            'Dakar': 42,
+            'Kathmandu': 45,
+            'Bratislava': 68,
+            'Ljubljana': 78,
+            'Vilnius': 72,
+            'Plovdiv': 70,
+            'Sofia': 65,
+            'Belgrade': 58,
+            'Sarajevo': 62,
+            'Tirana': 52,
+            'Funchal': 80,
+            'Palma de Mallorca': 72,
+            'Mérida': 52,
+            'Quito': 38,
+            'La Paz': 35,
+            'Santo Domingo': 40,
+            'San Juan': 42,
+            'Chiang Rai': 68,
+            'Ipoh': 65,
+            'Dumaguete': 58,
+            'Jeju': 80,
+            'Taichung': 78,
+            'Vung Tau': 62
 };
 
 // ------------------------------------------------------------------
@@ -2084,7 +2574,76 @@ const retireHealthcareIndex = {
   'Lima': 59, 'Santiago': 66, 'Medellín': 64, // [E]
   'Montevideo': 62, // [E]
   'San José': 68, // [E] Costa Rica - good public healthcare
-  'Playa del Carmen': 55 // [E]
+  'Playa del Carmen': 55, // [E]
+            'Faro': 68,
+            'Canggu': 48,
+            'Koh Samui': 65,
+            'Da Nang': 55,
+            'Hoi An': 48,
+            'Hua Hin': 62,
+            'Puerto Vallarta': 60,
+            'Tulum': 45,
+            'Mazatlán': 52,
+            'Cádiz': 72,
+            'Taormina': 65,
+            'Kotor': 52,
+            'Cascais': 72,
+            'Las Palmas': 70,
+            'Santa Cruz de Tenerife': 68,
+            'Paphos': 65,
+            'Limassol': 68,
+            'Nha Trang': 50,
+            'Siargao': 30,
+            'El Nido': 28,
+            'Essaouira': 38,
+            'Punta Cana': 48,
+            'Zanzibar': 32,
+            'Cuenca': 58,
+            'Da Lat': 45,
+            'Ubud': 45,
+            'Innsbruck': 82,
+            'Interlaken': 85,
+            'San Cristóbal de las Casas': 42,
+            'Oaxaca': 50,
+            'Antigua Guatemala': 42,
+            'Pokhara': 32,
+            'Luang Prabang': 30,
+            'Colombo': 55,
+            'Accra': 38,
+            'Tunis': 52,
+            'Tangier': 48,
+            'Amman': 62,
+            'Beirut': 72,
+            'Muscat': 68,
+            'Batumi': 48,
+            'Yerevan': 52,
+            'Vientiane': 35,
+            'Yangon': 38,
+            'Kampala': 35,
+            'Addis Ababa': 32,
+            'Dakar': 35,
+            'Kathmandu': 35,
+            'Bratislava': 68,
+            'Ljubljana': 72,
+            'Vilnius': 68,
+            'Plovdiv': 58,
+            'Sofia': 62,
+            'Belgrade': 60,
+            'Sarajevo': 55,
+            'Tirana': 48,
+            'Funchal': 68,
+            'Palma de Mallorca': 72,
+            'Mérida': 55,
+            'Quito': 58,
+            'La Paz': 42,
+            'Santo Domingo': 50,
+            'San Juan': 72,
+            'Chiang Rai': 55,
+            'Ipoh': 58,
+            'Dumaguete': 42,
+            'Jeju': 78,
+            'Taichung': 75,
+            'Vung Tau': 48
 };
 
 // ------------------------------------------------------------------
@@ -2158,7 +2717,76 @@ const retireClimateScore = {
   'São Paulo': 72, 'Buenos Aires': 70, 'Bogotá': 72,
   'Lima': 68, 'Santiago': 72, 'Medellín': 88,
   'Montevideo': 66, 'San José': 78,
-  'Playa del Carmen': 78
+  'Playa del Carmen': 78,
+            'Faro': 85,
+            'Canggu': 80,
+            'Koh Samui': 78,
+            'Da Nang': 72,
+            'Hoi An': 72,
+            'Hua Hin': 75,
+            'Puerto Vallarta': 80,
+            'Tulum': 82,
+            'Mazatlán': 78,
+            'Cádiz': 84,
+            'Taormina': 82,
+            'Kotor': 75,
+            'Cascais': 82,
+            'Las Palmas': 88,
+            'Santa Cruz de Tenerife': 86,
+            'Paphos': 82,
+            'Limassol': 80,
+            'Nha Trang': 78,
+            'Siargao': 75,
+            'El Nido': 76,
+            'Essaouira': 78,
+            'Punta Cana': 80,
+            'Zanzibar': 76,
+            'Cuenca': 78,
+            'Da Lat': 82,
+            'Ubud': 78,
+            'Innsbruck': 48,
+            'Interlaken': 45,
+            'San Cristóbal de las Casas': 75,
+            'Oaxaca': 80,
+            'Antigua Guatemala': 82,
+            'Pokhara': 70,
+            'Luang Prabang': 68,
+            'Colombo': 72,
+            'Accra': 70,
+            'Tunis': 75,
+            'Tangier': 78,
+            'Amman': 68,
+            'Beirut': 78,
+            'Muscat': 52,
+            'Batumi': 65,
+            'Yerevan': 60,
+            'Vientiane': 65,
+            'Yangon': 62,
+            'Kampala': 75,
+            'Addis Ababa': 72,
+            'Dakar': 75,
+            'Kathmandu': 62,
+            'Bratislava': 52,
+            'Ljubljana': 55,
+            'Vilnius': 45,
+            'Plovdiv': 60,
+            'Sofia': 55,
+            'Belgrade': 58,
+            'Sarajevo': 52,
+            'Tirana': 65,
+            'Funchal': 85,
+            'Palma de Mallorca': 84,
+            'Mérida': 78,
+            'Quito': 72,
+            'La Paz': 55,
+            'Santo Domingo': 76,
+            'San Juan': 80,
+            'Chiang Rai': 72,
+            'Ipoh': 75,
+            'Dumaguete': 76,
+            'Jeju': 62,
+            'Taichung': 72,
+            'Vung Tau': 76
 };
 
 // ------------------------------------------------------------------
@@ -2233,7 +2861,76 @@ const retireInfrastructureScore = {
   'São Paulo': 55, 'Buenos Aires': 65, 'Bogotá': 50,
   'Lima': 40, 'Santiago': 62, 'Medellín': 55,
   'Montevideo': 42, 'San José': 30,
-  'Playa del Carmen': 20
+  'Playa del Carmen': 20,
+            'Faro': 55,
+            'Canggu': 25,
+            'Koh Samui': 35,
+            'Da Nang': 52,
+            'Hoi An': 35,
+            'Hua Hin': 40,
+            'Puerto Vallarta': 45,
+            'Tulum': 30,
+            'Mazatlán': 38,
+            'Cádiz': 60,
+            'Taormina': 40,
+            'Kotor': 35,
+            'Cascais': 68,
+            'Las Palmas': 62,
+            'Santa Cruz de Tenerife': 60,
+            'Paphos': 45,
+            'Limassol': 52,
+            'Nha Trang': 38,
+            'Siargao': 15,
+            'El Nido': 12,
+            'Essaouira': 25,
+            'Punta Cana': 30,
+            'Zanzibar': 18,
+            'Cuenca': 42,
+            'Da Lat': 35,
+            'Ubud': 22,
+            'Innsbruck': 78,
+            'Interlaken': 82,
+            'San Cristóbal de las Casas': 28,
+            'Oaxaca': 35,
+            'Antigua Guatemala': 30,
+            'Pokhara': 20,
+            'Luang Prabang': 22,
+            'Colombo': 45,
+            'Accra': 35,
+            'Tunis': 42,
+            'Tangier': 48,
+            'Amman': 52,
+            'Beirut': 42,
+            'Muscat': 65,
+            'Batumi': 45,
+            'Yerevan': 48,
+            'Vientiane': 30,
+            'Yangon': 32,
+            'Kampala': 28,
+            'Addis Ababa': 30,
+            'Dakar': 32,
+            'Kathmandu': 25,
+            'Bratislava': 72,
+            'Ljubljana': 70,
+            'Vilnius': 68,
+            'Plovdiv': 52,
+            'Sofia': 62,
+            'Belgrade': 58,
+            'Sarajevo': 45,
+            'Tirana': 42,
+            'Funchal': 55,
+            'Palma de Mallorca': 65,
+            'Mérida': 42,
+            'Quito': 48,
+            'La Paz': 35,
+            'Santo Domingo': 42,
+            'San Juan': 55,
+            'Chiang Rai': 38,
+            'Ipoh': 52,
+            'Dumaguete': 28,
+            'Jeju': 72,
+            'Taichung': 72,
+            'Vung Tau': 38
 };
 
 // ------------------------------------------------------------------
@@ -2308,7 +3005,76 @@ const retireEnglishScore = {
   'São Paulo': 38, 'Buenos Aires': 50, 'Bogotá': 45,
   'Lima': 42, 'Santiago': 48, 'Medellín': 40,
   'Montevideo': 48, 'San José': 48,
-  'Playa del Carmen': 50
+  'Playa del Carmen': 50,
+            'Faro': 55,
+            'Canggu': 45,
+            'Koh Samui': 50,
+            'Da Nang': 32,
+            'Hoi An': 30,
+            'Hua Hin': 40,
+            'Puerto Vallarta': 45,
+            'Tulum': 48,
+            'Mazatlán': 30,
+            'Cádiz': 35,
+            'Taormina': 32,
+            'Kotor': 55,
+            'Cascais': 65,
+            'Las Palmas': 45,
+            'Santa Cruz de Tenerife': 42,
+            'Paphos': 75,
+            'Limassol': 78,
+            'Nha Trang': 28,
+            'Siargao': 72,
+            'El Nido': 70,
+            'Essaouira': 35,
+            'Punta Cana': 45,
+            'Zanzibar': 55,
+            'Cuenca': 35,
+            'Da Lat': 25,
+            'Ubud': 50,
+            'Innsbruck': 72,
+            'Interlaken': 78,
+            'San Cristóbal de las Casas': 25,
+            'Oaxaca': 30,
+            'Antigua Guatemala': 45,
+            'Pokhara': 45,
+            'Luang Prabang': 25,
+            'Colombo': 65,
+            'Accra': 85,
+            'Tunis': 40,
+            'Tangier': 42,
+            'Amman': 58,
+            'Beirut': 68,
+            'Muscat': 62,
+            'Batumi': 35,
+            'Yerevan': 42,
+            'Vientiane': 22,
+            'Yangon': 35,
+            'Kampala': 75,
+            'Addis Ababa': 40,
+            'Dakar': 25,
+            'Kathmandu': 45,
+            'Bratislava': 62,
+            'Ljubljana': 72,
+            'Vilnius': 68,
+            'Plovdiv': 42,
+            'Sofia': 48,
+            'Belgrade': 55,
+            'Sarajevo': 48,
+            'Tirana': 45,
+            'Funchal': 55,
+            'Palma de Mallorca': 48,
+            'Mérida': 28,
+            'Quito': 30,
+            'La Paz': 22,
+            'Santo Domingo': 35,
+            'San Juan': 75,
+            'Chiang Rai': 35,
+            'Ipoh': 55,
+            'Dumaguete': 72,
+            'Jeju': 35,
+            'Taichung': 42,
+            'Vung Tau': 25
 };
 
 // ------------------------------------------------------------------
@@ -2381,7 +3147,76 @@ const retireExpatCommunity = {
   'São Paulo': 'large', 'Buenos Aires': 'large', 'Bogotá': 'large',
   'Lima': 'large', 'Santiago': 'large', 'Medellín': 'large',
   'Montevideo': 'medium', 'San José': 'medium',
-  'Playa del Carmen': 'large'
+  'Playa del Carmen': 'large',
+            'Faro': 'medium',
+            'Canggu': 'large',
+            'Koh Samui': 'medium',
+            'Da Nang': 'large',
+            'Hoi An': 'medium',
+            'Hua Hin': 'medium',
+            'Puerto Vallarta': 'large',
+            'Tulum': 'large',
+            'Mazatlán': 'medium',
+            'Cádiz': 'small',
+            'Taormina': 'small',
+            'Kotor': 'small',
+            'Cascais': 'medium',
+            'Las Palmas': 'large',
+            'Santa Cruz de Tenerife': 'medium',
+            'Paphos': 'large',
+            'Limassol': 'large',
+            'Nha Trang': 'medium',
+            'Siargao': 'medium',
+            'El Nido': 'small',
+            'Essaouira': 'small',
+            'Punta Cana': 'medium',
+            'Zanzibar': 'small',
+            'Cuenca': 'large',
+            'Da Lat': 'small',
+            'Ubud': 'large',
+            'Innsbruck': 'small',
+            'Interlaken': 'small',
+            'San Cristóbal de las Casas': 'medium',
+            'Oaxaca': 'large',
+            'Antigua Guatemala': 'large',
+            'Pokhara': 'medium',
+            'Luang Prabang': 'small',
+            'Colombo': 'medium',
+            'Accra': 'medium',
+            'Tunis': 'small',
+            'Tangier': 'medium',
+            'Amman': 'medium',
+            'Beirut': 'medium',
+            'Muscat': 'medium',
+            'Batumi': 'medium',
+            'Yerevan': 'small',
+            'Vientiane': 'small',
+            'Yangon': 'small',
+            'Kampala': 'small',
+            'Addis Ababa': 'small',
+            'Dakar': 'small',
+            'Kathmandu': 'medium',
+            'Bratislava': 'small',
+            'Ljubljana': 'small',
+            'Vilnius': 'small',
+            'Plovdiv': 'small',
+            'Sofia': 'medium',
+            'Belgrade': 'medium',
+            'Sarajevo': 'small',
+            'Tirana': 'small',
+            'Funchal': 'medium',
+            'Palma de Mallorca': 'large',
+            'Mérida': 'medium',
+            'Quito': 'medium',
+            'La Paz': 'small',
+            'Santo Domingo': 'medium',
+            'San Juan': 'medium',
+            'Chiang Rai': 'small',
+            'Ipoh': 'small',
+            'Dumaguete': 'medium',
+            'Jeju': 'small',
+            'Taichung': 'small',
+            'Vung Tau': 'small'
 };
 
 // ------------------------------------------------------------------
@@ -2456,7 +3291,221 @@ const retireCultureScore = {
   'São Paulo': 82, 'Buenos Aires': 88, 'Bogotá': 70,
   'Lima': 68, 'Santiago': 68, 'Medellín': 70,
   'Montevideo': 58, 'San José': 50,
-  'Playa del Carmen': 48
+  'Playa del Carmen': 48,
+            'Faro': 52,
+            'Canggu': 45,
+            'Koh Samui': 42,
+            'Da Nang': 48,
+            'Hoi An': 65,
+            'Hua Hin': 40,
+            'Puerto Vallarta': 45,
+            'Tulum': 48,
+            'Mazatlán': 42,
+            'Cádiz': 68,
+            'Taormina': 72,
+            'Kotor': 62,
+            'Cascais': 58,
+            'Las Palmas': 55,
+            'Santa Cruz de Tenerife': 52,
+            'Paphos': 55,
+            'Limassol': 50,
+            'Nha Trang': 38,
+            'Siargao': 30,
+            'El Nido': 28,
+            'Essaouira': 58,
+            'Punta Cana': 32,
+            'Zanzibar': 55,
+            'Cuenca': 55,
+            'Da Lat': 42,
+            'Ubud': 62,
+            'Innsbruck': 68,
+            'Interlaken': 55,
+            'San Cristóbal de las Casas': 65,
+            'Oaxaca': 75,
+            'Antigua Guatemala': 62,
+            'Pokhara': 48,
+            'Luang Prabang': 68,
+            'Colombo': 55,
+            'Accra': 48,
+            'Tunis': 60,
+            'Tangier': 62,
+            'Amman': 62,
+            'Beirut': 72,
+            'Muscat': 55,
+            'Batumi': 45,
+            'Yerevan': 58,
+            'Vientiane': 45,
+            'Yangon': 62,
+            'Kampala': 40,
+            'Addis Ababa': 50,
+            'Dakar': 55,
+            'Kathmandu': 60,
+            'Bratislava': 60,
+            'Ljubljana': 62,
+            'Vilnius': 58,
+            'Plovdiv': 55,
+            'Sofia': 58,
+            'Belgrade': 62,
+            'Sarajevo': 60,
+            'Tirana': 48,
+            'Funchal': 52,
+            'Palma de Mallorca': 55,
+            'Mérida': 62,
+            'Quito': 60,
+            'La Paz': 55,
+            'Santo Domingo': 52,
+            'San Juan': 62,
+            'Chiang Rai': 50,
+            'Ipoh': 42,
+            'Dumaguete': 35,
+            'Jeju': 55,
+            'Taichung': 52,
+            'Vung Tau': 35
+};
+
+// ------------------------------------------------------------------
+// 8c. INHERITANCE TAX DATA BY COUNTRY
+//     rate: top marginal rate for direct heirs (%)
+//     threshold: exemption amount in local currency
+//     currency: ISO currency code
+//     null = no inheritance tax
+// ------------------------------------------------------------------
+const retireInheritanceTax = {
+    'United States': {rate: 40, threshold: 13610000, currency: 'USD', note: 'Federal estate tax above $13.61M exemption'},
+    'Canada': null,
+    'Mexico': null,
+    'Panama': null,
+    'Costa Rica': null,
+    'Guatemala': null,
+    'Dominican Republic': {rate: 3, threshold: 0, currency: 'DOP', note: '3% flat tax on net estate'},
+    'Brazil': {rate: 8, threshold: 0, currency: 'BRL', note: 'ITCMD state tax 2-8%; varies by state'},
+    'Argentina': {rate: 6.5, threshold: 0, currency: 'ARS', note: 'Buenos Aires province only; 2.2-6.5% progressive'},
+    'Colombia': {rate: 10, threshold: 0, currency: 'COP', note: '10% flat on inherited amounts'},
+    'Peru': null,
+    'Chile': {rate: 25, threshold: 0, currency: 'CLP', note: '1-25% progressive; direct heirs get deductions'},
+    'Uruguay': null,
+    'Ecuador': {rate: 35, threshold: 71870, currency: 'USD', note: '0-35% progressive above ~$72k'},
+    'Bolivia': {rate: 1, threshold: 0, currency: 'BOB', note: '1% transaction tax on property transfers'},
+    'United Kingdom': {rate: 40, threshold: 325000, currency: 'GBP', note: 'IHT above nil-rate band; +175k for family home'},
+    'France': {rate: 45, threshold: 100000, currency: 'EUR', note: '100k allowance per child; 5-45% progressive'},
+    'Netherlands': {rate: 20, threshold: 25187, currency: 'EUR', note: '10-20% for children; threshold indexed'},
+    'Germany': {rate: 30, threshold: 400000, currency: 'EUR', note: '400k exemption per child; 7-30% progressive'},
+    'Ireland': {rate: 33, threshold: 335000, currency: 'EUR', note: 'Capital Acquisitions Tax; Group A threshold'},
+    'Belgium': {rate: 30, threshold: 0, currency: 'EUR', note: '3-30% for direct heirs; varies by region'},
+    'Luxembourg': {rate: 5, threshold: 0, currency: 'EUR', note: '0% for spouses; 2-5% for children'},
+    'Switzerland': null,
+    'Austria': null,
+    'Spain': {rate: 34, threshold: 0, currency: 'EUR', note: 'Varies by region; many offer 95-99% reduction'},
+    'Portugal': null,
+    'Italy': {rate: 8, threshold: 1000000, currency: 'EUR', note: '4% above 1M for children/spouse; 6-8% others'},
+    'Greece': {rate: 10, threshold: 150000, currency: 'EUR', note: '1-10% for children/spouse; 150k exemption'},
+    'Croatia': {rate: 4, threshold: 0, currency: 'EUR', note: '4% on property; direct heirs exempt'},
+    'Cyprus': null,
+    'Sweden': null,
+    'Denmark': {rate: 15, threshold: 321700, currency: 'DKK', note: '15% for close family; 25% additional for others'},
+    'Finland': {rate: 19, threshold: 20000, currency: 'EUR', note: '7-19% progressive; 20k exemption'},
+    'Norway': null,
+    'Czech Republic': null,
+    'Hungary': {rate: 18, threshold: 0, currency: 'HUF', note: '18% general; direct heirs fully exempt'},
+    'Poland': {rate: 7, threshold: 36120, currency: 'PLN', note: '3-7% for close family; full exemption if reported in 6mo'},
+    'Romania': null,
+    'Estonia': null,
+    'Latvia': null,
+    'Turkey': {rate: 10, threshold: 1371632, currency: 'TRY', note: '1-10% progressive; exemption indexed'},
+    'Slovakia': null,
+    'Slovenia': {rate: 14, threshold: 0, currency: 'EUR', note: '5-14% for 2nd class; children/spouse exempt'},
+    'Lithuania': {rate: 10, threshold: 150000, currency: 'EUR', note: '5% up to 150k, 10% above; family can be exempt'},
+    'Bulgaria': {rate: 6.6, threshold: 0, currency: 'BGN', note: '0.4-6.6%; direct heirs exempt'},
+    'Serbia': {rate: 2.5, threshold: 0, currency: 'RSD', note: '1.5-2.5% for 2nd/3rd order; 1st order exempt'},
+    'Bosnia and Herzegovina': {rate: 5, threshold: 0, currency: 'BAM', note: 'Direct heirs generally exempt; 5% for others'},
+    'Montenegro': {rate: 3, threshold: 0, currency: 'EUR', note: '3% for 2nd order; 1st order exempt'},
+    'Albania': null,
+    'Japan': {rate: 55, threshold: 30000000, currency: 'JPY', note: '10-55% progressive; 30M JPY + 6M per heir exemption'},
+    'South Korea': {rate: 50, threshold: 500000000, currency: 'KRW', note: '10-50% progressive; 500M KRW exemption'},
+    'Hong Kong': null,
+    'Taiwan': {rate: 20, threshold: 13330000, currency: 'TWD', note: '10-20% progressive; 13.33M TWD exemption'},
+    'China': null,
+    'Singapore': null,
+    'Thailand': {rate: 10, threshold: 100000000, currency: 'THB', note: '5% for 100M-300M; 10% above 300M'},
+    'Malaysia': null,
+    'Vietnam': {rate: 10, threshold: 10000000, currency: 'VND', note: '10% income tax on inherited assets above 10M VND'},
+    'Philippines': {rate: 6, threshold: 5000000, currency: 'PHP', note: '6% flat above 5M PHP standard deduction'},
+    'Indonesia': null,
+    'Cambodia': null,
+    'Laos': null,
+    'Myanmar': null,
+    'India': null,
+    'Nepal': null,
+    'Sri Lanka': null,
+    'Australia': null,
+    'New Zealand': null,
+    'UAE': null,
+    'Qatar': null,
+    'Saudi Arabia': null,
+    'Israel': null,
+    'Jordan': null,
+    'Lebanon': {rate: 12, threshold: 0, currency: 'LBP', note: '3-12% for direct heirs; varies by kinship'},
+    'Oman': null,
+    'Georgia': null,
+    'Armenia': null,
+    'South Africa': {rate: 25, threshold: 3500000, currency: 'ZAR', note: '20% on first 30M above 3.5M; 25% above 30M'},
+    'Kenya': null,
+    'Nigeria': null,
+    'Egypt': null,
+    'Morocco': null,
+    'Ghana': null,
+    'Tunisia': {rate: 25, threshold: 0, currency: 'TND', note: '2.5% for direct heirs; up to 25% for unrelated'},
+    'Tanzania': null,
+    'Uganda': null,
+    'Ethiopia': null,
+    'Senegal': {rate: 10, threshold: 0, currency: 'XOF', note: '1-10% for direct heirs'}
+};
+
+// ------------------------------------------------------------------
+// 8b. CITY CHARM & ARCHITECTURE SCORES (0-100)
+//     Reflects historic architecture, urban aesthetics, natural beauty,
+//     cultural character, and overall visual appeal
+// ------------------------------------------------------------------
+const retireCityCharmScore = {
+    'New York': 72, 'Los Angeles': 45, 'San Francisco': 74, 'Miami': 52,
+    'Chicago': 73, 'Austin': 48, 'Denver': 50, 'Seattle': 58, 'Honolulu': 62,
+    'London': 82, 'Paris': 95, 'Berlin': 65, 'Amsterdam': 85, 'Barcelona': 90,
+    'Madrid': 75, 'Lisbon': 88, 'Rome': 94, 'Milan': 78, 'Vienna': 93,
+    'Prague': 94, 'Dublin': 70, 'Copenhagen': 76, 'Zürich': 77, 'Geneva': 75,
+    'Stockholm': 74, 'Helsinki': 62, 'Munich': 80, 'Brussels': 72,
+    'Luxembourg City': 68, 'Edinburgh': 88, 'Athens': 72, 'Budapest': 90,
+    'Kraków': 85, 'Warsaw': 55, 'Porto': 88, 'Bucharest': 38, 'Istanbul': 86,
+    'Dubai': 55, 'Abu Dhabi': 50, 'Bangkok': 60, 'Chiang Mai': 65,
+    'Kuala Lumpur': 52, 'Singapore': 62, 'Ho Chi Minh City': 42, 'Hanoi': 64,
+    'Jakarta': 30, 'Bali (Ubud)': 78, 'Manila': 28, 'Taipei': 50,
+    'Hong Kong': 58, 'Seoul': 55, 'Tokyo': 68, 'Osaka': 65, 'Shanghai': 62,
+    'Beijing': 70, 'Sydney': 72, 'Melbourne': 68, 'Brisbane': 48, 'Perth': 50,
+    'Auckland': 52, 'Queenstown': 75, 'Cape Town': 72, 'Johannesburg': 35,
+    'Nairobi': 32, 'Mexico City': 70, 'Cancún': 45, 'Playa del Carmen': 42,
+    'Guadalajara': 65, 'San Miguel de Allende': 92, 'Medellín': 55,
+    'Bogotá': 48, 'Cartagena': 85, 'Lima': 58, 'Santiago': 50,
+    'Buenos Aires': 76, 'Montevideo': 58, 'São Paulo': 42, 'Rio de Janeiro': 78,
+    'Panama City': 40, 'San José (Costa Rica)': 35, 'Tel Aviv': 55, 'Doha': 48,
+    'Kuching': 50, 'George Town (Penang)': 75, 'Phuket': 55, 'Koh Phangan': 50,
+    'Da Nang': 48, 'Tbilisi': 78, 'Marrakech': 82, 'Cairo': 68, 'Tulum': 55,
+    'Puerto Vallarta': 60, 'Dubrovnik': 93, 'Split': 82, 'Florence': 96,
+    'Tallinn': 84, 'Riga': 80, 'Vilnius': 75, 'Bratislava': 68, 'Ljubljana': 76,
+    'Plovdiv': 72, 'Sofia': 55, 'Belgrade': 52, 'Sarajevo': 70, 'Tirana': 38,
+    'Cusco': 90, 'Kyoto': 95, 'Chiang Rai': 60,
+    'Faro': 65, 'Canggu': 52, 'Koh Samui': 55, 'Hoi An': 88, 'Hua Hin': 45,
+    'Mazatlán': 58, 'Cádiz': 80, 'Taormina': 90, 'Kotor': 92, 'Cascais': 78,
+    'Las Palmas': 65, 'Santa Cruz de Tenerife': 60, 'Paphos': 62, 'Limassol': 55,
+    'Nha Trang': 48, 'Siargao': 45, 'El Nido': 55, 'Essaouira': 78,
+    'Punta Cana': 40, 'Zanzibar': 65, 'Cuenca': 75, 'Da Lat': 52, 'Ubud': 78,
+    'Innsbruck': 85, 'Interlaken': 82, 'San Cristóbal de las Casas': 78,
+    'Oaxaca': 82, 'Antigua Guatemala': 90, 'Pokhara': 62, 'Kathmandu': 58,
+    'Luang Prabang': 85, 'Colombo': 42, 'Accra': 28, 'Tunis': 60,
+    'Tangier': 65, 'Amman': 50, 'Beirut': 58, 'Muscat': 55, 'Batumi': 60,
+    'Yerevan': 55, 'Vientiane': 48, 'Yangon': 62, 'Kampala': 25,
+    'Addis Ababa': 30, 'Dakar': 38, 'Funchal': 80, 'Palma de Mallorca': 82,
+    'Mérida': 72, 'Quito': 75, 'La Paz': 55, 'Santo Domingo': 50,
+    'San Juan': 72, 'Ipoh': 55, 'Dumaguete': 38, 'Jeju': 58,
+    'Taichung': 45, 'Vung Tau': 40
 };
 
 // ------------------------------------------------------------------
@@ -2949,6 +3998,222 @@ const retireCountryData = {
     healthInsurance60Plus: 100,
     continent: 'North America',
     region: 'Central America'
+  },
+  'Ecuador': {
+    capitalGainsTax: 0,
+    dividendTax: 0,
+    wealthTax: null,
+    healthInsurance60Plus: 80,
+    continent: 'South America',
+    region: 'South America'
+  },
+  'Guatemala': {
+    capitalGainsTax: 0.1,
+    dividendTax: 5,
+    wealthTax: null,
+    healthInsurance60Plus: 60,
+    continent: 'Central America',
+    region: 'Central America'
+  },
+  'Nepal': {
+    capitalGainsTax: 0.1,
+    dividendTax: 5,
+    wealthTax: null,
+    healthInsurance60Plus: 40,
+    continent: 'Asia',
+    region: 'South Asia'
+  },
+  'Sri Lanka': {
+    capitalGainsTax: 0.1,
+    dividendTax: 14,
+    wealthTax: null,
+    healthInsurance60Plus: 50,
+    continent: 'Asia',
+    region: 'South Asia'
+  },
+  'Ghana': {
+    capitalGainsTax: 0.15,
+    dividendTax: 8,
+    wealthTax: null,
+    healthInsurance60Plus: 60,
+    continent: 'Africa',
+    region: 'West Africa'
+  },
+  'Tunisia': {
+    capitalGainsTax: 0.1,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 50,
+    continent: 'Africa',
+    region: 'North Africa'
+  },
+  'Jordan': {
+    capitalGainsTax: 0,
+    dividendTax: 0,
+    wealthTax: null,
+    healthInsurance60Plus: 80,
+    continent: 'Middle East',
+    region: 'Middle East'
+  },
+  'Lebanon': {
+    capitalGainsTax: 0.1,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 120,
+    continent: 'Middle East',
+    region: 'Middle East'
+  },
+  'Oman': {
+    capitalGainsTax: 0,
+    dividendTax: 0,
+    wealthTax: null,
+    healthInsurance60Plus: 130,
+    continent: 'Middle East',
+    region: 'Middle East'
+  },
+  'Armenia': {
+    capitalGainsTax: 0.1,
+    dividendTax: 5,
+    wealthTax: null,
+    healthInsurance60Plus: 50,
+    continent: 'Asia',
+    region: 'Caucasus'
+  },
+  'Laos': {
+    capitalGainsTax: 0.1,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 40,
+    continent: 'Asia',
+    region: 'Southeast Asia'
+  },
+  'Myanmar': {
+    capitalGainsTax: 0.1,
+    dividendTax: 0,
+    wealthTax: null,
+    healthInsurance60Plus: 35,
+    continent: 'Asia',
+    region: 'Southeast Asia'
+  },
+  'Tanzania': {
+    capitalGainsTax: 0.1,
+    dividendTax: 5,
+    wealthTax: null,
+    healthInsurance60Plus: 40,
+    continent: 'Africa',
+    region: 'East Africa'
+  },
+  'Uganda': {
+    capitalGainsTax: 0.3,
+    dividendTax: 15,
+    wealthTax: null,
+    healthInsurance60Plus: 45,
+    continent: 'Africa',
+    region: 'East Africa'
+  },
+  'Ethiopia': {
+    capitalGainsTax: 0.15,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 35,
+    continent: 'Africa',
+    region: 'East Africa'
+  },
+  'Senegal': {
+    capitalGainsTax: 0.1,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 50,
+    continent: 'Africa',
+    region: 'West Africa'
+  },
+  'Slovakia': {
+    capitalGainsTax: 0.19,
+    dividendTax: 7,
+    wealthTax: null,
+    healthInsurance60Plus: 120,
+    continent: 'Europe',
+    region: 'Central Europe'
+  },
+  'Slovenia': {
+    capitalGainsTax: 0.25,
+    dividendTax: 25,
+    wealthTax: null,
+    healthInsurance60Plus: 130,
+    continent: 'Europe',
+    region: 'Central Europe'
+  },
+  'Lithuania': {
+    capitalGainsTax: 0.15,
+    dividendTax: 15,
+    wealthTax: null,
+    healthInsurance60Plus: 100,
+    continent: 'Europe',
+    region: 'Baltic States'
+  },
+  'Bulgaria': {
+    capitalGainsTax: 0.1,
+    dividendTax: 5,
+    wealthTax: null,
+    healthInsurance60Plus: 60,
+    continent: 'Europe',
+    region: 'Eastern Europe'
+  },
+  'Serbia': {
+    capitalGainsTax: 0.15,
+    dividendTax: 15,
+    wealthTax: null,
+    healthInsurance60Plus: 70,
+    continent: 'Europe',
+    region: 'Eastern Europe'
+  },
+  'Bosnia and Herzegovina': {
+    capitalGainsTax: 0.1,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 60,
+    continent: 'Europe',
+    region: 'Eastern Europe'
+  },
+  'Montenegro': {
+    capitalGainsTax: 0.09,
+    dividendTax: 9,
+    wealthTax: null,
+    healthInsurance60Plus: 80,
+    continent: 'Europe',
+    region: 'Eastern Europe'
+  },
+  'Albania': {
+    capitalGainsTax: 0.15,
+    dividendTax: 8,
+    wealthTax: null,
+    healthInsurance60Plus: 50,
+    continent: 'Europe',
+    region: 'Eastern Europe'
+  },
+  'Cyprus': {
+    capitalGainsTax: 0.2,
+    dividendTax: 0,
+    wealthTax: null,
+    healthInsurance60Plus: 100,
+    continent: 'Europe',
+    region: 'Mediterranean'
+  },
+  'Dominican Republic': {
+    capitalGainsTax: 0.27,
+    dividendTax: 10,
+    wealthTax: null,
+    healthInsurance60Plus: 70,
+    continent: 'Central America',
+    region: 'Caribbean'
+  },
+  'Bolivia': {
+    capitalGainsTax: 0.125,
+    dividendTax: 12.5,
+    wealthTax: null,
+    healthInsurance60Plus: 40,
+    continent: 'South America',
+    region: 'South America'
   }
 };
 
@@ -3016,7 +4281,76 @@ const retireCityToCountry = {
   'Santiago': 'Chile', 'Medellín': 'Colombia',
   'Montevideo': 'Uruguay',
   'San José': 'Costa Rica',
-  'Playa del Carmen': 'Mexico'
+  'Playa del Carmen': 'Mexico',
+            'Faro': 'Portugal',
+            'Canggu': 'Indonesia',
+            'Koh Samui': 'Thailand',
+            'Da Nang': 'Vietnam',
+            'Hoi An': 'Vietnam',
+            'Hua Hin': 'Thailand',
+            'Puerto Vallarta': 'Mexico',
+            'Tulum': 'Mexico',
+            'Mazatlán': 'Mexico',
+            'Cádiz': 'Spain',
+            'Taormina': 'Italy',
+            'Kotor': 'Montenegro',
+            'Cascais': 'Portugal',
+            'Las Palmas': 'Spain',
+            'Santa Cruz de Tenerife': 'Spain',
+            'Paphos': 'Cyprus',
+            'Limassol': 'Cyprus',
+            'Nha Trang': 'Vietnam',
+            'Siargao': 'Philippines',
+            'El Nido': 'Philippines',
+            'Essaouira': 'Morocco',
+            'Punta Cana': 'Dominican Republic',
+            'Zanzibar': 'Tanzania',
+            'Cuenca': 'Ecuador',
+            'Da Lat': 'Vietnam',
+            'Ubud': 'Indonesia',
+            'Innsbruck': 'Austria',
+            'Interlaken': 'Switzerland',
+            'San Cristóbal de las Casas': 'Mexico',
+            'Oaxaca': 'Mexico',
+            'Antigua Guatemala': 'Guatemala',
+            'Pokhara': 'Nepal',
+            'Luang Prabang': 'Laos',
+            'Colombo': 'Sri Lanka',
+            'Accra': 'Ghana',
+            'Tunis': 'Tunisia',
+            'Tangier': 'Morocco',
+            'Amman': 'Jordan',
+            'Beirut': 'Lebanon',
+            'Muscat': 'Oman',
+            'Batumi': 'Georgia',
+            'Yerevan': 'Armenia',
+            'Vientiane': 'Laos',
+            'Yangon': 'Myanmar',
+            'Kampala': 'Uganda',
+            'Addis Ababa': 'Ethiopia',
+            'Dakar': 'Senegal',
+            'Kathmandu': 'Nepal',
+            'Bratislava': 'Slovakia',
+            'Ljubljana': 'Slovenia',
+            'Vilnius': 'Lithuania',
+            'Plovdiv': 'Bulgaria',
+            'Sofia': 'Bulgaria',
+            'Belgrade': 'Serbia',
+            'Sarajevo': 'Bosnia and Herzegovina',
+            'Tirana': 'Albania',
+            'Funchal': 'Portugal',
+            'Palma de Mallorca': 'Spain',
+            'Mérida': 'Mexico',
+            'Quito': 'Ecuador',
+            'La Paz': 'Bolivia',
+            'Santo Domingo': 'Dominican Republic',
+            'San Juan': 'United States',
+            'Chiang Rai': 'Thailand',
+            'Ipoh': 'Malaysia',
+            'Dumaguete': 'Philippines',
+            'Jeju': 'South Korea',
+            'Taichung': 'Taiwan',
+            'Vung Tau': 'Vietnam'
 };
 
 // ------------------------------------------------------------------
@@ -3082,7 +4416,76 @@ const retireCityCoords = {
   'Bogotá': [4.7110, -74.0721], 'Lima': [-12.0464, -77.0428],
   'Santiago': [-33.4489, -70.6693], 'Medellín': [6.2442, -75.5812],
   'Montevideo': [-34.9011, -56.1645], 'San José': [9.9281, -84.0907],
-  'Playa del Carmen': [20.6296, -87.0739]
+  'Playa del Carmen': [20.6296, -87.0739],
+            'Faro': [37.0194, -7.9304],
+            'Canggu': [-8.6478, 115.1385],
+            'Koh Samui': [9.512, 100.0136],
+            'Da Nang': [16.0544, 108.2022],
+            'Hoi An': [15.8801, 108.338],
+            'Hua Hin': [12.5684, 99.9577],
+            'Puerto Vallarta': [20.6534, -105.2253],
+            'Tulum': [20.2115, -87.4654],
+            'Mazatlán': [23.2494, -106.4111],
+            'Cádiz': [36.5271, -6.2886],
+            'Taormina': [37.8516, 15.2866],
+            'Kotor': [42.4247, 18.7712],
+            'Cascais': [38.6979, -9.4215],
+            'Las Palmas': [28.1235, -15.4363],
+            'Santa Cruz de Tenerife': [28.4636, -16.2518],
+            'Paphos': [34.7754, 32.4245],
+            'Limassol': [34.6786, 33.0413],
+            'Nha Trang': [12.2388, 109.1967],
+            'Siargao': [9.8489, 126.0458],
+            'El Nido': [11.1761, 119.393],
+            'Essaouira': [31.5085, -9.7595],
+            'Punta Cana': [18.5601, -68.3725],
+            'Zanzibar': [-6.1659, 39.1989],
+            'Cuenca': [-2.9001, -79.0059],
+            'Da Lat': [11.9404, 108.4583],
+            'Ubud': [-8.5069, 115.2625],
+            'Innsbruck': [47.2692, 11.4041],
+            'Interlaken': [46.6863, 7.8632],
+            'San Cristóbal de las Casas': [16.737, -92.6376],
+            'Oaxaca': [17.0732, -96.7266],
+            'Antigua Guatemala': [14.5586, -90.7295],
+            'Pokhara': [28.2096, 83.9856],
+            'Luang Prabang': [19.8856, 102.1347],
+            'Colombo': [6.9271, 79.8612],
+            'Accra': [5.6037, -0.187],
+            'Tunis': [36.8065, 10.1815],
+            'Tangier': [35.7595, -5.834],
+            'Amman': [31.9454, 35.9284],
+            'Beirut': [33.8938, 35.5018],
+            'Muscat': [23.588, 58.3829],
+            'Batumi': [41.6168, 41.6367],
+            'Yerevan': [40.1792, 44.4991],
+            'Vientiane': [17.9757, 102.6331],
+            'Yangon': [16.8661, 96.1951],
+            'Kampala': [0.3476, 32.5825],
+            'Addis Ababa': [9.0245, 38.7468],
+            'Dakar': [14.7167, -17.4677],
+            'Kathmandu': [27.7172, 85.324],
+            'Bratislava': [48.1486, 17.1077],
+            'Ljubljana': [46.0569, 14.5058],
+            'Vilnius': [54.6872, 25.2797],
+            'Plovdiv': [42.1354, 24.7453],
+            'Sofia': [42.6977, 23.3219],
+            'Belgrade': [44.7866, 20.4489],
+            'Sarajevo': [43.8563, 18.4131],
+            'Tirana': [41.3275, 19.8187],
+            'Funchal': [32.6669, -16.9241],
+            'Palma de Mallorca': [39.5696, 2.6502],
+            'Mérida': [20.9674, -89.5926],
+            'Quito': [-0.1807, -78.4678],
+            'La Paz': [-16.4897, -68.1193],
+            'Santo Domingo': [18.4861, -69.9312],
+            'San Juan': [18.4655, -66.1057],
+            'Chiang Rai': [19.9105, 99.8406],
+            'Ipoh': [4.5975, 101.0901],
+            'Dumaguete': [9.3068, 123.3054],
+            'Jeju': [33.4996, 126.5312],
+            'Taichung': [24.1477, 120.6736],
+            'Vung Tau': [10.346, 107.0843]
 };
 
 
@@ -4372,7 +5775,20 @@ const visaPrograms = [
     citizenshipYears: 5,
     healthInsuranceRequired: false,
     notes: 'Annual residence with income proof. Renewable, then 10-year card. Citizenship after 5 years. Morocco does not tax foreign pensions. Affordable. Income estimate.'
-  }
+  },
+        {country: 'EC', name: 'Ecuador Retirement Visa', type: 'retirement', minIncome: 1375, minWealth: 0},
+        {country: 'GT', name: 'Guatemala Pensionado Visa', type: 'retirement', minIncome: 1000, minWealth: 0},
+        {country: 'NP', name: 'Nepal Tourist Visa Extension', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'LK', name: 'Sri Lanka My Dream Home Visa', type: 'retirement', minIncome: 1500, minWealth: 15000},
+        {country: 'AM', name: 'Armenia Residence Permit', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'ME', name: 'Montenegro Temporary Residence', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'CY', name: 'Cyprus Category F Permit', type: 'retirement', minIncome: 0, minWealth: 30000},
+        {country: 'DO', name: 'Dominican Republic Pensionado Visa', type: 'retirement', minIncome: 1500, minWealth: 0},
+        {country: 'BO', name: 'Bolivia Specific Purpose Visa', type: 'retirement', minIncome: 1000, minWealth: 0},
+        {country: 'BG', name: 'Bulgaria Type D Long-Stay Visa', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'RS', name: 'Serbia Temporary Residence', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'AL', name: 'Albania Residence Permit', type: 'passive_income', minIncome: 0, minWealth: 0},
+        {country: 'SI', name: 'Slovenia Residence Permit', type: 'passive_income', minIncome: 1000, minWealth: 0},
 ];
 
 const countryRetireData = {
@@ -5008,7 +6424,14 @@ const countryNameToISO = {
     'Philippines': 'PH', 'Indonesia': 'ID', 'Cambodia': 'KH', 'India': 'IN',
     'Australia': 'AU', 'New Zealand': 'NZ',
     'UAE': 'AE', 'Qatar': 'QA', 'Saudi Arabia': 'SA', 'Israel': 'IL',
-    'South Africa': 'ZA', 'Kenya': 'KE', 'Nigeria': 'NG', 'Egypt': 'EG', 'Morocco': 'MA'
+    'South Africa': 'ZA', 'Kenya': 'KE', 'Nigeria': 'NG', 'Egypt': 'EG', 'Morocco': 'MA',
+            'Ecuador': 'EC', 'Guatemala': 'GT', 'Nepal': 'NP', 'Sri Lanka': 'LK',
+            'Ghana': 'GH', 'Tunisia': 'TN', 'Jordan': 'JO', 'Lebanon': 'LB',
+            'Oman': 'OM', 'Armenia': 'AM', 'Laos': 'LA', 'Myanmar': 'MM',
+            'Tanzania': 'TZ', 'Uganda': 'UG', 'Ethiopia': 'ET', 'Senegal': 'SN',
+            'Slovakia': 'SK', 'Slovenia': 'SI', 'Lithuania': 'LT', 'Bulgaria': 'BG',
+            'Serbia': 'RS', 'Bosnia and Herzegovina': 'BA', 'Montenegro': 'ME', 'Albania': 'AL',
+            'Cyprus': 'CY', 'Dominican Republic': 'DO', 'Bolivia': 'BO'
 };
 
 const isoToCountryName = Object.fromEntries(Object.entries(countryNameToISO).map(([k,v]) => [v,k]));
@@ -5023,23 +6446,174 @@ const countryFlags = {
     'TR':'🇹🇷','JP':'🇯🇵','KR':'🇰🇷','HK':'🇭🇰','TW':'🇹🇼','CN':'🇨🇳','SG':'🇸🇬',
     'TH':'🇹🇭','MY':'🇲🇾','VN':'🇻🇳','PH':'🇵🇭','ID':'🇮🇩','KH':'🇰🇭','IN':'🇮🇳',
     'AU':'🇦🇺','NZ':'🇳🇿','AE':'🇦🇪','QA':'🇶🇦','SA':'🇸🇦','IL':'🇮🇱',
-    'ZA':'🇿🇦','KE':'🇰🇪','NG':'🇳🇬','EG':'🇪🇬','MA':'🇲🇦'
+    'ZA':'🇿🇦','KE':'🇰🇪','NG':'🇳🇬','EG':'🇪🇬','MA':'🇲🇦',
+            'EC': '🇪🇨', 'GT': '🇬🇹', 'NP': '🇳🇵', 'LK': '🇱🇰',
+            'GH': '🇬🇭', 'TN': '🇹🇳', 'JO': '🇯🇴', 'LB': '🇱🇧',
+            'OM': '🇴🇲', 'AM': '🇦🇲', 'LA': '🇱🇦', 'MM': '🇲🇲',
+            'TZ': '🇹🇿', 'UG': '🇺🇬', 'ET': '🇪🇹', 'SN': '🇸🇳',
+            'SK': '🇸🇰', 'SI': '🇸🇮', 'LT': '🇱🇹', 'BG': '🇧🇬',
+            'RS': '🇷🇸', 'BA': '🇧🇦', 'ME': '🇲🇪', 'AL': '🇦🇱',
+            'CY': '🇨🇾', 'DO': '🇩🇴', 'BO': '🇧🇴'
 };
 
 // Region mapping for cities
+const cityLifestyleMap = {
+    'Faro': ['smaller_city', 'beach'],
+    'Canggu': ['smaller_city', 'beach'],
+    'Koh Samui': ['smaller_city', 'beach'],
+    'Da Nang': ['smaller_city', 'beach'],
+    'Hoi An': ['smaller_city', 'beach'],
+    'Hua Hin': ['smaller_city', 'beach'],
+    'Puerto Vallarta': ['smaller_city', 'beach'],
+    'Tulum': ['smaller_city', 'beach'],
+    'Mazatlán': ['smaller_city', 'beach'],
+    'Cádiz': ['smaller_city', 'beach'],
+    'Taormina': ['smaller_city', 'beach', 'mountain'],
+    'Kotor': ['smaller_city', 'beach', 'mountain'],
+    'Cascais': ['smaller_city', 'beach'],
+    'Las Palmas': ['smaller_city', 'beach'],
+    'Santa Cruz de Tenerife': ['smaller_city', 'beach'],
+    'Paphos': ['smaller_city', 'beach'],
+    'Limassol': ['smaller_city', 'beach'],
+    'Nha Trang': ['smaller_city', 'beach'],
+    'Siargao': ['smaller_city', 'beach'],
+    'El Nido': ['smaller_city', 'beach'],
+    'Essaouira': ['smaller_city', 'beach'],
+    'Punta Cana': ['smaller_city', 'beach'],
+    'Zanzibar': ['smaller_city', 'beach'],
+    'Cuenca': ['smaller_city', 'mountain'],
+    'Da Lat': ['smaller_city', 'mountain'],
+    'Ubud': ['smaller_city', 'mountain'],
+    'Innsbruck': ['smaller_city', 'mountain'],
+    'Interlaken': ['smaller_city', 'mountain'],
+    'San Cristóbal de las Casas': ['smaller_city', 'mountain'],
+    'Oaxaca': ['smaller_city', 'mountain'],
+    'Antigua Guatemala': ['smaller_city', 'mountain'],
+    'Pokhara': ['smaller_city', 'mountain'],
+    'Luang Prabang': ['smaller_city', 'mountain'],
+    'Colombo': ['major_city', 'beach'],
+    'Accra': ['major_city'],
+    'Tunis': ['major_city'],
+    'Tangier': ['major_city', 'beach'],
+    'Amman': ['major_city', 'mountain'],
+    'Beirut': ['major_city'],
+    'Muscat': ['major_city'],
+    'Batumi': ['major_city', 'beach'],
+    'Yerevan': ['major_city', 'mountain'],
+    'Vientiane': ['major_city'],
+    'Yangon': ['major_city'],
+    'Kampala': ['major_city'],
+    'Addis Ababa': ['major_city', 'mountain'],
+    'Dakar': ['major_city'],
+    'Kathmandu': ['major_city', 'mountain'],
+    'Bratislava': ['major_city'],
+    'Ljubljana': ['smaller_city', 'mountain'],
+    'Vilnius': ['major_city'],
+    'Plovdiv': ['smaller_city'],
+    'Sofia': ['major_city', 'mountain'],
+    'Belgrade': ['major_city'],
+    'Sarajevo': ['major_city', 'mountain'],
+    'Tirana': ['major_city'],
+    'Funchal': ['smaller_city', 'beach', 'mountain'],
+    'Palma de Mallorca': ['smaller_city', 'beach'],
+    'Mérida': ['major_city'],
+    'Quito': ['major_city', 'mountain'],
+    'La Paz': ['major_city', 'mountain'],
+    'Santo Domingo': ['major_city', 'beach'],
+    'San Juan': ['major_city', 'beach'],
+    'Chiang Rai': ['smaller_city', 'mountain'],
+    'Ipoh': ['smaller_city'],
+    'Dumaguete': ['smaller_city', 'beach'],
+    'Jeju': ['smaller_city', 'beach', 'mountain'],
+    'Taichung': ['major_city'],
+    'Vung Tau': ['smaller_city', 'beach']
+};
+
+const cityAttractivenessScore = {
+    'Faro': 68,
+    'Canggu': 72,
+    'Koh Samui': 75,
+    'Da Nang': 65,
+    'Hoi An': 82,
+    'Hua Hin': 55,
+    'Puerto Vallarta': 70,
+    'Tulum': 78,
+    'Mazatlán': 55,
+    'Cádiz': 72,
+    'Taormina': 88,
+    'Kotor': 82,
+    'Cascais': 75,
+    'Las Palmas': 68,
+    'Santa Cruz de Tenerife': 62,
+    'Paphos': 70,
+    'Limassol': 58,
+    'Nha Trang': 62,
+    'Siargao': 72,
+    'El Nido': 85,
+    'Essaouira': 72,
+    'Punta Cana': 68,
+    'Zanzibar': 78,
+    'Cuenca': 62,
+    'Da Lat': 58,
+    'Ubud': 80,
+    'Innsbruck': 82,
+    'Interlaken': 88,
+    'San Cristóbal de las Casas': 68,
+    'Oaxaca': 75,
+    'Antigua Guatemala': 78,
+    'Pokhara': 82,
+    'Luang Prabang': 85,
+    'Colombo': 52,
+    'Accra': 38,
+    'Tunis': 55,
+    'Tangier': 62,
+    'Amman': 65,
+    'Beirut': 58,
+    'Muscat': 62,
+    'Batumi': 60,
+    'Yerevan': 55,
+    'Vientiane': 45,
+    'Yangon': 58,
+    'Kampala': 35,
+    'Addis Ababa': 42,
+    'Dakar': 48,
+    'Kathmandu': 68,
+    'Bratislava': 62,
+    'Ljubljana': 72,
+    'Vilnius': 65,
+    'Plovdiv': 58,
+    'Sofia': 52,
+    'Belgrade': 55,
+    'Sarajevo': 62,
+    'Tirana': 48,
+    'Funchal': 78,
+    'Palma de Mallorca': 72,
+    'Mérida': 62,
+    'Quito': 65,
+    'La Paz': 60,
+    'Santo Domingo': 55,
+    'San Juan': 72,
+    'Chiang Rai': 62,
+    'Ipoh': 48,
+    'Dumaguete': 45,
+    'Jeju': 72,
+    'Taichung': 52,
+    'Vung Tau': 48
+};
+
 const cityRegionMap = {};
 (function() {
     const regionSets = {
-        'north_america': ['New York','San Francisco','Los Angeles','Chicago','Miami','Austin','Seattle','Denver','Boston','Washington DC','Houston','Charlotte','Las Vegas','Tampa','Raleigh','Dallas','Atlanta','Philadelphia','Phoenix','San Diego','Nashville','Minneapolis','Portland','Toronto','Vancouver','Montreal'],
-        'central_america': ['Mexico City','Cancún','Playa del Carmen','Panama City','San José'],
-        'south_america': ['São Paulo','Buenos Aires','Bogotá','Lima','Santiago','Medellín','Montevideo'],
-        'europe': ['London','Paris','Amsterdam','Berlin','Munich','Dublin','Brussels','Luxembourg City','Zurich','Geneva','Edinburgh','Nice','Madrid','Barcelona','Valencia','Málaga','Lisbon','Porto','Rome','Milan','Athens','Split','Stockholm','Copenhagen','Helsinki','Oslo','Vienna','Prague','Budapest','Warsaw','Krakow','Bucharest','Tallinn','Riga','Istanbul'],
-        'southeast_asia': ['Singapore','Bangkok','Chiang Mai','Phuket','Kuala Lumpur','Ho Chi Minh City','Hanoi','Manila','Jakarta','Bali','Phnom Penh'],
-        'east_asia': ['Tokyo','Osaka','Fukuoka','Seoul','Hong Kong','Taipei','Shanghai','Beijing','Shenzhen','Guangzhou'],
-        'south_asia': ['Mumbai','Bangalore','Delhi','Chennai'],
+        'north_america': ['New York','San Francisco','Los Angeles','Chicago','Miami','Austin','Seattle','Denver','Boston','Washington DC','Houston','Charlotte','Las Vegas','Tampa','Raleigh','Dallas','Atlanta','Philadelphia','Phoenix','San Diego','Nashville','Minneapolis','Portland','Toronto','Vancouver','Montreal','San Juan'],
+        'central_america': ['Mexico City','Cancún','Playa del Carmen','Panama City','San José','Puerto Vallarta','Tulum','Mazatlán','Punta Cana','San Cristóbal de las Casas','Oaxaca','Antigua Guatemala','Mérida','Santo Domingo'],
+        'south_america': ['São Paulo','Buenos Aires','Bogotá','Lima','Santiago','Medellín','Montevideo','Cuenca','Quito','La Paz'],
+        'europe': ['London','Paris','Amsterdam','Berlin','Munich','Dublin','Brussels','Luxembourg City','Zurich','Geneva','Edinburgh','Nice','Madrid','Barcelona','Valencia','Málaga','Lisbon','Porto','Rome','Milan','Athens','Split','Stockholm','Copenhagen','Helsinki','Oslo','Vienna','Prague','Budapest','Warsaw','Krakow','Bucharest','Tallinn','Riga','Istanbul','Faro','Cádiz','Taormina','Kotor','Cascais','Las Palmas','Santa Cruz de Tenerife','Paphos','Limassol','Innsbruck','Interlaken','Batumi','Yerevan','Bratislava','Ljubljana','Vilnius','Plovdiv','Sofia','Belgrade','Sarajevo','Tirana','Funchal','Palma de Mallorca'],
+        'southeast_asia': ['Singapore','Bangkok','Chiang Mai','Phuket','Kuala Lumpur','Ho Chi Minh City','Hanoi','Manila','Jakarta','Bali','Phnom Penh','Canggu','Koh Samui','Da Nang','Hoi An','Hua Hin','Nha Trang','Siargao','El Nido','Da Lat','Ubud','Luang Prabang','Vientiane','Yangon','Chiang Rai','Ipoh','Dumaguete','Vung Tau'],
+        'east_asia': ['Tokyo','Osaka','Fukuoka','Seoul','Hong Kong','Taipei','Shanghai','Beijing','Shenzhen','Guangzhou','Jeju','Taichung'],
+        'south_asia': ['Mumbai','Bangalore','Delhi','Chennai','Pokhara','Colombo','Kathmandu'],
         'oceania': ['Sydney','Melbourne','Perth','Auckland'],
-        'middle_east': ['Dubai','Abu Dhabi','Doha','Riyadh','Tel Aviv'],
-        'africa': ['Cape Town','Nairobi','Lagos','Cairo','Marrakech','Casablanca']
+        'middle_east': ['Dubai','Abu Dhabi','Doha','Riyadh','Tel Aviv','Amman','Beirut','Muscat'],
+        'africa': ['Cape Town','Nairobi','Lagos','Cairo','Marrakech','Casablanca','Essaouira','Zanzibar','Accra','Tunis','Tangier','Kampala','Addis Ababa','Dakar']
     };
     for (const [region, cities] of Object.entries(regionSets)) {
         for (const city of cities) cityRegionMap[city] = region;
@@ -5075,22 +6649,34 @@ function convertFromUSD(amountUSD, toCurrency) {
     return toGBP * exchangeRates[toCurrency];
 }
 
-function calculateMonthlyExpenses(cityName, household) {
+function calculateMonthlyExpenses(cityName, household, children) {
+    children = children || 0;
     const costs = cityLivingCosts[cityName];
     const rent = cityRent1BR[cityName] || 800;
     if (!costs) return { total: 1500, breakdown: {} };
 
-    const adults = household === 'couple' ? 2 : 1;
-    const rentMultiplier = household === 'couple' ? 1.4 : 1.0; // 2BR vs 1BR
+    const isFamily = household === 'family';
+    const adults = (household === 'couple' || isFamily) ? 2 : 1;
+    // Rent: single=1BR, couple=2BR(1.4x), family 1 child=2BR(1.6x), family 2+=3BR(2.0x)
+    let rentMultiplier = 1.0;
+    if (isFamily) {
+        rentMultiplier = children >= 2 ? 2.0 : 1.6;
+    } else if (household === 'couple') {
+        rentMultiplier = 1.4;
+    }
 
     const breakdown = {
         rent: Math.round(rent * rentMultiplier),
-        groceries: Math.round(costs.groceries * (1 + (adults - 1) * 0.5)),
-        utilities: Math.round(costs.utilities * (1 + (adults - 1) * 0.3)),
-        transport: Math.round(costs.transport * adults),
-        healthcare: Math.round(costs.healthcare * (1 + (adults - 1) * 0.7)),
+        groceries: Math.round(costs.groceries * (1 + (adults - 1) * 0.5 + children * 0.3)),
+        utilities: Math.round(costs.utilities * (1 + (adults - 1) * 0.3 + children * 0.15)),
+        transport: Math.round(costs.transport * adults), // children don't add transport
+        healthcare: Math.round(costs.healthcare * (1 + (adults - 1) * 0.7 + children * 0.4)),
         leisure: Math.round((costs.groceries * 0.3) + 150) // estimate leisure as portion of groceries + base
     };
+    // Add childcare cost if family with children
+    if (isFamily && children > 0 && costs.childcare) {
+        breakdown.childcare = Math.round(costs.childcare * children);
+    }
     breakdown.total = Object.values(breakdown).reduce((a, b) => a + b, 0);
     return breakdown;
 }
@@ -5117,7 +6703,8 @@ function calculateTaxOnPassiveIncome(annualIncome, cityName) {
     return convertToUSD(tax, localCurrency);
 }
 
-function getHealthInsuranceCost(cityName, household) {
+function getHealthInsuranceCost(cityName, household, children) {
+    children = children || 0;
     const countryName = getCountryName(cityName);
     const iso = getCountryISO(cityName);
     // Check both data sources
@@ -5126,14 +6713,16 @@ function getHealthInsuranceCost(cityName, household) {
     let base = 300;
     if (dataByName && dataByName.healthInsurance60Plus) base = dataByName.healthInsurance60Plus;
     else if (dataByISO && dataByISO.avgPrivateHealthInsurance60plus) base = dataByISO.avgPrivateHealthInsurance60plus;
-    return household === 'couple' ? base * 1.8 : base;
+    const isMultiAdult = (household === 'couple' || household === 'family');
+    const adultCost = isMultiAdult ? base * 1.8 : base;
+    return adultCost + (base * 0.4 * children);
 }
 
 function calculateYearsMoneyLasts(params) {
-    const { savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, cityName, household } = params;
+    const { savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, cityName, household, children } = params;
 
-    const expenses = calculateMonthlyExpenses(cityName, household);
-    const healthIns = getHealthInsuranceCost(cityName, household);
+    const expenses = calculateMonthlyExpenses(cityName, household, children);
+    const healthIns = getHealthInsuranceCost(cityName, household, children);
     const monthlyExpenses = expenses.total + healthIns;
     const annualExpenses = monthlyExpenses * 12;
 
@@ -5227,11 +6816,11 @@ function getVisaEligibility(cityName, citizenshipISO) {
 }
 
 function calculateCompositeScore(cityName, params) {
-    const { factorWeights, savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, household, citizenshipISO } = params;
+    const { factorWeights, savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, household, children, citizenshipISO } = params;
 
     // Financial calculation
     const financial = calculateYearsMoneyLasts({
-        savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, cityName, household
+        savingsUSD, monthlyIncomeUSD, returnRate, inflationRate, cityName, household, children
     });
 
     // QOL scores
@@ -5270,7 +6859,8 @@ function calculateCompositeScore(cityName, params) {
         infrastructure: qol.infrastructure,
         english: qol.english,
         expat: qol.expat,
-        culture: qol.culture
+        culture: qol.culture,
+        charm: (typeof retireCityCharmScore !== 'undefined' && retireCityCharmScore[cityName]) || 50
     };
 
     // Weighted composite
@@ -5301,7 +6891,7 @@ function calculateCompositeScore(cityName, params) {
 }
 
 function findTopCities(params) {
-    const { selectedRegions } = params;
+    const { selectedRegions, selectedLifestyles } = params;
     const allCities = Object.keys(coliData);
 
     // Filter by region
@@ -5309,6 +6899,34 @@ function findTopCities(params) {
     if (!selectedRegions.includes('anywhere')) {
         candidates = allCities.filter(city => selectedRegions.includes(cityRegionMap[city]));
     }
+
+    // Filter by lifestyle (if any selected)
+    if (selectedLifestyles && selectedLifestyles.length > 0) {
+        candidates = candidates.filter(city => {
+            const lifestyles = cityLifestyleMap[city] || ['major_city']; // default to major_city
+            return selectedLifestyles.some(ls => lifestyles.includes(ls));
+        });
+    }
+
+    // Deal-breaker hard filters
+    const mt = params.minThresholds || {};
+    const mh = params.mustHaves || {};
+    candidates = candidates.filter(city => {
+        const qol = getQOLScores(city);
+        if (mt.safety > 0 && (qol.safety || 0) < mt.safety) return false;
+        if (mt.healthcare > 0 && (qol.healthcare || 0) < mt.healthcare) return false;
+        if (mt.english > 0 && (qol.english || 0) < mt.english) return false;
+        if (mh.english && (qol.english || 0) < 50) return false;
+        if (mh.visa) {
+            const visa = getVisaEligibility(city, params.citizenshipISO);
+            if (!visa || visa.status === 'none' || visa.status === 'difficult') return false;
+        }
+        if (mh.beach) {
+            const lifestyles = cityLifestyleMap[city] || [];
+            if (!lifestyles.includes('beach')) return false;
+        }
+        return true;
+    });
 
     // Score all candidates
     const results = candidates.map(city => {
@@ -5352,12 +6970,17 @@ let userState = {
     returnRate: 3,
     age: 55,
     household: 'single',
+    children: 0,
     citizenship: '',
     horizon: 30,
     inflation: 3,
     selectedRegions: ['anywhere'],
-    factorOrder: ['affordability','healthcare','safety','climate','infrastructure','english','expat','culture'],
-    housing: 'rent'
+    selectedLifestyles: [],
+    factorOrder: ['affordability','healthcare','safety','climate','infrastructure','english','expat','culture','charm'],
+    housing: 'rent',
+    minThresholds: { safety: 0, healthcare: 0, english: 0 },
+    mustHaves: { visa: false, english: false, beach: false },
+    lockedFactors: []
 };
 
 // ── Theme Toggle ──
@@ -5375,25 +6998,104 @@ const navDropdown = document.getElementById('navDropdown');
 navBurger.addEventListener('click', (e) => { e.stopPropagation(); navDropdown.classList.toggle('open'); });
 document.addEventListener('click', (e) => { if (!navDropdown.contains(e.target) && e.target !== navBurger) navDropdown.classList.remove('open'); });
 
-// ── Currency Selector ──
+// ── Currency Selector (custom dropdown) ──
 (function(){
     const sel = document.getElementById('currencySelect');
+    const btn = document.getElementById('currencyDropdownBtn');
+    const list = document.getElementById('currencyDropdownList');
+    const optionsUl = document.getElementById('currencyOptions');
+    const searchInput = document.getElementById('currencySearch');
+    const flagSpan = document.getElementById('currencyFlag');
+    const codeSpan = document.getElementById('currencyCode');
     const currencies = Object.keys(exchangeRates).sort();
+
+    // Currency to flag and name mapping
+    const curInfo = {
+        'USD':'🇺🇸 US Dollar','EUR':'🇪🇺 Euro','GBP':'🇬🇧 British Pound','JPY':'🇯🇵 Japanese Yen',
+        'AUD':'🇦🇺 Australian Dollar','CAD':'🇨🇦 Canadian Dollar','CHF':'🇨🇭 Swiss Franc',
+        'CNY':'🇨🇳 Chinese Yuan','INR':'🇮🇳 Indian Rupee','BRL':'🇧🇷 Brazilian Real',
+        'MXN':'🇲🇽 Mexican Peso','KRW':'🇰🇷 Korean Won','SGD':'🇸🇬 Singapore Dollar',
+        'THB':'🇹🇭 Thai Baht','MYR':'🇲🇾 Malaysian Ringgit','IDR':'🇮🇩 Indonesian Rupiah',
+        'PHP':'🇵🇭 Philippine Peso','VND':'🇻🇳 Vietnamese Dong','TWD':'🇹🇼 Taiwan Dollar',
+        'HKD':'🇭🇰 Hong Kong Dollar','NZD':'🇳🇿 New Zealand Dollar','SEK':'🇸🇪 Swedish Krona',
+        'NOK':'🇳🇴 Norwegian Krone','DKK':'🇩🇰 Danish Krone','PLN':'🇵🇱 Polish Zloty',
+        'CZK':'🇨🇿 Czech Koruna','HUF':'🇭🇺 Hungarian Forint','RON':'🇷🇴 Romanian Leu',
+        'TRY':'🇹🇷 Turkish Lira','ZAR':'🇿🇦 South African Rand','AED':'🇦🇪 UAE Dirham',
+        'ILS':'🇮🇱 Israeli Shekel','QAR':'🇶🇦 Qatari Riyal','EGP':'🇪🇬 Egyptian Pound',
+        'KES':'🇰🇪 Kenyan Shilling','NGN':'🇳🇬 Nigerian Naira','MAD':'🇲🇦 Moroccan Dirham',
+        'CLP':'🇨🇱 Chilean Peso','COP':'🇨🇴 Colombian Peso','PEN':'🇵🇪 Peruvian Sol',
+        'ARS':'🇦🇷 Argentine Peso','UYU':'🇺🇾 Uruguayan Peso','CRC':'🇨🇷 Costa Rican Colón',
+        'PAB':'🇵🇦 Panamanian Balboa','SAR':'🇸🇦 Saudi Riyal','GEL':'🇬🇪 Georgian Lari',
+        'BGN':'🇧🇬 Bulgarian Lev','RSD':'🇷🇸 Serbian Dinar','BAM':'🇧🇦 Bosnian Mark',
+        'ALL':'🇦🇱 Albanian Lek','LKR':'🇱🇰 Sri Lankan Rupee','NPR':'🇳🇵 Nepalese Rupee',
+        'GHS':'🇬🇭 Ghanaian Cedi','TND':'🇹🇳 Tunisian Dinar','JOD':'🇯🇴 Jordanian Dinar',
+        'LBP':'🇱🇧 Lebanese Pound','OMR':'🇴🇲 Omani Rial','AMD':'🇦🇲 Armenian Dram',
+        'LAK':'🇱🇦 Lao Kip','MMK':'🇲🇲 Myanmar Kyat','TZS':'🇹🇿 Tanzanian Shilling',
+        'UGX':'🇺🇬 Ugandan Shilling','ETB':'🇪🇹 Ethiopian Birr','XOF':'🇸🇳 West African CFA',
+        'GTQ':'🇬🇹 Guatemalan Quetzal','BOB':'🇧🇴 Bolivian Boliviano','DOP':'🇩🇴 Dominican Peso',
+        'KHR':'🇰🇭 Cambodian Riel'
+    };
+
+    function getFlag(c) { return (curInfo[c] || '').split(' ')[0] || '💱'; }
+    function getName(c) { return (curInfo[c] || '').replace(/^[^\s]+\s/, '') || c; }
+
+    // Populate hidden select (keeps existing calculation logic working)
     currencies.forEach(c => {
         const opt = document.createElement('option');
         opt.value = c; opt.textContent = c;
         if (c === 'USD') opt.selected = true;
         sel.appendChild(opt);
     });
-    // Try to detect user currency from browser
+
+    function renderOptions(filter) {
+        const f = (filter || '').toLowerCase();
+        optionsUl.innerHTML = currencies
+            .filter(c => !f || c.toLowerCase().includes(f) || getName(c).toLowerCase().includes(f))
+            .map(c => `<li data-val="${c}" class="${c === sel.value ? 'selected' : ''}" role="option">
+                <span>${getFlag(c)}</span><span class="cur-code">${c}</span><span class="cur-name">${getName(c)}</span>
+            </li>`).join('');
+    }
+
+    function selectCurrency(code) {
+        sel.value = code;
+        flagSpan.textContent = getFlag(code);
+        codeSpan.textContent = code;
+        list.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+        searchInput.value = '';
+        userState.currency = code;
+    }
+
+    // Toggle dropdown
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = list.style.display === 'none';
+        list.style.display = open ? 'block' : 'none';
+        btn.setAttribute('aria-expanded', open);
+        if (open) { renderOptions(''); searchInput.focus(); }
+    });
+
+    // Search filter
+    searchInput.addEventListener('input', () => renderOptions(searchInput.value));
+
+    // Click on option
+    optionsUl.addEventListener('click', (e) => {
+        const li = e.target.closest('li');
+        if (li) selectCurrency(li.dataset.val);
+    });
+
+    // Close on outside click
+    document.addEventListener('click', () => { list.style.display = 'none'; btn.setAttribute('aria-expanded', 'false'); });
+    list.addEventListener('click', (e) => e.stopPropagation());
+
+    // Auto-detect user currency
     try {
         const locale = navigator.language || 'en-US';
         const parts = locale.split('-');
         const countryCode = (parts[1] || parts[0]).toUpperCase();
         const currencyMap = {'US':'USD','GB':'GBP','DE':'EUR','FR':'EUR','ES':'EUR','IT':'EUR','JP':'JPY','AU':'AUD','CA':'CAD','BR':'BRL','IN':'INR','MX':'MXN','CN':'CNY','KR':'KRW','TH':'THB','SG':'SGD','CH':'CHF','SE':'SEK','NO':'NOK','DK':'DKK','NZ':'NZD','PL':'PLN','CZ':'CZK','HU':'HUF','RO':'RON','TR':'TRY','AE':'AED','SA':'SAR','IL':'ILS','ZA':'ZAR','EG':'EGP','NG':'NGN','KE':'KES','MA':'MAD','PH':'PHP','ID':'IDR','VN':'VND','MY':'MYR','TW':'TWD','HK':'HKD','CL':'CLP','CO':'COP','PE':'PEN','AR':'ARS','UY':'UYU','CR':'CRC','QA':'QAR','PA':'PAB'};
-        if (currencyMap[countryCode] && exchangeRates[currencyMap[countryCode]]) {
-            sel.value = currencyMap[countryCode];
-        }
+        const detected = currencyMap[countryCode];
+        if (detected && exchangeRates[detected]) selectCurrency(detected);
     } catch(e) {}
 })();
 
@@ -5453,8 +7155,35 @@ function setupToggleGroup(id, callback) {
         });
     });
 }
-setupToggleGroup('householdToggle', val => { userState.household = val; });
+setupToggleGroup('householdToggle', val => {
+    userState.household = val;
+    const childrenGroup = document.getElementById('childrenGroup');
+    if (val === 'family') {
+        childrenGroup.style.display = 'block';
+        userState.children = parseInt(document.querySelector('#childrenToggle .toggle-btn.active')?.dataset.val || '1');
+    } else {
+        childrenGroup.style.display = 'none';
+        userState.children = 0;
+    }
+});
+setupToggleGroup('childrenToggle', val => { userState.children = parseInt(val); });
 setupToggleGroup('housingToggle', val => { userState.housing = val; });
+
+// ── Deal-breaker sliders ──
+['Safety', 'Healthcare', 'English'].forEach(name => {
+    const slider = document.getElementById('min' + name);
+    const valSpan = document.getElementById('min' + name + 'Val');
+    slider.addEventListener('input', function() {
+        const v = parseInt(this.value);
+        valSpan.textContent = v === 0 ? 'Off' : v;
+        userState.minThresholds[name.toLowerCase()] = v;
+    });
+});
+
+// ── Must-have checkboxes ──
+document.getElementById('mustVisa').addEventListener('change', function() { userState.mustHaves.visa = this.checked; });
+document.getElementById('mustEnglish50').addEventListener('change', function() { userState.mustHaves.english = this.checked; });
+document.getElementById('mustBeach').addEventListener('change', function() { userState.mustHaves.beach = this.checked; });
 
 // ── Region Chips ──
 document.querySelectorAll('#regionChips .chip').forEach(chip => {
@@ -5475,6 +7204,14 @@ document.querySelectorAll('#regionChips .chip').forEach(chip => {
                 userState.selectedRegions = ['anywhere'];
             }
         }
+    });
+});
+
+// ── Lifestyle Chips ──
+document.querySelectorAll('#lifestyleChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+        chip.classList.toggle('selected');
+        userState.selectedLifestyles = Array.from(document.querySelectorAll('#lifestyleChips .chip.selected')).map(c => c.dataset.lifestyle);
     });
 });
 
@@ -5616,7 +7353,7 @@ function calculateResults() {
     const rankItems = document.querySelectorAll('#rankList .rank-item');
     const factorWeights = {};
     rankItems.forEach((item, i) => {
-        factorWeights[item.dataset.factor] = 8 - i; // 8,7,6,5,4,3,2,1
+        factorWeights[item.dataset.factor] = rankItems.length - i; // 9,8,7,...,1
     });
 
     const params = {
@@ -5625,9 +7362,13 @@ function calculateResults() {
         returnRate,
         inflationRate: inflation,
         household,
+        children: userState.children,
         citizenshipISO: citizenship,
         factorWeights,
-        selectedRegions: userState.selectedRegions
+        selectedRegions: userState.selectedRegions,
+        selectedLifestyles: userState.selectedLifestyles,
+        minThresholds: userState.minThresholds,
+        mustHaves: userState.mustHaves
     };
 
     // Store for scenario recalculation
@@ -5669,6 +7410,27 @@ function calculateResults() {
 }
 
 // ── Render Results ──
+function formatVisaBadge(visa) {
+    if (visa.status === 'citizen') return { text: 'Citizen', class: 'eligible' };
+    if (!visa.programs || visa.programs.length === 0) return { text: 'Visa Required', class: 'difficult' };
+
+    const prog = visa.programs[0];
+    const name = (prog.name || '').replace(/\s*(visa|program)\s*/gi, ' ').trim();
+    const shortName = name.length > 22 ? name.substring(0, 19) + '...' : name;
+
+    let req = '';
+    if (prog.minMonthlyIncome) req = `min $${formatNumber(prog.minMonthlyIncome)}/mo`;
+    else if (prog.minSavings) req = `min $${formatNumber(prog.minSavings)}`;
+
+    let path = '';
+    if (prog.pathToPR && prog.citizenshipYears) path = `PR in ${prog.citizenshipYears}yr`;
+    else if (prog.pathToPR) path = 'PR eligible';
+
+    const parts = [shortName, req, path].filter(Boolean);
+    const badgeClass = visa.status === 'eligible' ? 'eligible' : 'possible';
+    return { text: parts.join(' · '), class: badgeClass };
+}
+
 function renderResults(top3, params, displayCurrency) {
     // Hide wizard, show results
     document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
@@ -5680,7 +7442,7 @@ function renderResults(top3, params, displayCurrency) {
     const rh = document.getElementById('resultsHeader');
     rh.innerHTML = `
         <h2>Your Top 3 Retirement Destinations</h2>
-        <p>Based on $${formatNumber(params.savingsUSD)} savings${params.monthlyIncomeUSD > 0 ? ' + $' + formatNumber(params.monthlyIncomeUSD) + '/mo income' : ''} &mdash; ${params.household === 'couple' ? 'couple' : 'single'}</p>
+        <p>Based on $${formatNumber(params.savingsUSD)} savings${params.monthlyIncomeUSD > 0 ? ' + $' + formatNumber(params.monthlyIncomeUSD) + '/mo income' : ''} &mdash; ${params.household === 'family' ? 'family of ' + (2 + (params.children || 0)) : params.household === 'couple' ? 'couple' : 'single'}</p>
     `;
 
     // Recommendation cards
@@ -5692,8 +7454,7 @@ function renderResults(top3, params, displayCurrency) {
         const yearsText = r.financial.years === Infinity ? '∞' : Math.round(r.financial.years);
         const yearsLabel = r.financial.years === Infinity ? 'Your income covers all expenses' : (yearsText === 1 ? 'year' : 'years your savings last');
         const monthlyUSD = r.financial.monthlyExpenses + r.financial.healthInsurance;
-        const visaClass = r.visa.status === 'eligible' || r.visa.status === 'citizen' ? 'eligible' : r.visa.status === 'possible' ? 'possible' : 'difficult';
-        const visaText = r.visa.status === 'citizen' ? 'Citizen' : r.visa.status === 'eligible' ? 'Visa Available' : r.visa.status === 'possible' ? 'Investment Visa' : 'Visa Required';
+        const badge = formatVisaBadge(r.visa);
 
         return `
         <div class="rec-card ${i === 0 ? 'primary' : ''}" onclick="scrollToDetail('detail${i}')">
@@ -5706,7 +7467,7 @@ function renderResults(top3, params, displayCurrency) {
                 <div class="rec-stat"><span class="rec-stat-label">Monthly cost</span><span class="rec-stat-value">$${formatNumber(monthlyUSD)}/mo</span></div>
                 <div class="rec-stat"><span class="rec-stat-label">QOL Score</span><span class="rec-stat-value">${Math.round(r.composite)}/100</span></div>
             </div>
-            <span class="rec-visa-badge ${visaClass}">${visaText}</span>
+            <span class="rec-visa-badge ${badge.class}">${badge.text}</span>
         </div>`;
     }).join('');
 
@@ -5737,11 +7498,20 @@ function renderComparisonTable(top3, params) {
         { label: 'Healthcare Quality', key: 'healthcare', fmt: r => r.qol.healthcare + '/100' },
         { label: 'Climate', key: 'climate', fmt: r => r.qol.climate + '/100' },
         { label: 'English Friendly', key: 'english', fmt: r => r.qol.english + '/100' },
+        { label: '🏛️ City Charm', key: 'charm', fmt: r => {
+            const score = (typeof retireCityCharmScore !== 'undefined' && retireCityCharmScore[r.city]) || 50;
+            return score + '/100';
+        }},
+        { label: 'Inheritance Tax', key: 'inheritanceTax', fmt: r => {
+            const country = getCountryName(r.city);
+            const tax = typeof retireInheritanceTax !== 'undefined' ? retireInheritanceTax[country] : undefined;
+            if (!tax) return 'None';
+            if (tax.rate === 0) return 'None';
+            return tax.rate + '%' + (tax.threshold > 0 ? ' above ' + formatNumber(tax.threshold) + ' ' + tax.currency : '');
+        }},
         { label: 'Visa Status', key: 'visa', fmt: r => {
-            if (r.visa.status === 'citizen') return 'Citizen';
-            if (r.visa.status === 'eligible') return '✓ Available';
-            if (r.visa.status === 'possible') return '~ Investment';
-            return '✗ Difficult';
+            const badge = formatVisaBadge(r.visa);
+            return badge.text;
         }}
     ];
 
@@ -5984,5 +7754,58 @@ document.querySelectorAll('.share-bar .share-btn').forEach(btn => {
 
     // ══════════════════════════════════════════════════════════
     </script>
+
+<!-- City List Modal -->
+<div id="cityListModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:var(--card-bg,#fff);border-radius:12px;max-width:800px;width:90%;max-height:80vh;overflow-y:auto;padding:28px;position:relative;">
+        <button onclick="document.getElementById('cityListModal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-primary,#333);">&times;</button>
+        <h2 style="margin:0 0 4px;">Cities in Our Database</h2>
+        <p style="color:var(--text-secondary,#666);margin:0 0 20px;">182 cities across 88 countries</p>
+
+        <div style="columns:2;column-gap:32px;">
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Europe (58)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Amsterdam, Athens, Barcelona, Batumi, Belgrade, Berlin, Bratislava, Brussels, Bucharest, Budapest, Cascais, Copenhagen, C&aacute;diz, Dublin, Edinburgh, Faro, Funchal, Geneva, Helsinki, Innsbruck, Interlaken, Istanbul, Kotor, Krakow, Las Palmas, Limassol, Lisbon, Ljubljana, London, Luxembourg City, Madrid, Milan, Munich, M&aacute;laga, Nice, Oslo, Palma de Mallorca, Paphos, Paris, Plovdiv, Porto, Prague, Riga, Rome, Santa Cruz de Tenerife, Sarajevo, Sofia, Split, Stockholm, Tallinn, Taormina, Tirana, Valencia, Vienna, Vilnius, Warsaw, Yerevan, Zurich</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Southeast Asia (28)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Bali, Bangkok, Canggu, Chiang Mai, Chiang Rai, Da Lat, Da Nang, Dumaguete, El Nido, Hanoi, Ho Chi Minh City, Hoi An, Hua Hin, Ipoh, Jakarta, Koh Samui, Kuala Lumpur, Luang Prabang, Manila, Nha Trang, Phnom Penh, Phuket, Siargao, Singapore, Ubud, Vientiane, Vung Tau, Yangon</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">North America (27)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Atlanta, Austin, Boston, Charlotte, Chicago, Dallas, Denver, Houston, Las Vegas, Los Angeles, Miami, Minneapolis, Montreal, Nashville, New York, Philadelphia, Phoenix, Portland, Raleigh, San Diego, San Francisco, San Juan, Seattle, Tampa, Toronto, Vancouver, Washington DC</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Central America &amp; Caribbean (14)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Antigua Guatemala, Canc&uacute;n, Mazatl&aacute;n, M&eacute;rida, Mexico City, Oaxaca, Panama City, Playa del Carmen, Puerto Vallarta, Punta Cana, San Crist&oacute;bal de las Casas, San Jos&eacute;, Santo Domingo, Tulum</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Africa (14)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Accra, Addis Ababa, Cairo, Cape Town, Casablanca, Dakar, Essaouira, Kampala, Lagos, Marrakech, Nairobi, Tangier, Tunis, Zanzibar</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">East Asia (12)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Beijing, Fukuoka, Guangzhou, Hong Kong, Jeju, Osaka, Seoul, Shanghai, Shenzhen, Taichung, Taipei, Tokyo</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">South America (10)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Bogot&aacute;, Buenos Aires, Cuenca, La Paz, Lima, Medell&iacute;n, Montevideo, Quito, Santiago, S&atilde;o Paulo</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Middle East (8)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Abu Dhabi, Amman, Beirut, Doha, Dubai, Muscat, Riyadh, Tel Aviv</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">South Asia (7)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Bangalore, Chennai, Colombo, Delhi, Kathmandu, Mumbai, Pokhara</p>
+            </div>
+            <div style="break-inside:avoid;margin-bottom:18px;">
+                <h4 style="margin:0 0 6px;color:var(--accent,#2563eb);">Oceania (4)</h4>
+                <p style="margin:0;font-size:13px;line-height:1.7;color:var(--text-secondary,#555);">Auckland, Melbourne, Perth, Sydney</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
