@@ -137,6 +137,11 @@
             --stat-card-bg: #2c2c2e;
             --nav-bg: rgba(0, 0, 0, 0.85);
         }
+        [data-theme="dark"] nav {
+            background: var(--nav-bg, rgba(0, 0, 0, 0.85));
+            border-bottom-color: var(--border);
+        }
+
 
         *, *::before, *::after {
             margin: 0;
@@ -167,8 +172,8 @@
             z-index: 100;
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
-            background: rgba(245, 245, 247, 0.72);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: var(--nav-bg, rgba(245, 245, 247, 0.72));
+            border-bottom: 1px solid var(--border);
             transition: background 0.3s, border-color 0.3s;
         }
 
@@ -204,7 +209,7 @@
 
         .nav-links a {
             font-size: 14px;
-            color: #1d1d1f;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s;
@@ -307,9 +312,9 @@
         .article-card {
             max-width: 720px;
             margin: 20px auto 60px;
-            background: #ffffff;
+            background: var(--card-bg);
             border-radius: 24px;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            box-shadow: var(--shadow);
             padding: 48px 52px;
             transition: background 0.3s, box-shadow 0.3s;
         }
@@ -339,7 +344,7 @@
         .article-date,
         .article-read-time {
             font-size: 13px;
-            color: #86868b;
+            color: var(--text-secondary);
         }
 
 
@@ -347,7 +352,7 @@
             width: 3px;
             height: 3px;
             border-radius: 50%;
-            background: #86868b;
+            background: var(--text-secondary);
         }
 
 
@@ -358,7 +363,7 @@
             line-height: 1.25;
             letter-spacing: -0.5px;
             margin-bottom: 32px;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -367,7 +372,7 @@
             font-size: 24px;
             font-weight: 700;
             margin: 40px 0 16px;
-            color: #1d1d1f;
+            color: var(--text-primary);
             letter-spacing: -0.3px;
         }
 
@@ -376,7 +381,7 @@
             font-size: 20px;
             font-weight: 600;
             margin: 32px 0 12px;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -384,7 +389,7 @@
             font-size: 16.5px;
             line-height: 1.75;
             margin-bottom: 18px;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -405,7 +410,7 @@
             margin: 0 0 20px 24px;
             font-size: 16.5px;
             line-height: 1.75;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -415,7 +420,7 @@
 
         .article-body strong {
             font-weight: 600;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -423,20 +428,20 @@
             border-left: 3px solid #2563eb;
             padding: 12px 20px;
             margin: 24px 0;
-            background: rgba(37, 99, 235, 0.04);
+            background: var(--tag-bg);
             border-radius: 0 12px 12px 0;
             font-style: italic;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
         /* Destination Cards */
         .destination-card {
-            background: #f5f5f7;
+            background: var(--stat-card-bg);
             border-radius: 16px;
             padding: 24px 28px;
             margin: 20px 0;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-light);
             transition: background 0.3s, border-color 0.3s;
         }
 
@@ -470,7 +475,7 @@
         }
 
         .destination-card .detail-grid .label {
-            color: #86868b;
+            color: var(--text-secondary);
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -480,7 +485,7 @@
 
         .destination-card .detail-grid .value {
             font-weight: 500;
-            color: #1d1d1f;
+            color: var(--text-primary);
         }
 
 
@@ -552,7 +557,7 @@
             text-align: center;
             padding: 40px 24px;
             font-size: 13px;
-            color: #86868b;
+            color: var(--text-secondary);
         }
 
 

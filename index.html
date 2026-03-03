@@ -436,6 +436,39 @@
             opacity: 0.7;
         }
 
+        /* Tool switcher */
+        .tool-switcher {
+            display: flex;
+            justify-content: center;
+            margin: 12px auto 0;
+        }
+        .tool-switcher a {
+            padding: 8px 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1.5px solid var(--accent);
+            transition: all 0.2s;
+            color: var(--accent);
+            background: transparent;
+        }
+        .tool-switcher a:first-child {
+            border-radius: 10px 0 0 10px;
+            border-right: none;
+        }
+        .tool-switcher a:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+        .tool-switcher a.active {
+            background: var(--accent);
+            color: #fff;
+        }
+        .tool-switcher a:not(.active):hover {
+            background: var(--accent);
+            color: #fff;
+            opacity: 0.8;
+        }
+
         /* Nav burger menu — visible on all screen sizes */
         .nav-burger {
             display: flex;
@@ -2251,6 +2284,10 @@
                     salary<span style="color: #2563eb;">:</span>converter
                 </h1>
                 <div style="width: 40px; height: 3px; background: #2563eb; border-radius: 2px; margin: 10px auto 0;"></div>
+            </div>
+            <div class="tool-switcher">
+                <a href="/" class="active">Salary Tool</a>
+                <a href="/retire/">Retire Abroad</a>
             </div>
             <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;" id="hero-subtitle">Compare salaries across 100 cities and over 2,000 neighborhoods worldwide.</p>
         </div>
