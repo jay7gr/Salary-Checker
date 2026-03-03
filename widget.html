@@ -5,9 +5,9 @@
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Salary Converter Widget — Free Tool for Your Website</title>
-    <meta name="description" content="Add a free salary comparison widget to your website. Compare salaries across 101 cities and 2,100+ neighborhoods worldwide.">
-    <meta name="keywords" content="salary widget, embeddable salary tool, salary comparison widget, free widget, salary converter embed, website salary tool">
+    <title>Free Embeddable Widgets — Salary Converter &amp; Retire Abroad Calculator</title>
+    <meta name="description" content="Add free salary comparison or retirement calculator widgets to your website. Compare salaries across 182 cities or find the best retirement destinations. Self-contained, no dependencies.">
+    <meta name="keywords" content="salary widget, embeddable salary tool, salary comparison widget, retirement calculator widget, free widget, salary converter embed, retire abroad widget">
     <meta name="author" content="salary:converter">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/widget">
@@ -19,8 +19,8 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/widget">
-    <meta property="og:title" content="Embed Salary Converter Widget — Free Tool for Your Website">
-    <meta property="og:description" content="Add a free salary comparison widget to your website. Compare salaries across 101 cities and 2,100+ neighborhoods worldwide.">
+    <meta property="og:title" content="Free Embeddable Widgets — Salary Converter &amp; Retire Abroad Calculator">
+    <meta property="og:description" content="Add free salary comparison or retirement calculator widgets to your website. 182 cities, 2,100+ neighborhoods. Self-contained, no dependencies.">
     <meta property="og:image" content="https://salary-converter.com/og-image.svg">
     <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
     <meta property="og:image:width" content="1200">
@@ -30,8 +30,8 @@
 
     <!-- Twitter/X Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Embed Salary Converter Widget — Free Tool for Your Website">
-    <meta name="twitter:description" content="Add a free salary comparison widget to your website. Compare salaries across 101 cities and 2,100+ neighborhoods worldwide.">
+    <meta name="twitter:title" content="Free Embeddable Widgets — Salary Converter &amp; Retire Abroad Calculator">
+    <meta name="twitter:description" content="Add free salary comparison or retirement calculator widgets to your website. 182 cities, 2,100+ neighborhoods. Self-contained, no dependencies.">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
 
     <!-- JSON-LD Structured Data -->
@@ -39,8 +39,8 @@
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Embed Salary Converter Widget",
-        "description": "Add a free salary comparison widget to your website. Compare salaries across 101 cities and 2,100+ neighborhoods worldwide.",
+        "name": "Free Embeddable Widgets — Salary Converter & Retire Abroad Calculator",
+        "description": "Add free salary comparison or retirement calculator widgets to your website. 182 cities, 2,100+ neighborhoods. Self-contained, no dependencies.",
         "url": "https://salary-converter.com/widget",
         "isPartOf": {
             "@type": "WebSite",
@@ -279,6 +279,42 @@
             text-decoration: underline;
         }
 
+        /* Widget tab switcher */
+        .widget-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 36px;
+        }
+        .widget-tab {
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            border: 1.5px solid #2563eb;
+            background: transparent;
+            color: #2563eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .widget-tab:first-child {
+            border-radius: 10px 0 0 10px;
+            border-right: none;
+        }
+        .widget-tab:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+        .widget-tab.active {
+            background: #2563eb;
+            color: #fff;
+        }
+        .widget-panel {
+            display: none;
+        }
+        .widget-panel.active {
+            display: block;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 20px 12px;
@@ -323,131 +359,192 @@
     <div class="container">
         <div class="page-header">
             <a href="https://salary-converter.com" class="page-logo">salary<span>:</span>converter</a>
-            <h1>Free Embeddable Widget</h1>
-            <p>Add a salary comparison tool to your website in seconds. Just copy the code and paste it into your HTML.</p>
+            <h1>Free Embeddable Widgets</h1>
+            <p>Add powerful financial tools to your website in seconds. Just copy the code and paste it into your HTML.</p>
         </div>
 
-        <div class="content">
-            <!-- Live Preview -->
-            <div class="preview-section">
-                <iframe id="widgetPreview" src="embed.html" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
-            </div>
+        <!-- Widget Tab Switcher -->
+        <div class="widget-tabs">
+            <button class="widget-tab active" onclick="switchWidget('salary')">Salary Converter</button>
+            <button class="widget-tab" onclick="switchWidget('retire')">Retire Abroad</button>
+        </div>
 
-            <!-- Code + Instructions -->
-            <div class="code-section">
-                <div class="code-card">
-                    <h2>Embed Code</h2>
-                    <p>Copy and paste this snippet into your website's HTML.</p>
-                    <div class="code-block">
-                        <button class="btn-copy" id="copyBtn" onclick="copyCode()">Copy</button>
-                        <code id="embedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+        <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
+        <div class="widget-panel active" id="salaryPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="salaryPreview" src="embed.html" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="salaryCopyBtn" onclick="copyCode('salary')">Copy</button>
+                            <code id="salaryEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;iframe</span>
     <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
     <span class="attr">width</span>=<span class="val">"420"</span>
     <span class="attr">height</span>=<span class="val">"520"</span>
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
-    <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
   <span class="tag">&gt;&lt;/iframe&gt;</span>
-  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;"</span><span class="tag">&gt;</span>
-    Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;font-weight:600;"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;</span>
-    — <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/compare/"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;"</span><span class="tag">&gt;</span>Compare Cities<span class="tag">&lt;/a&gt;</span>
-  <span class="tag">&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('salary', 360, 520, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('salary', 420, 520, this)">Standard (420px)</button>
+                                <button class="size-btn" onclick="setSize('salary', 500, 540, this)">Wide (500px)</button>
+                                <button class="size-btn" onclick="setSize('salary', '100%', 520, this)">Full Width</button>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="customize-section">
-                        <h3>Quick Sizes</h3>
-                        <div class="size-options">
-                            <button class="size-btn" onclick="setSize(360, 520, this)">Compact (360px)</button>
-                            <button class="size-btn active" onclick="setSize(420, 520, this)">Standard (420px)</button>
-                            <button class="size-btn" onclick="setSize(500, 540, this)">Wide (500px)</button>
-                            <button class="size-btn" onclick="setSize('100%', 520, this)">Full Width</button>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> 182 cities worldwide</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 2,100+ neighborhoods</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 67 currencies</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost of living data</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Tax calculations</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Responsive design</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="code-card">
-                    <h2>What's Included</h2>
-                    <div class="features-list">
-                        <div class="feature-item"><span class="feature-check">✓</span> 101 cities worldwide</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> 2,100+ neighborhoods</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> 43 currencies</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Cost of living data</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Exchange rates</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Responsive design</div>
-                        <div class="feature-item"><span class="feature-check">✓</span> Lightweight (~40KB)</div>
+        <!-- ═══════ RETIRE ABROAD WIDGET ═══════ -->
+        <div class="widget-panel" id="retirePanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="retirePreview" src="retire-embed.html" width="420" height="680" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="retireCopyBtn" onclick="copyCode('retire')">Copy</button>
+                            <code id="retireEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/retire-embed.html"</span>
+    <span class="attr">width</span>=<span class="val">"420"</span>
+    <span class="attr">height</span>=<span class="val">"680"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('retire', 360, 680, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('retire', 420, 680, this)">Standard (420px)</button>
+                                <button class="size-btn" onclick="setSize('retire', 500, 700, this)">Wide (500px)</button>
+                                <button class="size-btn" onclick="setSize('retire', '100%', 680, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> 182 cities, 88 countries</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Retirement calculator</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 100+ visa programs</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> QOL scores (safety, health)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Tax calculations</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Responsive design</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="page-footer">
-            <a href="https://salary-converter.com">Salary Converter Tool</a>
+            <a href="https://salary-converter.com">Salary Converter</a>
+            <a href="https://salary-converter.com/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
         </div>
     </div>
 
 <script>
-    function copyCode() {
-        const code = `<div style="max-width:420px"><iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
-        navigator.clipboard.writeText(code).then(() => {
-            const btn = document.getElementById('copyBtn');
+    const widgetConfig = {
+        salary: {
+            src: 'https://salary-converter.com/embed.html',
+            defaultW: 420, defaultH: 520,
+            previewId: 'salaryPreview',
+            codeId: 'salaryEmbedCode',
+            copyBtnId: 'salaryCopyBtn'
+        },
+        retire: {
+            src: 'https://salary-converter.com/retire-embed.html',
+            defaultW: 420, defaultH: 680,
+            previewId: 'retirePreview',
+            codeId: 'retireEmbedCode',
+            copyBtnId: 'retireCopyBtn'
+        }
+    };
+
+    let activeWidget = 'salary';
+
+    function switchWidget(type) {
+        activeWidget = type;
+        document.querySelectorAll('.widget-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.widget-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector(`.widget-tab[onclick*="${type}"]`).classList.add('active');
+        document.getElementById(type + 'Panel').classList.add('active');
+    }
+
+    function copyCode(type) {
+        const cfg = widgetConfig[type];
+        const code = `<div style="max-width:420px"><iframe src="${cfg.src}" width="${cfg.defaultW}" height="${cfg.defaultH}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe></div>`;
+        navigator.clipboard.writeText(window['_code_' + type] || code).then(() => {
+            const btn = document.getElementById(cfg.copyBtnId);
             btn.textContent = 'Copied!';
             btn.classList.add('copied');
-            setTimeout(() => {
-                btn.textContent = 'Copy';
-                btn.classList.remove('copied');
-            }, 2000);
+            setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
         });
     }
 
-    function setSize(w, h, btn) {
-        const iframe = document.getElementById('widgetPreview');
+    function setSize(type, w, h, btn) {
+        const cfg = widgetConfig[type];
+        const iframe = document.getElementById(cfg.previewId);
         iframe.width = w;
         iframe.height = h;
         iframe.style.maxWidth = '100%';
 
-        // Update active state
-        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+        // Update active state for this panel's buttons only
+        btn.closest('.size-options').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Update embed code display
-        const widthVal = typeof w === 'string' ? w : w;
-        const codeEl = document.getElementById('embedCode');
-        codeEl.innerHTML = `<span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:${widthVal}${typeof widthVal === 'number' ? 'px' : ''}"</span><span class="tag">&gt;</span>
+        // Update embed code
+        const wVal = typeof w === 'number' ? w : w;
+        const mw = typeof w === 'number' ? w + 'px' : w;
+        const codeEl = document.getElementById(cfg.codeId);
+        codeEl.innerHTML = `<span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:${mw}"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;iframe</span>
-    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html"</span>
-    <span class="attr">width</span>=<span class="val">"${widthVal}"</span>
+    <span class="attr">src</span>=<span class="val">"${cfg.src}"</span>
+    <span class="attr">width</span>=<span class="val">"${wVal}"</span>
     <span class="attr">height</span>=<span class="val">"${h}"</span>
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
-    <span class="attr">style</span>=<span class="val">"border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
   <span class="tag">&gt;&lt;/iframe&gt;</span>
-  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;"</span><span class="tag">&gt;</span>
-    Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;font-weight:600;"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;</span>
-    — <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/compare/"</span> <span class="attr">style</span>=<span class="val">"color:#2563eb;text-decoration:none;"</span><span class="tag">&gt;</span>Compare Cities<span class="tag">&lt;/a&gt;</span>
-  <span class="tag">&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span>`;
 
-        const mw = typeof widthVal === 'number' ? widthVal + 'px' : widthVal;
-        window._currentCode = `<div style="max-width:${mw}"><iframe src="https://salary-converter.com/embed.html" width="${widthVal}" height="${h}" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
+        window['_code_' + type] = `<div style="max-width:${mw}"><iframe src="${cfg.src}" width="${wVal}" height="${h}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe></div>`;
     }
 
-    // Override copy to use current size
-    const origCopy = copyCode;
-    copyCode = function() {
-        const code = window._currentCode || `<div style="max-width:420px"><iframe src="https://salary-converter.com/embed.html" width="420" height="520" frameborder="0" style="border-radius: 12px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); width:100%;"></iframe><p style="text-align:center;font-size:12px;margin-top:8px;font-family:sans-serif;color:#86868b;">Powered by <a href="https://salary-converter.com" style="color:#2563eb;text-decoration:none;font-weight:600;">salary:converter</a> — <a href="https://salary-converter.com/compare/" style="color:#2563eb;text-decoration:none;">Compare Cities</a></p></div>`;
-        navigator.clipboard.writeText(code).then(() => {
-            const btn = document.getElementById('copyBtn');
-            btn.textContent = 'Copied!';
-            btn.classList.add('copied');
-            setTimeout(() => {
-                btn.textContent = 'Copy';
-                btn.classList.remove('copied');
-            }, 2000);
-        });
-    };
+    // Handle URL hash for direct linking
+    if (window.location.hash === '#retire') switchWidget('retire');
 </script>
     <script src="/chat.js?v=2"></script>
 </body>
