@@ -543,6 +543,7 @@
         .footer-links {
             margin-top: 16px;
             display: flex;
+    flex-wrap: wrap;
             justify-content: center;
             gap: 24px;
         }
@@ -561,6 +562,16 @@
 
         /* ========== MOBILE ========== */
         @media (max-width: 768px) {
+            .related-tools {
+                margin-left: 16px !important;
+                margin-right: 16px !important;
+                padding: 24px !important;
+            }
+
+            .footer-links {
+                gap: 16px 20px;
+            }
+
             .article-header h1 {
                 font-size: 1.9rem;
                 letter-spacing: -0.8px;
@@ -616,13 +627,6 @@
 
             .nav-links a.nav-link-text {
                 display: none;
-            }
-
-            .theme-toggle {
-                position: fixed !important;
-                top: 16px !important;
-                right: 16px !important;
-                z-index: 10001 !important;
             }
 
 

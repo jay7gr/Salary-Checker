@@ -593,6 +593,20 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .related-tools {
+                margin-left: 16px !important;
+                margin-right: 16px !important;
+                padding: 24px !important;
+            }
+
+            .footer-links {
+                gap: 16px 20px;
+            }
+
+            .nav-links a.nav-link-text {
+                display: none;
+            }
+
             .article-card {
                 margin: 16px 16px 32px;
                 padding: 32px 24px;
@@ -669,14 +683,46 @@
                 font-size: 16px;
             }
         }
-    
-        @media (max-width: 768px) {
-            .theme-toggle {
-                position: fixed !important;
-                top: 16px !important;
-                right: 16px !important;
-                z-index: 10001 !important;
-            }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+        }
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .footer-logo span {
+            color: #2563eb;
+        }
+        .footer-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--text-primary);
         }
 
         .share-bar {
@@ -708,11 +754,11 @@
             <div class="nav-left">
                 <a href="https://salary-converter.com" class="logo">salary<span class="colon">:</span>converter</a>
                 <div class="nav-links">
-                    <a href="https://salary-converter.com">Tool</a>
-                    <a href="/salary/">Salaries</a>
-                    <a href="/retire/">Retire Abroad</a>
-                <a href="/blog/">Blog</a>
-                <a href="/privacy/">Privacy</a>
+                    <a href="https://salary-converter.com" class="nav-link-text">Tool</a>
+                    <a href="/salary/" class="nav-link-text">Salaries</a>
+                    <a href="/retire/" class="nav-link-text">Retire Abroad</a>
+                <a href="/blog/" class="nav-link-text">Blog</a>
+                <a href="/privacy/" class="nav-link-text">Privacy</a>
                 </div>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
@@ -1566,9 +1612,21 @@
         <a href="/rankings/highest-salaries" style="display: inline-block; padding: 8px 16px; background: var(--accent, #2563eb); color: #fff; border-radius: 8px; text-decoration: none; font-size: 0.9rem;">Highest Salaries Rankings</a>
     </div>
 </section>
-<footer>
-        <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
-    </footer>
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-logo">salary<span>:</span>converter</div>
+        <p class="footer-text">Compare salaries across cities and countries with real cost-of-living data.</p>
+        <div class="footer-links">
+            <a href="https://salary-converter.com">Tool</a>
+            <a href="/salary/">Salaries</a>
+            <a href="/retire/">Retire Abroad</a>
+            <a href="/blog/">Blog</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms</a>
+        </div>
+    </div>
+</footer>
     <script>
     (function(){
         var t=document.getElementById('themeToggle');
