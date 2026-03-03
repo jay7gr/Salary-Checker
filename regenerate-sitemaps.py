@@ -11,7 +11,7 @@ import glob
 from datetime import date
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-CHUNK_SIZE = 2000
+CHUNK_SIZE = 500
 TODAY = date.today().isoformat()
 BASE_URL = 'https://salary-converter.com'
 
