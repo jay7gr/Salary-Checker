@@ -76,10 +76,11 @@ for check in checks:
     matching = [u for u in urls if check in u]
     print(f'  {check}: {len(matching)} URLs')
 
-# Remove old sitemap files
-for old in glob.glob(os.path.join(ROOT, 'sitemap-*.xml')):
-    os.remove(old)
-    print(f'  Removed old: {os.path.basename(old)}')
+# Remove old sitemap files (both old sitemap-N.xml and new sitemap-sN.xml patterns)
+for pattern in ['sitemap-*.xml', 'sitemap-s*.xml']:
+    for old in glob.glob(os.path.join(ROOT, pattern)):
+        os.remove(old)
+        print(f'  Removed old: {os.path.basename(old)}')
 
 # Split into chunks and write individual sitemaps
 num_chunks = (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
@@ -87,7 +88,7 @@ sitemap_files = []
 
 for i in range(num_chunks):
     chunk = urls[i * CHUNK_SIZE : (i + 1) * CHUNK_SIZE]
-    filename = f'sitemap-{i + 1}.xml'
+    filename = f'sitemap-s{i + 1}.xml'
     filepath = os.path.join(ROOT, filename)
 
     xml_entries = ''
