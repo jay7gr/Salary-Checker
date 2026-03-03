@@ -4440,7 +4440,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{neighborhood}, {city}: {fmt_rent}/mo Rent ({CURRENT_YEAR})</title>
     <meta name="description" content="{meta_desc}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
@@ -4805,7 +4805,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{n1} vs {n2}, {city}: {diff_pct:.0f}% Cost Difference ({CURRENT_YEAR})</title>
     <meta name="description" content="{meta_desc}">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, follow">
     <link rel="canonical" href="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
