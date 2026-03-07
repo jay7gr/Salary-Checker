@@ -463,17 +463,19 @@
         /* Custom currency dropdown */
         .currency-dropdown-wrap { position: relative; }
         .currency-dropdown-btn {
-            display: flex; align-items: center; gap: 5px;
-            border: none; border-left: 1px solid var(--border-light); border-radius: 0 12px 12px 0;
-            padding: 8px 12px; font-size: 0.85rem; font-weight: 600;
-            background: var(--stat-card-bg); color: var(--text-primary);
+            display: flex; align-items: center; gap: 8px;
+            border: 1.5px solid var(--input-border); border-radius: 12px;
+            padding: 16px 14px; font-size: 1rem; font-weight: 600;
+            background: var(--input-bg); color: var(--text-primary);
             cursor: pointer; white-space: nowrap;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
-        .currency-dropdown-btn:hover { background: var(--dropdown-hover); }
+        .currency-dropdown-btn:hover { border-color: var(--accent); }
         .currency-arrow { font-size: 0.65rem; opacity: 0.8; margin-left: 1px; }
         .currency-dropdown-list {
-            position: absolute; top: 100%; right: 0; z-index: 100;
-            width: 260px; max-height: 280px; overflow-y: auto;
+            position: absolute; top: 100%; left: 0; z-index: 100;
+            width: 100%; min-width: 260px; max-height: 280px; overflow-y: auto;
             background: var(--card-bg); border: 1px solid var(--border);
             border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             margin-top: 4px; padding: 6px;
@@ -510,8 +512,18 @@
             font-size: 1.8rem !important;
             font-weight: 700 !important;
             text-align: center;
-            padding: 16px 0 16px 90px !important;
+            padding: 16px 20px !important;
             letter-spacing: 1px;
+            border: 1.5px solid var(--input-border);
+            border-radius: 12px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            width: 100%;
+        }
+        .big-input:focus {
+            border-color: var(--accent);
+            box-shadow: var(--focus-shadow);
+            outline: none;
         }
 
         /* ── Slider ── */
@@ -1170,7 +1182,7 @@
             .nav-burger { position: fixed; top: 16px; left: 16px; z-index: 10000; }
             .nav-dropdown { position: fixed; top: 58px; left: 16px; z-index: 10000; }
             .theme-toggle { position: fixed !important; top: 23px !important; right: 16px !important; z-index: 10001 !important; }
-            .big-input { padding: 14px 8px 14px 12px !important; font-size: 1.3rem !important; text-align: left; }
+            .big-input { font-size: 1.3rem !important; padding: 14px 16px !important; }
             .qol-grid { grid-template-columns: 1fr; }
             .scenario-bar { flex-direction: column; align-items: flex-start; }
             .compare-table { font-size: 0.75rem; }
@@ -1179,8 +1191,7 @@
             .threshold-row { flex-wrap: wrap; }
             .threshold-label { min-width: 110px; font-size: 0.8rem; }
             .threshold-slider { max-width: 100%; }
-            .currency-dropdown-btn { padding: 6px 8px; gap: 3px; font-size: 0.78rem; flex-shrink: 0; }
-            .currency-dropdown-list { width: calc(100vw - 40px); max-width: 300px; right: 0; left: auto; }
+            .currency-dropdown-btn { padding: 12px 14px; font-size: 0.9rem; }
             .rec-visa-badge { font-size: 0.65rem; padding: 4px 8px; }
         }
 
@@ -1236,25 +1247,26 @@
                 <h2>Your retirement finances</h2>
                 <p>Your total savings and any recurring passive income (pension, dividends, rental income, Social Security).</p>
 
-                <div class="form-row single">
+                <div class="form-row">
                     <div class="form-group">
                         <label>Retirement Savings</label>
-                        <div class="currency-input-wrap">
-                            <input type="text" id="savingsInput" class="big-input" placeholder="500,000" inputmode="numeric" autocomplete="off">
-                            <div class="currency-dropdown-wrap" id="currencyDropdownWrap">
-                                <button type="button" class="currency-dropdown-btn" id="currencyDropdownBtn" aria-haspopup="listbox" aria-expanded="false">
-                                    <span id="currencyFlag">🇺🇸</span>
-                                    <span id="currencyCode">USD</span>
-                                    <span class="currency-arrow">&#9662;</span>
-                                </button>
-                                <div class="currency-dropdown-list" id="currencyDropdownList" role="listbox" style="display:none;">
-                                    <input type="text" class="currency-search" id="currencySearch" placeholder="Search currency..." autocomplete="off">
-                                    <ul id="currencyOptions"></ul>
-                                </div>
-                            </div>
-                            <select id="currencySelect" style="display:none;"></select>
-                        </div>
+                        <input type="text" id="savingsInput" class="big-input" placeholder="500,000" inputmode="numeric" autocomplete="off">
                         <span class="hint">Total amount saved for retirement (401k, IRA, savings, investments)</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <div class="currency-dropdown-wrap" id="currencyDropdownWrap" style="position:relative;">
+                            <button type="button" class="currency-dropdown-btn" id="currencyDropdownBtn" aria-haspopup="listbox" aria-expanded="false">
+                                <span id="currencyFlag">🇺🇸</span>
+                                <span id="currencyCode">USD</span>
+                                <span class="currency-arrow">&#9662;</span>
+                            </button>
+                            <div class="currency-dropdown-list" id="currencyDropdownList" role="listbox" style="display:none;">
+                                <input type="text" class="currency-search" id="currencySearch" placeholder="Search currency..." autocomplete="off">
+                                <ul id="currencyOptions"></ul>
+                            </div>
+                        </div>
+                        <select id="currencySelect" style="display:none;"></select>
                     </div>
                 </div>
 
