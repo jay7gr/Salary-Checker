@@ -431,6 +431,8 @@
             border-radius: 12px;
             background: var(--input-bg);
             transition: border-color 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            max-width: 100%;
         }
         .currency-input-wrap:focus-within {
             border-color: var(--accent);
@@ -1168,7 +1170,7 @@
             .nav-burger { position: fixed; top: 16px; left: 16px; z-index: 10000; }
             .nav-dropdown { position: fixed; top: 58px; left: 16px; z-index: 10000; }
             .theme-toggle { position: fixed !important; top: 23px !important; right: 16px !important; z-index: 10001 !important; }
-            .big-input { font-size: 1.4rem !important; }
+            .big-input { padding: 14px 8px 14px 12px !important; font-size: 1.3rem !important; text-align: left; }
             .qol-grid { grid-template-columns: 1fr; }
             .scenario-bar { flex-direction: column; align-items: flex-start; }
             .compare-table { font-size: 0.75rem; }
@@ -1177,9 +1179,8 @@
             .threshold-row { flex-wrap: wrap; }
             .threshold-label { min-width: 110px; font-size: 0.8rem; }
             .threshold-slider { max-width: 100%; }
-            .currency-dropdown-btn { padding: 6px 8px; gap: 3px; font-size: 0.78rem; }
-            .currency-dropdown-list { width: 260px; right: 0; left: auto; }
-            .big-input { padding: 16px 0 16px 60px !important; }
+            .currency-dropdown-btn { padding: 6px 8px; gap: 3px; font-size: 0.78rem; flex-shrink: 0; }
+            .currency-dropdown-list { width: calc(100vw - 40px); max-width: 300px; right: 0; left: auto; }
             .rec-visa-badge { font-size: 0.65rem; padding: 4px 8px; }
         }
 
