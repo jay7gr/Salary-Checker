@@ -2,14 +2,26 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://salary-converter.com/sitemap-s1.xml</loc>
-    <lastmod>2026-03-03</lastmod>
+    <lastmod>2026-03-07</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://salary-converter.com/sitemap-s2.xml</loc>
-    <lastmod>2026-03-03</lastmod>
+    <lastmod>2026-03-07</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://salary-converter.com/sitemap-s3.xml</loc>
-    <lastmod>2026-03-03</lastmod>
+    <lastmod>2026-03-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://salary-converter.com/sitemap-s4.xml</loc>
+    <lastmod>2026-03-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://salary-converter.com/sitemap-s5.xml</loc>
+    <lastmod>2026-03-07</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://salary-converter.com/sitemap-s6.xml</loc>
+    <lastmod>2026-03-07</lastmod>
   </sitemap>
 </sitemapindex>
