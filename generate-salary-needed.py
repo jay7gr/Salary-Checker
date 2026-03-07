@@ -556,7 +556,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -564,7 +564,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{title}">
     <meta name="twitter:description" content="{desc}">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
     {faq_schema}
     </script>
@@ -858,13 +858,13 @@ index_page = f'''<!DOCTYPE html>
     <meta property="og:title" content="What Salary Do You Need? 2026 — {city_count} Cities Compared">
     <meta property="og:description" content="Find the minimum salary to live comfortably in {city_count} cities. Neighborhood-level breakdown.">
     <meta property="og:url" content="https://salary-converter.com/salary-needed/">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What Salary Do You Need? {city_count} Cities Compared 2026">
     <meta name="twitter:description" content="Minimum salary to live comfortably in {city_count} cities. With neighborhood-level data.">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",

@@ -2348,12 +2348,12 @@ def generate_city_page(city, comparison_pairs):
     <meta property="og:url" content="https://salary-converter.com/city/{slug}">
     <meta property="og:title" content="{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})">
     <meta property="og:description" content="{city_meta_desc}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})">
     <meta name="twitter:description" content="{city_meta_desc}">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
@@ -3269,12 +3269,12 @@ def generate_comparison_page(city1, city2):
     <meta property="og:url" content="https://salary-converter.com/compare/{slug1}-vs-{slug2}">
     <meta property="og:title" content="{city1} vs {city2}: {pct_cheaper:.0f}% Cost Difference ({CURRENT_YEAR})">
     <meta property="og:description" content="Rent: ${rent1:,}/mo vs ${rent2:,}/mo. {cheaper_city} is {pct_cheaper:.0f}% cheaper overall. Side-by-side taxes, groceries, rent & salary equivalents for singles & families.">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{city1} vs {city2}: {pct_cheaper:.0f}% Cost Difference ({CURRENT_YEAR})">
     <meta name="twitter:description" content="Rent: ${rent1:,}/mo vs ${rent2:,}/mo. {cheaper_city} is {pct_cheaper:.0f}% cheaper overall. Side-by-side taxes, groceries, rent & salary equivalents for singles & families.">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
@@ -3701,7 +3701,7 @@ def generate_city_index():
     <meta property="og:url" content="https://salary-converter.com/city/">
     <meta property="og:title" content="Cost of Living by City {CURRENT_YEAR} — {len(coliData)} Cities Ranked">
     <meta property="og:description" content="Compare cost of living, salaries, and neighborhoods across {len(coliData)} cities worldwide.">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -3916,7 +3916,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     <meta property="og:url" content="https://salary-converter.com/compare/">
     <meta property="og:title" content="{total:,} City Cost of Living Comparisons {CURRENT_YEAR}">
     <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between any two of 101 cities worldwide.">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -4480,7 +4480,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
     <meta property="og:title" content="{neighborhood}, {city}: {fmt_rent}/mo Rent ({CURRENT_YEAR})">
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:url" content="https://salary-converter.com/city/{city_slug}/{nhood_slug}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -4845,7 +4845,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     <meta property="og:title" content="{n1} vs {n2}, {city}: {diff_pct:.0f}% Cost Difference ({CURRENT_YEAR})">
     <meta property="og:description" content="{meta_desc}">
     <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -5178,7 +5178,7 @@ def generate_blog_undervalued_neighborhoods():
     <meta property="og:title" content="50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})">
     <meta property="og:description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index.">
     <meta property="og:url" content="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -5397,7 +5397,7 @@ def generate_blog_salary_goes_furthest():
     <meta property="og:title" content="Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})">
     <meta property="og:description" content="Discover which neighborhoods give you the most purchasing power worldwide.">
     <meta property="og:url" content="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
@@ -5629,7 +5629,7 @@ def generate_blog_major_cities_breakdown():
     <meta property="og:title" content="Real Cost of Living in 10 Major Cities: Neighborhood Breakdown ({CURRENT_YEAR})">
     <meta property="og:description" content="Detailed neighborhood-level cost of living data for 10 major world cities.">
     <meta property="og:url" content="https://salary-converter.com/blog/articles/real-cost-of-living-major-cities-neighborhood-breakdown">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{

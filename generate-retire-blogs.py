@@ -330,7 +330,7 @@ def build_blog_html(slug, title, meta_description, tag, article_body_html, read_
     <meta property="og:url" content="{canonical}">
     <meta property="og:title" content="{html_mod.escape(title)}">
     <meta property="og:description" content="{html_mod.escape(meta_description)}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:image:alt" content="Salary Converter - Compare cost of living and salaries between cities">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -341,7 +341,7 @@ def build_blog_html(slug, title, meta_description, tag, article_body_html, read_
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{html_mod.escape(title)}">
     <meta name="twitter:description" content="{html_mod.escape(meta_description)}">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">

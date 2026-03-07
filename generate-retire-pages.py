@@ -746,12 +746,12 @@ def generate_city_page(city):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{title}">
     <meta name="twitter:description" content="{desc}">
-    <meta name="twitter:image" content="https://salary-converter.com/og-image.svg">
+    <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
     {faq_schema}
     </script>
@@ -990,7 +990,7 @@ def generate_country_page(country_code, country_name, cities):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{title}">
@@ -1122,7 +1122,7 @@ def generate_visa_page(country_code, country_name, visas):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">
@@ -1235,7 +1235,7 @@ def generate_budget_page(budget_type, amount, label):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">
@@ -1367,7 +1367,7 @@ def generate_compare_page(city_a, city_b):
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">
@@ -1480,7 +1480,7 @@ def generate_destinations_index():
     <meta property="og:title" content="{title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="https://salary-converter.com/og-image.svg">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
     {{
