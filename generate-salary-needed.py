@@ -548,7 +548,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
     <title>{title}</title>
     <meta name="description" content="{desc}">
     <meta name="keywords" content="salary needed {display_name}, minimum salary {display_name}, cost of living {display_name}, {display_name} salary 2026, what salary {city_name}">
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="{canonical}">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="manifest" href="/manifest.json">
