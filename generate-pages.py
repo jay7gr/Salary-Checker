@@ -2723,6 +2723,7 @@ def generate_city_page(city, comparison_pairs):
 
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -3026,6 +3027,7 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -3649,6 +3651,7 @@ def generate_comparison_page(city1, city2):
         
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -3849,6 +3852,7 @@ def generate_city_index():
         
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 
@@ -4087,6 +4091,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 
@@ -4746,6 +4751,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -5066,6 +5072,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -5307,6 +5314,7 @@ def generate_blog_undervalued_neighborhoods():
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -5541,6 +5549,7 @@ def generate_blog_salary_goes_furthest():
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}
@@ -5736,6 +5745,7 @@ def generate_blog_major_cities_breakdown():
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 {THEME_JS}

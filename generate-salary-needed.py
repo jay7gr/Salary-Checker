@@ -758,6 +758,7 @@ def generate_page(city_name, neighborhood_name=None, nb_multiplier=1.0):
 
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
 
@@ -913,6 +914,7 @@ index_page = f'''<!DOCTYPE html>
 
             <a href="/about/">About</a>
             <a href="/terms/">Terms</a>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
     </div>
     <script>

@@ -547,6 +547,10 @@
             color: var(--text-primary);
         }
 
+        .ai-disclaimer { font-size: 0.72rem; color: var(--text-secondary); margin-top: 12px; }
+        .ai-disclaimer a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+        .ai-disclaimer a:hover { color: var(--accent); }
+
         /* ========== MOBILE ========== */
         @media (max-width: 768px) {
             .article-header h1 {
@@ -643,6 +647,15 @@
             </ul>
             <p>All data points are cross-referenced and updated periodically to keep comparisons as reliable as possible. Our methodology is transparent: every comparison page shows exactly which factors are driving the result.</p>
 
+            <h2 id="how-we-use-ai">How We Use AI</h2>
+            <p>We use AI tools as part of our development and content workflow. Here is how:</p>
+            <ul>
+                <li><strong>Site Development</strong> &mdash; AI coding assistants help us build features, write scripts, and maintain our codebase more efficiently. Every line of code is reviewed and tested by our team before deployment.</li>
+                <li><strong>Content &amp; Analysis</strong> &mdash; AI helps us draft explanatory content, summarize data patterns, and structure our blog articles. All content is fact-checked against our primary data sources and edited for accuracy.</li>
+                <li><strong>Data Processing</strong> &mdash; AI assists with structuring and cross-referencing data from our sources (Numbeo, Expatistan, OECD, BLS, and others). The underlying data always comes from these verified third-party sources &mdash; AI does not generate the numbers.</li>
+            </ul>
+            <p>What AI does <strong>not</strong> do: AI does not generate our cost-of-living indices, tax rates, or salary benchmarks. Those come directly from the data sources listed above. AI is a tool in our workflow &mdash; the data and the decisions are ours.</p>
+
             <h2>Why We Built This</h2>
             <p>Moving to a new city or country is one of the biggest financial decisions you can make. Yet most people rely on rough guesses or outdated cost-of-living calculators that only tell part of the story.</p>
             <p>We built salary:converter because we believe everyone deserves access to clear, honest salary data when making these decisions &mdash; whether you are a remote worker choosing your next base, an expat weighing an overseas offer, or a recent graduate comparing cities for your first job.</p>
@@ -703,6 +716,7 @@
                 <a href="/privacy/">Privacy</a>
                 <a href="/terms/">Terms</a>
             </div>
+            <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
         </div>
     </footer>
     <script>

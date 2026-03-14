@@ -1060,6 +1060,7 @@ def build_blog_html(slug, title, meta_description, tag, article_body_html, read_
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 <a href="https://salary-converter.com">salary:converter</a>. All rights reserved.</p>
+        <p class="ai-disclaimer" style="font-size:0.72rem;color:var(--text-secondary);margin-top:8px;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
     </footer>
     <script>
     (function(){{
