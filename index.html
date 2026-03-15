@@ -750,6 +750,73 @@
             color: var(--input-placeholder);
         }
 
+        /* Searchable combobox */
+        .combobox-wrapper { position: relative; }
+        .combobox-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            max-height: 240px;
+            overflow-y: auto;
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            display: none;
+        }
+        .combobox-dropdown.open { display: block; }
+        .combobox-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: background 0.15s;
+        }
+        .combobox-item:hover, .combobox-item.highlighted {
+            background: var(--quick-btn-hover-bg);
+            color: var(--accent);
+        }
+        .combobox-item .pct {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-left: 4px;
+        }
+        [data-theme="dark"] .combobox-dropdown {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        /* Salary frequency toggle */
+        .freq-toggle {
+            display: inline-flex;
+            gap: 0;
+            background: var(--stat-card-bg);
+            border-radius: 8px;
+            padding: 2px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .freq-btn {
+            padding: 3px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: transparent;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .freq-btn.active {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .freq-btn:hover:not(.active) { color: var(--text-primary); }
+
         .quick-select {
             display: flex;
             flex-wrap: wrap;
@@ -2345,7 +2412,12 @@
             <div id="singleSalaryRow">
             <div class="two-column">
                 <div class="form-group">
-                    <label for="currentSalary" id="salaryLabel">Your Salary</label>
+                    <label for="currentSalary" id="salaryLabel">Your Salary
+                        <span class="freq-toggle" id="currentFreqToggle">
+                            <button class="freq-btn active" data-freq="annual" type="button">Annual</button>
+                            <button class="freq-btn" data-freq="monthly" type="button">Monthly</button>
+                        </span>
+                    </label>
                     <input type="text" id="currentSalary" placeholder="e.g. $60,000">
                 </div>
                 <div class="form-group">
@@ -2359,7 +2431,12 @@
             <div id="familySalaryInputs" style="display:none;">
                 <div class="two-column">
                     <div class="form-group">
-                        <label for="adult1Salary">Adult 1 Salary</label>
+                        <label for="adult1Salary">Adult 1 Salary
+                            <span class="freq-toggle" id="familyFreqToggle">
+                                <button class="freq-btn active" data-freq="annual" type="button">Annual</button>
+                                <button class="freq-btn" data-freq="monthly" type="button">Monthly</button>
+                            </span>
+                        </label>
                         <input type="text" id="adult1Salary" placeholder="e.g. 80,000" inputmode="numeric">
                     </div>
                     <div class="form-group">
@@ -2377,10 +2454,12 @@
             <div class="quick-select" id="currentCityQuick"></div>
             <div class="neighborhood-group" id="currentNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="currentNeighborhood">Neighborhood</label>
-                    <select id="currentNeighborhood">
-                        <option value="">Select a neighborhood...</option>
-                    </select>
+                    <label for="currentNeighborhoodInput">Neighborhood</label>
+                    <div class="combobox-wrapper" id="currentNeighborhoodCombobox">
+                        <input type="text" class="combobox-input" id="currentNeighborhoodInput" placeholder="Search neighborhood..." autocomplete="off">
+                        <input type="hidden" id="currentNeighborhood" value="">
+                        <div class="combobox-dropdown" id="currentNeighborhoodDropdown"></div>
+                    </div>
                     <div class="neighborhood-hint" id="currentNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
                 </div>
             </div>
@@ -2409,10 +2488,12 @@
             <div class="quick-select" id="targetCityQuick"></div>
             <div class="neighborhood-group" id="targetNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="targetNeighborhood">Neighborhood</label>
-                    <select id="targetNeighborhood">
-                        <option value="">Select a neighborhood...</option>
-                    </select>
+                    <label for="targetNeighborhoodInput">Neighborhood</label>
+                    <div class="combobox-wrapper" id="targetNeighborhoodCombobox">
+                        <input type="text" class="combobox-input" id="targetNeighborhoodInput" placeholder="Search neighborhood..." autocomplete="off">
+                        <input type="hidden" id="targetNeighborhood" value="">
+                        <div class="combobox-dropdown" id="targetNeighborhoodDropdown"></div>
+                    </div>
                     <div class="neighborhood-hint" id="targetNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
                 </div>
             </div>
@@ -2427,7 +2508,12 @@
             </div>
             <div id="singleOfferRow">
                 <div class="form-group" style="margin-top: 8px;">
-                    <label for="targetSalary">Target City Salary <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
+                    <label for="targetSalary">Target City Salary <span style="font-weight:400;color:var(--text-secondary);">(optional)</span>
+                        <span class="freq-toggle" id="targetFreqToggle">
+                            <button class="freq-btn active" data-freq="annual" type="button">Annual</button>
+                            <button class="freq-btn" data-freq="monthly" type="button">Monthly</button>
+                        </span>
+                    </label>
                     <div style="position:relative;">
                         <span id="offerCurrencyBadge" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--text-secondary);pointer-events:none;display:none;"></span>
                         <input type="text" id="targetSalary" placeholder="e.g. 45,000" inputmode="numeric">
@@ -3707,6 +3793,39 @@
                 if (hi - lo < 1) break;
             }
             return Math.round((lo + hi) / 2);
+        }
+
+        // Salary frequency state
+        const salaryFrequency = { current: 'annual', target: 'annual' };
+
+        function initFreqToggles() {
+            document.querySelectorAll('.freq-toggle').forEach(toggle => {
+                toggle.querySelectorAll('.freq-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        toggle.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const freq = this.dataset.freq;
+                        if (toggle.id === 'targetFreqToggle') {
+                            salaryFrequency.target = freq;
+                        } else {
+                            salaryFrequency.current = freq;
+                        }
+                        updateFreqPlaceholders();
+                    });
+                });
+            });
+        }
+
+        function updateFreqPlaceholders() {
+            const isMonthly = salaryFrequency.current === 'monthly';
+            document.getElementById('currentSalary').placeholder = isMonthly ? 'e.g. $5,000' : 'e.g. $60,000';
+            document.getElementById('adult1Salary').placeholder = isMonthly ? 'e.g. 6,667' : 'e.g. 80,000';
+            document.getElementById('adult2Salary').placeholder = isMonthly ? 'e.g. 3,750' : 'e.g. 45,000';
+            const isTargetMonthly = salaryFrequency.target === 'monthly';
+            document.getElementById('targetSalary').placeholder = isTargetMonthly ? 'e.g. 3,750' : 'e.g. 45,000';
+            document.getElementById('offer1Salary').placeholder = isTargetMonthly ? 'e.g. 6,667' : 'e.g. 80,000';
+            document.getElementById('offer2Salary').placeholder = isTargetMonthly ? 'e.g. 3,750' : 'e.g. 45,000';
         }
 
         // Household state
@@ -5325,26 +5444,123 @@
             }
         }
 
-        // Populate neighborhood dropdown when a city is selected
+        // Searchable combobox for neighborhoods
+        const comboboxData = {};
+
+        function initCombobox(inputId, hiddenId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const hidden = document.getElementById(hiddenId);
+            const dropdown = document.getElementById(dropdownId);
+            let items = [];
+            let highlightedIdx = -1;
+
+            function renderItems(filter) {
+                const query = (filter || '').toLowerCase();
+                const filtered = query ? items.filter(it => it.label.toLowerCase().includes(query)) : items;
+                dropdown.innerHTML = '';
+                highlightedIdx = -1;
+                filtered.forEach((it, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'combobox-item';
+                    div.innerHTML = `${it.name} <span class="pct">${it.pctText}</span>`;
+                    div.dataset.value = it.value;
+                    div.dataset.idx = idx;
+                    div.addEventListener('mousedown', function(e) {
+                        e.preventDefault();
+                        selectItem(it);
+                    });
+                    dropdown.appendChild(div);
+                });
+                dropdown.classList.toggle('open', filtered.length > 0);
+            }
+
+            function selectItem(it) {
+                hidden.value = it.value;
+                input.value = it.label;
+                dropdown.classList.remove('open');
+                highlightedIdx = -1;
+            }
+
+            function highlightItem(idx) {
+                const items = dropdown.querySelectorAll('.combobox-item');
+                items.forEach(el => el.classList.remove('highlighted'));
+                if (idx >= 0 && idx < items.length) {
+                    items[idx].classList.add('highlighted');
+                    items[idx].scrollIntoView({ block: 'nearest' });
+                    highlightedIdx = idx;
+                }
+            }
+
+            input.addEventListener('focus', function() { renderItems(this.value); });
+            input.addEventListener('input', function() {
+                hidden.value = '';
+                renderItems(this.value);
+            });
+            input.addEventListener('blur', function() {
+                setTimeout(() => {
+                    dropdown.classList.remove('open');
+                    if (!hidden.value) { input.value = ''; }
+                }, 150);
+            });
+            input.addEventListener('keydown', function(e) {
+                const visibleItems = dropdown.querySelectorAll('.combobox-item');
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    highlightItem(Math.min(highlightedIdx + 1, visibleItems.length - 1));
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    highlightItem(Math.max(highlightedIdx - 1, 0));
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (highlightedIdx >= 0 && visibleItems[highlightedIdx]) {
+                        const val = visibleItems[highlightedIdx].dataset.value;
+                        const it = items.find(i => i.value === val);
+                        if (it) selectItem(it);
+                    }
+                } else if (e.key === 'Escape') {
+                    dropdown.classList.remove('open');
+                    input.blur();
+                }
+            });
+
+            // Store setter for external use
+            comboboxData[hiddenId] = {
+                setItems: function(newItems) {
+                    items = newItems;
+                    hidden.value = '';
+                    input.value = '';
+                },
+                clear: function() {
+                    items = [];
+                    hidden.value = '';
+                    input.value = '';
+                    dropdown.innerHTML = '';
+                    dropdown.classList.remove('open');
+                }
+            };
+        }
+
+        // Initialize comboboxes
+        initCombobox('currentNeighborhoodInput', 'currentNeighborhood', 'currentNeighborhoodDropdown');
+        initCombobox('targetNeighborhoodInput', 'targetNeighborhood', 'targetNeighborhoodDropdown');
+
+        // Populate neighborhood combobox when a city is selected
         function populateNeighborhoods(city, neighborhoodSelectId, neighborhoodGroupId) {
-            const select = document.getElementById(neighborhoodSelectId);
             const group = document.getElementById(neighborhoodGroupId);
             const neighborhoods = cityNeighborhoods[city];
+            const combobox = comboboxData[neighborhoodSelectId];
 
-            // Clear existing options
-            select.innerHTML = '<option value="">Select a neighborhood...</option>';
+            if (combobox) combobox.clear();
 
             if (neighborhoods) {
-                // Sort neighborhoods by multiplier (highest first)
                 const sorted = Object.entries(neighborhoods).sort((a, b) => b[1] - a[1]);
-                sorted.forEach(([name, multiplier]) => {
-                    const option = document.createElement('option');
-                    option.value = name;
+                const items = sorted.map(([name, multiplier]) => {
                     const pct = ((multiplier - 1) * 100);
                     const sign = pct >= 0 ? '+' : '';
-                    option.textContent = `${name} (${sign}${pct.toFixed(0)}% vs city avg)`;
-                    select.appendChild(option);
+                    const pctText = `(${sign}${pct.toFixed(0)}% vs city avg)`;
+                    return { value: name, name: name, pctText: pctText, label: `${name} (${sign}${pct.toFixed(0)}% vs city avg)` };
                 });
+                if (combobox) combobox.setItems(items);
                 group.style.display = 'block';
             } else {
                 group.style.display = 'none';
@@ -5525,6 +5741,12 @@
                 if (!salary || salary <= 0) { showError('Please enter your salary', 'currentSalary'); return; }
             }
 
+            // Convert monthly to annual if needed
+            if (salaryFrequency.current === 'monthly') {
+                salary = salary * 12;
+                if (salary2) salary2 = salary2 * 12;
+            }
+
             // Read city from the correct field
             const currentCity = (household.mode === 'family' && household.adults === 2)
                 ? (document.getElementById('familyCity').value || document.getElementById('currentCity').value)
@@ -5554,6 +5776,12 @@
                 const rawTargetSalary = document.getElementById('targetSalary').value
                     .replace(/,/g, '').replace(/[^\d.]/g, '');
                 targetSalaryOffer = rawTargetSalary ? parseFloat(rawTargetSalary) : null;
+            }
+            // Convert target salary monthly to annual if needed
+            if (salaryFrequency.target === 'monthly' && targetSalaryOffer !== null) {
+                targetSalaryOffer = targetSalaryOffer * 12;
+                if (offer1 !== null) offer1 = offer1 * 12;
+                if (offer2 !== null) offer2 = offer2 * 12;
             }
             const hasOffer = targetSalaryOffer !== null && targetSalaryOffer > 0;
 
@@ -6252,6 +6480,8 @@
             document.getElementById('targetCurrency').value = '';
             document.getElementById('currentNeighborhood').value = '';
             document.getElementById('targetNeighborhood').value = '';
+            document.getElementById('currentNeighborhoodInput').value = '';
+            document.getElementById('targetNeighborhoodInput').value = '';
             document.getElementById('currentNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetNeighborhoodGroup').style.display = 'none';
             document.getElementById('targetSalary').value = '';
@@ -6264,6 +6494,15 @@
             document.getElementById('salaryRangesSection').style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
+            // Reset salary frequency
+            salaryFrequency.current = 'annual';
+            salaryFrequency.target = 'annual';
+            document.querySelectorAll('.freq-toggle').forEach(toggle => {
+                toggle.querySelectorAll('.freq-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.freq === 'annual');
+                });
+            });
+            updateFreqPlaceholders();
             // Reset household state
             setHouseholdMode('single');
             householdState.adults = 2; householdState.children = 1;
@@ -6391,6 +6630,9 @@
                 fc.value = cc.value;
             });
         })();
+
+        // Initialize salary frequency toggles
+        initFreqToggles();
 
         // Household mode toggle listeners
         document.querySelectorAll('#householdModeToggle .mode-btn').forEach(btn => {
@@ -6540,8 +6782,14 @@
                 var fromN = params.get('fromN'), toN = params.get('toN');
                 var offer = params.get('offer'), offer1Param = params.get('offer1'), offer2Param = params.get('offer2');
                 setTimeout(function(){
-                    if (fromN) document.getElementById('currentNeighborhood').value = fromN;
-                    if (toN) document.getElementById('targetNeighborhood').value = toN;
+                    if (fromN) {
+                        document.getElementById('currentNeighborhood').value = fromN;
+                        document.getElementById('currentNeighborhoodInput').value = fromN;
+                    }
+                    if (toN) {
+                        document.getElementById('targetNeighborhood').value = toN;
+                        document.getElementById('targetNeighborhoodInput').value = toN;
+                    }
                     if (offer) document.getElementById('targetSalary').value = offer;
                     if (offer1Param) document.getElementById('offer1Salary').value = offer1Param;
                     if (offer2Param) document.getElementById('offer2Salary').value = offer2Param;
