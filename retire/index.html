@@ -1480,26 +1480,10 @@
 
                 <div id="dealBreakers" style="margin-top:24px;">
                     <label style="font-weight:600;">Deal-Breakers <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
-                    <p style="font-size:0.82rem;color:var(--text-secondary);margin:4px 0 12px;">Set minimum scores — cities below these thresholds will be excluded.</p>
-                    <div class="threshold-row">
-                        <span class="threshold-label">🛡️ Safety min:</span>
-                        <input type="range" min="0" max="80" value="0" id="minSafety" class="threshold-slider">
-                        <span class="threshold-val" id="minSafetyVal">Off</span>
-                    </div>
-                    <div class="threshold-row">
-                        <span class="threshold-label">🏥 Healthcare min:</span>
-                        <input type="range" min="0" max="80" value="0" id="minHealthcare" class="threshold-slider">
-                        <span class="threshold-val" id="minHealthcareVal">Off</span>
-                    </div>
-                    <div class="threshold-row">
-                        <span class="threshold-label">🗣️ English min:</span>
-                        <input type="range" min="0" max="80" value="0" id="minEnglish" class="threshold-slider">
-                        <span class="threshold-val" id="minEnglishVal">Off</span>
-                    </div>
-                    <div id="mustHaves" style="margin-top:12px;">
+                    <p style="font-size:0.82rem;color:var(--text-secondary);margin:4px 0 12px;">Exclude cities that don't meet these requirements.</p>
+                    <div id="mustHaves" style="margin-top:8px;">
                         <label class="must-have-check"><input type="checkbox" id="mustVisa"> Must have retirement visa program <span style="font-size:0.75rem;color:var(--text-secondary);cursor:help;" title="Countries that offer a specific visa for retirees, e.g. Spain Non-Lucrative, Portugal D7, Panama Pensionado">(?)</span></label>
                         <label class="must-have-check"><input type="checkbox" id="mustNoInheritanceTax"> No inheritance tax <span style="font-size:0.75rem;color:var(--text-secondary);cursor:help;" title="Exclude countries that tax inherited assets or estates">(?)</span></label>
-                        <label class="must-have-check"><input type="checkbox" id="mustBeach"> Must be beach/coastal</label>
                     </div>
                 </div>
             </div>
@@ -7129,13 +7113,8 @@ function findTopCities(params) {
     }
 
     // Deal-breaker hard filters
-    const mt = params.minThresholds || {};
     const mh = params.mustHaves || {};
     candidates = candidates.filter(city => {
-        const qol = getQOLScores(city);
-        if (mt.safety > 0 && (qol.safety || 0) < mt.safety) return false;
-        if (mt.healthcare > 0 && (qol.healthcare || 0) < mt.healthcare) return false;
-        if (mt.english > 0 && (qol.english || 0) < mt.english) return false;
         if (mh.noInheritanceTax) {
             const country = getCountryName(city);
             const tax = retireInheritanceTax[country];
@@ -7144,10 +7123,6 @@ function findTopCities(params) {
         if (mh.visa) {
             const visa = getVisaEligibility(city, params.citizenshipISO);
             if (!visa || visa.status === 'none' || visa.status === 'difficult') return false;
-        }
-        if (mh.beach) {
-            const lifestyles = cityLifestyleMap[city] || [];
-            if (!lifestyles.includes('beach')) return false;
         }
         return true;
     });
@@ -7202,8 +7177,7 @@ let userState = {
     selectedLifestyles: [],
     factorOrder: ['affordability','healthcare','safety','climate','infrastructure','english','expat','culture','charm'],
     housing: 'rent',
-    minThresholds: { safety: 0, healthcare: 0, english: 0 },
-    mustHaves: { visa: false, noInheritanceTax: false, beach: false },
+    mustHaves: { visa: false, noInheritanceTax: false },
     lockedFactors: [],
     preferredCountry: '',
     preferredCity: ''
@@ -7396,21 +7370,9 @@ setupToggleGroup('householdToggle', val => {
 setupToggleGroup('childrenToggle', val => { userState.children = parseInt(val); });
 setupToggleGroup('housingToggle', val => { userState.housing = val; });
 
-// ── Deal-breaker sliders ──
-['Safety', 'Healthcare', 'English'].forEach(name => {
-    const slider = document.getElementById('min' + name);
-    const valSpan = document.getElementById('min' + name + 'Val');
-    slider.addEventListener('input', function() {
-        const v = parseInt(this.value);
-        valSpan.textContent = v === 0 ? 'Off' : v;
-        userState.minThresholds[name.toLowerCase()] = v;
-    });
-});
-
 // ── Must-have checkboxes ──
 document.getElementById('mustVisa').addEventListener('change', function() { userState.mustHaves.visa = this.checked; });
 document.getElementById('mustNoInheritanceTax').addEventListener('change', function() { userState.mustHaves.noInheritanceTax = this.checked; });
-document.getElementById('mustBeach').addEventListener('change', function() { userState.mustHaves.beach = this.checked; });
 
 // ── Region Chips ──
 document.querySelectorAll('#regionChips .chip').forEach(chip => {
@@ -7652,7 +7614,6 @@ function calculateResults() {
         selectedLifestyles: userState.selectedLifestyles,
         preferredCountry: userState.preferredCountry,
         preferredCity: userState.preferredCity,
-        minThresholds: userState.minThresholds,
         mustHaves: userState.mustHaves
     };
 
