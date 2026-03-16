@@ -1340,7 +1340,7 @@
                     <div class="form-group">
                         <label>Planning Horizon</label>
                         <div style="display:flex;align-items:center;gap:10px;">
-                            <input type="range" id="horizonSlider" min="5" max="50" value="30">
+                            <input type="range" id="horizonSlider" min="5" max="70" value="30">
                             <span class="slider-value" id="horizonValue">30 yrs</span>
                         </div>
                         <span class="hint">How many years you want your money to last</span>
@@ -1391,10 +1391,20 @@
                     <div class="chip" data-lifestyle="mountain">🏔️ Mountain / Nature</div>
                 </div>
 
-                <div class="form-group" style="margin-top:12px;">
-                    <label>Or search for a specific country or city</label>
-                    <input type="text" id="locationSearch" placeholder="e.g. Portugal, Lisbon, Thailand...">
-                    <div id="locationResults" style="display:none;"></div>
+                <div style="margin-top:12px;">
+                    <label style="display:block;font-weight:600;">Or narrow by country / city <span style="font-weight:400;color:var(--text-secondary);font-size:0.85rem;">(optional)</span></label>
+                    <div class="form-row" style="margin-top:8px;">
+                        <div class="form-group">
+                            <select id="countryFilter">
+                                <option value="">Any country</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="cityFilter" disabled>
+                                <option value="">Select a country first</option>
+                            </select>
+                        </div>
+                    </div>
                     <span class="hint" style="margin-top:6px;display:block;">This tool covers 182 cities across 88 countries. <a href="#" onclick="document.getElementById('cityListModal').style.display='flex';return false;" style="color:var(--accent);">View full city list</a></span>
                 </div>
             </div>
@@ -1653,6 +1663,7 @@ const coliData = {
             'Rome': 49.3,
             'Milan': 57.8,
             'Athens': 30.6,
+            'Chania': 28, 'Thessaloniki': 26, 'Rhodes': 30, 'Corfu': 30, 'Kalamata': 25, 'Florence': 52, 'Lecce': 30, 'Bologna': 45, 'Naples': 35, 'Cagliari': 35, 'Antalya': 20, 'Bodrum': 25, 'Fethiye': 18, 'Alanya': 18, 'Alicante': 35, 'Granada': 30, 'Seville': 33, 'Bordeaux': 45, 'Montpellier': 40, 'Lyon': 42, 'Dubrovnik': 40, 'Zadar': 30, 'Rovinj': 38, 'San Miguel de Allende': 28, 'Ajijic': 22, 'Guanajuato': 22, 'Boquete': 30, 'Coronado': 32, 'Tamarindo': 35, 'Nosara': 38, 'Cartagena': 25, 'Santa Marta': 20, 'Florianopolis': 28, 'Salvador': 22, 'Penang': 26, 'Langkawi': 24, 'Lombok': 20, 'Yogyakarta': 16, 'Cebu': 22, 'Krabi': 25, 'Fez': 18, 'Agadir': 20, 'Stellenbosch': 25, 'Brisbane': 60, 'Gold Coast': 55, 'Wellington': 58, 'Tauranga': 52, 'Queenstown': 62,
             'Split': 31.8,
 
             // Europe - Northern
@@ -1893,6 +1904,7 @@ const cityToCurrency = {
             'Madrid': 'EUR', 'Barcelona': 'EUR', 'Valencia': 'EUR', 'Málaga': 'EUR',
             'Lisbon': 'EUR', 'Porto': 'EUR', 'Rome': 'EUR', 'Milan': 'EUR',
             'Athens': 'EUR', 'Split': 'EUR',
+            'Chania': 'EUR', 'Thessaloniki': 'EUR', 'Rhodes': 'EUR', 'Corfu': 'EUR', 'Kalamata': 'EUR', 'Florence': 'EUR', 'Lecce': 'EUR', 'Bologna': 'EUR', 'Naples': 'EUR', 'Cagliari': 'EUR', 'Antalya': 'TRY', 'Bodrum': 'TRY', 'Fethiye': 'TRY', 'Alanya': 'TRY', 'Alicante': 'EUR', 'Granada': 'EUR', 'Seville': 'EUR', 'Bordeaux': 'EUR', 'Montpellier': 'EUR', 'Lyon': 'EUR', 'Dubrovnik': 'EUR', 'Zadar': 'EUR', 'Rovinj': 'EUR', 'San Miguel de Allende': 'MXN', 'Ajijic': 'MXN', 'Guanajuato': 'MXN', 'Boquete': 'USD', 'Coronado': 'USD', 'Tamarindo': 'CRC', 'Nosara': 'CRC', 'Cartagena': 'COP', 'Santa Marta': 'COP', 'Florianopolis': 'BRL', 'Salvador': 'BRL', 'Penang': 'MYR', 'Langkawi': 'MYR', 'Lombok': 'IDR', 'Yogyakarta': 'IDR', 'Cebu': 'PHP', 'Krabi': 'THB', 'Fez': 'MAD', 'Agadir': 'MAD', 'Stellenbosch': 'ZAR', 'Brisbane': 'AUD', 'Gold Coast': 'AUD', 'Wellington': 'NZD', 'Tauranga': 'NZD', 'Queenstown': 'NZD',
             // Europe - Northern
             'Stockholm': 'SEK', 'Copenhagen': 'DKK', 'Helsinki': 'EUR',
             'Oslo': 'NOK', 'Vienna': 'EUR',
@@ -1962,6 +1974,7 @@ const cityToCountry = {
             'Madrid': 'ES', 'Barcelona': 'ES', 'Valencia': 'ES', 'Málaga': 'ES',
             'Lisbon': 'PT', 'Porto': 'PT', 'Rome': 'IT', 'Milan': 'IT',
             'Athens': 'GR', 'Split': 'HR',
+            'Chania': 'GR', 'Thessaloniki': 'GR', 'Rhodes': 'GR', 'Corfu': 'GR', 'Kalamata': 'GR', 'Florence': 'IT', 'Lecce': 'IT', 'Bologna': 'IT', 'Naples': 'IT', 'Cagliari': 'IT', 'Antalya': 'TR', 'Bodrum': 'TR', 'Fethiye': 'TR', 'Alanya': 'TR', 'Alicante': 'ES', 'Granada': 'ES', 'Seville': 'ES', 'Bordeaux': 'FR', 'Montpellier': 'FR', 'Lyon': 'FR', 'Dubrovnik': 'HR', 'Zadar': 'HR', 'Rovinj': 'HR', 'San Miguel de Allende': 'MX', 'Ajijic': 'MX', 'Guanajuato': 'MX', 'Boquete': 'PA', 'Coronado': 'PA', 'Tamarindo': 'CR', 'Nosara': 'CR', 'Cartagena': 'CO', 'Santa Marta': 'CO', 'Florianopolis': 'BR', 'Salvador': 'BR', 'Penang': 'MY', 'Langkawi': 'MY', 'Lombok': 'ID', 'Yogyakarta': 'ID', 'Cebu': 'PH', 'Krabi': 'TH', 'Fez': 'MA', 'Agadir': 'MA', 'Stellenbosch': 'ZA', 'Brisbane': 'AU', 'Gold Coast': 'AU', 'Wellington': 'NZ', 'Tauranga': 'NZ', 'Queenstown': 'NZ',
             'Stockholm': 'SE', 'Copenhagen': 'DK', 'Helsinki': 'FI', 'Oslo': 'NO', 'Vienna': 'AT',
             'Prague': 'CZ', 'Budapest': 'HU', 'Warsaw': 'PL', 'Krakow': 'PL',
             'Bucharest': 'RO', 'Tallinn': 'EE', 'Riga': 'LV', 'Istanbul': 'TR',
@@ -2141,6 +2154,7 @@ const cityRent1BR = {
             'Geneva': 2600, 'Edinburgh': 1300, 'Nice': 1100,
             'Madrid': 1100, 'Barcelona': 1200, 'Valencia': 850, 'Málaga': 800,
             'Lisbon': 1000, 'Porto': 800, 'Rome': 1200, 'Milan': 1400, 'Athens': 700, 'Split': 650,
+            'Chania': 500, 'Thessaloniki': 450, 'Rhodes': 480, 'Corfu': 480, 'Kalamata': 400, 'Florence': 1300, 'Lecce': 550, 'Bologna': 900, 'Naples': 650, 'Cagliari': 580, 'Antalya': 400, 'Bodrum': 480, 'Fethiye': 350, 'Alanya': 320, 'Alicante': 700, 'Granada': 550, 'Seville': 650, 'Bordeaux': 800, 'Montpellier': 700, 'Lyon': 750, 'Dubrovnik': 700, 'Zadar': 500, 'Rovinj': 620, 'San Miguel de Allende': 650, 'Ajijic': 450, 'Guanajuato': 380, 'Boquete': 550, 'Coronado': 580, 'Tamarindo': 700, 'Nosara': 800, 'Cartagena': 520, 'Santa Marta': 380, 'Florianopolis': 450, 'Salvador': 340, 'Penang': 420, 'Langkawi': 380, 'Lombok': 300, 'Yogyakarta': 250, 'Cebu': 350, 'Krabi': 350, 'Fez': 300, 'Agadir': 340, 'Stellenbosch': 480, 'Brisbane': 1300, 'Gold Coast': 1100, 'Wellington': 1100, 'Tauranga': 1000, 'Queenstown': 1200,
             'Stockholm': 1500, 'Copenhagen': 1800, 'Helsinki': 1200, 'Oslo': 1600, 'Vienna': 1000,
             'Prague': 800, 'Budapest': 600, 'Warsaw': 700, 'Krakow': 550, 'Bucharest': 500,
             'Tallinn': 650, 'Riga': 550, 'Istanbul': 450,
@@ -2279,6 +2293,54 @@ const cityLivingCosts = {
             'Rome': {groceries:320,utilities:260,transport:40,healthcare:40,childcare:700},
             'Milan': {groceries:350,utilities:270,transport:40,healthcare:45,childcare:800},
             'Athens': {groceries:270,utilities:230,transport:35,healthcare:35,childcare:400},
+            'Chania':{groceries:240,utilities:200,transport:25,healthcare:30},
+            'Thessaloniki':{groceries:250,utilities:210,transport:30,healthcare:32},
+            'Rhodes':{groceries:260,utilities:210,transport:20,healthcare:28},
+            'Corfu':{groceries:255,utilities:205,transport:22,healthcare:30},
+            'Kalamata':{groceries:230,utilities:190,transport:20,healthcare:25},
+            'Florence':{groceries:350,utilities:260,transport:40,healthcare:45},
+            'Lecce':{groceries:260,utilities:200,transport:25,healthcare:35},
+            'Bologna':{groceries:320,utilities:240,transport:38,healthcare:42},
+            'Naples':{groceries:280,utilities:210,transport:30,healthcare:38},
+            'Cagliari':{groceries:270,utilities:200,transport:28,healthcare:35},
+            'Antalya':{groceries:180,utilities:120,transport:18,healthcare:20},
+            'Bodrum':{groceries:200,utilities:130,transport:15,healthcare:22},
+            'Fethiye':{groceries:160,utilities:110,transport:12,healthcare:18},
+            'Alanya':{groceries:155,utilities:105,transport:12,healthcare:18},
+            'Alicante':{groceries:280,utilities:200,transport:30,healthcare:35},
+            'Granada':{groceries:260,utilities:190,transport:25,healthcare:32},
+            'Seville':{groceries:270,utilities:200,transport:28,healthcare:34},
+            'Bordeaux':{groceries:320,utilities:240,transport:38,healthcare:40},
+            'Montpellier':{groceries:300,utilities:220,transport:32,healthcare:38},
+            'Lyon':{groceries:310,utilities:230,transport:35,healthcare:40},
+            'Dubrovnik':{groceries:300,utilities:220,transport:25,healthcare:30},
+            'Zadar':{groceries:260,utilities:190,transport:22,healthcare:28},
+            'Rovinj':{groceries:290,utilities:210,transport:20,healthcare:28},
+            'San Miguel de Allende':{groceries:200,utilities:120,transport:15,healthcare:25},
+            'Ajijic':{groceries:170,utilities:100,transport:10,healthcare:20},
+            'Guanajuato':{groceries:165,utilities:95,transport:10,healthcare:18},
+            'Boquete':{groceries:220,utilities:120,transport:10,healthcare:25},
+            'Coronado':{groceries:230,utilities:130,transport:12,healthcare:25},
+            'Tamarindo':{groceries:280,utilities:140,transport:15,healthcare:28},
+            'Nosara':{groceries:300,utilities:150,transport:12,healthcare:30},
+            'Cartagena':{groceries:200,utilities:120,transport:15,healthcare:22},
+            'Santa Marta':{groceries:170,utilities:100,transport:10,healthcare:18},
+            'Florianopolis':{groceries:220,utilities:130,transport:20,healthcare:25},
+            'Salvador':{groceries:190,utilities:110,transport:15,healthcare:20},
+            'Penang':{groceries:180,utilities:100,transport:15,healthcare:20},
+            'Langkawi':{groceries:170,utilities:90,transport:10,healthcare:18},
+            'Lombok':{groceries:140,utilities:60,transport:8,healthcare:15},
+            'Yogyakarta':{groceries:120,utilities:50,transport:6,healthcare:12},
+            'Cebu':{groceries:170,utilities:90,transport:10,healthcare:18},
+            'Krabi':{groceries:180,utilities:100,transport:10,healthcare:18},
+            'Fez':{groceries:150,utilities:90,transport:10,healthcare:15},
+            'Agadir':{groceries:160,utilities:95,transport:10,healthcare:16},
+            'Stellenbosch':{groceries:200,utilities:110,transport:15,healthcare:25},
+            'Brisbane':{groceries:380,utilities:280,transport:55,healthcare:60},
+            'Gold Coast':{groceries:360,utilities:260,transport:45,healthcare:55},
+            'Wellington':{groceries:370,utilities:260,transport:50,healthcare:55},
+            'Tauranga':{groceries:350,utilities:240,transport:35,healthcare:50},
+            'Queenstown':{groceries:380,utilities:270,transport:30,healthcare:52},
             'Split': {groceries:280,utilities:230,transport:40,healthcare:30,childcare:350},
             'Stockholm': {groceries:350,utilities:200,transport:100,healthcare:40,childcare:180},
             'Copenhagen': {groceries:380,utilities:250,transport:60,healthcare:35,childcare:400},
@@ -2463,6 +2525,7 @@ const retireSafetyIndex = {
   'Madrid': 71, 'Barcelona': 48, 'Valencia': 65,
   'Málaga': 69, 'Lisbon': 67, 'Porto': 67,
   'Rome': 53, 'Milan': 47, 'Athens': 45,
+  'Chania': 68, 'Thessaloniki': 52, 'Rhodes': 70, 'Corfu': 72, 'Kalamata': 70, 'Florence': 58, 'Lecce': 72, 'Bologna': 55, 'Naples': 42, 'Cagliari': 68, 'Antalya': 60, 'Bodrum': 65, 'Fethiye': 68, 'Alanya': 62, 'Alicante': 68, 'Granada': 68, 'Seville': 60, 'Bordeaux': 52, 'Montpellier': 48, 'Lyon': 48, 'Dubrovnik': 72, 'Zadar': 75, 'Rovinj': 78, 'San Miguel de Allende': 55, 'Ajijic': 55, 'Guanajuato': 48, 'Boquete': 55, 'Coronado': 52, 'Tamarindo': 45, 'Nosara': 48, 'Cartagena': 40, 'Santa Marta': 42, 'Florianopolis': 40, 'Salvador': 28, 'Penang': 55, 'Langkawi': 60, 'Lombok': 55, 'Yogyakarta': 60, 'Cebu': 45, 'Krabi': 65, 'Fez': 55, 'Agadir': 58, 'Stellenbosch': 38, 'Brisbane': 58, 'Gold Coast': 55, 'Wellington': 55, 'Tauranga': 58, 'Queenstown': 68,
   'Split': 70,
 
   // Europe Northern
@@ -2613,6 +2676,7 @@ const retireHealthcareIndex = {
   'Málaga': 74, // [E]
   'Lisbon': 72, 'Porto': 79,
   'Rome': 65, 'Milan': 70, 'Athens': 59,
+  'Chania': 55, 'Thessaloniki': 62, 'Rhodes': 50, 'Corfu': 48, 'Kalamata': 50, 'Florence': 72, 'Lecce': 62, 'Bologna': 72, 'Naples': 65, 'Cagliari': 62, 'Antalya': 65, 'Bodrum': 58, 'Fethiye': 52, 'Alanya': 55, 'Alicante': 76, 'Granada': 74, 'Seville': 76, 'Bordeaux': 80, 'Montpellier': 78, 'Lyon': 82, 'Dubrovnik': 58, 'Zadar': 55, 'Rovinj': 55, 'San Miguel de Allende': 58, 'Ajijic': 55, 'Guanajuato': 52, 'Boquete': 52, 'Coronado': 55, 'Tamarindo': 52, 'Nosara': 42, 'Cartagena': 60, 'Santa Marta': 50, 'Florianopolis': 62, 'Salvador': 55, 'Penang': 68, 'Langkawi': 52, 'Lombok': 35, 'Yogyakarta': 45, 'Cebu': 52, 'Krabi': 48, 'Fez': 45, 'Agadir': 48, 'Stellenbosch': 62, 'Brisbane': 78, 'Gold Coast': 72, 'Wellington': 75, 'Tauranga': 68, 'Queenstown': 62,
   'Split': 62, // [E]
 
   // Europe Northern
@@ -2768,6 +2832,7 @@ const retireClimateScore = {
   'Madrid': 76, 'Barcelona': 82, 'Valencia': 85,
   'Málaga': 90, 'Lisbon': 84, 'Porto': 74,
   'Rome': 78, 'Milan': 62, 'Athens': 82,
+  'Chania': 84, 'Thessaloniki': 72, 'Rhodes': 84, 'Corfu': 78, 'Kalamata': 82, 'Florence': 70, 'Lecce': 82, 'Bologna': 58, 'Naples': 78, 'Cagliari': 82, 'Antalya': 85, 'Bodrum': 82, 'Fethiye': 82, 'Alanya': 84, 'Alicante': 88, 'Granada': 75, 'Seville': 72, 'Bordeaux': 65, 'Montpellier': 82, 'Lyon': 60, 'Dubrovnik': 78, 'Zadar': 78, 'Rovinj': 72, 'San Miguel de Allende': 78, 'Ajijic': 82, 'Guanajuato': 76, 'Boquete': 76, 'Coronado': 75, 'Tamarindo': 78, 'Nosara': 78, 'Cartagena': 72, 'Santa Marta': 78, 'Florianopolis': 75, 'Salvador': 82, 'Penang': 75, 'Langkawi': 78, 'Lombok': 80, 'Yogyakarta': 75, 'Cebu': 75, 'Krabi': 78, 'Fez': 72, 'Agadir': 82, 'Stellenbosch': 78, 'Brisbane': 78, 'Gold Coast': 82, 'Wellington': 55, 'Tauranga': 68, 'Queenstown': 55,
   'Split': 78,
 
   // Europe Northern
@@ -2912,6 +2977,7 @@ const retireInfrastructureScore = {
   'Madrid': 82, 'Barcelona': 80, 'Valencia': 72,
   'Málaga': 58, 'Lisbon': 68, 'Porto': 62,
   'Rome': 58, 'Milan': 75, 'Athens': 60,
+  'Chania': 48, 'Thessaloniki': 58, 'Rhodes': 45, 'Corfu': 44, 'Kalamata': 42, 'Florence': 65, 'Lecce': 45, 'Bologna': 68, 'Naples': 52, 'Cagliari': 50, 'Antalya': 62, 'Bodrum': 52, 'Fethiye': 45, 'Alanya': 50, 'Alicante': 65, 'Granada': 58, 'Seville': 62, 'Bordeaux': 72, 'Montpellier': 65, 'Lyon': 72, 'Dubrovnik': 52, 'Zadar': 48, 'Rovinj': 48, 'San Miguel de Allende': 48, 'Ajijic': 40, 'Guanajuato': 42, 'Boquete': 38, 'Coronado': 42, 'Tamarindo': 40, 'Nosara': 35, 'Cartagena': 55, 'Santa Marta': 42, 'Florianopolis': 55, 'Salvador': 48, 'Penang': 62, 'Langkawi': 45, 'Lombok': 35, 'Yogyakarta': 45, 'Cebu': 50, 'Krabi': 42, 'Fez': 42, 'Agadir': 45, 'Stellenbosch': 55, 'Brisbane': 78, 'Gold Coast': 68, 'Wellington': 72, 'Tauranga': 58, 'Queenstown': 52,
   'Split': 42,
 
   // Europe Northern
@@ -3056,6 +3122,7 @@ const retireEnglishScore = {
   'Madrid': 55, 'Barcelona': 55, 'Valencia': 55,
   'Málaga': 55, 'Lisbon': 62, 'Porto': 62,
   'Rome': 50, 'Milan': 50, 'Athens': 55,
+  'Chania': 45, 'Thessaloniki': 50, 'Rhodes': 50, 'Corfu': 55, 'Kalamata': 40, 'Florence': 50, 'Lecce': 35, 'Bologna': 48, 'Naples': 38, 'Cagliari': 35, 'Antalya': 40, 'Bodrum': 45, 'Fethiye': 50, 'Alanya': 35, 'Alicante': 55, 'Granada': 45, 'Seville': 45, 'Bordeaux': 45, 'Montpellier': 42, 'Lyon': 42, 'Dubrovnik': 58, 'Zadar': 55, 'Rovinj': 52, 'San Miguel de Allende': 50, 'Ajijic': 55, 'Guanajuato': 35, 'Boquete': 60, 'Coronado': 55, 'Tamarindo': 55, 'Nosara': 55, 'Cartagena': 40, 'Santa Marta': 35, 'Florianopolis': 30, 'Salvador': 25, 'Penang': 70, 'Langkawi': 65, 'Lombok': 35, 'Yogyakarta': 35, 'Cebu': 80, 'Krabi': 38, 'Fez': 30, 'Agadir': 30, 'Stellenbosch': 90, 'Brisbane': 98, 'Gold Coast': 98, 'Wellington': 98, 'Tauranga': 98, 'Queenstown': 98,
   'Split': 58,
 
   // Europe Northern
@@ -3198,6 +3265,7 @@ const retireExpatCommunity = {
   'Madrid': 'large', 'Barcelona': 'large', 'Valencia': 'large',
   'Málaga': 'large', 'Lisbon': 'large', 'Porto': 'medium',
   'Rome': 'large', 'Milan': 'large', 'Athens': 'medium',
+  'Chania': 'medium', 'Thessaloniki': 'medium', 'Rhodes': 'medium', 'Corfu': 'medium', 'Kalamata': 'small', 'Florence': 'large', 'Lecce': 'medium', 'Bologna': 'medium', 'Naples': 'medium', 'Cagliari': 'small', 'Antalya': 'large', 'Bodrum': 'medium', 'Fethiye': 'medium', 'Alanya': 'large', 'Alicante': 'large', 'Granada': 'medium', 'Seville': 'medium', 'Bordeaux': 'medium', 'Montpellier': 'medium', 'Lyon': 'medium', 'Dubrovnik': 'small', 'Zadar': 'small', 'Rovinj': 'small', 'San Miguel de Allende': 'large', 'Ajijic': 'large', 'Guanajuato': 'medium', 'Boquete': 'large', 'Coronado': 'medium', 'Tamarindo': 'medium', 'Nosara': 'medium', 'Cartagena': 'medium', 'Santa Marta': 'small', 'Florianopolis': 'small', 'Salvador': 'small', 'Penang': 'large', 'Langkawi': 'medium', 'Lombok': 'small', 'Yogyakarta': 'small', 'Cebu': 'large', 'Krabi': 'medium', 'Fez': 'small', 'Agadir': 'medium', 'Stellenbosch': 'medium', 'Brisbane': 'large', 'Gold Coast': 'large', 'Wellington': 'medium', 'Tauranga': 'medium', 'Queenstown': 'medium',
   'Split': 'small',
 
   // Europe Northern
@@ -3342,6 +3410,7 @@ const retireCultureScore = {
   'Madrid': 88, 'Barcelona': 90, 'Valencia': 72,
   'Málaga': 62, 'Lisbon': 80, 'Porto': 72,
   'Rome': 90, 'Milan': 82, 'Athens': 78,
+  'Chania': 72, 'Thessaloniki': 80, 'Rhodes': 75, 'Corfu': 72, 'Kalamata': 68, 'Florence': 95, 'Lecce': 78, 'Bologna': 88, 'Naples': 88, 'Cagliari': 72, 'Antalya': 68, 'Bodrum': 72, 'Fethiye': 65, 'Alanya': 60, 'Alicante': 72, 'Granada': 88, 'Seville': 90, 'Bordeaux': 85, 'Montpellier': 78, 'Lyon': 88, 'Dubrovnik': 80, 'Zadar': 72, 'Rovinj': 75, 'San Miguel de Allende': 85, 'Ajijic': 70, 'Guanajuato': 82, 'Boquete': 55, 'Coronado': 48, 'Tamarindo': 55, 'Nosara': 52, 'Cartagena': 82, 'Santa Marta': 65, 'Florianopolis': 65, 'Salvador': 82, 'Penang': 78, 'Langkawi': 60, 'Lombok': 62, 'Yogyakarta': 85, 'Cebu': 65, 'Krabi': 60, 'Fez': 90, 'Agadir': 62, 'Stellenbosch': 72, 'Brisbane': 72, 'Gold Coast': 55, 'Wellington': 82, 'Tauranga': 55, 'Queenstown': 60,
   'Split': 55,
 
   // Europe Northern
@@ -3566,6 +3635,8 @@ const retireCityCharmScore = {
     'Prague': 94, 'Dublin': 70, 'Copenhagen': 76, 'Zürich': 77, 'Geneva': 75,
     'Stockholm': 74, 'Helsinki': 62, 'Munich': 80, 'Brussels': 72,
     'Luxembourg City': 68, 'Edinburgh': 88, 'Athens': 72, 'Budapest': 90,
+    'Chania': 80, 'Thessaloniki': 72, 'Rhodes': 82, 'Corfu': 85, 'Kalamata': 75, 'Florence': 95, 'Lecce': 85, 'Bologna': 82, 'Naples': 80, 'Cagliari': 78, 'Antalya': 78, 'Bodrum': 82, 'Fethiye': 85, 'Alanya': 72, 'Alicante': 75, 'Granada': 88, 'Seville': 90, 'Bordeaux': 85, 'Montpellier': 78, 'Lyon': 82, 'Dubrovnik': 95, 'Zadar': 80, 'Rovinj': 90, 'San Miguel de Allende': 92, 'Ajijic': 78, 'Guanajuato': 88, 'Boquete': 75, 'Coronado': 62, 'Tamarindo': 72, 'Nosara': 75, 'Cartagena': 88, 'Santa Marta': 72, 'Florianopolis': 78, 'Salvador': 78, 'Penang': 80, 'Langkawi': 78, 'Lombok': 82, 'Yogyakarta': 80, 'Cebu': 68, 'Krabi': 82, 'Fez': 88, 'Agadir': 68, 'Stellenbosch': 82, 'Brisbane': 68, 'Gold Coast': 65, 'Wellington': 75, 'Tauranga': 70, 'Queenstown': 92,
+    'Chania': 82, 'Thessaloniki': 75, 'Rhodes': 85, 'Corfu': 88, 'Kalamata': 78, 'Florence': 95, 'Lecce': 88, 'Bologna': 85, 'Naples': 82, 'Cagliari': 78, 'Antalya': 75, 'Bodrum': 82, 'Fethiye': 85, 'Alanya': 72, 'Alicante': 75, 'Granada': 90, 'Seville': 92, 'Bordeaux': 88, 'Montpellier': 80, 'Lyon': 85, 'Dubrovnik': 95, 'Zadar': 82, 'Rovinj': 92, 'San Miguel de Allende': 95, 'Ajijic': 82, 'Guanajuato': 90, 'Boquete': 78, 'Coronado': 65, 'Tamarindo': 75, 'Nosara': 78, 'Cartagena': 90, 'Santa Marta': 75, 'Florianopolis': 78, 'Salvador': 80, 'Penang': 80, 'Langkawi': 78, 'Lombok': 82, 'Yogyakarta': 82, 'Cebu': 68, 'Krabi': 82, 'Fez': 92, 'Agadir': 68, 'Stellenbosch': 85, 'Brisbane': 68, 'Gold Coast': 65, 'Wellington': 78, 'Tauranga': 72, 'Queenstown': 92,
     'Kraków': 85, 'Warsaw': 55, 'Porto': 88, 'Bucharest': 38, 'Istanbul': 86,
     'Dubai': 55, 'Abu Dhabi': 50, 'Bangkok': 60, 'Chiang Mai': 65,
     'Kuala Lumpur': 52, 'Singapore': 62, 'Ho Chi Minh City': 42, 'Hanoi': 64,
@@ -4340,6 +4411,7 @@ const retireCityToCountry = {
   'Lisbon': 'Portugal', 'Porto': 'Portugal',
   'Rome': 'Italy', 'Milan': 'Italy',
   'Athens': 'Greece',
+  'Chania': 'Greece', 'Thessaloniki': 'Greece', 'Rhodes': 'Greece', 'Corfu': 'Greece', 'Kalamata': 'Greece', 'Florence': 'Italy', 'Lecce': 'Italy', 'Bologna': 'Italy', 'Naples': 'Italy', 'Cagliari': 'Italy', 'Antalya': 'Turkey', 'Bodrum': 'Turkey', 'Fethiye': 'Turkey', 'Alanya': 'Turkey', 'Alicante': 'Spain', 'Granada': 'Spain', 'Seville': 'Spain', 'Bordeaux': 'France', 'Montpellier': 'France', 'Lyon': 'France', 'Dubrovnik': 'Croatia', 'Zadar': 'Croatia', 'Rovinj': 'Croatia', 'San Miguel de Allende': 'Mexico', 'Ajijic': 'Mexico', 'Guanajuato': 'Mexico', 'Boquete': 'Panama', 'Coronado': 'Panama', 'Tamarindo': 'Costa Rica', 'Nosara': 'Costa Rica', 'Cartagena': 'Colombia', 'Santa Marta': 'Colombia', 'Florianopolis': 'Brazil', 'Salvador': 'Brazil', 'Penang': 'Malaysia', 'Langkawi': 'Malaysia', 'Lombok': 'Indonesia', 'Yogyakarta': 'Indonesia', 'Cebu': 'Philippines', 'Krabi': 'Thailand', 'Fez': 'Morocco', 'Agadir': 'Morocco', 'Stellenbosch': 'South Africa', 'Brisbane': 'Australia', 'Gold Coast': 'Australia', 'Wellington': 'New Zealand', 'Tauranga': 'New Zealand', 'Queenstown': 'New Zealand',
   'Split': 'Croatia',
   'Stockholm': 'Sweden', 'Copenhagen': 'Denmark',
   'Helsinki': 'Finland', 'Oslo': 'Norway', 'Vienna': 'Austria',
@@ -4476,6 +4548,7 @@ const retireCityCoords = {
   'Lisbon': [38.7223, -9.1393], 'Porto': [41.1579, -8.6291],
   'Rome': [41.9028, 12.4964], 'Milan': [45.4642, 9.1900],
   'Athens': [37.9838, 23.7275], 'Split': [43.5081, 16.4402],
+  'Chania': [35.5138, 24.018], 'Thessaloniki': [40.6401, 22.9444], 'Rhodes': [36.4341, 28.2176], 'Corfu': [39.6243, 19.9217], 'Kalamata': [37.0388, 22.1143], 'Florence': [43.7696, 11.2558], 'Lecce': [40.3516, 18.175], 'Bologna': [44.4949, 11.3426], 'Naples': [40.8518, 14.2681], 'Cagliari': [39.2238, 9.1217], 'Antalya': [36.8969, 30.7133], 'Bodrum': [37.0344, 27.4305], 'Fethiye': [36.6515, 29.1164], 'Alanya': [36.5437, 31.9994], 'Alicante': [38.3452, -0.481], 'Granada': [37.1773, -3.5986], 'Seville': [37.3891, -5.9845], 'Bordeaux': [44.8378, -0.5792], 'Montpellier': [43.6108, 3.8767], 'Lyon': [45.764, 4.8357], 'Dubrovnik': [42.6507, 18.0944], 'Zadar': [44.1194, 15.2314], 'Rovinj': [45.0812, 13.6387], 'San Miguel de Allende': [20.9144, -100.7452], 'Ajijic': [20.2955, -103.2629], 'Guanajuato': [21.019, -101.2574], 'Boquete': [8.7833, -82.4333], 'Coronado': [8.5878, -79.9286], 'Tamarindo': [10.2994, -85.8371], 'Nosara': [9.9765, -85.653], 'Cartagena': [10.391, -75.5364], 'Santa Marta': [11.2408, -74.199], 'Florianopolis': [-27.5954, -48.548], 'Salvador': [-12.9714, -38.5124], 'Penang': [5.4164, 100.3327], 'Langkawi': [6.35, 99.8], 'Lombok': [-8.565, 116.351], 'Yogyakarta': [-7.7956, 110.3695], 'Cebu': [10.3157, 123.8854], 'Krabi': [8.0863, 98.9063], 'Fez': [34.0181, -5.0078], 'Agadir': [30.4278, -9.5981], 'Stellenbosch': [-33.9321, 18.8602], 'Brisbane': [-27.4698, 153.0251], 'Gold Coast': [-28.0167, 153.4], 'Wellington': [-41.2865, 174.7762], 'Tauranga': [-37.6878, 176.1651], 'Queenstown': [-45.0312, 168.6626],
   'Stockholm': [59.3293, 18.0686], 'Copenhagen': [55.6761, 12.5683],
   'Helsinki': [60.1699, 24.9384], 'Oslo': [59.9139, 10.7522],
   'Vienna': [48.2082, 16.3738],
@@ -6561,6 +6634,54 @@ const cityLifestyleMap = {
     'Mazatlán': ['smaller_city', 'beach'],
     'Cádiz': ['smaller_city', 'beach'],
     'Taormina': ['smaller_city', 'beach', 'mountain'],
+    'Chania': ['smaller_city', 'beach', 'mountain'],
+    'Thessaloniki': ['major_city', 'beach'],
+    'Rhodes': ['smaller_city', 'beach'],
+    'Corfu': ['smaller_city', 'beach', 'mountain'],
+    'Kalamata': ['smaller_city', 'beach', 'mountain'],
+    'Florence': ['major_city'],
+    'Lecce': ['smaller_city', 'beach'],
+    'Bologna': ['major_city'],
+    'Naples': ['major_city', 'beach'],
+    'Cagliari': ['major_city', 'beach'],
+    'Antalya': ['major_city', 'beach'],
+    'Bodrum': ['smaller_city', 'beach'],
+    'Fethiye': ['smaller_city', 'beach', 'mountain'],
+    'Alanya': ['smaller_city', 'beach'],
+    'Alicante': ['major_city', 'beach'],
+    'Granada': ['major_city', 'mountain'],
+    'Seville': ['major_city'],
+    'Bordeaux': ['major_city'],
+    'Montpellier': ['major_city', 'beach'],
+    'Lyon': ['major_city'],
+    'Dubrovnik': ['smaller_city', 'beach'],
+    'Zadar': ['smaller_city', 'beach'],
+    'Rovinj': ['smaller_city', 'beach'],
+    'San Miguel de Allende': ['smaller_city', 'mountain'],
+    'Ajijic': ['smaller_city', 'mountain'],
+    'Guanajuato': ['smaller_city', 'mountain'],
+    'Boquete': ['smaller_city', 'mountain'],
+    'Coronado': ['smaller_city', 'beach'],
+    'Tamarindo': ['smaller_city', 'beach'],
+    'Nosara': ['smaller_city', 'beach'],
+    'Cartagena': ['major_city', 'beach'],
+    'Santa Marta': ['smaller_city', 'beach', 'mountain'],
+    'Florianopolis': ['major_city', 'beach'],
+    'Salvador': ['major_city', 'beach'],
+    'Penang': ['major_city', 'beach'],
+    'Langkawi': ['smaller_city', 'beach'],
+    'Lombok': ['smaller_city', 'beach', 'mountain'],
+    'Yogyakarta': ['major_city'],
+    'Cebu': ['major_city', 'beach'],
+    'Krabi': ['smaller_city', 'beach'],
+    'Fez': ['major_city'],
+    'Agadir': ['major_city', 'beach'],
+    'Stellenbosch': ['smaller_city', 'mountain'],
+    'Brisbane': ['major_city'],
+    'Gold Coast': ['major_city', 'beach'],
+    'Wellington': ['major_city'],
+    'Tauranga': ['smaller_city', 'beach'],
+    'Queenstown': ['smaller_city', 'mountain'],
     'Kotor': ['smaller_city', 'beach', 'mountain'],
     'Cascais': ['smaller_city', 'beach'],
     'Las Palmas': ['smaller_city', 'beach'],
@@ -6696,16 +6817,16 @@ const cityAttractivenessScore = {
 const cityRegionMap = {};
 (function() {
     const regionSets = {
-        'north_america': ['New York','San Francisco','Los Angeles','Chicago','Miami','Austin','Seattle','Denver','Boston','Washington DC','Houston','Charlotte','Las Vegas','Tampa','Raleigh','Dallas','Atlanta','Philadelphia','Phoenix','San Diego','Nashville','Minneapolis','Portland','Toronto','Vancouver','Montreal','San Juan'],
-        'central_america': ['Mexico City','Cancún','Playa del Carmen','Panama City','San José','Puerto Vallarta','Tulum','Mazatlán','Punta Cana','San Cristóbal de las Casas','Oaxaca','Antigua Guatemala','Mérida','Santo Domingo'],
-        'south_america': ['São Paulo','Buenos Aires','Bogotá','Lima','Santiago','Medellín','Montevideo','Cuenca','Quito','La Paz'],
-        'europe': ['London','Paris','Amsterdam','Berlin','Munich','Dublin','Brussels','Luxembourg City','Zurich','Geneva','Edinburgh','Nice','Madrid','Barcelona','Valencia','Málaga','Lisbon','Porto','Rome','Milan','Athens','Split','Stockholm','Copenhagen','Helsinki','Oslo','Vienna','Prague','Budapest','Warsaw','Krakow','Bucharest','Tallinn','Riga','Istanbul','Faro','Cádiz','Taormina','Kotor','Cascais','Las Palmas','Santa Cruz de Tenerife','Paphos','Limassol','Innsbruck','Interlaken','Batumi','Yerevan','Bratislava','Ljubljana','Vilnius','Plovdiv','Sofia','Belgrade','Sarajevo','Tirana','Funchal','Palma de Mallorca'],
-        'southeast_asia': ['Singapore','Bangkok','Chiang Mai','Phuket','Kuala Lumpur','Ho Chi Minh City','Hanoi','Manila','Jakarta','Bali','Phnom Penh','Canggu','Koh Samui','Da Nang','Hoi An','Hua Hin','Nha Trang','Siargao','El Nido','Da Lat','Ubud','Luang Prabang','Vientiane','Yangon','Chiang Rai','Ipoh','Dumaguete','Vung Tau'],
+        'north_america': ['New York','San Francisco','Los Angeles','Chicago','Miami','Austin','Seattle','Denver','Boston','Washington DC','Houston','Charlotte','Las Vegas','Tampa','Raleigh','Dallas','Atlanta','Philadelphia','Phoenix','San Diego','Nashville','Minneapolis','Portland','Toronto','Vancouver','Montreal','San Juan', 'San Miguel de Allende', 'Ajijic', 'Guanajuato'],
+        'central_america': ['Mexico City','Cancún','Playa del Carmen','Panama City','San José','Puerto Vallarta','Tulum','Mazatlán','Punta Cana','San Cristóbal de las Casas','Oaxaca','Antigua Guatemala','Mérida','Santo Domingo', 'Boquete', 'Coronado', 'Tamarindo', 'Nosara'],
+        'south_america': ['São Paulo','Buenos Aires','Bogotá','Lima','Santiago','Medellín','Montevideo','Cuenca','Quito','La Paz', 'Cartagena', 'Santa Marta', 'Florianopolis', 'Salvador'],
+        'europe': ['London','Paris','Amsterdam','Berlin','Munich','Dublin','Brussels','Luxembourg City','Zurich','Geneva','Edinburgh','Nice','Madrid','Barcelona','Valencia','Málaga','Lisbon','Porto','Rome','Milan','Athens','Split','Stockholm','Copenhagen','Helsinki','Oslo','Vienna','Prague','Budapest','Warsaw','Krakow','Bucharest','Tallinn','Riga','Istanbul','Faro','Cádiz','Taormina','Kotor','Cascais','Las Palmas','Santa Cruz de Tenerife','Paphos','Limassol','Innsbruck','Interlaken','Batumi','Yerevan','Bratislava','Ljubljana','Vilnius','Plovdiv','Sofia','Belgrade','Sarajevo','Tirana','Funchal','Palma de Mallorca', 'Chania', 'Thessaloniki', 'Rhodes', 'Corfu', 'Kalamata', 'Florence', 'Lecce', 'Bologna', 'Naples', 'Cagliari', 'Antalya', 'Bodrum', 'Fethiye', 'Alanya', 'Alicante', 'Granada', 'Seville', 'Bordeaux', 'Montpellier', 'Lyon', 'Dubrovnik', 'Zadar', 'Rovinj'],
+        'southeast_asia': ['Singapore','Bangkok','Chiang Mai','Phuket','Kuala Lumpur','Ho Chi Minh City','Hanoi','Manila','Jakarta','Bali','Phnom Penh','Canggu','Koh Samui','Da Nang','Hoi An','Hua Hin','Nha Trang','Siargao','El Nido','Da Lat','Ubud','Luang Prabang','Vientiane','Yangon','Chiang Rai','Ipoh','Dumaguete','Vung Tau', 'Penang', 'Langkawi', 'Lombok', 'Yogyakarta', 'Cebu', 'Krabi'],
         'east_asia': ['Tokyo','Osaka','Fukuoka','Seoul','Hong Kong','Taipei','Shanghai','Beijing','Shenzhen','Guangzhou','Jeju','Taichung'],
         'south_asia': ['Mumbai','Bangalore','Delhi','Chennai','Pokhara','Colombo','Kathmandu'],
-        'oceania': ['Sydney','Melbourne','Perth','Auckland'],
+        'oceania': ['Sydney','Melbourne','Perth','Auckland', 'Brisbane', 'Gold Coast', 'Wellington', 'Tauranga', 'Queenstown'],
         'middle_east': ['Dubai','Abu Dhabi','Doha','Riyadh','Tel Aviv','Amman','Beirut','Muscat'],
-        'africa': ['Cape Town','Nairobi','Lagos','Cairo','Marrakech','Casablanca','Essaouira','Zanzibar','Accra','Tunis','Tangier','Kampala','Addis Ababa','Dakar']
+        'africa': ['Cape Town','Nairobi','Lagos','Cairo','Marrakech','Casablanca','Essaouira','Zanzibar','Accra','Tunis','Tangier','Kampala','Addis Ababa','Dakar', 'Fez', 'Agadir', 'Stellenbosch']
     };
     for (const [region, cities] of Object.entries(regionSets)) {
         for (const city of cities) cityRegionMap[city] = region;
@@ -6992,6 +7113,13 @@ function findTopCities(params) {
         candidates = allCities.filter(city => selectedRegions.includes(cityRegionMap[city]));
     }
 
+    // Filter by preferred country/city
+    if (params.preferredCity) {
+        candidates = candidates.filter(city => city === params.preferredCity);
+    } else if (params.preferredCountry) {
+        candidates = candidates.filter(city => cityToCountry[city] === params.preferredCountry);
+    }
+
     // Filter by lifestyle (if any selected)
     if (selectedLifestyles && selectedLifestyles.length > 0) {
         candidates = candidates.filter(city => {
@@ -7072,7 +7200,9 @@ let userState = {
     housing: 'rent',
     minThresholds: { safety: 0, healthcare: 0, english: 0 },
     mustHaves: { visa: false, english: false, beach: false },
-    lockedFactors: []
+    lockedFactors: [],
+    preferredCountry: '',
+    preferredCity: ''
 };
 
 // ── Theme Toggle ──
@@ -7308,6 +7438,53 @@ document.querySelectorAll('#lifestyleChips .chip').forEach(chip => {
     });
 });
 
+// ── Country / City Dropdowns ──
+(function() {
+    const countrySel = document.getElementById('countryFilter');
+    const citySel = document.getElementById('cityFilter');
+    const allCities = Object.keys(cityToCountry);
+
+    // Build sorted country list from cityToCountry values
+    const countryCodes = [...new Set(Object.values(cityToCountry))].sort((a, b) => {
+        const nameA = isoToCountryName[a] || a;
+        const nameB = isoToCountryName[b] || b;
+        return nameA.localeCompare(nameB);
+    });
+    countryCodes.forEach(code => {
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = isoToCountryName[code] || code;
+        countrySel.appendChild(opt);
+    });
+
+    countrySel.addEventListener('change', () => {
+        const code = countrySel.value;
+        citySel.innerHTML = '';
+        if (!code) {
+            citySel.disabled = true;
+            citySel.innerHTML = '<option value="">Select a country first</option>';
+            userState.preferredCountry = '';
+            userState.preferredCity = '';
+            return;
+        }
+        userState.preferredCountry = code;
+        userState.preferredCity = '';
+        citySel.disabled = false;
+        citySel.innerHTML = '<option value="">Any city</option>';
+        const cities = allCities.filter(c => cityToCountry[c] === code).sort();
+        cities.forEach(city => {
+            const opt = document.createElement('option');
+            opt.value = city;
+            opt.textContent = city;
+            citySel.appendChild(opt);
+        });
+    });
+
+    citySel.addEventListener('change', () => {
+        userState.preferredCity = citySel.value;
+    });
+})();
+
 // ── Drag-to-Rank ──
 (function(){
     const list = document.getElementById('rankList');
@@ -7406,6 +7583,15 @@ function goToStep(step) {
             return;
         }
     }
+    if (step === 3 && currentStep === 2) {
+        const citizenship = document.getElementById('citizenshipSelect').value;
+        if (!citizenship) {
+            document.getElementById('citizenshipSelect').style.borderColor = 'var(--error-color)';
+            document.getElementById('citizenshipSelect').focus();
+            setTimeout(() => { document.getElementById('citizenshipSelect').style.borderColor = ''; }, 2000);
+            return;
+        }
+    }
 
     currentStep = step;
 
@@ -7460,6 +7646,8 @@ function calculateResults() {
         factorWeights,
         selectedRegions: userState.selectedRegions,
         selectedLifestyles: userState.selectedLifestyles,
+        preferredCountry: userState.preferredCountry,
+        preferredCity: userState.preferredCity,
         minThresholds: userState.minThresholds,
         mustHaves: userState.mustHaves
     };
