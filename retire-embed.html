@@ -560,6 +560,100 @@
             color: #60a5fa;
         }
 
+        /* Visa badge clickable */
+        .visa-badge { cursor: pointer; }
+        .visa-badge .visa-info-icon {
+            font-size: 0.7em;
+            opacity: 0.7;
+            margin-left: 2px;
+        }
+
+        /* Visa detail panel */
+        .visa-detail-panel {
+            display: none;
+            margin-top: 12px;
+            padding: 14px 18px;
+            background: var(--stat-card-bg);
+            border: 1px solid var(--border-section);
+            border-radius: 12px;
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+        .visa-detail-panel.show { display: block; animation: fadeSlideIn 0.3s ease-out; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .visa-detail-program { margin-bottom: 10px; }
+        .visa-detail-program:last-child { margin-bottom: 0; }
+        .visa-detail-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .visa-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid var(--border-section);
+        }
+        .visa-detail-row:last-child { border-bottom: none; }
+        .visa-detail-label { color: var(--text-secondary); font-weight: 500; }
+        .visa-detail-value { color: var(--text-primary); font-weight: 600; text-align: right; max-width: 60%; }
+        .visa-detail-notes {
+            margin-top: 8px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.5;
+        }
+        .visa-detail-fallback {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Collapsed cards for results 4-10 */
+        .result-card.collapsed {
+            padding: 16px 20px;
+        }
+        .result-card.collapsed .card-years {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+        .result-card.collapsed .card-years-label {
+            margin-bottom: 10px;
+        }
+        .result-card.collapsed .card-expenses {
+            margin-bottom: 10px;
+        }
+        .more-results {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .more-results.show {
+            display: flex;
+        }
+        .show-more-btn {
+            width: 100%;
+            padding: 14px;
+            border: 1px dashed var(--border-section);
+            border-radius: 12px;
+            background: transparent;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            margin-top: 4px;
+        }
+        .show-more-btn:hover {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
         /* Footer */
         .powered-by {
             text-align: center;
@@ -680,7 +774,7 @@
             </div>
         </div>
 
-        <button class="btn-find" id="btnFind">Find My Top 3</button>
+        <button class="btn-find" id="btnFind">Find My Top Destinations</button>
 
         <div class="results-section" id="resultsSection">
             <div class="results-title">Your Top Retirement Destinations</div>
@@ -5793,20 +5887,52 @@ function findTopCities(params) {
             return;
         }
 
-        // Render top 3
-        const top3 = results.slice(0, 3);
+        // Build visa detail HTML helper
+        function buildVisaDetailHTML(visa) {
+            if (visa.status === 'citizen') {
+                return '<div class="visa-detail-fallback">No visa needed — you\'re a citizen.</div>';
+            }
+            if (!visa.programs || visa.programs.length === 0) {
+                return '<div class="visa-detail-fallback">No known retirement visa programs for this country.</div>';
+            }
+            return visa.programs.map(p => {
+                let rows = '';
+                if (p.minMonthlyIncome) rows += `<div class="visa-detail-row"><span class="visa-detail-label">Min. Monthly Income</span><span class="visa-detail-value">$${formatNumber(p.minMonthlyIncome)}/mo</span></div>`;
+                if (p.minSavings) rows += `<div class="visa-detail-row"><span class="visa-detail-label">Min. Savings</span><span class="visa-detail-value">$${formatNumber(p.minSavings)}</span></div>`;
+                if (p.minAge) rows += `<div class="visa-detail-row"><span class="visa-detail-label">Min. Age</span><span class="visa-detail-value">${p.minAge}+</span></div>`;
+                if (p.maxStayYears) rows += `<div class="visa-detail-row"><span class="visa-detail-label">Max Stay</span><span class="visa-detail-value">${p.maxStayYears} years</span></div>`;
+                rows += `<div class="visa-detail-row"><span class="visa-detail-label">Path to PR</span><span class="visa-detail-value">${p.pathToPR ? 'Yes' : 'No'}</span></div>`;
+                rows += `<div class="visa-detail-row"><span class="visa-detail-label">Path to Citizenship</span><span class="visa-detail-value">${p.pathToCitizenship ? (p.citizenshipYears ? 'Yes (' + p.citizenshipYears + ' yrs)' : 'Yes') : 'No'}</span></div>`;
+                if (p.healthInsuranceRequired) rows += `<div class="visa-detail-row"><span class="visa-detail-label">Health Insurance</span><span class="visa-detail-value">Required</span></div>`;
+                const notes = p.notes ? `<div class="visa-detail-notes">${p.notes}</div>` : '';
+                return `<div class="visa-detail-program"><div class="visa-detail-name">${p.name}</div>${rows}${notes}</div>`;
+            }).join('');
+        }
+
+        // Get visa badge info
+        function getVisaBadge(visa) {
+            let visaClass, visaText;
+            if (visa.status === 'citizen') { visaClass = 'visa-citizen'; visaText = 'Citizen'; }
+            else if (visa.status === 'eligible') { visaClass = 'visa-eligible'; visaText = 'Visa Available'; }
+            else if (visa.status === 'possible') { visaClass = 'visa-possible'; visaText = 'Possible (Investment)'; }
+            else { visaClass = 'visa-difficult'; visaText = 'Difficult'; }
+            return { visaClass, visaText };
+        }
+
+        // Render results (up to 10)
+        const topResults = results;
         const cardsContainer = document.getElementById('resultCards');
         cardsContainer.innerHTML = '';
 
         const sym = getCurrencySymbol(currency);
 
-        top3.forEach((r, i) => {
+        // Render top 3 as full expanded cards
+        topResults.slice(0, 3).forEach((r, i) => {
             const iso = getCountryISO(r.city);
             const flag = countryFlags[iso] || '';
             const countryName = getCountryName(r.city);
             const qol = r.qol;
 
-            // Years display
             let yearsText, yearsLabel;
             if (r.financial.years === Infinity) {
                 yearsText = '\u221E Indefinitely';
@@ -5817,17 +5943,10 @@ function findTopCities(params) {
                 yearsLabel = 'your money lasts';
             }
 
-            // Monthly expenses in user currency
             const expLocal = convertFromUSD(r.financial.monthlyExpenses, currency);
             const expText = sym + formatNumber(expLocal) + '/mo';
-
-            // Visa badge
-            const visa = r.visa;
-            let visaClass, visaText;
-            if (visa.status === 'citizen') { visaClass = 'visa-citizen'; visaText = 'Citizen'; }
-            else if (visa.status === 'eligible') { visaClass = 'visa-eligible'; visaText = 'Visa Available'; }
-            else if (visa.status === 'possible') { visaClass = 'visa-possible'; visaText = 'Possible (Investment)'; }
-            else { visaClass = 'visa-difficult'; visaText = 'Difficult'; }
+            const { visaClass, visaText } = getVisaBadge(r.visa);
+            const visaDetailHTML = buildVisaDetailHTML(r.visa);
 
             const card = document.createElement('div');
             card.className = 'result-card';
@@ -5860,10 +5979,77 @@ function findTopCities(params) {
                         <span class="qol-score">${qol.climate}</span>
                     </div>
                 </div>
-                <span class="visa-badge ${visaClass}">${visaText}</span>
+                <span class="visa-badge ${visaClass}">${visaText} <span class="visa-info-icon">\u24D8</span></span>
+                <div class="visa-detail-panel">${visaDetailHTML}</div>
             `;
+            card.querySelector('.visa-badge').addEventListener('click', function() {
+                card.querySelector('.visa-detail-panel').classList.toggle('show');
+            });
             cardsContainer.appendChild(card);
         });
+
+        // Show more button + collapsed cards 4-10
+        if (topResults.length > 3) {
+            const showMoreBtn = document.createElement('button');
+            showMoreBtn.className = 'show-more-btn';
+            showMoreBtn.textContent = `Show ${topResults.length - 3} More Destinations`;
+            cardsContainer.appendChild(showMoreBtn);
+
+            const moreContainer = document.createElement('div');
+            moreContainer.className = 'more-results';
+            cardsContainer.appendChild(moreContainer);
+
+            topResults.slice(3).forEach((r, i) => {
+                const iso = getCountryISO(r.city);
+                const flag = countryFlags[iso] || '';
+                const countryName = getCountryName(r.city);
+
+                let yearsText, yearsLabel;
+                if (r.financial.years === Infinity) {
+                    yearsText = '\u221E Indefinitely';
+                    yearsLabel = 'your money lasts forever';
+                } else {
+                    const y = Math.round(r.financial.years * 10) / 10;
+                    yearsText = y + ' Years';
+                    yearsLabel = 'your money lasts';
+                }
+
+                const expLocal = convertFromUSD(r.financial.monthlyExpenses, currency);
+                const expText = sym + formatNumber(expLocal) + '/mo';
+                const { visaClass, visaText } = getVisaBadge(r.visa);
+                const visaDetailHTML = buildVisaDetailHTML(r.visa);
+
+                const card = document.createElement('div');
+                card.className = 'result-card collapsed';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="card-flag">${flag}</span>
+                        <div>
+                            <div class="card-city">${r.city}</div>
+                            <div class="card-country">${countryName}</div>
+                        </div>
+                        <div class="card-rank">${i + 4}</div>
+                    </div>
+                    <div class="card-years">${yearsText}</div>
+                    <div class="card-years-label">${yearsLabel}</div>
+                    <div class="card-expenses">Est. monthly expenses: ${expText}</div>
+                    <span class="visa-badge ${visaClass}">${visaText} <span class="visa-info-icon">\u24D8</span></span>
+                    <div class="visa-detail-panel">${visaDetailHTML}</div>
+                `;
+                card.querySelector('.visa-badge').addEventListener('click', function() {
+                    card.querySelector('.visa-detail-panel').classList.toggle('show');
+                });
+                moreContainer.appendChild(card);
+            });
+
+            showMoreBtn.addEventListener('click', function() {
+                const isShowing = moreContainer.classList.contains('show');
+                moreContainer.classList.toggle('show');
+                showMoreBtn.textContent = isShowing
+                    ? `Show ${topResults.length - 3} More Destinations`
+                    : 'Show Fewer';
+            });
+        }
 
         document.getElementById('resultsSection').classList.add('show');
         document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
