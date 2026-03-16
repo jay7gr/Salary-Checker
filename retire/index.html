@@ -1498,7 +1498,7 @@
                     </div>
                     <div id="mustHaves" style="margin-top:12px;">
                         <label class="must-have-check"><input type="checkbox" id="mustVisa"> Must have retirement visa program</label>
-                        <label class="must-have-check"><input type="checkbox" id="mustEnglish50"> Must have good English (50+)</label>
+                        <label class="must-have-check"><input type="checkbox" id="mustNoInheritanceTax"> No inheritance tax</label>
                         <label class="must-have-check"><input type="checkbox" id="mustBeach"> Must be beach/coastal</label>
                     </div>
                 </div>
@@ -7136,7 +7136,11 @@ function findTopCities(params) {
         if (mt.safety > 0 && (qol.safety || 0) < mt.safety) return false;
         if (mt.healthcare > 0 && (qol.healthcare || 0) < mt.healthcare) return false;
         if (mt.english > 0 && (qol.english || 0) < mt.english) return false;
-        if (mh.english && (qol.english || 0) < 50) return false;
+        if (mh.noInheritanceTax) {
+            const country = getCountryName(city);
+            const tax = retireInheritanceTax[country];
+            if (tax && tax.rate > 0) return false;
+        }
         if (mh.visa) {
             const visa = getVisaEligibility(city, params.citizenshipISO);
             if (!visa || visa.status === 'none' || visa.status === 'difficult') return false;
@@ -7199,7 +7203,7 @@ let userState = {
     factorOrder: ['affordability','healthcare','safety','climate','infrastructure','english','expat','culture','charm'],
     housing: 'rent',
     minThresholds: { safety: 0, healthcare: 0, english: 0 },
-    mustHaves: { visa: false, english: false, beach: false },
+    mustHaves: { visa: false, noInheritanceTax: false, beach: false },
     lockedFactors: [],
     preferredCountry: '',
     preferredCity: ''
@@ -7405,7 +7409,7 @@ setupToggleGroup('housingToggle', val => { userState.housing = val; });
 
 // ── Must-have checkboxes ──
 document.getElementById('mustVisa').addEventListener('change', function() { userState.mustHaves.visa = this.checked; });
-document.getElementById('mustEnglish50').addEventListener('change', function() { userState.mustHaves.english = this.checked; });
+document.getElementById('mustNoInheritanceTax').addEventListener('change', function() { userState.mustHaves.noInheritanceTax = this.checked; });
 document.getElementById('mustBeach').addEventListener('change', function() { userState.mustHaves.beach = this.checked; });
 
 // ── Region Chips ──
