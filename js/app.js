@@ -2519,8 +2519,11 @@
             // Clear existing options
             select.innerHTML = '<option value="">Select a neighborhood...</option>';
 
+            // Remove any previous searchable wrapper
+            const existingWrapper = group.querySelector('.searchable-select-wrapper');
+            if (existingWrapper) existingWrapper.remove();
+
             if (neighborhoods) {
-                // Sort neighborhoods by multiplier (highest first)
                 const sorted = Object.entries(neighborhoods).sort((a, b) => b[1] - a[1]);
                 sorted.forEach(([name, multiplier]) => {
                     const option = document.createElement('option');
@@ -2530,8 +2533,61 @@
                     option.textContent = `${name} (${sign}${pct.toFixed(0)}% vs city avg)`;
                     select.appendChild(option);
                 });
+
+                // Build searchable overlay if many neighborhoods
+                if (sorted.length > 10) {
+                    select.style.display = 'none';
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'searchable-select-wrapper';
+                    const searchInput = document.createElement('input');
+                    searchInput.type = 'text';
+                    searchInput.className = 'search-input';
+                    searchInput.placeholder = 'Type to search neighborhoods...';
+                    searchInput.autocomplete = 'off';
+                    const dropdownList = document.createElement('div');
+                    dropdownList.className = 'dropdown-list';
+
+                    function renderItems(filter) {
+                        dropdownList.innerHTML = '';
+                        const filtered = sorted.filter(([name]) => name.toLowerCase().includes(filter.toLowerCase()));
+                        if (filtered.length === 0) {
+                            dropdownList.innerHTML = '<div class="dropdown-item" style="color:var(--text-secondary);pointer-events:none;">No matches</div>';
+                            return;
+                        }
+                        filtered.forEach(([name, multiplier]) => {
+                            const item = document.createElement('div');
+                            item.className = 'dropdown-item';
+                            const pct = ((multiplier - 1) * 100);
+                            const sign = pct >= 0 ? '+' : '';
+                            item.textContent = `${name} (${sign}${pct.toFixed(0)}% vs city avg)`;
+                            item.addEventListener('click', () => {
+                                select.value = name;
+                                select.dispatchEvent(new Event('change'));
+                                searchInput.value = item.textContent;
+                                dropdownList.classList.remove('open');
+                            });
+                            dropdownList.appendChild(item);
+                        });
+                    }
+
+                    searchInput.addEventListener('focus', () => { renderItems(searchInput.value); dropdownList.classList.add('open'); });
+                    searchInput.addEventListener('input', () => { renderItems(searchInput.value); dropdownList.classList.add('open'); });
+                    document.addEventListener('click', (e) => { if (!wrapper.contains(e.target)) dropdownList.classList.remove('open'); });
+
+                    // Clear button behavior
+                    searchInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') { dropdownList.classList.remove('open'); searchInput.blur(); }
+                    });
+
+                    wrapper.appendChild(searchInput);
+                    wrapper.appendChild(dropdownList);
+                    select.parentNode.insertBefore(wrapper, select.nextSibling);
+                } else {
+                    select.style.display = '';
+                }
                 group.style.display = 'block';
             } else {
+                select.style.display = '';
                 group.style.display = 'none';
             }
         }
@@ -2708,6 +2764,10 @@
                 const rawSalary = document.getElementById('currentSalary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
                 salary = parseFloat(rawSalary);
                 if (!salary || salary <= 0) { showError('Please enter your salary', 'currentSalary'); return; }
+                // Convert to annual based on frequency toggle
+                const freq = document.getElementById('salaryFrequency') ? document.getElementById('salaryFrequency').value : 'annual';
+                if (freq === 'monthly') salary *= 12;
+                else if (freq === 'hourly') salary *= 2080; // 40hrs × 52 weeks
             }
 
             // Read city from the correct field

@@ -7663,7 +7663,7 @@ function calculateResults() {
         return;
     }
 
-    renderResults(topCities.slice(0, 3), params, currency);
+    renderResults(topCities.slice(0, 5), params, currency);
 
     // GA4 event
     if (typeof gtag === 'function') {
@@ -7712,21 +7712,24 @@ function formatVisaBadge(visa) {
     return { text: parts.join(' · '), class: badgeClass };
 }
 
-function renderResults(top3, params, displayCurrency) {
+function renderResults(topCities, params, displayCurrency) {
     // Hide wizard, show results
     document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
     document.querySelector('.wizard-progress').style.display = 'none';
     document.getElementById('wizardLabel').style.display = 'none';
     document.getElementById('resultsContainer').classList.add('show');
 
+    const top3 = topCities.slice(0, 3);
+    const alsoConsider = topCities.slice(3, 5);
+
     // Header
     const rh = document.getElementById('resultsHeader');
     rh.innerHTML = `
-        <h2>Your Top 3 Retirement Destinations</h2>
+        <h2>Your Top ${topCities.length} Retirement Destinations</h2>
         <p>Based on $${formatNumber(params.savingsUSD)} savings${params.monthlyIncomeUSD > 0 ? ' + $' + formatNumber(params.monthlyIncomeUSD) + '/mo income' : ''} &mdash; ${params.household === 'family' ? 'family of ' + (2 + (params.children || 0)) : params.household === 'couple' ? 'couple' : 'single'}</p>
     `;
 
-    // Recommendation cards
+    // Recommendation cards — top 3
     const cardsDiv = document.getElementById('recCards');
     cardsDiv.innerHTML = top3.map((r, i) => {
         const iso = cityToCountry[r.city];
@@ -7752,15 +7755,43 @@ function renderResults(top3, params, displayCurrency) {
         </div>`;
     }).join('');
 
-    // Comparison table
-    renderComparisonTable(top3, params);
+    // "Also consider" compact cards for cities 4-5
+    if (alsoConsider.length > 0) {
+        cardsDiv.innerHTML += `
+            <div style="width:100%;margin-top:16px;">
+                <h3 style="font-size:0.95rem;color:var(--text-secondary);margin:0 0 10px;font-weight:600;">Also consider</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    ${alsoConsider.map((r, i) => {
+                        const iso = cityToCountry[r.city];
+                        const flag = countryFlags[iso] || '🌍';
+                        const countryName = getCountryName(r.city);
+                        const yearsText = r.financial.years === Infinity ? '∞' : Math.round(r.financial.years);
+                        const monthlyUSD = r.financial.monthlyExpenses + r.financial.healthInsurance;
+                        return `<div class="rec-card" style="flex:1;min-width:200px;cursor:pointer;" onclick="scrollToDetail('detail${i + 3}')">
+                            <div class="rec-flag">${flag}</div>
+                            <div class="rec-city">${r.city}</div>
+                            <div class="rec-country">${countryName}</div>
+                            <div class="rec-years ${r.financial.years === Infinity ? 'infinite' : ''}">${yearsText}</div>
+                            <div class="rec-years-label">${r.financial.years === Infinity ? 'Your income covers all expenses' : 'years your savings last'}</div>
+                            <div class="rec-stats">
+                                <div class="rec-stat"><span class="rec-stat-label">Monthly cost</span><span class="rec-stat-value">$${formatNumber(monthlyUSD)}/mo</span></div>
+                                <div class="rec-stat"><span class="rec-stat-label">QOL Score</span><span class="rec-stat-value">${Math.round(r.composite)}/100</span></div>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>`;
+    }
 
-    // Per-city detail panels
-    renderCityDetails(top3, params, displayCurrency);
+    // Comparison table — all cities
+    renderComparisonTable(topCities, params);
+
+    // Per-city detail panels — all cities
+    renderCityDetails(topCities, params, displayCurrency);
 
     // Share URL
     const shareUrl = window.location.href;
-    const shareText = `My top retirement destination: ${top3[0].city} — ${top3[0].financial.years === Infinity ? 'money lasts forever' : Math.round(top3[0].financial.years) + ' years'} | salary-converter.com/retire/`;
+    const shareText = `My top retirement destination: ${topCities[0].city} — ${topCities[0].financial.years === Infinity ? 'money lasts forever' : Math.round(topCities[0].financial.years) + ' years'} | salary-converter.com/retire/`;
     document.getElementById('shareBar').setAttribute('data-share-url', shareUrl);
     document.getElementById('shareBar').setAttribute('data-share-text', shareText);
 
@@ -7973,7 +8004,7 @@ function recalculateWithScenarios() {
 
     const topCities = findTopCities(params);
     if (topCities.length >= 3) {
-        renderResults(topCities.slice(0, 3), params, window._lastCurrency);
+        renderResults(topCities.slice(0, 5), params, window._lastCurrency);
     }
 }
 
