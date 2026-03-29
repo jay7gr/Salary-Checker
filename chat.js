@@ -30,8 +30,9 @@
         '.chat-header-title{font-size:0.85rem;font-weight:600;color:var(--text-primary,#1d1d1f);line-height:1.3}',
         '.chat-header-subtitle{font-size:0.7rem;color:var(--text-secondary,#86868b);margin-top:2px}',
         '.chat-header-actions{display:flex;align-items:center;gap:4px}',
-        '.chat-new-btn{background:none;border:none;color:var(--text-secondary,#86868b);cursor:pointer;font-size:0.75rem;padding:4px 8px;border-radius:6px;transition:background 0.15s,color 0.15s;font-family:inherit}',
-        '.chat-new-btn:hover{background:var(--tag-bg,#f0f0f2);color:var(--text-primary,#1d1d1f)}',
+        '.chat-new-btn,.chat-auth-btn{background:none;border:none;color:var(--text-secondary,#86868b);cursor:pointer;font-size:0.75rem;padding:4px 8px;border-radius:6px;transition:background 0.15s,color 0.15s;font-family:inherit}',
+        '.chat-new-btn:hover,.chat-auth-btn:hover{background:var(--tag-bg,#f0f0f2);color:var(--text-primary,#1d1d1f)}',
+        '.chat-auth-btn.signed-in{color:var(--accent,#2563eb)}',
         '.chat-close-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:background 0.15s}',
         '.chat-close-btn svg{width:18px;height:18px;fill:var(--text-secondary,#86868b)}',
         '.chat-close-btn:hover{background:var(--tag-bg,#f0f0f2)}',
@@ -84,6 +85,95 @@
     ].join('\n');
     document.head.appendChild(style);
 
+    // --- Firebase Config ---
+    // Replace these with your Firebase project credentials
+    var FIREBASE_CONFIG = {
+        apiKey: 'AIzaSyDExample-ReplaceWithYourKey',
+        authDomain: 'salary-converter-chat.firebaseapp.com',
+        projectId: 'salary-converter-chat',
+        storageBucket: 'salary-converter-chat.appspot.com',
+        messagingSenderId: '123456789012',
+        appId: '1:123456789012:web:abc123def456'
+    };
+
+    // --- Firebase SDK loader ---
+    var firebaseReady = false;
+    var firebaseApp = null;
+    var firebaseAuth = null;
+    var firebaseDb = null;
+    var currentUser = null;
+
+    function loadFirebaseSDK() {
+        return new Promise(function(resolve) {
+            if (window.firebase && window.firebase.app) {
+                resolve();
+                return;
+            }
+            var scripts = [
+                'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',
+                'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js',
+                'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js'
+            ];
+            var loaded = 0;
+            function onLoad() {
+                loaded++;
+                if (loaded === scripts.length) resolve();
+            }
+            // Load sequentially: app first, then auth + firestore
+            var first = document.createElement('script');
+            first.src = scripts[0];
+            first.onload = function() {
+                var s1 = document.createElement('script');
+                s1.src = scripts[1];
+                s1.onload = onLoad;
+                s1.onerror = onLoad;
+                document.head.appendChild(s1);
+                var s2 = document.createElement('script');
+                s2.src = scripts[2];
+                s2.onload = onLoad;
+                s2.onerror = onLoad;
+                document.head.appendChild(s2);
+            };
+            first.onerror = function() { resolve(); };
+            document.head.appendChild(first);
+        });
+    }
+
+    function initFirebase() {
+        return loadFirebaseSDK().then(function() {
+            if (!window.firebase || !window.firebase.app) return;
+            try {
+                if (!firebase.apps.length) {
+                    firebaseApp = firebase.initializeApp(FIREBASE_CONFIG);
+                } else {
+                    firebaseApp = firebase.app();
+                }
+                firebaseAuth = firebase.auth();
+                firebaseDb = firebase.firestore();
+                firebaseReady = true;
+
+                // Listen for auth state changes
+                firebaseAuth.onAuthStateChanged(function(user) {
+                    currentUser = user;
+                    updateAuthUI();
+                    if (user && chatInitialized) {
+                        // User just signed in — load their cloud history
+                        loadHistoryFromCloud().then(function() {
+                            if (chatInitialized) {
+                                var messagesEl = document.getElementById('chatMessages');
+                                if (messagesEl) {
+                                    if (!restoreMessages()) showWelcome();
+                                }
+                            }
+                        });
+                    }
+                });
+            } catch (e) {
+                firebaseReady = false;
+            }
+        });
+    }
+
     // --- Config ---
     var _k = '=0UVBZ3aJFGWDBDUz80b2o3N0E0aD5kTsllRzIWekd0VMZUWl5EZBRUbalnetNXYnh2TVt2XrN3Z';
     var getKey = function() { return atob(_k.split('').reverse().join('')); };
@@ -100,14 +190,18 @@
     var MAX_HISTORY = 20;
     var STORAGE_KEY = 'sc_chat_history';
 
-    // --- Persistence helpers ---
+    // --- Persistence helpers (sessionStorage fallback + Firestore cloud sync) ---
     function saveHistory() {
+        // Always save to sessionStorage as immediate cache
         try {
             sessionStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
         } catch (e) { /* storage full or unavailable */ }
+        // If signed in, also persist to Firestore
+        saveHistoryToCloud();
     }
 
     function loadHistory() {
+        // Load from sessionStorage first (fast, synchronous)
         try {
             var data = sessionStorage.getItem(STORAGE_KEY);
             if (data) {
@@ -115,6 +209,36 @@
                 if (!Array.isArray(conversationHistory)) conversationHistory = [];
             }
         } catch (e) { conversationHistory = []; }
+    }
+
+    function saveHistoryToCloud() {
+        if (!firebaseReady || !currentUser || !firebaseDb) return;
+        try {
+            firebaseDb.collection('chatHistory').doc(currentUser.uid).set({
+                messages: conversationHistory,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(function() { /* silent fail */ });
+        } catch (e) { /* silent fail */ }
+    }
+
+    function loadHistoryFromCloud() {
+        if (!firebaseReady || !currentUser || !firebaseDb) {
+            return Promise.resolve();
+        }
+        return firebaseDb.collection('chatHistory').doc(currentUser.uid).get()
+            .then(function(doc) {
+                if (doc.exists) {
+                    var data = doc.data();
+                    if (data && Array.isArray(data.messages) && data.messages.length > 0) {
+                        conversationHistory = data.messages;
+                        // Sync cloud data to local cache
+                        try {
+                            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
+                        } catch (e) { /* ignore */ }
+                    }
+                }
+            })
+            .catch(function() { /* silent fail — use local data */ });
     }
 
     function restoreMessages() {
@@ -130,6 +254,35 @@
             }
         }
         return true;
+    }
+
+    // --- Auth UI ---
+    function updateAuthUI() {
+        var btn = document.getElementById('chatAuthBtn');
+        if (!btn) return;
+        if (currentUser) {
+            btn.textContent = 'Sign Out';
+            btn.title = currentUser.email || currentUser.displayName || 'Signed in';
+        } else {
+            btn.textContent = 'Sign In';
+            btn.title = 'Sign in to sync chat across devices';
+        }
+    }
+
+    function handleAuthClick() {
+        if (!firebaseReady || !firebaseAuth) return;
+        if (currentUser) {
+            firebaseAuth.signOut().then(function() {
+                // Revert to local-only — keep current messages in session
+            });
+        } else {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            firebaseAuth.signInWithPopup(provider).catch(function(err) {
+                if (err.code !== 'auth/popup-closed-by-user') {
+                    appendError('Sign-in failed. Please try again.');
+                }
+            });
+        }
     }
 
     // --- Helpers ---
@@ -309,7 +462,7 @@
 
     function clearChat() {
         conversationHistory = [];
-        saveHistory();
+        saveHistory(); // clears both local + cloud
         if (abortController) abortController.abort();
         isStreaming = false;
         document.getElementById('chatSend').disabled = false;
@@ -327,6 +480,7 @@
                     '<div class="chat-header-subtitle">Powered by AI</div>' +
                 '</div>' +
                 '<div class="chat-header-actions">' +
+                    '<button class="chat-auth-btn" id="chatAuthBtn" title="Sign in to sync chat across devices">Sign In</button>' +
                     '<button class="chat-new-btn" id="chatNewBtn">New Chat</button>' +
                     '<button class="chat-close-btn" id="chatCloseBtn" aria-label="Close chat"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>' +
                 '</div>' +
@@ -340,6 +494,7 @@
             '</div>';
         document.body.appendChild(p);
 
+        document.getElementById('chatAuthBtn').addEventListener('click', handleAuthClick);
         document.getElementById('chatNewBtn').addEventListener('click', clearChat);
         document.getElementById('chatCloseBtn').addEventListener('click', toggleChat);
         document.getElementById('chatSend').addEventListener('click', function() {
@@ -362,11 +517,23 @@
             e.stopPropagation();
         });
 
+        // Load local cache immediately
         loadHistory();
         if (!restoreMessages()) {
             showWelcome();
         }
         chatInitialized = true;
+        updateAuthUI();
+
+        // Then try loading cloud data (async, will update UI if newer data found)
+        if (currentUser) {
+            loadHistoryFromCloud().then(function() {
+                if (conversationHistory.length > 0) {
+                    restoreMessages();
+                }
+            });
+        }
+
         return p;
     }
 
@@ -424,4 +591,7 @@
         '<span class="icon-close"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span>';
     document.body.appendChild(bubble);
     bubble.addEventListener('click', toggleChat);
+
+    // --- Bootstrap Firebase (non-blocking) ---
+    initFirebase();
 })();
