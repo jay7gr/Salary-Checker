@@ -5,6 +5,9 @@
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1c1c1e" media="(prefers-color-scheme: dark)">
+    <link rel="apple-touch-icon" href="/logo-512.png">
     <title>Free Salary Converter 2026 — Compare 3,400+ Areas</title>
 
     <!-- SEO Meta Tags -->
@@ -234,6 +237,23 @@
             --focus-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
             --range-bar-bg: #38383a;
             --quick-btn-hover-bg: #3a3a3c;
+        }
+
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 99999;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-to-content:focus {
+            left: 0;
         }
 
         * {
@@ -2277,12 +2297,13 @@
     <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 </head>
 <body>
+    <a href="#calculator" class="skip-to-content">Skip to main content</a>
     <button class="sidebar-burger" id="sidebarBurger" aria-label="Toggle stats panel">
         <span class="burger-icon">📊</span>
     </button>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="page-layout">
-    <div class="container">
+    <div class="container" id="calculator">
         <div class="header">
             <a href="/city/" class="blog-link" style="left: 80px;">Cities</a>
             <a href="/compare/" class="blog-link" style="left: 150px;">City Comparisons</a>
@@ -2320,7 +2341,7 @@
         </div>
 
 
-        <div class="error-message" id="error"></div>
+        <div class="error-message" id="error" role="alert" aria-live="assertive"></div>
 
         <div class="form-section household-section" id="householdSection">
             <h2>👥 Household</h2>
@@ -2794,9 +2815,9 @@
     </nav>
 
     <div class="contact-overlay" id="contactOverlay">
-        <div class="contact-modal">
+        <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
             <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Close">&times;</button>
-            <h2>Contact Us</h2>
+            <h2 id="contactModalTitle">Contact Us</h2>
             <p class="contact-subtitle">Have feedback, found a data error, or want to suggest a feature?</p>
             <form id="contactForm" class="contact-form">
                 <input type="hidden" name="access_key" value="58839fd2-7f1c-4944-8fd5-322bc3d6beba">
