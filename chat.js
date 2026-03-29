@@ -98,6 +98,39 @@
     var abortController = null;
     var bubble, panel;
     var MAX_HISTORY = 20;
+    var STORAGE_KEY = 'sc_chat_history';
+
+    // --- Persistence helpers ---
+    function saveHistory() {
+        try {
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(conversationHistory));
+        } catch (e) { /* storage full or unavailable */ }
+    }
+
+    function loadHistory() {
+        try {
+            var data = sessionStorage.getItem(STORAGE_KEY);
+            if (data) {
+                conversationHistory = JSON.parse(data);
+                if (!Array.isArray(conversationHistory)) conversationHistory = [];
+            }
+        } catch (e) { conversationHistory = []; }
+    }
+
+    function restoreMessages() {
+        if (conversationHistory.length === 0) return false;
+        var messagesEl = document.getElementById('chatMessages');
+        messagesEl.innerHTML = '';
+        for (var i = 0; i < conversationHistory.length; i++) {
+            var m = conversationHistory[i];
+            if (m.role === 'user') {
+                appendMessage('user', m.content);
+            } else if (m.role === 'assistant') {
+                appendMessage('ai', m.content);
+            }
+        }
+        return true;
+    }
 
     // --- Helpers ---
     function renderMarkdown(text) {
@@ -234,6 +267,7 @@
         }
 
         conversationHistory.push({ role: 'assistant', content: fullText });
+        saveHistory();
     }
 
     async function sendMessage(text) {
@@ -249,6 +283,7 @@
         while (conversationHistory.length > MAX_HISTORY) {
             conversationHistory.shift();
         }
+        saveHistory();
 
         var input = document.getElementById('chatInput');
         input.value = '';
@@ -274,6 +309,7 @@
 
     function clearChat() {
         conversationHistory = [];
+        saveHistory();
         if (abortController) abortController.abort();
         isStreaming = false;
         document.getElementById('chatSend').disabled = false;
@@ -326,7 +362,10 @@
             e.stopPropagation();
         });
 
-        showWelcome();
+        loadHistory();
+        if (!restoreMessages()) {
+            showWelcome();
+        }
         chatInitialized = true;
         return p;
     }
