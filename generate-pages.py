@@ -5119,6 +5119,19 @@ def get_neighborhood_comparison_pairs(city):
     return [(n1, nhoods[n1], n2, nhoods[n2]) for n1, n2 in pairs]
 
 
+def get_all_neighborhood_pairs(city):
+    """Return all C(n,2) neighborhood pairs for a city (for full page generation)."""
+    nhoods = cityNeighborhoods.get(city, {})
+    if len(nhoods) < 2:
+        return []
+    sorted_nhoods = sorted(nhoods.keys())
+    pairs = []
+    for i, n1 in enumerate(sorted_nhoods):
+        for n2 in sorted_nhoods[i + 1:]:
+            pairs.append((n1, nhoods[n1], n2, nhoods[n2]))
+    return pairs
+
+
 # ============================================================
 # DATA-DRIVEN BLOG ARTICLE GENERATORS
 # ============================================================
@@ -5955,11 +5968,11 @@ if __name__ == '__main__':
             f.write(html)
     print(f"  Done: {len(comparison_pairs)} city comparison pages in /compare/")
 
-    # Generate neighborhood comparison pages
+    # Generate neighborhood comparison pages (all C(n,2) pairs per city)
     nhood_comp_count = 0
     nhood_comp_data = {}
     for city in cityNeighborhoods:
-        pairs = get_neighborhood_comparison_pairs(city)
+        pairs = get_all_neighborhood_pairs(city)
         if not pairs:
             continue
         nhood_comp_data[city] = pairs
