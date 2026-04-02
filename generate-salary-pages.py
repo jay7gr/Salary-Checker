@@ -444,7 +444,10 @@ def generate_city_salary_page(job_title, city):
     <meta property="og:title" content="{html_mod.escape(ptitle)}">
     <meta property="og:description" content="{html_mod.escape(mdesc)}">
     <meta property="og:url" content="{canon}">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{html_mod.escape(ptitle)}">
+    <meta name="twitter:description" content="{html_mod.escape(mdesc)}">
     <script type="application/ld+json">{bc_s}</script>
     <script type="application/ld+json">{faq_s}</script>
 {GA4_SNIPPET}

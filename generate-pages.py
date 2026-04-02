@@ -4831,7 +4831,54 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
         rc_s2 = slugify(rc_n2)
         related_comp_links += f'<a href="/compare/{city_slug}/{rc_s1}-vs-{rc_s2}" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">{rc_n1} vs {rc_n2}</a>\n'
 
-    meta_desc = f'{more_affordable} is {diff_pct:.0f}% cheaper than {more_expensive} in {city}. Compare rent, groceries & salary equivalents neighborhood by neighborhood.'
+    meta_desc = (
+        f'{more_affordable} is {diff_pct:.0f}% cheaper than {more_expensive} in {city}. '
+        f'1BR rent: {fmt_rent2 if more_affordable == n2 else fmt_rent1}/mo vs '
+        f'{fmt_rent1 if more_affordable == n2 else fmt_rent2}/mo. '
+        f'Full cost of living breakdown with salary equivalents.'
+    )
+
+    # FAQ schema
+    faq_schema = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": f"Is {n1} or {n2} cheaper in {city}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": (
+                        f"{more_affordable} is cheaper — {diff_pct:.0f}% less expensive than {more_expensive} in {city}. "
+                        f"The cost of living index is {coli1} for {n1} vs {coli2} for {n2} (city average: {city_coli})."
+                    )
+                }
+            },
+            {
+                "@type": "Question",
+                "name": f"What is the rent difference between {n1} and {n2} in {city}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": (
+                        f"A 1-bedroom apartment in {n1} costs approximately {fmt_rent1}/month, "
+                        f"compared to {fmt_rent2}/month in {n2}. "
+                        f"{more_affordable} is {diff_pct:.0f}% more affordable overall."
+                    )
+                }
+            },
+            {
+                "@type": "Question",
+                "name": f"What salary do you need to live in {n1} vs {n2}?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": (
+                        f"To maintain the equivalent of a $75,000 USD lifestyle, you need "
+                        f"{fmt_equiv1} in {n1} and {fmt_equiv2} in {n2}, {city}."
+                    )
+                }
+            }
+        ]
+    }, indent=4)
 
     # Share bar
     share_text = f'{n1} vs {n2} in {city}: {more_affordable} is {diff_pct:.0f}% more affordable — salary:converter'
@@ -4853,6 +4900,9 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
     <meta property="og:url" content="https://salary-converter.com/compare/{city_slug}/{n1_slug}-vs-{n2_slug}">
     <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{n1} vs {n2}, {city}: {diff_pct:.0f}% Cost Difference ({CURRENT_YEAR})">
+    <meta name="twitter:description" content="{meta_desc}">
     <script type="application/ld+json">
     {{
         "@context": "https://schema.org",
@@ -4863,6 +4913,9 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             {{"@type": "ListItem", "position": 3, "name": "{n1} vs {n2} ({city})"}}
         ]
     }}
+    </script>
+    <script type="application/ld+json">
+    {faq_schema}
     </script>
 {GA4_SNIPPET}
     <style>
