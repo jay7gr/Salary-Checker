@@ -68,7 +68,7 @@ def compute_city_salary_data(job_title, city):
     country = cityCountry.get(city, '')
     if local_salary > 0:
         ded = calculate_all_deductions(local_salary, country, city)
-        take_home_pct = (1 - ded['total_rate']) * 100
+        take_home_pct = 100 - ded['total_rate']
     else:
         take_home_pct = 100.0
     local_formatted = format_currency_amount(local_salary, currency)
@@ -336,6 +336,205 @@ def generate_index_page():
     return html
 
 
+def generate_city_salary_page(job_title, city):
+    """Individual profession × city page: /salary/{job-slug}/{city-slug}.html"""
+    ranges = salaryRanges[job_title]
+    low, mid, high = ranges['low'], ranges['mid'], ranges['high']
+    job_slug = slugify(job_title)
+    city_slug = slugify(city)
+    jt_lower = job_title.lower()
+    country = cityCountry.get(city, '')
+    currency = cityToCurrency.get(city, 'USD')
+
+    d = compute_city_salary_data(job_title, city)
+    adjusted_usd = d['adjusted_usd']
+    local_formatted = d['local_formatted']
+    take_home_pct = d['take_home_pct']
+    coli = d['coli']
+
+    # Salary range adjusted for this city's COLI
+    low_local = format_currency_amount(low * (coli / 100) * (exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)), currency)
+    high_local = format_currency_amount(high * (coli / 100) * (exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)), currency)
+    take_home_usd = adjusted_usd * take_home_pct / 100
+    take_home_monthly = take_home_usd / 12
+
+    canon = f'https://salary-converter.com/salary/{job_slug}/{city_slug}'
+    ptitle = f'{job_title} Salary in {city} ({CURRENT_YEAR}) — salary:converter'
+    mdesc = f'{job_title}s in {city} earn {local_formatted}/year (≈${adjusted_usd:,.0f} USD), after adjusting for local cost of living. Take-home: {take_home_pct:.0f}%. See full breakdown.'
+
+    # Top 5 cities by adjusted USD (same job) for comparison
+    all_cities_data = sorted(
+        [{'city': c, 'slug': slugify(c), **compute_city_salary_data(job_title, c)} for c in coliData],
+        key=lambda x: x['adjusted_usd'], reverse=True
+    )
+    top5 = [c for c in all_cities_data if c['city'] != city][:5]
+    city_rank = next((i + 1 for i, c in enumerate(all_cities_data) if c['city'] == city), '-')
+    total_cities = len(all_cities_data)
+
+    top5_rows = ''
+    for r in top5:
+        top5_rows += (
+            f'<tr><td><a href="/salary/{job_slug}/{r["slug"]}" '
+            f'style="color:var(--accent);text-decoration:none;font-weight:500;">{html_mod.escape(r["city"])}</a></td>'
+            f'<td style="text-align:right;">{r["local_formatted"]}</td>'
+            f'<td style="text-align:right;">${r["adjusted_usd"]:,.0f}</td>'
+            f'<td style="text-align:center;">{r["take_home_pct"]:.0f}%</td></tr>\n'
+        )
+
+    # Other jobs in same city (same category first)
+    cat = JOB_TO_CATEGORY.get(job_title, '')
+    same_cat = [t for t in JOB_CATEGORIES.get(cat, []) if t != job_title]
+    other_cat = [t for cat_jobs in JOB_CATEGORIES.values() for t in cat_jobs if t not in same_cat and t != job_title]
+    related_jobs = same_cat[:4] + other_cat[:2]
+    related_links = ''.join(
+        f'<a href="/salary/{slugify(t)}/{city_slug}" class="similar-city-link">'
+        f'{html_mod.escape(t)} in {html_mod.escape(city)}</a>'
+        for t in related_jobs
+    )
+
+    # Other cities for same job
+    nearby_links = ''.join(
+        f'<a href="/salary/{job_slug}/{slugify(c["city"])}" class="similar-city-link">'
+        f'{html_mod.escape(c["city"])}</a>'
+        for c in all_cities_data[:8] if c['city'] != city
+    )
+
+    # FAQ
+    f1q = f'How much does a {jt_lower} earn in {city}?'
+    f1a = (f'A {jt_lower} in {city} earns approximately {local_formatted}/year '
+           f'(≈${adjusted_usd:,.0f} USD equivalent), based on the {city} cost of living index of {coli}. '
+           f'Entry-level roles start around {low_local} and senior positions can reach {high_local}.')
+    f2q = f'What is the take-home pay for a {jt_lower} in {city}?'
+    f2a = (f'After income tax and social contributions in {country or city}, a {jt_lower} in {city} '
+           f'takes home approximately {take_home_pct:.0f}% of their gross salary, '
+           f'or around ${take_home_monthly:,.0f}/month (${take_home_usd:,.0f}/year in USD equivalent).')
+    f3q = f'How does {city} rank for {jt_lower} salaries globally?'
+    f3a = (f'{city} ranks #{city_rank} out of {total_cities} cities for {jt_lower} salaries '
+           f'after cost-of-living adjustment. The top city globally for this role is {all_cities_data[0]["city"]}.')
+
+    faq_s = json.dumps({
+        "@context": "https://schema.org", "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": f1q, "acceptedAnswer": {"@type": "Answer", "text": f1a}},
+            {"@type": "Question", "name": f2q, "acceptedAnswer": {"@type": "Answer", "text": f2a}},
+            {"@type": "Question", "name": f3q, "acceptedAnswer": {"@type": "Answer", "text": f3a}},
+        ]
+    })
+    bc_s = json.dumps({
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Salaries", "item": "https://salary-converter.com/salary/"},
+            {"@type": "ListItem", "position": 3, "name": f"{job_title} Salary", "item": f"https://salary-converter.com/salary/{job_slug}"},
+            {"@type": "ListItem", "position": 4, "name": city},
+        ]
+    })
+
+    sbar = build_share_bar(ptitle, canon)
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>{html_mod.escape(ptitle)}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="description" content="{html_mod.escape(mdesc)}">
+    <link rel="canonical" href="{canon}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{html_mod.escape(ptitle)}">
+    <meta property="og:description" content="{html_mod.escape(mdesc)}">
+    <meta property="og:url" content="{canon}">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">{bc_s}</script>
+    <script type="application/ld+json">{faq_s}</script>
+{GA4_SNIPPET}
+    <style>{_base_css()}</style>
+</head>
+<body>
+    <div class="page-wrapper">
+        {_nav_bar()}
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo;
+            <a href="/salary/">Salaries</a> &rsaquo;
+            <a href="/salary/{job_slug}">{html_mod.escape(job_title)}</a> &rsaquo;
+            {html_mod.escape(city)}
+        </div>
+        <div class="hero">
+            <h1>{html_mod.escape(job_title)} Salary in {html_mod.escape(city)} ({CURRENT_YEAR})</h1>
+            <p class="hero-desc">
+                {html_mod.escape(job_title)}s in {html_mod.escape(city)} earn <strong>{local_formatted}/year</strong>
+                (≈<strong>${adjusted_usd:,.0f} USD</strong>), adjusted for local cost of living.
+                Ranked #{city_rank} of {total_cities} cities for this role.
+            </p>
+        </div>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="label">Local Salary</div>
+                <div class="value">{local_formatted}</div>
+                <div class="sub">per year</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">USD Equivalent</div>
+                <div class="value">${adjusted_usd:,.0f}</div>
+                <div class="sub">per year</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Take-Home</div>
+                <div class="value">{take_home_pct:.0f}%</div>
+                <div class="sub">${take_home_monthly:,.0f}/mo net</div>
+            </div>
+        </div>
+        {sbar}
+        <section class="content-card">
+            <h2>Salary Range in {html_mod.escape(city)}</h2>
+            <p>Typical {html_mod.escape(jt_lower)} salary range in {html_mod.escape(city)}, adjusted for local cost of living (COLI: {coli}):</p>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="label">Entry Level</div><div class="value">{low_local}</div></div>
+                <div class="stat-card"><div class="label">Mid-Career</div><div class="value">{local_formatted}</div></div>
+                <div class="stat-card"><div class="label">Senior</div><div class="value">{high_local}</div></div>
+            </div>
+        </section>
+        <section class="content-card">
+            <h2>Top Cities for {html_mod.escape(job_title)} Salary</h2>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">Highest-paying cities for this role after cost-of-living adjustment:</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr>
+                        <th>City</th>
+                        <th style="text-align:right;">Local Salary</th>
+                        <th style="text-align:right;">USD Equiv.</th>
+                        <th style="text-align:center;">Take-Home</th>
+                    </tr></thead>
+                    <tbody>{top5_rows}</tbody>
+                </table>
+            </div>
+            <p style="margin-top:12px;font-size:0.82rem;">
+                <a href="/salary/{job_slug}" style="color:var(--accent);">See all {total_cities} cities for {html_mod.escape(job_title)} &rarr;</a>
+            </p>
+        </section>
+{WISE_CTA}
+        <section class="content-card">
+            <h2>Other Jobs in {html_mod.escape(city)}</h2>
+            <div class="similar-cities">{related_links}</div>
+        </section>
+        <section class="content-card">
+            <h2>{html_mod.escape(job_title)} Salary — Other Cities</h2>
+            <div class="similar-cities">{nearby_links}</div>
+        </section>
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item"><h3>{html_mod.escape(f1q)}</h3><p>{html_mod.escape(f1a)}</p></div>
+            <div class="faq-item"><h3>{html_mod.escape(f2q)}</h3><p>{html_mod.escape(f2a)}</p></div>
+            <div class="faq-item"><h3>{html_mod.escape(f3q)}</h3><p>{html_mod.escape(f3a)}</p></div>
+        </section>
+        {_footer()}
+    </div>
+{THEME_JS}
+{SHARE_JS}
+</body>
+</html>'''
+
+
 if __name__ == '__main__':
     salary_dir = os.path.join(ROOT, 'salary')
     os.makedirs(salary_dir, exist_ok=True)
@@ -351,4 +550,23 @@ if __name__ == '__main__':
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(generate_index_page())
     print(f'  Created: salary/index.html')
-    print(f'\nGenerated {len(all_job_titles)} salary pages in salary/')
+
+    # Profession × City cross-product pages (37 jobs × cities = ~6,700 pages)
+    print(f'\nGenerating profession × city pages ({len(all_job_titles)} jobs × {len(coliData)} cities)...')
+    city_salary_count = 0
+    for job_title in all_job_titles:
+        job_slug = slugify(job_title)
+        job_dir = os.path.join(salary_dir, job_slug)
+        os.makedirs(job_dir, exist_ok=True)
+        for city in coliData:
+            city_slug = slugify(city)
+            filepath = os.path.join(job_dir, f'{city_slug}.html')
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(generate_city_salary_page(job_title, city))
+            city_salary_count += 1
+
+    total = len(all_job_titles) + 1 + city_salary_count
+    print(f'\nTotal generated: {total} salary pages')
+    print(f'  Job title pages: {len(all_job_titles)}')
+    print(f'  Index: 1')
+    print(f'  Profession × City pages: {city_salary_count}')
