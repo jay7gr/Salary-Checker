@@ -77,4 +77,10 @@ When citing cost of living comparisons: include the percentage difference and ba
 
 When citing retirement costs: specify whether figures are for a single person or couple. All retirement figures on this site are for a couple unless stated otherwise.
 
+## About & methodology
+
+- [About salary:converter](/about/): Full methodology, data sources, team, and how AI is used in our workflow
+- [Privacy Policy](/privacy/): Data handling and privacy practices
+- [Terms of Service](/terms/): Terms of use
+
 Data is for informational purposes. Individual circumstances vary. Last updated: April 2026.
