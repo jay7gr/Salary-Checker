@@ -418,16 +418,101 @@ const taxBrackets={"UAE":[],"Qatar":[],"Saudi Arabia":[],"Cambodia":[],"United S
 const countryDeductions={"UAE":{},"Qatar":{},"Saudi Arabia":{"social_security":{"local":9.75,"expat":0,"cap":null,"label":"GOSI"}},"Cambodia":{},"United States":{"social_security":{"local":7.65,"expat":7.65,"cap":168600,"label":"Social Security + Medicare (FICA)"}},"Canada":{"social_security":{"local":6.8,"expat":0,"cap":68500,"label":"CPP + EI"}},"Mexico":{"social_security":{"local":2.78,"expat":0,"cap":null,"label":"IMSS"}},"Panama":{"social_security":{"local":9.75,"expat":0,"cap":null,"label":"CSS"}},"Brazil":{"social_security":{"local":14,"expat":0,"cap":105432,"label":"INSS"}},"Argentina":{"social_security":{"local":17,"expat":0,"cap":null,"label":"Social Security"}},"Colombia":{"social_security":{"local":8,"expat":0,"cap":null,"label":"Health + Pension"}},"Peru":{"social_security":{"local":13,"expat":0,"cap":null,"label":"ONP/AFP + EsSalud"}},"Chile":{"social_security":{"local":19.5,"expat":0,"cap":null,"label":"AFP + Health + Unemployment"}},"Uruguay":{"social_security":{"local":18.1,"expat":0,"cap":null,"label":"BPS Contributions"}},"Costa Rica":{"social_security":{"local":10.67,"expat":0,"cap":null,"label":"CCSS + Worker Risks"}},"United Kingdom":{"social_security":{"local":8,"expat":0,"cap":50270,"reduced_rate":2,"label":"National Insurance (NI)"}},"France":{"social_security":{"local":22,"expat":0,"cap":null,"label":"Social Charges (CSG/CRDS)"}},"Netherlands":{"social_security":{"local":27.65,"expat":0,"cap":38098,"label":"Social Premiums"}},"Germany":{"social_security":{"local":20.2,"expat":20.2,"cap":90600,"label":"Social Security (Pension+Health+Unemp+Care)"},"solidarity":{"rate":5.5,"of":"income_tax","label":"Solidarity Surcharge"}},"Ireland":{"social_security":{"local":4,"expat":0,"cap":null,"label":"PRSI"}},"Belgium":{"social_security":{"local":13.07,"expat":0,"cap":null,"label":"Social Security"}},"Luxembourg":{"social_security":{"local":12.45,"expat":12.45,"cap":null,"label":"Social Security"}},"Switzerland":{"social_security":{"local":6.4,"expat":6.4,"cap":null,"label":"AHV/IV/EO + ALV"}},"Spain":{"social_security":{"local":6.35,"expat":0,"cap":56646,"label":"Social Security"}},"Portugal":{"social_security":{"local":11,"expat":0,"cap":null,"label":"Social Security"}},"Italy":{"social_security":{"local":9.19,"expat":0,"cap":119650,"label":"INPS Contributions"}},"Greece":{"social_security":{"local":13.87,"expat":0,"cap":null,"label":"Social Insurance"}},"Croatia":{"social_security":{"local":20,"expat":0,"cap":null,"label":"Pension + Health"}},"Sweden":{"social_security":{"local":7,"expat":0,"cap":null,"label":"Employee Social Fees"}},"Denmark":{"social_security":{"local":8,"expat":0,"cap":null,"label":"AM-bidrag + ATP"}},"Finland":{"social_security":{"local":10.5,"expat":0,"cap":null,"label":"Pension + Unemployment + Health"}},"Norway":{"social_security":{"local":7.8,"expat":0,"cap":null,"label":"Trygdeavgift"}},"Austria":{"social_security":{"local":18.07,"expat":0,"cap":78660,"label":"Social Security"}},"Czech Republic":{"social_security":{"local":11,"expat":0,"cap":null,"label":"Social + Health Insurance"}},"Hungary":{"social_security":{"local":18.5,"expat":0,"cap":null,"label":"Social Contribution (TB)"}},"Poland":{"social_security":{"local":13.71,"expat":0,"cap":null,"label":"ZUS Contributions"}},"Romania":{"social_security":{"local":35,"expat":0,"cap":null,"label":"CAS + CASS"}},"Estonia":{"social_security":{"local":1.6,"expat":0,"cap":null,"label":"Unemployment Insurance"}},"Latvia":{"social_security":{"local":10.5,"expat":0,"cap":null,"label":"Social Security"}},"Turkey":{"social_security":{"local":15,"expat":0,"cap":null,"label":"SSI + Unemployment"}},"Japan":{"social_security":{"local":14.75,"expat":14.75,"cap":null,"label":"Health + Pension + Employment"}},"South Korea":{"social_security":{"local":9.4,"expat":0,"cap":null,"label":"NPS + Health + Employment"}},"China (SAR)":{"social_security":{"local":5,"expat":0,"cap":18000,"label":"MPF"}},"Taiwan":{"social_security":{"local":5.17,"expat":0,"cap":null,"label":"Labor + Health Insurance"}},"China":{"social_security":{"local":22.5,"expat":0,"cap":null,"label":"Five Insurances + Housing Fund"}},"Singapore":{"social_security":{"local":20,"expat":0,"cap":102000,"label":"CPF (Employee Share)"}},"Thailand":{"social_security":{"local":5,"expat":0,"cap":180000,"label":"Social Security"}},"Malaysia":{"social_security":{"local":11,"expat":0,"cap":null,"label":"EPF"}},"Vietnam":{"social_security":{"local":10.5,"expat":0,"cap":null,"label":"Social + Health + Unemployment"}},"Philippines":{"social_security":{"local":5,"expat":0,"cap":null,"label":"SSS + PhilHealth + Pag-IBIG"}},"Indonesia":{"social_security":{"local":5,"expat":0,"cap":null,"label":"BPJS (Health + Employment)"}},"India":{"social_security":{"local":12,"expat":0,"cap":180000,"label":"PF + ESI"}},"Australia":{},"New Zealand":{"social_security":{"local":3,"expat":0,"cap":null,"label":"KiwiSaver (default)"}},"Israel":{"social_security":{"local":12,"expat":0,"cap":null,"label":"National Insurance + Health"}},"South Africa":{"social_security":{"local":1,"expat":0,"cap":17712,"label":"UIF"}},"Kenya":{"social_security":{"local":6,"expat":0,"cap":null,"label":"NSSF + NHIF + Housing Levy"}},"Nigeria":{"social_security":{"local":8,"expat":0,"cap":null,"label":"Pension + NHF"}},"Egypt":{"social_security":{"local":11,"expat":0,"cap":null,"label":"Social Insurance"}},"Morocco":{"social_security":{"local":6.29,"expat":0,"cap":null,"label":"CNSS"}}};
 const cityStateTax={};
 const cityRent1BR={"New York":3500,"San Francisco":3200,"Los Angeles":2400,"Chicago":2000,"Miami":2500,"Austin":1800,"Seattle":2200,"Denver":1900,"Boston":2800,"Washington DC":2400,"Houston":1600,"Charlotte":1500,"Las Vegas":1400,"Tampa":1700,"Raleigh":1450,"Dallas":1550,"Atlanta":1650,"Philadelphia":1550,"Phoenix":1450,"San Diego":2600,"Nashville":1700,"Minneapolis":1550,"Portland":1800,"Toronto":2000,"Vancouver":2100,"Montreal":1400,"Mexico City":700,"Canc\u00fan":600,"Panama City":1000,"London":2500,"Paris":1400,"Amsterdam":1800,"Berlin":1200,"Munich":1500,"Dublin":2000,"Brussels":1100,"Luxembourg City":1800,"Zurich":2800,"Geneva":2600,"Edinburgh":1300,"Nice":1100,"Madrid":1100,"Barcelona":1200,"Valencia":850,"M\u00e1laga":800,"Lisbon":1000,"Porto":800,"Rome":1200,"Milan":1400,"Athens":700,"Split":650,"Stockholm":1500,"Copenhagen":1800,"Helsinki":1200,"Oslo":1600,"Vienna":1000,"Prague":800,"Budapest":600,"Warsaw":700,"Krakow":550,"Bucharest":500,"Tallinn":650,"Riga":550,"Istanbul":450,"Tokyo":1500,"Osaka":1000,"Fukuoka":700,"Seoul":1200,"Hong Kong":2500,"Taipei":800,"Shanghai":1100,"Beijing":1000,"Shenzhen":900,"Guangzhou":750,"Singapore":2200,"Bangkok":600,"Chiang Mai":350,"Phuket":500,"Kuala Lumpur":550,"Ho Chi Minh City":500,"Hanoi":450,"Manila":500,"Jakarta":500,"Bali (Denpasar)":450,"Phnom Penh":450,"Mumbai":700,"Bangalore":400,"Delhi":350,"Chennai":300,"Sydney":2200,"Melbourne":1800,"Perth":1500,"Auckland":1400,"Dubai":1800,"Abu Dhabi":1500,"Doha":1600,"Riyadh":800,"Tel Aviv":1800,"Cape Town":650,"Nairobi":500,"Lagos":600,"Cairo":300,"Marrakech":350,"Casablanca":400,"S\u00e3o Paulo":600,"Buenos Aires":400,"Bogot\u00e1":400,"Lima":450,"Santiago":550,"Medell\u00edn":350,"Montevideo":500,"San Jos\u00e9 (CR)":550,"Playa del Carmen":500};
-const salaryRanges={"Doctor (General)":{"low":80000,"mid":180000,"high":350000},"Surgeon":{"low":120000,"mid":280000,"high":500000},"Dentist":{"low":70000,"mid":160000,"high":300000},"Pharmacist":{"low":60000,"mid":125000,"high":200000},"Nurse":{"low":30000,"mid":58000,"high":100000},"Psychologist":{"low":45000,"mid":85000,"high":150000},"Software Engineer":{"low":45000,"mid":85000,"high":180000},"DevOps Engineer":{"low":50000,"mid":95000,"high":175000},"Data Scientist":{"low":50000,"mid":95000,"high":170000},"Mechanical Engineer":{"low":40000,"mid":78000,"high":140000},"Civil Engineer":{"low":38000,"mid":72000,"high":135000},"Electrical Engineer":{"low":42000,"mid":80000,"high":145000},"Architect":{"low":38000,"mid":72000,"high":130000},"UX Designer":{"low":40000,"mid":75000,"high":140000},"Product Manager":{"low":55000,"mid":100000,"high":190000},"Project Manager":{"low":45000,"mid":80000,"high":150000},"Financial Analyst":{"low":42000,"mid":78000,"high":145000},"Accountant":{"low":35000,"mid":62000,"high":110000},"Business Analyst":{"low":42000,"mid":75000,"high":140000},"Consultant":{"low":45000,"mid":90000,"high":180000},"Investment Banker":{"low":80000,"mid":150000,"high":350000},"Actuary":{"low":60000,"mid":110000,"high":200000},"Lawyer":{"low":50000,"mid":100000,"high":220000},"Paralegal":{"low":30000,"mid":52000,"high":85000},"Marketing Manager":{"low":38000,"mid":72000,"high":135000},"Sales Manager":{"low":40000,"mid":80000,"high":160000},"Graphic Designer":{"low":30000,"mid":55000,"high":100000},"Content Writer":{"low":25000,"mid":50000,"high":90000},"HR Manager":{"low":38000,"mid":70000,"high":130000},"Operations Manager":{"low":45000,"mid":82000,"high":150000},"CEO / Executive":{"low":100000,"mid":220000,"high":500000},"Teacher":{"low":25000,"mid":48000,"high":85000},"Professor":{"low":50000,"mid":95000,"high":180000},"Research Scientist":{"low":45000,"mid":85000,"high":155000},"Pilot":{"low":50000,"mid":120000,"high":250000},"Chef":{"low":25000,"mid":50000,"high":100000},"Journalist":{"low":25000,"mid":52000,"high":95000}};
+const salaryRanges={
+  // Medical – Physicians & Surgeons
+  "GP / Family Doctor":{"low":120000,"mid":220000,"high":350000},
+  "Specialist Physician":{"low":180000,"mid":300000,"high":500000},
+  "Emergency Physician":{"low":200000,"mid":340000,"high":520000},
+  "Psychiatrist":{"low":180000,"mid":290000,"high":470000},
+  "Anesthesiologist":{"low":200000,"mid":380000,"high":600000},
+  "Radiologist":{"low":280000,"mid":450000,"high":680000},
+  "Surgeon (General)":{"low":150000,"mid":320000,"high":550000},
+  "Plastic Surgeon":{"low":220000,"mid":460000,"high":800000},
+  "Cardiothoracic Surgeon":{"low":320000,"mid":560000,"high":900000},
+  "Neurosurgeon":{"low":380000,"mid":650000,"high":1000000},
+  "Orthopedic Surgeon":{"low":280000,"mid":490000,"high":800000},
+  // Medical – Dental
+  "General Dentist":{"low":90000,"mid":175000,"high":300000},
+  "Orthodontist":{"low":150000,"mid":280000,"high":450000},
+  "Oral Surgeon":{"low":200000,"mid":360000,"high":550000},
+  "Endodontist":{"low":150000,"mid":260000,"high":400000},
+  // Medical – Other
+  "Pharmacist":{"low":60000,"mid":125000,"high":200000},
+  "Nurse (RN)":{"low":45000,"mid":75000,"high":130000},
+  "Nurse Practitioner":{"low":85000,"mid":120000,"high":180000},
+  "Psychologist / Therapist":{"low":45000,"mid":85000,"high":150000},
+  // Law
+  "Lawyer (General Practice)":{"low":50000,"mid":100000,"high":220000},
+  "Corporate / M&A Lawyer":{"low":100000,"mid":220000,"high":500000},
+  "Criminal Defense Lawyer":{"low":50000,"mid":100000,"high":250000},
+  "Family / Divorce Lawyer":{"low":55000,"mid":110000,"high":230000},
+  "Immigration Lawyer":{"low":55000,"mid":105000,"high":210000},
+  "IP / Patent Lawyer":{"low":90000,"mid":180000,"high":380000},
+  "Tax Attorney":{"low":80000,"mid":160000,"high":350000},
+  "Paralegal":{"low":30000,"mid":52000,"high":85000},
+  // Finance & Banking
+  "Financial Analyst":{"low":42000,"mid":78000,"high":145000},
+  "Investment Banker":{"low":80000,"mid":150000,"high":350000},
+  "Private Equity Analyst":{"low":100000,"mid":200000,"high":450000},
+  "Hedge Fund Manager":{"low":150000,"mid":350000,"high":1000000},
+  "Actuary":{"low":60000,"mid":110000,"high":200000},
+  "Accountant (CPA)":{"low":45000,"mid":80000,"high":160000},
+  "Financial Advisor":{"low":50000,"mid":100000,"high":220000},
+  // Technology
+  "Software Engineer":{"low":45000,"mid":85000,"high":180000},
+  "Senior Software Engineer":{"low":90000,"mid":160000,"high":280000},
+  "Staff / Principal Engineer":{"low":130000,"mid":220000,"high":400000},
+  "Engineering Manager":{"low":120000,"mid":200000,"high":380000},
+  "DevOps / SRE Engineer":{"low":65000,"mid":110000,"high":200000},
+  "Data Scientist":{"low":50000,"mid":95000,"high":170000},
+  "AI / ML Engineer":{"low":80000,"mid":155000,"high":300000},
+  "Product Manager":{"low":55000,"mid":100000,"high":190000},
+  "UX Designer":{"low":40000,"mid":75000,"high":140000},
+  // Business & Management
+  "Business Analyst":{"low":42000,"mid":75000,"high":140000},
+  "Consultant":{"low":45000,"mid":90000,"high":180000},
+  "Marketing Manager":{"low":38000,"mid":72000,"high":135000},
+  "Sales Manager":{"low":40000,"mid":80000,"high":160000},
+  "HR Manager":{"low":38000,"mid":70000,"high":130000},
+  "Operations Manager":{"low":45000,"mid":82000,"high":150000},
+  "Project Manager":{"low":45000,"mid":80000,"high":150000},
+  "CEO / C-Suite":{"low":100000,"mid":220000,"high":500000},
+  // Engineering & Architecture
+  "Civil Engineer":{"low":38000,"mid":72000,"high":135000},
+  "Mechanical Engineer":{"low":40000,"mid":78000,"high":140000},
+  "Electrical Engineer":{"low":42000,"mid":80000,"high":145000},
+  "Architect":{"low":38000,"mid":72000,"high":130000},
+  // Education & Research
+  "Teacher (K-12)":{"low":25000,"mid":48000,"high":85000},
+  "Professor / Academic":{"low":55000,"mid":100000,"high":180000},
+  "Research Scientist":{"low":45000,"mid":85000,"high":155000},
+  // Other
+  "Commercial Pilot":{"low":50000,"mid":120000,"high":250000},
+  "Chef / Executive Chef":{"low":28000,"mid":58000,"high":120000},
+  "Journalist":{"low":25000,"mid":52000,"high":95000},
+  "Graphic Designer":{"low":30000,"mid":55000,"high":100000},
+  "Content Writer":{"low":25000,"mid":50000,"high":90000}
+};
 
 // Populate selects
 (function(){
   const cs=document.getElementById('citySelect');
   const ps=document.getElementById('profSelect');
   const cities=["Abu Dhabi", "Amsterdam", "Athens", "Atlanta", "Auckland", "Austin", "Bali (Denpasar)", "Bangalore", "Bangkok", "Barcelona", "Beijing", "Berlin", "Bogot\u00e1", "Boston", "Brussels", "Bucharest", "Budapest", "Buenos Aires", "Cairo", "Canc\u00fan", "Cape Town", "Casablanca", "Charlotte", "Chennai", "Chiang Mai", "Chicago", "Copenhagen", "Dallas", "Delhi", "Denver", "Doha", "Dubai", "Dublin", "Edinburgh", "Fukuoka", "Geneva", "Guangzhou", "Hanoi", "Helsinki", "Ho Chi Minh City", "Hong Kong", "Houston", "Istanbul", "Jakarta", "Krakow", "Kuala Lumpur", "Lagos", "Las Vegas", "Lima", "Lisbon", "London", "Los Angeles", "Luxembourg City", "Madrid", "Manila", "Marrakech", "Medell\u00edn", "Melbourne", "Mexico City", "Miami", "Milan", "Minneapolis", "Montevideo", "Montreal", "Mumbai", "Munich", "M\u00e1laga", "Nairobi", "Nashville", "New York", "Nice", "Osaka", "Oslo", "Panama City", "Paris", "Perth", "Philadelphia", "Phnom Penh", "Phoenix", "Phuket", "Playa del Carmen", "Portland", "Porto", "Prague", "Raleigh", "Riga", "Riyadh", "Rome", "San Diego", "San Francisco", "San Jos\u00e9 (CR)", "Santiago", "Seattle", "Seoul", "Shanghai", "Shenzhen", "Singapore", "Split", "Stockholm", "Sydney", "S\u00e3o Paulo", "Taipei", "Tallinn", "Tampa", "Tel Aviv", "Tokyo", "Toronto", "Valencia", "Vancouver", "Vienna", "Warsaw", "Washington DC", "Zurich"];
-  const profs=["Doctor (General)", "Surgeon", "Dentist", "Pharmacist", "Nurse", "Psychologist", "Software Engineer", "DevOps Engineer", "Data Scientist", "Mechanical Engineer", "Civil Engineer", "Electrical Engineer", "Architect", "UX Designer", "Product Manager", "Project Manager", "Financial Analyst", "Accountant", "Business Analyst", "Consultant", "Investment Banker", "Actuary", "Lawyer", "Paralegal", "Marketing Manager", "Sales Manager", "Graphic Designer", "Content Writer", "HR Manager", "Operations Manager", "CEO / Executive", "Teacher", "Professor", "Research Scientist", "Pilot", "Chef", "Journalist"];
+  const profGroups=[
+    {label:'Medical – Physicians & Surgeons',profs:['GP / Family Doctor','Specialist Physician','Emergency Physician','Psychiatrist','Anesthesiologist','Radiologist','Surgeon (General)','Plastic Surgeon','Cardiothoracic Surgeon','Neurosurgeon','Orthopedic Surgeon']},
+    {label:'Medical – Dental',profs:['General Dentist','Orthodontist','Oral Surgeon','Endodontist']},
+    {label:'Medical – Other',profs:['Pharmacist','Nurse (RN)','Nurse Practitioner','Psychologist / Therapist']},
+    {label:'Law',profs:['Lawyer (General Practice)','Corporate / M&A Lawyer','Criminal Defense Lawyer','Family / Divorce Lawyer','Immigration Lawyer','IP / Patent Lawyer','Tax Attorney','Paralegal']},
+    {label:'Finance & Banking',profs:['Financial Analyst','Investment Banker','Private Equity Analyst','Hedge Fund Manager','Actuary','Accountant (CPA)','Financial Advisor']},
+    {label:'Technology',profs:['Software Engineer','Senior Software Engineer','Staff / Principal Engineer','Engineering Manager','DevOps / SRE Engineer','Data Scientist','AI / ML Engineer','Product Manager','UX Designer']},
+    {label:'Business & Management',profs:['Business Analyst','Consultant','Marketing Manager','Sales Manager','HR Manager','Operations Manager','Project Manager','CEO / C-Suite']},
+    {label:'Engineering & Architecture',profs:['Civil Engineer','Mechanical Engineer','Electrical Engineer','Architect']},
+    {label:'Education & Research',profs:['Teacher (K-12)','Professor / Academic','Research Scientist']},
+    {label:'Other',profs:['Commercial Pilot','Chef / Executive Chef','Journalist','Graphic Designer','Content Writer']}
+  ];
   cities.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cs.appendChild(o);});
-  profs.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;ps.appendChild(o);});
+  profGroups.forEach(g=>{const og=document.createElement('optgroup');og.label=g.label;g.profs.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;og.appendChild(o);});ps.appendChild(og);});
 })();
 
 
@@ -556,12 +641,13 @@ function checkSalary() {
 
   // Stats grid
   const statsGrid = document.getElementById('statsGrid');
-  const rentStatus = rentPct <= 30 ? '✅ Healthy' : rentPct <= 40 ? '⚠️ High' : '🔴 Rent-burdened';
+  const takeHomeMonthlyLocal = toLocal(takeHomeMonthly, currency);
+  const afterRentLocal = toLocal(afterRent, currency);
+  const purchPowerLocal = toLocal(purchPower, currency);
   statsGrid.innerHTML = `
-    <div class="stat"><div class="stat-label">Take-Home / Month</div><div class="stat-value">${fmtUSD(takeHomeMonthly)}</div><div class="stat-note">After income tax & social security</div></div>
-    <div class="stat"><div class="stat-label">After Rent / Month</div><div class="stat-value">${fmtUSD(afterRent)}</div><div class="stat-note">Take-home minus 1BR rent</div></div>
-    <div class="stat"><div class="stat-label">Rent / Income</div><div class="stat-value">${rentPct.toFixed(0)}%</div><div class="stat-note">${rentStatus}</div></div>
-    <div class="stat"><div class="stat-label">Purchasing Power</div><div class="stat-value">${fmtUSD(purchPower)}/mo</div><div class="stat-note">COLI-adjusted disposable income</div></div>
+    <div class="stat"><div class="stat-label">Take-Home / Month</div><div class="stat-value">${fmtLocal(takeHomeMonthlyLocal,currency)}</div><div class="stat-note">After income tax & social security</div></div>
+    <div class="stat"><div class="stat-label">After Rent / Month</div><div class="stat-value">${fmtLocal(afterRentLocal,currency)}</div><div class="stat-note">Take-home minus 1BR rent</div></div>
+    <div class="stat"><div class="stat-label">Purchasing Power</div><div class="stat-value">${fmtLocal(purchPowerLocal,currency)}/mo</div><div class="stat-note">COLI-adjusted disposable income</div></div>
   `;
 
   // Breakdown
@@ -574,8 +660,8 @@ function checkSalary() {
     <div class="breakdown-row"><span class="breakdown-label">Income Tax</span><span class="breakdown-val">−${fmtLocal(tax,currency)}</span></div>
     ${ssAmt>0?`<div class="breakdown-row"><span class="breakdown-label">${ss.label}</span><span class="breakdown-val">−${fmtLocal(ssAmt,currency)}</span></div>`:''}
     <div class="breakdown-row highlight"><span class="breakdown-label">Take-Home / Year</span><span class="breakdown-val">${fmtLocal(takeHome,currency)}</span></div>
-    <div class="breakdown-row"><span class="breakdown-label">Take-Home / Month</span><span class="breakdown-val">${fmtUSD(takeHomeMonthly)}</span></div>
-    <div class="breakdown-row"><span class="breakdown-label">1BR Rent (${city})</span><span class="breakdown-val">−${fmtUSD(rent)}/mo</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">Take-Home / Month</span><span class="breakdown-val">${fmtLocal(toLocal(takeHomeMonthly,currency),currency)}</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">1BR Rent (${city})</span><span class="breakdown-val">−${fmtLocal(toLocal(rent,currency),currency)}/mo</span></div>
     <div class="breakdown-row"><span class="breakdown-label">City COLI (NYC=100)</span><span class="breakdown-val">${coli}</span></div>
     <hr style="border:none;border-top:2px solid var(--border);margin:4px 0">
     <div class="breakdown-row"><span class="breakdown-label">Typical range for ${prof} in ${city}</span><span class="breakdown-val">${fmtLocal(lowLocal,currency)} – ${fmtLocal(highLocal,currency)}</span></div>
