@@ -696,8 +696,8 @@ footer a:hover{color:var(--accent)}
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">1. <strong>Gross salary in local currency</strong> — you enter this directly.</p>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">2. <strong>Tax &amp; social security</strong> — calculated using the progressive income tax brackets and social security rates for each city's country.</p>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">3. <strong>Take-home converted to USD</strong> — using ECB reference rates for a like-for-like comparison.</p>
-    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">4. <strong>Rent deducted</strong> — average 1-bedroom rent for each city (USD/month).</p>
-    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">5. <strong>Cost-of-living adjustment</strong> — the remaining disposable income is divided by the city's COLI index (New York = 100). This shows how far your money actually goes locally — a dollar in Bangkok buys 3× what it buys in New York.</p>
+    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">4. <strong>Rent deducted</strong> — average 1-bedroom rent for each city (USD/month) is subtracted to show after-rent disposable income.</p>
+    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">5. <strong>Real purchasing power</strong> — take-home pay (before rent) is divided by the city's COLI index (New York = 100). Since COLI already includes housing costs, we use take-home rather than after-rent to avoid counting rent twice. This shows what your salary is genuinely worth in each city.</p>
     <p style="font-size:.78rem;color:var(--text-secondary);margin-top:12px">Tax calculations are estimates for a single filer with no special deductions. Actual figures depend on your individual circumstances. <a href="/about/" style="color:var(--accent)">Data sources &rarr;</a></p>
   </div>
 
@@ -791,7 +791,9 @@ function evaluate(city,salaryLocal){
   const takeHomeMonthly=takeHomeUSD/12;
   const rentMonthly=cityRent1BR[city]||800;
   const afterRent=takeHomeMonthly-rentMonthly;
-  const purchPower=afterRent/(coli/100);
+  // purchPower = COLI-adjusted take-home (rent is a component of COLI, so
+  // we divide take-home — not after-rent — by COLI to avoid double-counting housing)
+  const purchPower=takeHomeMonthly/(coli/100);
   const totalRate=salaryLocal>0?(totalDed/salaryLocal)*100:0;
   return{city,cur,coli,country,salaryLocal,salaryUSD,tax,taxRate,ss,ct,
     totalDed,totalRate,takeHomeLocal,takeHomeUSD,takeHomeMonthly,

@@ -810,7 +810,9 @@ function checkSalary() {
   const takeHomeMonthly = takeHomeUSD / 12;
   const rent = cityRent1BR[city] || 800;
   const afterRent = takeHomeMonthly - rent;
-  const purchPower = afterRent / (coli/100);
+  // purchPower = COLI-adjusted take-home (rent is embedded in COLI, so dividing
+  // take-home — not after-rent — avoids double-counting housing costs)
+  const purchPower = takeHomeMonthly / (coli/100);
   const rentPct = takeHomeMonthly > 0 ? (rent/takeHomeMonthly*100) : 0;
 
   // Percentile estimate (0–100)
@@ -862,7 +864,7 @@ function checkSalary() {
   statsGrid.innerHTML = `
     <div class="stat"><div class="stat-label">Take-Home / Month</div><div class="stat-value">${fmtLocal(takeHomeMonthlyLocal,currency)}</div><div class="stat-note">After income tax & social security</div></div>
     <div class="stat"><div class="stat-label">After Rent / Month</div><div class="stat-value">${fmtLocal(afterRentLocal,currency)}</div><div class="stat-note">Take-home minus 1BR rent</div></div>
-    <div class="stat"><div class="stat-label">Purchasing Power</div><div class="stat-value">${fmtLocal(purchPowerLocal,currency)}/mo</div><div class="stat-note">COLI-adjusted disposable income</div></div>
+    <div class="stat"><div class="stat-label">Purchasing Power</div><div class="stat-value">${fmtLocal(purchPowerLocal,currency)}/mo</div><div class="stat-note">Take-home adjusted for local cost of living</div></div>
   `;
 
   // Breakdown
