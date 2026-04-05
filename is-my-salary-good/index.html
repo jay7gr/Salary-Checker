@@ -325,6 +325,7 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="verdict-emoji" id="verdictEmoji"></div>
       <div class="verdict-title" id="verdictTitle"></div>
       <div class="verdict-sub" id="verdictSub"></div>
+      <div id="sourceBadge" style="margin-top:10px;font-size:0.7rem;opacity:0.75;"></div>
     </div>
 
     <div class="stats-grid" id="statsGrid"></div>
@@ -373,15 +374,23 @@ footer a{color:var(--accent);text-decoration:none}
   </section>
 
   <div style="margin-top:24px;padding:20px 24px;background:var(--card-bg);border-radius:16px;box-shadow:var(--shadow);">
-    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-secondary);margin-bottom:12px;">Data Sources</p>
-    <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.6;">
-      US salary benchmarks from <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener" style="color:var(--accent);">BLS Occupational Employment &amp; Wage Statistics (May 2024)</a>.
-      Physician compensation from <a href="https://www.doximity.com/reports/physician-compensation-report/2025" target="_blank" rel="noopener" style="color:var(--accent);">Doximity 2025 Physician Compensation Report</a> and <a href="https://www.medscape.com/sites/public/physician-comp/2025" target="_blank" rel="noopener" style="color:var(--accent);">Medscape 2025</a>.
-      Legal salaries from <a href="https://www.nalp.org/privatesectorsalaries" target="_blank" rel="noopener" style="color:var(--accent);">NALP 2025</a>.
-      Tech compensation from <a href="https://www.levels.fyi" target="_blank" rel="noopener" style="color:var(--accent);">Levels.fyi</a>.
-      Finance from <a href="https://mergersandinquisitions.com/investment-banker-salary/" target="_blank" rel="noopener" style="color:var(--accent);">Mergers &amp; Inquisitions</a> and <a href="https://www.wallstreetoasis.com/resources/careers/salary/hedge-fund-pay-guide" target="_blank" rel="noopener" style="color:var(--accent);">Wall Street Oasis</a>.
-      Country salary multipliers based on <a href="https://stats.oecd.org/Index.aspx?DataSetCode=AV_AN_WAGE" target="_blank" rel="noopener" style="color:var(--accent);">OECD Earnings Database</a> and Mercer salary surveys.
-      All figures are estimates — consult a financial advisor for major career decisions.
+    <p style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-secondary);margin-bottom:12px;">About this data</p>
+    <p style="font-size:0.75rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;">
+      Benchmarks use one of three tiers, shown on each result:
+      <span style="display:inline-block;margin:2px 4px 0 0;padding:1px 6px;border-radius:4px;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.3);font-size:0.68rem;font-weight:600;color:#16a34a;">✅ Verified</span> from primary national statistics sources —
+      <span style="display:inline-block;margin:2px 4px 0 0;padding:1px 6px;border-radius:4px;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.35);font-size:0.68rem;font-weight:600;color:#b45309;">⚠️ Estimated</span> from OECD wage ratios vs the US baseline —
+      <span style="display:inline-block;margin:2px 0;padding:1px 6px;border-radius:4px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);font-size:0.68rem;font-weight:600;color:#dc2626;">🔴 COLI estimate</span> where no salary data exists.
+    </p>
+    <p style="font-size:0.72rem;color:var(--text-secondary);line-height:1.6;">
+      US sources: <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener" style="color:var(--accent);">BLS OES May 2024</a> ·
+      <a href="https://www.doximity.com/reports/physician-compensation-report/2025" target="_blank" rel="noopener" style="color:var(--accent);">Doximity 2025</a> ·
+      <a href="https://www.medscape.com/sites/public/physician-comp/2025" target="_blank" rel="noopener" style="color:var(--accent);">Medscape 2025</a> ·
+      <a href="https://www.nalp.org/privatesectorsalaries" target="_blank" rel="noopener" style="color:var(--accent);">NALP 2025</a> ·
+      <a href="https://www.levels.fyi" target="_blank" rel="noopener" style="color:var(--accent);">Levels.fyi</a> ·
+      <a href="https://mergersandinquisitions.com/investment-banker-salary/" target="_blank" rel="noopener" style="color:var(--accent);">M&amp;I</a> ·
+      <a href="https://www.wallstreetoasis.com/resources/careers/salary/hedge-fund-pay-guide" target="_blank" rel="noopener" style="color:var(--accent);">WSO</a>.
+      International estimates: <a href="https://stats.oecd.org/Index.aspx?DataSetCode=AV_AN_WAGE" target="_blank" rel="noopener" style="color:var(--accent);">OECD Earnings Database</a> · Mercer Global Salary Surveys.
+      All figures are estimates — consult a financial advisor before major career decisions.
     </p>
   </div>
 
@@ -545,9 +554,75 @@ const profCategory={
   'Journalist':'other','Graphic Designer':'other','Content Writer':'other'
 };
 
+// Data provenance per country.
+// verified:true = drawn from a named primary national statistics source.
+// verified:false = estimated from OECD average wage ratios + Mercer surveys — directionally
+//   correct but not a primary per-profession survey. Will be upgraded as national data arrives.
+const countrySources={
+  'United States':  {verified:true,  source:'BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi'},
+  // --- Pending upgrade to national statistics office data (ONS, Eurostat, ABS, StatsCan) ---
+  'United Kingdom': {verified:false, source:'Estimated · OECD wage ratios + Mercer surveys'},
+  'Ireland':        {verified:false, source:'Estimated · OECD wage ratios + Mercer surveys'},
+  'Germany':        {verified:false, source:'Estimated · OECD wage ratios + Destatis'},
+  'Netherlands':    {verified:false, source:'Estimated · OECD wage ratios + CBS Netherlands'},
+  'Switzerland':    {verified:false, source:'Estimated · OECD wage ratios + FSO Switzerland'},
+  'France':         {verified:false, source:'Estimated · OECD wage ratios + INSEE'},
+  'Belgium':        {verified:false, source:'Estimated · OECD wage ratios + Statbel'},
+  'Luxembourg':     {verified:false, source:'Estimated · OECD wage ratios'},
+  'Sweden':         {verified:false, source:'Estimated · OECD wage ratios + SCB Sweden'},
+  'Norway':         {verified:false, source:'Estimated · OECD wage ratios + SSB Norway'},
+  'Denmark':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Denmark'},
+  'Finland':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Finland'},
+  'Austria':        {verified:false, source:'Estimated · OECD wage ratios + Statistik Austria'},
+  'Spain':          {verified:false, source:'Estimated · OECD wage ratios + INE Spain'},
+  'Portugal':       {verified:false, source:'Estimated · OECD wage ratios + INE Portugal'},
+  'Italy':          {verified:false, source:'Estimated · OECD wage ratios + ISTAT'},
+  'Greece':         {verified:false, source:'Estimated · OECD wage ratios + Eurostat'},
+  'Czech Republic': {verified:false, source:'Estimated · OECD wage ratios + Czech Statistical Office'},
+  'Poland':         {verified:false, source:'Estimated · OECD wage ratios + GUS Poland'},
+  'Hungary':        {verified:false, source:'Estimated · OECD wage ratios + HCSO'},
+  'Romania':        {verified:false, source:'Estimated · OECD wage ratios + INS Romania'},
+  'Estonia':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Estonia'},
+  'Latvia':         {verified:false, source:'Estimated · OECD wage ratios + CSB Latvia'},
+  'Croatia':        {verified:false, source:'Estimated · OECD wage ratios + DZS Croatia'},
+  'Australia':      {verified:false, source:'Estimated · OECD wage ratios + ABS (pending)'},
+  'New Zealand':    {verified:false, source:'Estimated · OECD wage ratios + Stats NZ (pending)'},
+  'Canada':         {verified:false, source:'Estimated · OECD wage ratios + Statistics Canada (pending)'},
+  'Japan':          {verified:false, source:'Estimated · OECD wage ratios + MHLW Japan'},
+  'South Korea':    {verified:false, source:'Estimated · OECD wage ratios + Statistics Korea'},
+  'Singapore':      {verified:false, source:'Estimated · MOM Singapore surveys'},
+  'Israel':         {verified:false, source:'Estimated · OECD wage ratios + CBS Israel'},
+  'Turkey':         {verified:false, source:'Estimated · OECD wage ratios + TURKSTAT'},
+  'UAE':            {verified:false, source:'Estimated · Mercer Gulf surveys'},
+  'Qatar':          {verified:false, source:'Estimated · Mercer Gulf surveys'},
+  'Saudi Arabia':   {verified:false, source:'Estimated · Mercer Gulf surveys'},
+  'China':          {verified:false, source:'Estimated · NBS China wage surveys'},
+  'China (SAR)':    {verified:false, source:'Estimated · Census & Statistics HK'},
+  'Taiwan':         {verified:false, source:'Estimated · DGBAS Taiwan'},
+  'India':          {verified:false, source:'Estimated · NSSO India (limited coverage)'},
+  'Malaysia':       {verified:false, source:'Estimated · DOSM Malaysia'},
+  'Thailand':       {verified:false, source:'Estimated · NSO Thailand'},
+  'Vietnam':        {verified:false, source:'Estimated · GSO Vietnam'},
+  'Philippines':    {verified:false, source:'Estimated · PSA Philippines'},
+  'Indonesia':      {verified:false, source:'Estimated · BPS Indonesia'},
+  'Cambodia':       {verified:false, source:'Estimated · NIS Cambodia'},
+  'Brazil':         {verified:false, source:'Estimated · IBGE Brazil PNAD'},
+  'Argentina':      {verified:false, source:'Estimated · INDEC Argentina'},
+  'Colombia':       {verified:false, source:'Estimated · DANE Colombia'},
+  'Chile':          {verified:false, source:'Estimated · INE Chile'},
+  'Peru':           {verified:false, source:'Estimated · INEI Peru'},
+  'Uruguay':        {verified:false, source:'Estimated · INE Uruguay'},
+  'Mexico':         {verified:false, source:'Estimated · INEGI Mexico'},
+  'Costa Rica':     {verified:false, source:'Estimated · INEC Costa Rica'},
+  'Panama':         {verified:false, source:'Estimated · INEC Panama'},
+  'South Africa':   {verified:false, source:'Estimated · Stats SA'},
+  'Kenya':          {verified:false, source:'Estimated · KNBS Kenya'},
+  'Nigeria':        {verified:false, source:'Estimated · NBS Nigeria'},
+  'Egypt':          {verified:false, source:'Estimated · CAPMAS Egypt'},
+  'Morocco':        {verified:false, source:'Estimated · HCP Morocco'}
+};
+
 // Country salary multipliers vs US baseline, by profession category
-// Sources: OECD Earnings Database, Glassdoor country reports, Numbeo, Mercer salary surveys
-// Covers: tech, medical_physician, medical_dental, medical_other, law, finance, business, engineering, education
 const countryMultipliers={
   'United States':     {tech:1.00,medical_physician:1.00,medical_dental:1.00,medical_other:1.00,law:1.00,finance:1.00,business:1.00,engineering:1.00,education:1.00},
   'Canada':            {tech:0.65,medical_physician:0.55,medical_dental:0.65,medical_other:0.60,law:0.60,finance:0.62,business:0.62,engineering:0.65,education:0.68},
@@ -707,16 +782,17 @@ function checkSalary() {
   // Convert user salary to USD
   const salaryUSD = toUSD(salary, currency);
 
-  // Determine benchmark multiplier: country-specific data if available, else COLI fallback
+  // Determine benchmark multiplier + data provenance
   const cat = profCategory[prof] || 'other';
   const countryMults = countryMultipliers[country];
-  let benchMult, usingLocalData;
+  const srcInfo = countrySources[country] || null;
+  let benchMult, dataQuality; // dataQuality: 'verified' | 'estimated' | 'coli'
   if (countryMults && countryMults[cat] !== undefined) {
     benchMult = countryMults[cat];
-    usingLocalData = true;
+    dataQuality = (srcInfo && srcInfo.verified) ? 'verified' : 'estimated';
   } else {
     benchMult = coli / 100;
-    usingLocalData = false;
+    dataQuality = 'coli';
   }
 
   const lowUSD  = ranges.low  * benchMult;
@@ -767,6 +843,14 @@ function checkSalary() {
   document.getElementById('verdictTitle').textContent = title;
   document.getElementById('verdictSub').textContent = sub;
 
+  // Source badge in verdict
+  const srcLabel = dataQuality==='verified'
+    ? `✅ Verified data · ${srcInfo.source}`
+    : dataQuality==='estimated'
+    ? `⚠️ Estimated benchmark · ${srcInfo ? srcInfo.source : 'OECD wage ratios'}`
+    : `🔴 COLI estimate only · no salary survey data for this region`;
+  document.getElementById('sourceBadge').textContent = srcLabel;
+
   // Stats grid
   const statsGrid = document.getElementById('statsGrid');
   const takeHomeMonthlyLocal = toLocal(takeHomeMonthly, currency);
@@ -793,7 +877,12 @@ function checkSalary() {
     <div class="breakdown-row"><span class="breakdown-label">City COLI (NYC=100)</span><span class="breakdown-val">${coli}</span></div>
     <hr style="border:none;border-top:2px solid var(--border);margin:4px 0">
     <div class="breakdown-row"><span class="breakdown-label">Typical range for ${prof} in ${city}</span><span class="breakdown-val">${fmtLocal(lowLocal,currency)} – ${fmtLocal(highLocal,currency)}</span></div>
-    ${!usingLocalData ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);font-size:0.75rem;color:var(--text-secondary);line-height:1.4;">⚠️ <strong style="color:var(--text-primary);">Estimated benchmark</strong> — no country-specific salary data available for ${country||'this region'}. Range is scaled from US baselines using the city's cost-of-living index (COLI). Actual local salaries may differ significantly.</div>` : `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);font-size:0.75rem;color:var(--text-secondary);line-height:1.4;">📊 <strong style="color:var(--text-primary);">Country-adjusted benchmark</strong> — range reflects ${country} salary norms for this profession category.</div>`}
+    ${dataQuality==='verified'
+      ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(22,163,74,0.07);border:1px solid rgba(22,163,74,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">✅ <strong style="color:var(--text-primary);">Verified data</strong> — benchmarks drawn from primary national sources.<br><span style="font-size:0.68rem;opacity:.8;">${srcInfo.source}</span></div>`
+      : dataQuality==='estimated'
+      ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.28);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">⚠️ <strong style="color:var(--text-primary);">Estimated benchmark</strong> — no verified national survey data available yet for ${country||'this country'}. Range is derived from OECD average wage ratios vs the US baseline. Actual salaries may differ.<br><span style="font-size:0.68rem;opacity:.8;">${srcInfo ? srcInfo.source : 'OECD wage ratios'}</span></div>`
+      : `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">🔴 <strong style="color:var(--text-primary);">COLI estimate only</strong> — no salary data available for this profession category in ${country||'this region'}. Range is scaled from US baselines using the city's cost-of-living index. Treat as a rough guide only.</div>`
+    }
   `;
 
   // Percentile bar
