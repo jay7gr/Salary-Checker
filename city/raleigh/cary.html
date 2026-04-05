@@ -1,4 +1,4 @@
-<!-- salary-nav-v1 --><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -97,6 +97,8 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; }
+        html { touch-action: manipulation; -ms-touch-action: manipulation; }
 
         :root {
             --bg: #f5f5f7;
@@ -236,8 +238,8 @@
         .faq-item { margin-bottom: 20px; }
         .faq-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
         .faq-item p { font-size: 0.9rem; color: var(--text-body); line-height: 1.6; }
-        .page-footer { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
-        .page-footer a { font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; margin: 0 12px; }
+        .page-footer { text-align: center; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px; }
+        .page-footer a { font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 500; }
         @media (max-width: 600px) {
             .hero h1 { font-size: 1.5rem; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -271,7 +273,6 @@
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
                 <a href="/compare/">City Comparisons</a>
-                <a href="/salary/">Salaries</a>
                 <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
@@ -288,7 +289,7 @@
         </div>
 
         <section class="hero">
-            <h1>Is Cary Expensive?</h1>
+            <h1>Cary</h1>
             <p class="subtitle">Raleigh, United States</p>
             <span class="badge" style="background: #2563eb15; color: #2563eb;">+5% vs Raleigh avg</span>
         </section>
@@ -489,15 +490,14 @@
             <a href="/">Salary Converter</a>
             <a href="/city/raleigh">Raleigh</a>
             <a href="/city/">All Cities</a>
-            <a href="/salary/">Salaries</a>
             <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
-                    <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
-    </footer>
+            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
+        </footer>
     </div>
 
     <script>

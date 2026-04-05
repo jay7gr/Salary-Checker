@@ -1287,6 +1287,317 @@ def generate_budget_page(budget_type, amount, label):
 
 
 # ═══════════════════════════════════════════════════════════════════
+#  PAGE TYPE F: /retire/city/{city}/on-{budget}.html
+#  Cross-product: "Retire in [City] on $X/month" (182 × 12 = 2,184 pages)
+# ═══════════════════════════════════════════════════════════════════
+def generate_city_budget_page(city, budget_type, amount, label):
+    """Cross-product page: retiring in a specific city on a specific budget."""
+    cc = city_to_country.get(city, '')
+    country_name = get_country_name(cc)
+    city_slug = to_slug(city)
+    budget_slug = label.lower().replace('$', '').replace(',', '').replace(' ', '-').replace('/', '-')
+    canonical = f"https://salary-converter.com/retire/city/{city_slug}/on-{budget_slug}"
+
+    single_cost = get_monthly_cost(city, 'single')
+    couple_cost = get_monthly_cost(city, 'couple')
+    safety = safety_index.get(city, 50)
+    healthcare = healthcare_index.get(city, 50)
+    climate = climate_score.get(city, 50)
+    english = english_score.get(city, 50)
+    visas = get_visa_programs_for_country(cc)
+
+    if budget_type == 'monthly':
+        actual = couple_cost['total']
+        qualifies = actual <= amount
+        shortfall = actual - amount  # positive = over budget
+        coverage_pct = round(amount / actual * 100) if actual > 0 else 100
+        years_val = None
+
+        if qualifies:
+            title = f"Retire in {city} on {label}: Complete Budget Guide (2026)"
+            desc = f"{city} costs {fmt_usd(actual)}/month for a couple — within your {label} budget. See the full breakdown, visa options &amp; alternatives."
+            verdict_label = "Within Budget"
+            verdict_color = "#16a34a"
+            verdict_icon = "✓"
+            verdict_text = (
+                f"{city} costs <strong>{fmt_usd(actual)}/month</strong> for a couple, leaving "
+                f"<strong>{fmt_usd(amount - actual)}/month</strong> in headroom on your {label} budget."
+            )
+        else:
+            title = f"Retire in {city} on {label}: What It Really Costs (2026)"
+            desc = f"{city} costs {fmt_usd(actual)}/month for a couple — {fmt_usd(shortfall)} over a {label} budget. See what's included and cheaper alternatives."
+            verdict_label = "Over Budget"
+            verdict_color = "#dc2626"
+            verdict_icon = "✗"
+            verdict_text = (
+                f"{city} costs <strong>{fmt_usd(actual)}/month</strong> for a couple, which is "
+                f"<strong>{fmt_usd(shortfall)} over</strong> a {label} budget. "
+                f"Your budget covers about <strong>{coverage_pct}%</strong> of costs here."
+            )
+
+        # Alternatives: qualifying cities sorted by cost (cheapest first), show up to 6
+        alternatives = sorted(
+            [(c, get_monthly_cost(c, 'couple')['total']) for c in coli_data
+             if get_monthly_cost(c, 'couple')['total'] <= amount and c != city],
+            key=lambda x: x[1]
+        )[:6]
+        alt_label = f"Cities Within {label}"
+
+    else:  # savings
+        yrs_single = years_money_lasts(amount, city, 'single')
+        yrs_couple = years_money_lasts(amount, city, 'couple')
+        years_val = yrs_couple
+        actual = couple_cost['total']
+        qualifies = yrs_couple >= 20
+        shortfall = None
+
+        title = f"Retire in {city} with {label}: How Long It Lasts (2026)"
+        desc = (
+            f"With {label} in savings, a couple can retire in {city} for "
+            f"{yrs_couple} years. Monthly cost: {fmt_usd(actual)}. See breakdown, visa options &amp; more."
+        )
+        if yrs_couple >= 25:
+            verdict_label = "Excellent Value"
+            verdict_color = "#16a34a"
+            verdict_icon = "✓"
+        elif yrs_couple >= 15:
+            verdict_label = "Good Value"
+            verdict_color = "#d97706"
+            verdict_icon = "~"
+        else:
+            verdict_label = "Expensive"
+            verdict_color = "#dc2626"
+            verdict_icon = "✗"
+
+        verdict_text = (
+            f"With <strong>{label}</strong> in savings, a couple can retire in {city} for "
+            f"<strong>{yrs_couple} years</strong> (single: {yrs_single} years). "
+            f"Monthly costs run <strong>{fmt_usd(actual)}</strong>."
+        )
+        # Alternatives: cities where savings last longer
+        alternatives = sorted(
+            [(c, years_money_lasts(amount, c, 'couple')) for c in coli_data if c != city],
+            key=lambda x: -x[1]
+        )[:6]
+        alt_label = f"Cities Where {label} Lasts Longest"
+
+    # Cost breakdown bar (visual %)
+    cost_items = [
+        ('Rent (1BR)', couple_cost['rent']),
+        ('Groceries', couple_cost['groceries']),
+        ('Utilities', couple_cost['utilities']),
+        ('Transport', couple_cost['transport']),
+        ('Healthcare', couple_cost['healthcare']),
+    ]
+    max_cost = max(v for _, v in cost_items) or 1
+    breakdown_rows = ''
+    for cat, val in cost_items:
+        bar_pct = round(val / max_cost * 100)
+        breakdown_rows += f'''
+            <tr>
+                <td style="padding:8px 0;width:120px;font-size:0.85rem;">{cat}</td>
+                <td style="padding:8px 0;">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div style="flex:1;background:var(--border-light);border-radius:4px;height:8px;">
+                            <div style="width:{bar_pct}%;background:var(--accent);border-radius:4px;height:8px;"></div>
+                        </div>
+                        <span style="font-size:0.85rem;font-weight:600;min-width:60px;text-align:right;">{fmt_usd(val)}/mo</span>
+                    </div>
+                </td>
+            </tr>'''
+
+    # Alternatives HTML
+    alt_links_html = ''
+    for alt_city, alt_val in alternatives:
+        alt_slug = to_slug(alt_city)
+        if budget_type == 'monthly':
+            alt_display = fmt_usd(alt_val) + '/mo'
+        else:
+            alt_display = f'{alt_val} yrs'
+        alt_links_html += (
+            f'<a href="/retire/city/{alt_slug}/on-{budget_slug}" '
+            f'style="display:inline-block;padding:6px 14px;background:var(--stat-card-bg);'
+            f'border-radius:8px;font-size:0.82rem;text-decoration:none;color:var(--text-primary);margin:4px;">'
+            f'{alt_city} <span style="color:var(--text-secondary);font-size:0.78rem;">({alt_display})</span></a>'
+        )
+
+    # Other budgets for this city
+    budget_links_html = ''
+    for bt, ba, bl in [
+        ('monthly', 1000, '$1,000/Month'), ('monthly', 1500, '$1,500/Month'),
+        ('monthly', 2000, '$2,000/Month'), ('monthly', 2500, '$2,500/Month'),
+        ('monthly', 3000, '$3,000/Month'), ('monthly', 3500, '$3,500/Month'),
+        ('savings', 200000, '$200K Savings'), ('savings', 300000, '$300K Savings'),
+        ('savings', 500000, '$500K Savings'), ('savings', 750000, '$750K Savings'),
+        ('savings', 1000000, '$1M Savings'), ('savings', 2000000, '$2M Savings'),
+    ]:
+        if ba == amount and bt == budget_type:
+            continue
+        bl_slug = bl.lower().replace('$', '').replace(',', '').replace(' ', '-').replace('/', '-')
+        budget_links_html += (
+            f'<a href="/retire/city/{city_slug}/on-{bl_slug}" '
+            f'style="display:inline-block;padding:6px 14px;background:var(--stat-card-bg);'
+            f'border-radius:8px;font-size:0.82rem;text-decoration:none;color:var(--text-primary);margin:4px;">'
+            f'{bl}</a>'
+        )
+
+    # Visa snippet (first visa program, if any)
+    visa_snippet = ''
+    if visas:
+        v = visas[0]
+        inc_req = fmt_usd(v['minMonthlyIncome']) + '/mo' if v.get('minMonthlyIncome') else 'N/A'
+        visa_snippet = f'''
+        <section class="content-card">
+            <h2>Visa &amp; Residency in {country_name}</h2>
+            <p>The <strong>{v.get('name', 'retirement visa')}</strong> requires a minimum monthly income of <strong>{inc_req}</strong>.
+            {"Path to permanent residency: Yes." if v.get('pathToPR') else ""}
+            <a href="/retire/visa/{to_slug(country_name)}" style="color:var(--accent);">Full {country_name} visa guide &rarr;</a></p>
+        </section>'''
+
+    # FAQ
+    if budget_type == 'monthly':
+        faq_items = [
+            {'q': f'Can I retire in {city} on {label}?',
+             'a': (f'Yes — {city} costs {fmt_usd(couple_cost["total"])}/month for a couple, which fits within a {label} budget with {fmt_usd(amount - couple_cost["total"])} to spare.'
+                   if qualifies else
+                   f'{city} costs {fmt_usd(couple_cost["total"])}/month for a couple, which is {fmt_usd(shortfall)} over a {label} budget. You would need to either increase your budget or consider a cheaper neighborhood.')},
+            {'q': f'What does {label} cover in {city}?',
+             'a': (f'In {city}, {label} covers rent ({fmt_usd(couple_cost["rent"])}), groceries ({fmt_usd(couple_cost["groceries"])}), '
+                   f'utilities ({fmt_usd(couple_cost["utilities"])}), transport ({fmt_usd(couple_cost["transport"])}), '
+                   f'and healthcare ({fmt_usd(couple_cost["healthcare"])}) — a total of {fmt_usd(couple_cost["total"])}/month for a couple.')},
+            {'q': f'What are cheaper alternatives to {city}?',
+             'a': (f'Cities within a {label} budget include: {", ".join(c for c, _ in alternatives[:4])}.'
+                   if alternatives else f'See our full list of cities within {label}.')},
+        ]
+    else:
+        faq_items = [
+            {'q': f'How long will {label} last in {city}?',
+             'a': f'With {label} in savings, a single retiree can live in {city} for approximately {yrs_single} years. A couple can last approximately {yrs_couple} years, based on monthly costs of {fmt_usd(couple_cost["total"])}.'},
+            {'q': f'What is the monthly cost of living in {city}?',
+             'a': f'A couple needs approximately {fmt_usd(couple_cost["total"])}/month in {city}, covering rent ({fmt_usd(couple_cost["rent"])}), groceries ({fmt_usd(couple_cost["groceries"])}), utilities ({fmt_usd(couple_cost["utilities"])}), transport ({fmt_usd(couple_cost["transport"])}), and healthcare ({fmt_usd(couple_cost["healthcare"])}).'},
+            {'q': f'Where does {label} last longest for retirement?',
+             'a': (f'Cities where {label} lasts longest include: {", ".join(f"{c} ({v} yrs)" for c, v in alternatives[:4])}.'
+                   if alternatives else 'See our full savings comparison tool.')},
+        ]
+
+    faq_schema = json.dumps({
+        "@context": "https://schema.org", "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": f['q'], "acceptedAnswer": {"@type": "Answer", "text": f['a']}} for f in faq_items]
+    }, indent=8)
+    breadcrumb_schema = json.dumps({
+        "@context": "https://schema.org", "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com"},
+            {"@type": "ListItem", "position": 2, "name": "Retire Abroad", "item": "https://salary-converter.com/retire/"},
+            {"@type": "ListItem", "position": 3, "name": f"Retire in {city}", "item": f"https://salary-converter.com/retire/city/{city_slug}"},
+            {"@type": "ListItem", "position": 4, "name": label, "item": canonical},
+        ]
+    }, indent=8)
+    faq_html = '\n'.join(f'<div class="faq-item"><h3>{f["q"]}</h3><p>{f["a"]}</p></div>' for f in faq_items)
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content="{desc}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{canonical}">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{title}">
+    <meta property="og:description" content="{desc}">
+    <meta property="og:url" content="{canonical}">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
+    <meta property="og:site_name" content="salary:converter">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {faq_schema}
+    </script>
+    <script type="application/ld+json">
+    {breadcrumb_schema}
+    </script>
+{GA4_SNIPPET}
+    <style>
+{PAGE_CSS}
+    </style>
+{THEME_JS}
+</head>
+<body>
+{THEME_TOGGLE_HTML}
+    <div class="page-container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> &rsaquo;
+            <a href="/retire/">Retire Abroad</a> &rsaquo;
+            <a href="/retire/city/{city_slug}">{city}</a> &rsaquo;
+            {label}
+        </div>
+        <h1>{"Retire in " + city + " on " + label if budget_type == "monthly" else "Retire in " + city + " with " + label}</h1>
+        <p class="subtitle">{"Can you retire in " + city + " on " + label + "? Here's the full cost breakdown, what's included, and how it compares to other cities."
+          if budget_type == "monthly" else
+          "How long does " + label + " last in " + city + "? Complete cost analysis with breakdown, visa options, and alternatives."}</p>
+
+        <section class="content-card">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <span style="font-size:1.5rem;font-weight:700;color:{verdict_color};">{verdict_icon}</span>
+                <div>
+                    <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-secondary);font-weight:600;">{verdict_label}</div>
+                    <p style="margin:4px 0 0;font-size:0.95rem;line-height:1.5;">{verdict_text}</p>
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:16px;">
+                <div class="stat-card"><div class="stat-label">Monthly (Couple)</div><div class="stat-value">{fmt_usd(couple_cost["total"])}</div></div>
+                <div class="stat-card"><div class="stat-label">Monthly (Single)</div><div class="stat-value">{fmt_usd(single_cost["total"])}</div></div>
+                <div class="stat-card"><div class="stat-label">Safety Score</div><div class="stat-value">{safety}/100</div></div>
+                <div class="stat-card"><div class="stat-label">Healthcare</div><div class="stat-value">{healthcare}/100</div></div>
+                {f'<div class="stat-card"><div class="stat-label">Savings Duration</div><div class="stat-value">{years_val} yrs</div></div>' if years_val is not None else ''}
+            </div>
+        </section>
+
+        <section class="content-card">
+            <h2>Monthly Cost Breakdown (Couple)</h2>
+            <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:16px;">Estimated monthly expenses in {city} for a couple.</p>
+            <table style="width:100%;border-collapse:collapse;">
+                <tbody>{breakdown_rows}</tbody>
+                <tfoot><tr style="border-top:2px solid var(--border);">
+                    <td style="padding:8px 0;font-weight:600;">Total</td>
+                    <td style="padding:8px 0;text-align:right;font-weight:700;font-size:1.05rem;">{fmt_usd(couple_cost["total"])}/mo</td>
+                </tr></tfoot>
+            </table>
+        </section>
+
+        <section class="content-card">
+            <h2>{alt_label}</h2>
+            <div style="margin-top:8px;">{alt_links_html if alt_links_html else "<p style='color:var(--text-secondary);'>No cities match this filter.</p>"}</div>
+            <p style="margin-top:12px;font-size:0.82rem;"><a href="/retire/budget/{budget_slug}" style="color:var(--accent);">See full ranked list for {label} &rarr;</a></p>
+        </section>
+
+        {visa_snippet}
+
+        <section class="content-card">
+            <h2>Other Budgets for {city}</h2>
+            <div style="margin-top:8px;">{budget_links_html}</div>
+            <p style="margin-top:12px;font-size:0.82rem;"><a href="/retire/city/{city_slug}" style="color:var(--accent);">Full {city} retirement guide &rarr;</a></p>
+        </section>
+
+        <section class="content-card">
+            <h2>Frequently Asked Questions</h2>
+            {faq_html}
+        </section>
+
+{RETIRE_CTA_HTML}
+{SALARY_CTA_HTML}
+{WISE_CTA_HTML}
+{DATA_SOURCES_HTML}
+{build_footer()}
+    </div>
+{FOOTER_JS}
+</body>
+</html>'''
+
+
+# ═══════════════════════════════════════════════════════════════════
 #  PAGE TYPE E: /retire/compare/{a}-vs-{b}.html
 # ═══════════════════════════════════════════════════════════════════
 def generate_compare_page(city_a, city_b):
@@ -1660,11 +1971,27 @@ for city_a, city_b in COMPARE_PAIRS:
         print(f"  Skipping compare {city_a} vs {city_b}: '{missing}' not found")
 print(f"Compare pages: {compare_count}")
 
-# F. Destinations index
+# F. City × Budget cross-product pages (182 cities × 12 budgets = 2,184 pages)
+city_budget_count = 0
+for city in coli_data:
+    city_slug = to_slug(city)
+    city_dir_path = os.path.join(BASE_DIR, 'retire', 'city', city_slug)
+    os.makedirs(city_dir_path, exist_ok=True)
+    for btype, amount, label in budgets:
+        html = generate_city_budget_page(city, btype, amount, label)
+        if html:
+            budget_slug = label.lower().replace('$', '').replace(',', '').replace(' ', '-').replace('/', '-')
+            path = os.path.join(city_dir_path, f'on-{budget_slug}.html')
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(html)
+            city_budget_count += 1
+print(f"City × Budget pages: {city_budget_count}")
+
+# G. Destinations index
 dest_html = generate_destinations_index()
 with open(os.path.join(BASE_DIR, 'retire', 'destinations', 'index.html'), 'w', encoding='utf-8') as f:
     f.write(dest_html)
 print(f"Destinations index: 1")
 
-total = city_count + country_count + visa_count + budget_count + compare_count + 1
+total = city_count + country_count + visa_count + budget_count + compare_count + city_budget_count + 1
 print(f"\n=== Total: {total} pages generated in /retire/ ===")

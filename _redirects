@@ -2,6 +2,8 @@
 # Generated redirect rules for broken city/neighborhood URLs
 # These fix 404s from salary-needed pages linking to wrong city slugs
 
+/compare/* / 301
+
 /city/amsterdam/canal-ring /city/amsterdam/canal-ring-centrum 308
 /city/austin/south-congress /city/austin/south-congress-soco 308
 /city/bangkok/sukhumvit /city/bangkok/sukhumvit-asoke 308
