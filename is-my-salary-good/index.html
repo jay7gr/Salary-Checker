@@ -995,6 +995,142 @@ window.addEventListener('DOMContentLoaded', () => {
         articles.slice(0,3).forEach(function(a){a.style.display='';});
     })();
     </script>
+
+<nav class="footer-links-grid" aria-label="Explore">
+    <div class="footer-links-col">
+        <h4>Cities</h4>
+        <a href="/city/london">London</a>
+        <a href="/city/new-york">New York</a>
+        <a href="/city/dubai">Dubai</a>
+        <a href="/city/singapore">Singapore</a>
+        <a href="/city/berlin">Berlin</a>
+        <a href="/city/tokyo">Tokyo</a>
+        <a href="/city/paris">Paris</a>
+        <a href="/city/amsterdam">Amsterdam</a>
+        <a href="/city/san-francisco">San Francisco</a>
+        <a href="/city/sydney">Sydney</a>
+        <a href="/city/toronto">Toronto</a>
+        <a href="/city/lisbon">Lisbon</a>
+        <a href="/city/bangkok">Bangkok</a>
+        <a href="/city/barcelona">Barcelona</a>
+        <a href="/city/hong-kong">Hong Kong</a>
+        <a href="/city/munich">Munich</a>
+        <a href="/city/buenos-aires">Buenos Aires</a>
+        <a href="/city/zurich">Zurich</a>
+    </div>
+    <div class="footer-links-col">
+        <h4>Tools</h4>
+        <a href="/offer-evaluator/">Offer Evaluator</a>
+        <a href="/is-my-salary-good/">Is My Salary Good?</a>
+        <a href="/compare/london-vs-new-york">London vs New York</a>
+        <a href="/compare/dubai-vs-singapore">Dubai vs Singapore</a>
+        <a href="/compare/berlin-vs-london">Berlin vs London</a>
+        <a href="/compare/new-york-vs-san-francisco">SF vs New York</a>
+        <a href="/compare/melbourne-vs-sydney">Sydney vs Melbourne</a>
+        <a href="/compare/amsterdam-vs-berlin">Amsterdam vs Berlin</a>
+        <a href="/compare/barcelona-vs-lisbon">Lisbon vs Barcelona</a>
+        <a href="/compare/los-angeles-vs-new-york">NY vs Los Angeles</a>
+        <a href="/compare/bangkok-vs-ho-chi-minh-city">Bangkok vs HCMC</a>
+        <a href="/compare/toronto-vs-vancouver">Toronto vs Vancouver</a>
+    </div>
+    <div class="footer-links-col">
+        <h4>Salary Needed</h4>
+        <a href="/salary-needed/london">London</a>
+        <a href="/salary-needed/new-york">New York</a>
+        <a href="/salary-needed/berlin">Berlin</a>
+        <a href="/salary-needed/dubai">Dubai</a>
+        <a href="/salary-needed/singapore">Singapore</a>
+        <a href="/salary-needed/tokyo">Tokyo</a>
+        <a href="/salary-needed/paris">Paris</a>
+        <a href="/salary-needed/amsterdam">Amsterdam</a>
+        <a href="/salary-needed/sydney">Sydney</a>
+        <a href="/salary-needed/lisbon">Lisbon</a>
+        <a href="/salary-needed/barcelona">Barcelona</a>
+        <a href="/salary-needed/toronto">Toronto</a>
+    </div>
+    <div class="footer-links-col">
+        <h4>Neighborhoods</h4>
+        <a href="/city/london/mayfair">London: Mayfair</a>
+        <a href="/city/london/marylebone">London: Marylebone</a>
+        <a href="/city/london/shoreditch">London: Shoreditch</a>
+        <a href="/city/london/brixton">London: Brixton</a>
+        <a href="/city/new-york/manhattan-midtown">NY: Midtown</a>
+        <a href="/city/new-york/brooklyn-williamsburg">NY: Williamsburg</a>
+        <a href="/city/new-york/manhattan-upper-east-side">NY: Upper East Side</a>
+        <a href="/city/new-york/harlem">NY: Harlem</a>
+        <a href="/city/berlin/mitte">Berlin: Mitte</a>
+        <a href="/city/berlin/kreuzberg">Berlin: Kreuzberg</a>
+        <a href="/city/tokyo/shibuya">Tokyo: Shibuya</a>
+        <a href="/city/tokyo/minato">Tokyo: Minato</a>
+        <a href="/city/dubai/downtown-dubai">Dubai: Downtown</a>
+        <a href="/city/dubai/dubai-marina">Dubai: Marina</a>
+        <a href="/city/singapore/orchard-road">SG: Orchard Road</a>
+        <a href="/city/singapore/marina-bay">SG: Marina Bay</a>
+    </div>
+    <div class="footer-links-col">
+        <h4>Guides</h4>
+        <a href="/blog/articles/how-cost-of-living-affects-your-salary">How Cost of Living Affects Salary</a>
+        <a href="/blog/articles/top-10-cities-for-remote-workers-2026">Top 10 Cities for Remote Workers</a>
+        <a href="/blog/articles/london-vs-new-york-true-cost-comparison">London vs New York Deep Dive</a>
+        <a href="/blog/articles/tech-salary-comparison-by-city-2026">Tech Salary by City 2026</a>
+        <a href="/blog/articles/salary-negotiation-when-relocating-abroad">Salary Negotiation Abroad</a>
+        <a href="/blog/articles/affordable-cities-in-europe-for-americans-2026">Affordable European Cities</a>
+    </div>
+</nav>
+
+<div class="contact-overlay" id="contactOverlay">
+    <div class="contact-modal">
+        <button class="contact-modal-close" onclick="closeContactModal()" aria-label="Close">&times;</button>
+        <h2>Contact Us</h2>
+        <p class="contact-subtitle">Have feedback, found a data error, or want to suggest a feature?</p>
+        <form id="contactForm" class="contact-form">
+            <input type="hidden" name="access_key" value="58839fd2-7f1c-4944-8fd5-322bc3d6beba">
+            <input type="hidden" name="subject" value="salary-converter.com Contact Form">
+            <div class="contact-form-grid">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:8px">
+                <label for="contactMessage">Message</label>
+                <textarea id="contactMessage" name="message" rows="4" placeholder="Your message..." required></textarea>
+            </div>
+            <button type="submit" style="margin-top:12px;padding:12px 28px;background:var(--accent,#2563eb);color:#fff;border:none;border-radius:100px;font-size:0.95rem;font-weight:700;cursor:pointer;width:100%">Send Message</button>
+        </form>
+        <div id="contactSuccess" style="display:none;text-align:center;color:#16a34a;font-weight:600;padding:16px 0">Thank you! We'll get back to you soon.</div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="site-footer-logo">salary<span>:</span>converter</div>
+    <div class="site-footer-text">Compare salaries across 182 cities and 3,400+ neighborhoods worldwide.</div>
+    <div class="site-footer-links">
+        <a href="https://salary-converter.com">Salary Converter</a>
+        <a href="/city/">Cities</a>
+        <a href="/compare/">City Comparisons</a>
+        <a href="/salary-needed/">Salary Needed</a>
+        <a href="/retire/">Retire Abroad</a>
+        <a href="/blog/">Blog</a>
+        <a href="/about/">About</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/widget">Widget</a>
+        <a href="#" onclick="openContactModal(); return false;">Contact</a>
+    </div>
+    <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
+</footer>
+<script>
+function openContactModal(){document.getElementById('contactOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeContactModal(){document.getElementById('contactOverlay').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('contactOverlay').addEventListener('click',function(e){if(e.target===this)closeContactModal();});
+const _cf=document.getElementById('contactForm');
+if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const btn=_cf.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Sending...';try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(_cf)});if(r.ok){_cf.style.display='none';document.getElementById('contactSuccess').style.display='block';}else{btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}}catch(err){btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}});
+</script>
     <script src="/chat.js?v=2"></script>
 </body>
 </html>
