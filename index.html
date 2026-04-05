@@ -469,6 +469,13 @@
             color: #fff;
             opacity: 0.8;
         }
+        @media (max-width: 768px) {
+            .tool-switcher { width: 100%; }
+            .tool-switcher a { flex: 1; min-width: 0; padding: 8px 6px; font-size: 0.75rem; text-align: center; white-space: normal; line-height: 1.2; }
+        }
+        @media (max-width: 480px) {
+            .tool-switcher a { padding: 7px 4px; font-size: 0.68rem; }
+        }
 
         /* Nav burger menu — visible on all screen sizes */
         .nav-burger {
@@ -2316,7 +2323,7 @@
             <div class="tool-switcher">
                 <a href="/" class="active">Salary Converter</a>
                 <a href="/retire/">Retire Abroad</a>
-                <a href="/is-my-salary-good/">Salary Benchmark</a>
+                <a href="/is-my-salary-good/">Salary Check</a>
                 <a href="/offer-evaluator/">Offer Evaluator</a>
             </div>
             <p style="color: #86868b; font-size: 1.15rem; font-weight: 400; margin-top: 14px;" id="hero-subtitle">Compare salaries across 182 cities and 3,400+ neighborhoods worldwide.</p>
@@ -2740,10 +2747,12 @@
             <h4>Tools</h4>
             <a href="/offer-evaluator/">Offer Evaluator</a>
             <a href="/is-my-salary-good/">Is My Salary Good?</a>
-            <a href="/offer-evaluator/?a=London:65000&b=New York:130000">London vs New York</a>
-            <a href="/offer-evaluator/?a=Dubai:120000&b=Singapore:120000">Dubai vs Singapore</a>
-            <a href="/offer-evaluator/?a=Berlin:80000&b=London:70000">Berlin vs London</a>
-            <a href="/offer-evaluator/?a=San Francisco:160000&b=New York:130000">SF vs New York</a>
+            <a href="/compare/london-vs-new-york">London vs New York</a>
+            <a href="/compare/dubai-vs-singapore">Dubai vs Singapore</a>
+            <a href="/compare/berlin-vs-london">London vs Berlin</a>
+            <a href="/compare/new-york-vs-san-francisco">SF vs New York</a>
+            <a href="/compare/london-vs-paris">London vs Paris</a>
+            <a href="/compare/singapore-vs-tokyo">Tokyo vs Singapore</a>
             <a href="/compare/melbourne-vs-sydney">Sydney vs Melbourne</a>
             <a href="/compare/amsterdam-vs-berlin">Amsterdam vs Berlin</a>
             <a href="/compare/barcelona-vs-lisbon">Lisbon vs Barcelona</a>

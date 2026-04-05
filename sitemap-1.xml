@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://salary-converter.com/</loc><lastmod>2026-04-02</lastmod></url>
+  <url><loc>https://salary-converter.com/</loc><lastmod>2026-04-05</lastmod></url>
+  <url><loc>https://salary-converter.com/offer-evaluator/</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://salary-converter.com/is-my-salary-good/</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://salary-converter.com/widget</loc><lastmod>2026-04-02</lastmod></url>
   <url><loc>https://salary-converter.com/city/</loc><lastmod>2026-04-02</lastmod></url>
-  <url><loc>https://salary-converter.com/compare/</loc><lastmod>2026-04-02</lastmod></url>
-  <url><loc>https://salary-converter.com/blog/</loc><lastmod>2026-04-02</lastmod></url>
+  <url><loc>https://salary-converter.com/blog/</loc><lastmod>2026-04-05</lastmod></url>
+  <url><loc>https://salary-converter.com/blog/articles/is-100k-a-good-salary-2026</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://salary-converter.com/blog/articles/how-to-know-if-your-salary-is-good</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://salary-converter.com/blog/articles/software-engineer-salary-london-vs-new-york-2026</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://salary-converter.com/blog/articles/what-does-80k-get-you-in-different-cities-2026</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://salary-converter.com/blog/articles/best-cities-for-software-engineers-salary-2026</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world</loc><lastmod>2026-04-02</lastmod></url>
   <url><loc>https://salary-converter.com/blog/articles/affordable-cities-in-europe-for-americans-2026</loc><lastmod>2026-04-02</lastmod></url>
   <url><loc>https://salary-converter.com/blog/articles/average-salary-by-city-2026-global-comparison</loc><lastmod>2026-04-02</lastmod></url>
