@@ -555,18 +555,25 @@ const profCategory={
 // verified:true = drawn from a named primary national statistics source.
 // verified:false = estimated from OECD average wage ratios + Mercer surveys — directionally
 //   correct but not a primary per-profession survey. Will be upgraded as national data arrives.
+// verified:true = drawn from named primary national statistics.
+// unverifiedCats = categories within a verified country that still use OECD estimates
+//   (typically medical_dental — no national dental salary surveys found).
 const countrySources={
-  'United States':  {verified:true,  source:'BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi'},
-  // --- Pending upgrade to national statistics office data (ONS, Eurostat, ABS, StatsCan) ---
-  'United Kingdom': {verified:false, source:'Estimated · OECD wage ratios + Mercer surveys'},
-  'Ireland':        {verified:false, source:'Estimated · OECD wage ratios + Mercer surveys'},
-  'Germany':        {verified:false, source:'Estimated · OECD wage ratios + Destatis'},
-  'Netherlands':    {verified:false, source:'Estimated · OECD wage ratios + CBS Netherlands'},
+  // ── Verified: primary national statistics ───────────────────────────────────
+  'United States':  {verified:true, source:'BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi', url:'https://www.bls.gov/oes/'},
+  'United Kingdom': {verified:true, source:'ONS ASHE April 2024 · DfE School Workforce England 2024', url:'https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/bulletins/annualsurveyofhoursandearnings/2024', unverifiedCats:['medical_dental']},
+  'Germany':        {verified:true, source:'Bundesagentur für Arbeit Entgeltatlas 2024 · Destatis', url:'https://web.arbeitsagentur.de/entgeltatlas/', unverifiedCats:['medical_dental']},
+  'Canada':         {verified:true, source:'Canada Job Bank LFS 2023–2024 · CIHI Physician Data', url:'https://www.jobbank.gc.ca/trend-analysis/search-wages', unverifiedCats:['medical_dental']},
+  'Australia':      {verified:true, source:'ABS Employee Earnings Aug 2024 · Jobs and Skills Australia', url:'https://www.abs.gov.au/statistics/labour/earnings-and-working-conditions/employee-earnings/aug-2024', unverifiedCats:['medical_dental','law']},
+  'Sweden':         {verified:true, source:'SCB Salary Structures, Whole Economy 2024', url:'https://www.scb.se/en/finding-statistics/statistics-by-subject-area/labour-market/wages-salaries-and-labour-costs/salary-structures-whole-economy/', unverifiedCats:['medical_dental']},
+  'France':         {verified:true, source:'INSEE DADS 2022 (most recent full-year data)', url:'https://www.insee.fr/fr/statistiques/7707884', unverifiedCats:['medical_dental','medical_physician']},
+  'Netherlands':    {verified:true, source:'CBS Statistics Netherlands 2022 · Eurostat SES 2022', url:'https://www.cbs.nl/en-gb/labour-and-income', unverifiedCats:['medical_dental']},
+  'New Zealand':    {verified:true, source:'Stats NZ Labour Market Income Jun 2024 · Immigration NZ', url:'https://www.stats.govt.nz/information-releases/labour-market-statistics-income-june-2024-quarter/', unverifiedCats:['medical_dental']},
+  // ── Estimated: OECD wage ratios + named national stats office ───────────────
+  'Ireland':        {verified:false, source:'Estimated · OECD wage ratios + CSO Ireland'},
   'Switzerland':    {verified:false, source:'Estimated · OECD wage ratios + FSO Switzerland'},
-  'France':         {verified:false, source:'Estimated · OECD wage ratios + INSEE'},
   'Belgium':        {verified:false, source:'Estimated · OECD wage ratios + Statbel'},
   'Luxembourg':     {verified:false, source:'Estimated · OECD wage ratios'},
-  'Sweden':         {verified:false, source:'Estimated · OECD wage ratios + SCB Sweden'},
   'Norway':         {verified:false, source:'Estimated · OECD wage ratios + SSB Norway'},
   'Denmark':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Denmark'},
   'Finland':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Finland'},
@@ -582,9 +589,6 @@ const countrySources={
   'Estonia':        {verified:false, source:'Estimated · OECD wage ratios + Statistics Estonia'},
   'Latvia':         {verified:false, source:'Estimated · OECD wage ratios + CSB Latvia'},
   'Croatia':        {verified:false, source:'Estimated · OECD wage ratios + DZS Croatia'},
-  'Australia':      {verified:false, source:'Estimated · OECD wage ratios + ABS (pending)'},
-  'New Zealand':    {verified:false, source:'Estimated · OECD wage ratios + Stats NZ (pending)'},
-  'Canada':         {verified:false, source:'Estimated · OECD wage ratios + Statistics Canada (pending)'},
   'Japan':          {verified:false, source:'Estimated · OECD wage ratios + MHLW Japan'},
   'South Korea':    {verified:false, source:'Estimated · OECD wage ratios + Statistics Korea'},
   'Singapore':      {verified:false, source:'Estimated · MOM Singapore surveys'},
@@ -622,16 +626,16 @@ const countrySources={
 // Country salary multipliers vs US baseline, by profession category
 const countryMultipliers={
   'United States':     {tech:1.00,medical_physician:1.00,medical_dental:1.00,medical_other:1.00,law:1.00,finance:1.00,business:1.00,engineering:1.00,education:1.00},
-  'Canada':            {tech:0.65,medical_physician:0.55,medical_dental:0.65,medical_other:0.60,law:0.60,finance:0.62,business:0.62,engineering:0.65,education:0.68},
-  'United Kingdom':    {tech:0.52,medical_physician:0.28,medical_dental:0.40,medical_other:0.40,law:0.55,finance:0.68,business:0.50,engineering:0.48,education:0.48},
+  'Canada':            {tech:0.66,medical_physician:0.68,medical_dental:0.65,medical_other:0.65,law:0.60,finance:0.68,business:0.57,engineering:0.68,education:1.04},
+  'United Kingdom':    {tech:0.46,medical_physician:0.51,medical_dental:0.40,medical_other:0.54,law:0.52,finance:0.70,business:0.58,engineering:0.64,education:1.06},
   'Ireland':           {tech:0.58,medical_physician:0.40,medical_dental:0.48,medical_other:0.45,law:0.48,finance:0.52,business:0.50,engineering:0.50,education:0.50},
-  'Germany':           {tech:0.48,medical_physician:0.32,medical_dental:0.40,medical_other:0.38,law:0.38,finance:0.48,business:0.45,engineering:0.50,education:0.55},
-  'Netherlands':       {tech:0.52,medical_physician:0.38,medical_dental:0.42,medical_other:0.42,law:0.42,finance:0.50,business:0.48,engineering:0.50,education:0.52},
+  'Germany':           {tech:0.59,medical_physician:0.39,medical_dental:0.40,medical_other:0.59,law:0.55,finance:0.65,business:0.59,engineering:0.89,education:1.13},
+  'Netherlands':       {tech:0.58,medical_physician:0.45,medical_dental:0.42,medical_other:0.49,law:0.54,finance:0.73,business:0.59,engineering:0.70,education:0.86},
   'Switzerland':       {tech:0.75,medical_physician:0.55,medical_dental:0.60,medical_other:0.58,law:0.58,finance:0.72,business:0.65,engineering:0.68,education:0.72},
-  'France':            {tech:0.42,medical_physician:0.22,medical_dental:0.30,medical_other:0.38,law:0.32,finance:0.48,business:0.42,engineering:0.42,education:0.45},
+  'France':            {tech:0.46,medical_physician:0.43,medical_dental:0.30,medical_other:0.46,law:0.55,finance:0.65,business:0.51,engineering:0.63,education:0.69},
   'Belgium':           {tech:0.45,medical_physician:0.30,medical_dental:0.36,medical_other:0.38,law:0.38,finance:0.45,business:0.42,engineering:0.44,education:0.48},
   'Luxembourg':        {tech:0.58,medical_physician:0.40,medical_dental:0.46,medical_other:0.44,law:0.48,finance:0.65,business:0.55,engineering:0.54,education:0.58},
-  'Sweden':            {tech:0.48,medical_physician:0.32,medical_dental:0.40,medical_other:0.42,law:0.42,finance:0.48,business:0.45,engineering:0.48,education:0.50},
+  'Sweden':            {tech:0.45,medical_physician:0.42,medical_dental:0.40,medical_other:0.49,law:0.53,finance:0.68,business:0.55,engineering:0.63,education:0.75},
   'Norway':            {tech:0.52,medical_physician:0.40,medical_dental:0.48,medical_other:0.48,law:0.48,finance:0.52,business:0.50,engineering:0.55,education:0.58},
   'Denmark':           {tech:0.50,medical_physician:0.35,medical_dental:0.45,medical_other:0.44,law:0.44,finance:0.50,business:0.47,engineering:0.50,education:0.55},
   'Finland':           {tech:0.45,medical_physician:0.32,medical_dental:0.40,medical_other:0.40,law:0.40,finance:0.44,business:0.42,engineering:0.45,education:0.48},
@@ -665,8 +669,8 @@ const countryMultipliers={
   'Indonesia':         {tech:0.10,medical_physician:0.08,medical_dental:0.09,medical_other:0.07,law:0.07,finance:0.09,business:0.08,engineering:0.09,education:0.07},
   'Cambodia':          {tech:0.10,medical_physician:0.07,medical_dental:0.07,medical_other:0.06,law:0.06,finance:0.08,business:0.07,engineering:0.07,education:0.06},
   'India':             {tech:0.13,medical_physician:0.08,medical_dental:0.09,medical_other:0.07,law:0.07,finance:0.10,business:0.10,engineering:0.11,education:0.08},
-  'Australia':         {tech:0.62,medical_physician:0.58,medical_dental:0.62,medical_other:0.60,law:0.58,finance:0.62,business:0.60,engineering:0.65,education:0.65},
-  'New Zealand':       {tech:0.50,medical_physician:0.45,medical_dental:0.50,medical_other:0.48,law:0.48,finance:0.50,business:0.48,engineering:0.52,education:0.55},
+  'Australia':         {tech:0.57,medical_physician:0.51,medical_dental:0.62,medical_other:0.54,law:0.45,finance:0.55,business:0.67,engineering:0.64,education:1.04},
+  'New Zealand':       {tech:0.48,medical_physician:0.53,medical_dental:0.50,medical_other:0.52,law:0.40,finance:0.52,business:0.41,engineering:0.57,education:0.76},
   'Brazil':            {tech:0.18,medical_physician:0.18,medical_dental:0.18,medical_other:0.15,law:0.15,finance:0.18,business:0.16,engineering:0.16,education:0.14},
   'Argentina':         {tech:0.14,medical_physician:0.12,medical_dental:0.12,medical_other:0.10,law:0.10,finance:0.12,business:0.11,engineering:0.12,education:0.10},
   'Colombia':          {tech:0.12,medical_physician:0.12,medical_dental:0.12,medical_other:0.10,law:0.10,finance:0.11,business:0.10,engineering:0.11,education:0.09},
@@ -783,10 +787,11 @@ function checkSalary() {
   const cat = profCategory[prof] || 'other';
   const countryMults = countryMultipliers[country];
   const srcInfo = countrySources[country] || null;
-  let benchMult, dataQuality; // dataQuality: 'verified' | 'estimated' | 'coli'
+  const catUnverified = srcInfo && srcInfo.unverifiedCats && srcInfo.unverifiedCats.includes(cat);
+  let benchMult, dataQuality; // 'verified' | 'estimated' | 'coli'
   if (countryMults && countryMults[cat] !== undefined) {
     benchMult = countryMults[cat];
-    dataQuality = (srcInfo && srcInfo.verified) ? 'verified' : 'estimated';
+    dataQuality = (srcInfo && srcInfo.verified && !catUnverified) ? 'verified' : 'estimated';
   } else {
     benchMult = coli / 100;
     dataQuality = 'coli';
@@ -840,13 +845,14 @@ function checkSalary() {
   document.getElementById('verdictTitle').textContent = title;
   document.getElementById('verdictSub').textContent = sub;
 
-  // Source badge in verdict
-  const srcLabel = dataQuality==='verified'
-    ? `✅ Verified data · ${srcInfo.source}`
+  // Source badge in verdict (with link if available)
+  const srcHref = srcInfo && srcInfo.url ? ` <a href="${srcInfo.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;text-underline-offset:2px;opacity:.7;">↗</a>` : '';
+  const srcHtml = dataQuality==='verified'
+    ? `✅ Verified · ${srcInfo.source}${srcHref}`
     : dataQuality==='estimated'
-    ? `⚠️ Estimated benchmark · ${srcInfo ? srcInfo.source : 'OECD wage ratios'}`
+    ? `⚠️ Estimated · ${srcInfo ? srcInfo.source : 'OECD wage ratios'}`
     : `🔴 COLI estimate only · no salary survey data for this region`;
-  document.getElementById('sourceBadge').textContent = srcLabel;
+  document.getElementById('sourceBadge').innerHTML = srcHtml;
 
   // Stats grid
   const statsGrid = document.getElementById('statsGrid');
@@ -874,12 +880,12 @@ function checkSalary() {
     <div class="breakdown-row"><span class="breakdown-label">City COLI (NYC=100)</span><span class="breakdown-val">${coli}</span></div>
     <hr style="border:none;border-top:2px solid var(--border);margin:4px 0">
     <div class="breakdown-row"><span class="breakdown-label">Typical range for ${prof} in ${city}</span><span class="breakdown-val">${fmtLocal(lowLocal,currency)} – ${fmtLocal(highLocal,currency)}</span></div>
-    ${dataQuality==='verified'
-      ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(22,163,74,0.07);border:1px solid rgba(22,163,74,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">✅ <strong style="color:var(--text-primary);">Verified data</strong> — benchmarks drawn from primary national sources.<br><span style="font-size:0.68rem;opacity:.8;">${srcInfo.source}</span></div>`
-      : dataQuality==='estimated'
-      ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.28);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">⚠️ <strong style="color:var(--text-primary);">Estimated benchmark</strong> — no verified national survey data available yet for ${country||'this country'}. Range is derived from OECD average wage ratios vs the US baseline. Actual salaries may differ.<br><span style="font-size:0.68rem;opacity:.8;">${srcInfo ? srcInfo.source : 'OECD wage ratios'}</span></div>`
-      : `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">🔴 <strong style="color:var(--text-primary);">COLI estimate only</strong> — no salary data available for this profession category in ${country||'this region'}. Range is scaled from US baselines using the city's cost-of-living index. Treat as a rough guide only.</div>`
-    }
+    ${(()=>{
+      const link = srcInfo&&srcInfo.url ? ` <a href="${srcInfo.url}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">View source ↗</a>` : '';
+      if(dataQuality==='verified') return `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(22,163,74,0.07);border:1px solid rgba(22,163,74,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">✅ <strong style="color:var(--text-primary);">Verified data</strong> — benchmarks drawn from primary national statistics.${link}<br><span style="font-size:0.68rem;opacity:.85;">${srcInfo.source}</span></div>`;
+      if(dataQuality==='estimated') return `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.28);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">⚠️ <strong style="color:var(--text-primary);">Estimated benchmark</strong> — no verified national survey data for this profession in ${country||'this country'}. Derived from OECD average wage ratios vs the US baseline. Actual salaries may differ.<br><span style="font-size:0.68rem;opacity:.85;">${srcInfo?srcInfo.source:'OECD wage ratios'}</span></div>`;
+      return `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.25);font-size:0.73rem;color:var(--text-secondary);line-height:1.5;">🔴 <strong style="color:var(--text-primary);">COLI estimate only</strong> — no salary survey data for this profession in ${country||'this region'}. Scaled from US baselines using the city cost-of-living index. Treat as a rough guide only.</div>`;
+    })()}
   `;
 
   // Percentile bar
