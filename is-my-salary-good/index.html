@@ -23,13 +23,27 @@
 <style>
 :root{--bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;
             --nav-burger-bg: #f0f0f2;
-            --nav-burger-hover: #e0e0e5;--accent-hover:#1d4ed8;--shadow:0 2px 20px rgba(0,0,0,.06);--border:#e5e5ea;--border-light:#f0f0f2;--stat-bg:#f5f5f7;--green:#16a34a;--amber:#d97706;--red:#dc2626}
+            --nav-burger-hover: #e0e0e5;--accent-hover:#1d4ed8;--shadow:0 2px 20px rgba(0,0,0,.06);
+            --accent-light: #2563eb;
+            --stat-card-bg: #f5f5f7;
+            --meta-color: #aeaeb2;
+            --blog-card-bg: #f5f5f7;
+            --blog-card-hover: #ededf0;
+            --blog-cta-bg: rgba(37,99,235,0.08);
+            --blog-cta-hover: rgba(37,99,235,0.15);--border:#e5e5ea;--border-light:#f0f0f2;--stat-bg:#f5f5f7;--green:#16a34a;--amber:#d97706;--red:#dc2626}
 [data-theme=dark]{--bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;
             --nav-burger-bg: #2c2c2e;
-            --nav-burger-hover: #3a3a3c;--shadow:0 2px 20px rgba(0,0,0,.3);--border:#38383a;--border-light:#2c2c2e;--stat-bg:#2c2c2e}
+            --nav-burger-hover: #3a3a3c;--shadow:0 2px 20px rgba(0,0,0,.3);
+            --accent-light: #5b9aff;
+            --stat-card-bg: #2c2c2e;
+            --meta-color: #636366;
+            --blog-card-bg: #2c2c2e;
+            --blog-card-hover: #3a3a3c;
+            --blog-cta-bg: rgba(91,154,255,0.1);
+            --blog-cta-hover: rgba(91,154,255,0.18);--border:#38383a;--border-light:#2c2c2e;--stat-bg:#2c2c2e}
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;padding:20px 12px;display:flex;flex-direction:column;align-items:center}
-.page-wrap{background:var(--card-bg);border-radius:24px;box-shadow:var(--shadow);max-width:760px;width:100%;padding:32px 28px 80px}
+.page-wrap{background:var(--card-bg);border-radius:24px;box-shadow:var(--shadow);max-width:760px;width:100%;padding:32px 28px 80px;flex:1;min-width:0}
 @media(max-width:768px){body{padding:0;background:var(--card-bg)}.page-wrap{border-radius:0;box-shadow:none;padding:56px 16px 40px}}
 .nav{display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;border-bottom:1px solid var(--border-light);margin-bottom:32px;flex-wrap:wrap;gap:12px}
 .nav a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;font-weight:500}
@@ -224,9 +238,31 @@ footer a{color:var(--accent);text-decoration:none}
         @media (max-width: 480px) {
             .tool-switcher a { padding: 8px 10px; font-size: 0.73rem; }
         }
+
+        /* ── Right-rail sidebar ── */
+        .page-layout{display:flex;gap:20px;max-width:1280px;width:100%;align-items:flex-start}
+        .sidebar{width:300px;flex-shrink:0;position:sticky;top:40px;max-height:calc(100vh - 80px);overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;gap:20px}
+        .sidebar::-webkit-scrollbar{width:0}
+        .sidebar-card{background:var(--card-bg);border-radius:20px;box-shadow:var(--shadow);padding:24px}
+        .sidebar-card h3{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-primary);margin-bottom:16px}
+        .sidebar-salary-link{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--stat-card-bg);border-radius:10px;text-decoration:none;color:var(--text-primary);font-size:.84rem;font-weight:500;transition:background .2s,transform .15s;margin-bottom:6px}
+        .sidebar-salary-link:last-of-type{margin-bottom:0}
+        .sidebar-salary-link:hover{background:var(--accent);color:#fff;transform:translateX(3px)}
+        .sidebar-salary-link span{font-size:.78rem;font-weight:500;color:var(--text-secondary);opacity:0;transition:opacity .2s}
+        .sidebar-salary-link:hover span{opacity:1;color:#fff}
+        .blog-article-card{display:block;text-decoration:none;padding:16px;border-radius:14px;background:var(--blog-card-bg);transition:all .2s;margin-bottom:10px}
+        .blog-article-card:last-child{margin-bottom:0}
+        .blog-article-card:hover{background:var(--blog-card-hover);transform:translateY(-2px)}
+        .blog-article-tag{font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--accent-light);margin-bottom:6px}
+        .blog-article-title{font-size:.85rem;font-weight:600;color:var(--text-primary);line-height:1.35;margin-bottom:6px}
+        .blog-article-meta{font-size:.65rem;color:var(--meta-color)}
+        .blog-card-cta{display:block;text-align:center;margin-top:14px;font-size:.75rem;font-weight:600;color:var(--accent-light);text-decoration:none;padding:9px 16px;border-radius:10px;background:var(--blog-cta-bg);transition:all .2s}
+        .blog-card-cta:hover{background:var(--blog-cta-hover)}
+        @media(max-width:1024px){.sidebar{display:none}}
 </style>
 </head>
 <body>
+<div class="page-layout">
 <div class="page-wrap">
         <div class="header">
             <button class="nav-burger" id="navBurger" aria-label="Menu">&#9776;</button>
@@ -340,6 +376,37 @@ footer a{color:var(--accent);text-decoration:none}
     <p>&copy; 2026 <a href="/">salary-converter.com</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · Salary benchmarks based on COLI-adjusted global data.</p>
   </footer>
 </div>
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <h3>&#128176; What Salary Do You Need?</h3>
+            <p style="font-size:.82rem;color:var(--text-secondary);margin-bottom:14px;line-height:1.5;">Find the minimum salary to live comfortably &mdash; with neighborhood-level breakdowns.</p>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+                <a href="/salary-needed/new-york" class="sidebar-salary-link">&#127482;&#127480; New York <span>Find out &rarr;</span></a>
+                <a href="/salary-needed/london" class="sidebar-salary-link">&#127468;&#127463; London <span>Find out &rarr;</span></a>
+                <a href="/salary-needed/dubai" class="sidebar-salary-link">&#127462;&#127466; Dubai <span>Find out &rarr;</span></a>
+                <a href="/salary-needed/singapore" class="sidebar-salary-link">&#127480;&#127468; Singapore <span>Find out &rarr;</span></a>
+                <a href="/salary-needed/tokyo" class="sidebar-salary-link">&#127471;&#127477; Tokyo <span>Find out &rarr;</span></a>
+                <a href="/salary-needed/berlin" class="sidebar-salary-link">&#127465;&#127466; Berlin <span>Find out &rarr;</span></a>
+            </div>
+            <a href="/salary-needed/" style="display:block;text-align:center;margin-top:14px;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none;">Browse all 182 cities &rarr;</a>
+        </div>
+        <div class="sidebar-card">
+            <h3>&#128203; From the Blog</h3>
+            <div id="blogArticlesList">
+                <a href="/blog/articles/how-cost-of-living-affects-your-salary" class="blog-article-card" data-blog-article><div class="blog-article-tag">Featured</div><div class="blog-article-title">How Cost of Living Actually Affects Your Salary</div><div class="blog-article-meta">10 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/top-10-cities-for-remote-workers-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Remote Work</div><div class="blog-article-title">Top 10 Cities for Remote Workers in 2026</div><div class="blog-article-meta">7 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/salary-negotiation-when-relocating-abroad" class="blog-article-card" data-blog-article><div class="blog-article-tag">Career</div><div class="blog-article-title">How to Negotiate Your Salary When Relocating Abroad</div><div class="blog-article-meta">8 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/what-is-a-good-salary-by-city-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Guide</div><div class="blog-article-title">What Is a Good Salary in Your City? 2026 Guide</div><div class="blog-article-meta">15 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/tech-salary-comparison-by-city-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Tech</div><div class="blog-article-title">Tech Salary by City 2026 (Adjusted for Cost of Living)</div><div class="blog-article-meta">10 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/affordable-cities-in-europe-for-americans-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Expat Life</div><div class="blog-article-title">Affordable Cities in Europe for Americans 2026</div><div class="blog-article-meta">11 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/how-to-retire-abroad-cost-of-living-guide" class="blog-article-card" data-blog-article><div class="blog-article-tag">Retirement</div><div class="blog-article-title">How to Retire Abroad on a U.S. Salary</div><div class="blog-article-meta">12 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/best-cities-for-software-engineers-salary-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Tech</div><div class="blog-article-title">Best Cities for Software Engineers in 2026</div><div class="blog-article-meta">9 min read &middot; Feb 2026</div></a>
+                <a href="/blog/articles/software-engineer-salary-london-vs-new-york-2026" class="blog-article-card" data-blog-article><div class="blog-article-tag">Career</div><div class="blog-article-title">Software Engineer Salary: London vs New York 2026</div><div class="blog-article-meta">8 min read &middot; Feb 2026</div></a>
+            </div>
+            <a href="/blog/" class="blog-card-cta">View All Articles &rarr;</a>
+        </div>
+    </aside>
+    </div><!-- end page-layout -->
 
 <script>
 
@@ -573,5 +640,14 @@ window.addEventListener('DOMContentLoaded', () => {
     })();
 
 </script>
+    <script>
+    (function(){
+        var articles = Array.from(document.querySelectorAll('[data-blog-article]'));
+        for(var i=articles.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=articles[i];articles[i]=articles[j];articles[j]=tmp;}
+        articles.forEach(function(a){a.style.display='none';});
+        articles.slice(0,3).forEach(function(a){a.style.display='';});
+    })();
+    </script>
+    <script src="/chat.js?v=2"></script>
 </body>
 </html>
