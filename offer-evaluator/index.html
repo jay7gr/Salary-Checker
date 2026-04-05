@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Job Offer Evaluator 2026 — Which Offer Is Really Worth More?</title>
 <meta name="description" content="Compare two job offers side-by-side. See take-home pay, rent-adjusted disposable income, and real purchasing power after cost-of-living adjustment. Free tool.">
 <meta name="robots" content="index,follow">
@@ -337,10 +337,11 @@ footer a:hover{color:var(--accent)}
             .nav-burger   { position: fixed; top: 16px; left: 16px; z-index: 10000; }
             .nav-dropdown { position: fixed; top: 58px; left: 16px; z-index: 10000; }
             .theme-toggle { position: fixed !important; top: 23px !important; right: 16px !important; z-index: 10001 !important; }
-            .tool-switcher a { padding: 8px 16px; font-size: 0.78rem; }
+            .tool-switcher { width: 100%; }
+            .tool-switcher a { flex: 1; min-width: 0; padding: 8px 6px; font-size: 0.75rem; text-align: center; white-space: normal; line-height: 1.2; }
         }
         @media (max-width: 480px) {
-            .tool-switcher a { padding: 8px 10px; font-size: 0.73rem; }
+            .tool-switcher a { padding: 7px 4px; font-size: 0.68rem; }
         }
 
         /* ── Right-rail sidebar ── */

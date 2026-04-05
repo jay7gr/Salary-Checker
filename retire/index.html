@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <title>Retire Abroad Calculator 2026 — Find Where Your Savings Last Longest</title>
 
     <!-- SEO Meta Tags -->
@@ -232,6 +232,14 @@
             background: var(--accent);
             color: #fff;
             opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .tool-switcher { width: 100%; }
+            .tool-switcher a { flex: 1; min-width: 0; padding: 8px 6px; font-size: 0.75rem; text-align: center; white-space: normal; line-height: 1.2; }
+        }
+        @media (max-width: 480px) {
+            .tool-switcher a { padding: 7px 4px; font-size: 0.68rem; }
         }
 
         /* ── Nav burger ── */
