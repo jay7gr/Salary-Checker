@@ -282,9 +282,9 @@ footer a{color:var(--accent);text-decoration:none}
                 <div style="width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin: 10px auto 0;"></div>
             </div>
             <div class="tool-switcher">
-                <a href="/">Salary Tool</a>
+                <a href="/">Salary Converter</a>
                 <a href="/retire/">Retire Abroad</a>
-                <a href="/is-my-salary-good/" class="active">Salary Check</a>
+                <a href="/is-my-salary-good/" class="active">Salary Benchmark</a>
                 <a href="/offer-evaluator/">Offer Evaluator</a>
             </div>
             <p style="color: var(--text-secondary); font-size: 1rem; font-weight: 400; margin-top: 14px;">Enter your city, profession, and salary — see your percentile, take-home pay, and real purchasing power.</p>
@@ -494,6 +494,107 @@ const salaryRanges={
   "Content Writer":{"low":25000,"mid":50000,"high":90000}
 };
 
+// Profession → category mapping
+const profCategory={
+  'GP / Family Doctor':'medical_physician','Specialist Physician':'medical_physician',
+  'Emergency Physician':'medical_physician','Psychiatrist':'medical_physician',
+  'Anesthesiologist':'medical_physician','Radiologist':'medical_physician',
+  'Surgeon (General)':'medical_physician','Plastic Surgeon':'medical_physician',
+  'Cardiothoracic Surgeon':'medical_physician','Neurosurgeon':'medical_physician',
+  'Orthopedic Surgeon':'medical_physician',
+  'General Dentist':'medical_dental','Orthodontist':'medical_dental',
+  'Oral Surgeon':'medical_dental','Endodontist':'medical_dental',
+  'Pharmacist':'medical_other','Nurse (RN)':'medical_other',
+  'Nurse Practitioner':'medical_other','Psychologist / Therapist':'medical_other',
+  'Lawyer (General Practice)':'law','Corporate / M&A Lawyer':'law',
+  'Criminal Defense Lawyer':'law','Family / Divorce Lawyer':'law',
+  'Immigration Lawyer':'law','IP / Patent Lawyer':'law',
+  'Tax Attorney':'law','Paralegal':'law',
+  'Financial Analyst':'finance','Investment Banker':'finance',
+  'Private Equity Analyst':'finance','Hedge Fund Manager':'finance',
+  'Actuary':'finance','Accountant (CPA)':'finance','Financial Advisor':'finance',
+  'Software Engineer':'tech','Senior Software Engineer':'tech',
+  'Staff / Principal Engineer':'tech','Engineering Manager':'tech',
+  'DevOps / SRE Engineer':'tech','Data Scientist':'tech',
+  'AI / ML Engineer':'tech','Product Manager':'tech','UX Designer':'tech',
+  'Business Analyst':'business','Consultant':'business',
+  'Marketing Manager':'business','Sales Manager':'business',
+  'HR Manager':'business','Operations Manager':'business',
+  'Project Manager':'business','CEO / C-Suite':'business',
+  'Civil Engineer':'engineering','Mechanical Engineer':'engineering',
+  'Electrical Engineer':'engineering','Architect':'engineering',
+  'Teacher (K-12)':'education','Professor / Academic':'education',
+  'Research Scientist':'education',
+  'Commercial Pilot':'other','Chef / Executive Chef':'other',
+  'Journalist':'other','Graphic Designer':'other','Content Writer':'other'
+};
+
+// Country salary multipliers vs US baseline, by profession category
+// Sources: OECD Earnings Database, Glassdoor country reports, Numbeo, Mercer salary surveys
+// Covers: tech, medical_physician, medical_dental, medical_other, law, finance, business, engineering, education
+const countryMultipliers={
+  'United States':     {tech:1.00,medical_physician:1.00,medical_dental:1.00,medical_other:1.00,law:1.00,finance:1.00,business:1.00,engineering:1.00,education:1.00},
+  'Canada':            {tech:0.65,medical_physician:0.55,medical_dental:0.65,medical_other:0.60,law:0.60,finance:0.62,business:0.62,engineering:0.65,education:0.68},
+  'United Kingdom':    {tech:0.52,medical_physician:0.28,medical_dental:0.40,medical_other:0.40,law:0.55,finance:0.68,business:0.50,engineering:0.48,education:0.48},
+  'Ireland':           {tech:0.58,medical_physician:0.40,medical_dental:0.48,medical_other:0.45,law:0.48,finance:0.52,business:0.50,engineering:0.50,education:0.50},
+  'Germany':           {tech:0.48,medical_physician:0.32,medical_dental:0.40,medical_other:0.38,law:0.38,finance:0.48,business:0.45,engineering:0.50,education:0.55},
+  'Netherlands':       {tech:0.52,medical_physician:0.38,medical_dental:0.42,medical_other:0.42,law:0.42,finance:0.50,business:0.48,engineering:0.50,education:0.52},
+  'Switzerland':       {tech:0.75,medical_physician:0.55,medical_dental:0.60,medical_other:0.58,law:0.58,finance:0.72,business:0.65,engineering:0.68,education:0.72},
+  'France':            {tech:0.42,medical_physician:0.22,medical_dental:0.30,medical_other:0.38,law:0.32,finance:0.48,business:0.42,engineering:0.42,education:0.45},
+  'Belgium':           {tech:0.45,medical_physician:0.30,medical_dental:0.36,medical_other:0.38,law:0.38,finance:0.45,business:0.42,engineering:0.44,education:0.48},
+  'Luxembourg':        {tech:0.58,medical_physician:0.40,medical_dental:0.46,medical_other:0.44,law:0.48,finance:0.65,business:0.55,engineering:0.54,education:0.58},
+  'Sweden':            {tech:0.48,medical_physician:0.32,medical_dental:0.40,medical_other:0.42,law:0.42,finance:0.48,business:0.45,engineering:0.48,education:0.50},
+  'Norway':            {tech:0.52,medical_physician:0.40,medical_dental:0.48,medical_other:0.48,law:0.48,finance:0.52,business:0.50,engineering:0.55,education:0.58},
+  'Denmark':           {tech:0.50,medical_physician:0.35,medical_dental:0.45,medical_other:0.44,law:0.44,finance:0.50,business:0.47,engineering:0.50,education:0.55},
+  'Finland':           {tech:0.45,medical_physician:0.32,medical_dental:0.40,medical_other:0.40,law:0.40,finance:0.44,business:0.42,engineering:0.45,education:0.48},
+  'Austria':           {tech:0.45,medical_physician:0.32,medical_dental:0.40,medical_other:0.38,law:0.38,finance:0.44,business:0.42,engineering:0.46,education:0.52},
+  'Spain':             {tech:0.32,medical_physician:0.28,medical_dental:0.32,medical_other:0.28,law:0.30,finance:0.32,business:0.32,engineering:0.32,education:0.32},
+  'Portugal':          {tech:0.28,medical_physician:0.22,medical_dental:0.28,medical_other:0.24,law:0.25,finance:0.28,business:0.28,engineering:0.28,education:0.28},
+  'Italy':             {tech:0.32,medical_physician:0.28,medical_dental:0.35,medical_other:0.30,law:0.30,finance:0.32,business:0.32,engineering:0.32,education:0.32},
+  'Greece':            {tech:0.25,medical_physician:0.22,medical_dental:0.26,medical_other:0.22,law:0.24,finance:0.25,business:0.24,engineering:0.25,education:0.24},
+  'Czech Republic':    {tech:0.28,medical_physician:0.22,medical_dental:0.26,medical_other:0.22,law:0.24,finance:0.26,business:0.26,engineering:0.26,education:0.26},
+  'Poland':            {tech:0.28,medical_physician:0.20,medical_dental:0.24,medical_other:0.20,law:0.22,finance:0.24,business:0.24,engineering:0.24,education:0.24},
+  'Hungary':           {tech:0.22,medical_physician:0.18,medical_dental:0.20,medical_other:0.18,law:0.18,finance:0.20,business:0.20,engineering:0.20,education:0.20},
+  'Romania':           {tech:0.20,medical_physician:0.16,medical_dental:0.18,medical_other:0.16,law:0.16,finance:0.18,business:0.18,engineering:0.18,education:0.16},
+  'Estonia':           {tech:0.30,medical_physician:0.22,medical_dental:0.26,medical_other:0.22,law:0.24,finance:0.26,business:0.26,engineering:0.26,education:0.26},
+  'Latvia':            {tech:0.25,medical_physician:0.18,medical_dental:0.22,medical_other:0.18,law:0.20,finance:0.22,business:0.22,engineering:0.22,education:0.20},
+  'Croatia':           {tech:0.25,medical_physician:0.18,medical_dental:0.22,medical_other:0.18,law:0.20,finance:0.22,business:0.22,engineering:0.22,education:0.20},
+  'Turkey':            {tech:0.18,medical_physician:0.15,medical_dental:0.16,medical_other:0.14,law:0.15,finance:0.17,business:0.16,engineering:0.16,education:0.15},
+  'Israel':            {tech:0.65,medical_physician:0.40,medical_dental:0.45,medical_other:0.38,law:0.44,finance:0.55,business:0.50,engineering:0.52,education:0.48},
+  'UAE':               {tech:0.58,medical_physician:0.50,medical_dental:0.52,medical_other:0.44,law:0.52,finance:0.58,business:0.50,engineering:0.52,education:0.42},
+  'Qatar':             {tech:0.52,medical_physician:0.55,medical_dental:0.50,medical_other:0.42,law:0.46,finance:0.52,business:0.46,engineering:0.50,education:0.40},
+  'Saudi Arabia':      {tech:0.42,medical_physician:0.48,medical_dental:0.44,medical_other:0.38,law:0.38,finance:0.44,business:0.40,engineering:0.44,education:0.36},
+  'Japan':             {tech:0.32,medical_physician:0.32,medical_dental:0.35,medical_other:0.30,law:0.35,finance:0.38,business:0.35,engineering:0.40,education:0.45},
+  'South Korea':       {tech:0.35,medical_physician:0.35,medical_dental:0.38,medical_other:0.30,law:0.36,finance:0.38,business:0.35,engineering:0.38,education:0.45},
+  'China':             {tech:0.22,medical_physician:0.15,medical_dental:0.18,medical_other:0.14,law:0.18,finance:0.22,business:0.20,engineering:0.22,education:0.16},
+  'China (SAR)':       {tech:0.58,medical_physician:0.45,medical_dental:0.48,medical_other:0.40,law:0.58,finance:0.65,business:0.52,engineering:0.50,education:0.45},
+  'Taiwan':            {tech:0.32,medical_physician:0.30,medical_dental:0.32,medical_other:0.28,law:0.28,finance:0.32,business:0.30,engineering:0.32,education:0.32},
+  'Singapore':         {tech:0.62,medical_physician:0.55,medical_dental:0.55,medical_other:0.45,law:0.55,finance:0.62,business:0.58,engineering:0.55,education:0.55},
+  'Malaysia':          {tech:0.18,medical_physician:0.20,medical_dental:0.20,medical_other:0.16,law:0.18,finance:0.20,business:0.18,engineering:0.18,education:0.16},
+  'Thailand':          {tech:0.14,medical_physician:0.15,medical_dental:0.15,medical_other:0.12,law:0.12,finance:0.14,business:0.13,engineering:0.13,education:0.12},
+  'Vietnam':           {tech:0.10,medical_physician:0.08,medical_dental:0.08,medical_other:0.07,law:0.07,finance:0.09,business:0.08,engineering:0.09,education:0.07},
+  'Philippines':       {tech:0.10,medical_physician:0.08,medical_dental:0.09,medical_other:0.07,law:0.07,finance:0.09,business:0.08,engineering:0.08,education:0.07},
+  'Indonesia':         {tech:0.10,medical_physician:0.08,medical_dental:0.09,medical_other:0.07,law:0.07,finance:0.09,business:0.08,engineering:0.09,education:0.07},
+  'Cambodia':          {tech:0.10,medical_physician:0.07,medical_dental:0.07,medical_other:0.06,law:0.06,finance:0.08,business:0.07,engineering:0.07,education:0.06},
+  'India':             {tech:0.13,medical_physician:0.08,medical_dental:0.09,medical_other:0.07,law:0.07,finance:0.10,business:0.10,engineering:0.11,education:0.08},
+  'Australia':         {tech:0.62,medical_physician:0.58,medical_dental:0.62,medical_other:0.60,law:0.58,finance:0.62,business:0.60,engineering:0.65,education:0.65},
+  'New Zealand':       {tech:0.50,medical_physician:0.45,medical_dental:0.50,medical_other:0.48,law:0.48,finance:0.50,business:0.48,engineering:0.52,education:0.55},
+  'Brazil':            {tech:0.18,medical_physician:0.18,medical_dental:0.18,medical_other:0.15,law:0.15,finance:0.18,business:0.16,engineering:0.16,education:0.14},
+  'Argentina':         {tech:0.14,medical_physician:0.12,medical_dental:0.12,medical_other:0.10,law:0.10,finance:0.12,business:0.11,engineering:0.12,education:0.10},
+  'Colombia':          {tech:0.12,medical_physician:0.12,medical_dental:0.12,medical_other:0.10,law:0.10,finance:0.11,business:0.10,engineering:0.11,education:0.09},
+  'Chile':             {tech:0.17,medical_physician:0.18,medical_dental:0.18,medical_other:0.14,law:0.14,finance:0.16,business:0.15,engineering:0.16,education:0.13},
+  'Peru':              {tech:0.12,medical_physician:0.12,medical_dental:0.12,medical_other:0.09,law:0.09,finance:0.10,business:0.09,engineering:0.10,education:0.08},
+  'Uruguay':           {tech:0.18,medical_physician:0.16,medical_dental:0.16,medical_other:0.13,law:0.13,finance:0.15,business:0.14,engineering:0.14,education:0.13},
+  'Mexico':            {tech:0.18,medical_physician:0.15,medical_dental:0.15,medical_other:0.12,law:0.12,finance:0.16,business:0.14,engineering:0.14,education:0.12},
+  'Costa Rica':        {tech:0.22,medical_physician:0.18,medical_dental:0.18,medical_other:0.14,law:0.14,finance:0.18,business:0.16,engineering:0.16,education:0.14},
+  'Panama':            {tech:0.22,medical_physician:0.18,medical_dental:0.18,medical_other:0.14,law:0.14,finance:0.20,business:0.18,engineering:0.18,education:0.14},
+  'South Africa':      {tech:0.18,medical_physician:0.18,medical_dental:0.20,medical_other:0.15,law:0.16,finance:0.18,business:0.16,engineering:0.18,education:0.14},
+  'Kenya':             {tech:0.10,medical_physician:0.08,medical_dental:0.08,medical_other:0.06,law:0.06,finance:0.08,business:0.07,engineering:0.07,education:0.06},
+  'Nigeria':           {tech:0.10,medical_physician:0.07,medical_dental:0.07,medical_other:0.06,law:0.06,finance:0.08,business:0.07,engineering:0.07,education:0.06},
+  'Egypt':             {tech:0.08,medical_physician:0.07,medical_dental:0.07,medical_other:0.06,law:0.05,finance:0.07,business:0.06,engineering:0.07,education:0.05},
+  'Morocco':           {tech:0.10,medical_physician:0.08,medical_dental:0.08,medical_other:0.07,law:0.07,finance:0.09,business:0.08,engineering:0.08,education:0.07}
+};
+
 // Populate selects
 (function(){
   const cs=document.getElementById('citySelect');
@@ -590,10 +691,21 @@ function checkSalary() {
   // Convert user salary to USD
   const salaryUSD = toUSD(salary, currency);
 
-  // COLI-adjusted benchmarks in USD for this city
-  const lowUSD  = ranges.low  * (coli/100);
-  const midUSD  = ranges.mid  * (coli/100);
-  const highUSD = ranges.high * (coli/100);
+  // Determine benchmark multiplier: country-specific data if available, else COLI fallback
+  const cat = profCategory[prof] || 'other';
+  const countryMults = countryMultipliers[country];
+  let benchMult, usingLocalData;
+  if (countryMults && countryMults[cat] !== undefined) {
+    benchMult = countryMults[cat];
+    usingLocalData = true;
+  } else {
+    benchMult = coli / 100;
+    usingLocalData = false;
+  }
+
+  const lowUSD  = ranges.low  * benchMult;
+  const midUSD  = ranges.mid  * benchMult;
+  const highUSD = ranges.high * benchMult;
 
   // Tax + SS
   const {tax} = calcTax(salary, country);
@@ -665,6 +777,7 @@ function checkSalary() {
     <div class="breakdown-row"><span class="breakdown-label">City COLI (NYC=100)</span><span class="breakdown-val">${coli}</span></div>
     <hr style="border:none;border-top:2px solid var(--border);margin:4px 0">
     <div class="breakdown-row"><span class="breakdown-label">Typical range for ${prof} in ${city}</span><span class="breakdown-val">${fmtLocal(lowLocal,currency)} – ${fmtLocal(highLocal,currency)}</span></div>
+    ${!usingLocalData ? `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);font-size:0.75rem;color:var(--text-secondary);line-height:1.4;">⚠️ <strong style="color:var(--text-primary);">Estimated benchmark</strong> — no country-specific salary data available for ${country||'this region'}. Range is scaled from US baselines using the city's cost-of-living index (COLI). Actual local salaries may differ significantly.</div>` : `<div style="margin-top:10px;padding:10px 12px;border-radius:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);font-size:0.75rem;color:var(--text-secondary);line-height:1.4;">📊 <strong style="color:var(--text-primary);">Country-adjusted benchmark</strong> — range reflects ${country} salary norms for this profession category.</div>`}
   `;
 
   // Percentile bar
