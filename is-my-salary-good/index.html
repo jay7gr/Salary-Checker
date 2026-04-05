@@ -257,6 +257,34 @@ footer a{color:var(--accent);text-decoration:none}
         .blog-card-cta{display:block;text-align:center;margin-top:14px;font-size:.75rem;font-weight:600;color:var(--accent-light);text-decoration:none;padding:9px 16px;border-radius:10px;background:var(--blog-cta-bg);transition:all .2s}
         .blog-card-cta:hover{background:var(--blog-cta-hover)}
         @media(max-width:1024px){.sidebar{display:none}}
+        .footer-links-grid{max-width:1200px;width:100%;margin:0 auto;padding:24px 24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+        .footer-links-col h4{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-secondary);margin-bottom:8px}
+        .footer-links-col a{display:block;font-size:0.75rem;color:var(--text-secondary);text-decoration:none;padding:2px 0;line-height:1.6;transition:color 0.15s}
+        .footer-links-col a:hover{color:var(--accent)}
+        @media(max-width:600px){.footer-links-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+        .site-footer{max-width:1200px;width:100%;margin:40px auto 0;padding:32px 24px;border-top:1px solid var(--border);text-align:center}
+        .site-footer-logo{font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;color:var(--text-primary);margin-bottom:6px}
+        .site-footer-logo span{color:var(--accent)}
+        .site-footer-text{font-size:0.8rem;color:var(--text-secondary);margin-bottom:14px}
+        .site-footer-links{display:flex;justify-content:center;gap:12px 24px;flex-wrap:wrap}
+        .site-footer-links a{font-size:0.8rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color 0.2s}
+        .site-footer-links a:hover{color:var(--text-primary)}
+        .ai-disclaimer{font-size:0.72rem;color:var(--text-secondary);margin-top:14px;letter-spacing:0.01em}
+        .ai-disclaimer a{color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px}
+        .ai-disclaimer a:hover{color:var(--accent)}
+        .contact-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10003;align-items:center;justify-content:center}
+        .contact-overlay.open{display:flex}
+        .contact-modal{background:var(--card-bg,#fff);border-radius:16px;padding:28px;max-width:480px;width:calc(100% - 32px);position:relative;box-shadow:0 8px 40px rgba(0,0,0,0.2)}
+        .contact-modal-close{position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-secondary);line-height:1;padding:4px 8px}
+        .contact-modal h2{font-size:1.3rem;font-weight:700;color:var(--text-primary);margin-bottom:8px}
+        .contact-subtitle{font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px}
+        .contact-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media(max-width:480px){.contact-form-grid{grid-template-columns:1fr}}
+        .form-group label{display:block;font-size:0.8rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px}
+        .form-group input,.form-group textarea{width:100%;padding:10px 14px;border:1.5px solid var(--border,#e5e5ea);border-radius:10px;font-size:0.88rem;background:var(--bg,#f5f5f7);color:var(--text-primary);outline:none;font-family:inherit;transition:border-color 0.2s}
+        .form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+        .form-group textarea{resize:vertical;min-height:80px}
+        .contact-success{text-align:center;color:var(--green,#16a34a);font-weight:600;padding:16px 0}
 </style>
 </head>
 <body>
@@ -265,10 +293,14 @@ footer a{color:var(--accent);text-decoration:none}
         <div class="header">
             <button class="nav-burger" id="navBurger" aria-label="Menu">&#9776;</button>
             <div class="nav-dropdown" id="navDropdown">
-                <a href="/city/"><span>&#127960;&#65039;</span>Browse Cities</a>
-                <a href="/salary/"><span>&#128188;</span>Salaries by Job</a>
-                <a href="/blog/"><span>&#128203;</span>Read our Blog</a>
-                <a href="/about/"><span>&#8505;&#65039;</span>About</a>
+                <a href="/city/"><span>🏙️</span>Browse Cities</a>
+                <a href="/offer-evaluator/"><span>⚖️</span>Offer Evaluator</a>
+                <a href="/salary-needed/"><span>💰</span>Salary Needed</a>
+                <a href="/salary/"><span>💼</span>Salaries by Job</a>
+                <a href="/retire/"><span>🌴</span>Retire Abroad</a>
+                <a href="/blog/"><span>📝</span>Read our Blog</a>
+                <a href="https://salary-converter.com/widget"><span>🧩</span>Free Widgets for your website</a>
+                <a href="#" onclick="openContactModal(); return false;"><span>📩</span>Contact Us</a>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
                 <span class="toggle-thumb"><svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
