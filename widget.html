@@ -297,13 +297,9 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .widget-tab:first-child {
-            border-radius: 10px 0 0 10px;
-            border-right: none;
-        }
-        .widget-tab:last-child {
-            border-radius: 0 10px 10px 0;
-        }
+        .widget-tab:first-child { border-radius: 10px 0 0 10px; }
+        .widget-tab:last-child { border-radius: 0 10px 10px 0; }
+        .widget-tab:not(:last-child) { border-right: none; }
         .widget-tab.active {
             background: #2563eb;
             color: #fff;
@@ -367,6 +363,8 @@
         <div class="widget-tabs">
             <button class="widget-tab active" onclick="switchWidget('salary')">Salary Converter</button>
             <button class="widget-tab" onclick="switchWidget('retire')">Retire Abroad</button>
+            <button class="widget-tab" onclick="switchWidget('salarychk')">Salary Check</button>
+            <button class="widget-tab" onclick="switchWidget('offer')">Offer Evaluator</button>
         </div>
 
         <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
@@ -469,6 +467,106 @@
             </div>
         </div>
 
+        <!-- ═══════ SALARY CHECK WIDGET ═══════ -->
+        <div class="widget-panel" id="salarychkPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="salarychkPreview" src="/is-my-salary-good/" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="salarychkCopyBtn" onclick="copyCode('salarychk')">Copy</button>
+                            <code id="salarychkEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/is-my-salary-good/"</span>
+    <span class="attr">width</span>=<span class="val">"420"</span>
+    <span class="attr">height</span>=<span class="val">"580"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin-top:6px"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/is-my-salary-good/"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;&lt;/p&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('salarychk', 360, 580, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('salarychk', 420, 580, this)">Standard (420px)</button>
+                                <button class="size-btn" onclick="setSize('salarychk', 500, 600, this)">Wide (500px)</button>
+                                <button class="size-btn" onclick="setSize('salarychk', '100%', 580, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Is my salary good?</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 182 cities worldwide</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Industry benchmarks</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Percentile ranking</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost of living adjusted</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ OFFER EVALUATOR WIDGET ═══════ -->
+        <div class="widget-panel" id="offerPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="offerPreview" src="/offer-evaluator/" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="offerCopyBtn" onclick="copyCode('offer')">Copy</button>
+                            <code id="offerEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/offer-evaluator/"</span>
+    <span class="attr">width</span>=<span class="val">"420"</span>
+    <span class="attr">height</span>=<span class="val">"580"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin-top:6px"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/offer-evaluator/"</span><span class="tag">&gt;</span>salary:converter<span class="tag">&lt;/a&gt;&lt;/p&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('offer', 360, 580, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('offer', 420, 580, this)">Standard (420px)</button>
+                                <button class="size-btn" onclick="setSize('offer', 500, 600, this)">Wide (500px)</button>
+                                <button class="size-btn" onclick="setSize('offer', '100%', 580, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Compare job offers</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Total compensation view</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Benefits analysis</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost of living adjusted</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Tax calculations</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="page-footer">
             <a href="https://salary-converter.com">Salary Converter</a>
             <a href="https://salary-converter.com/retire/">Retire Abroad</a>
@@ -491,6 +589,20 @@
             previewId: 'retirePreview',
             codeId: 'retireEmbedCode',
             copyBtnId: 'retireCopyBtn'
+        },
+        salarychk: {
+            src: 'https://salary-converter.com/is-my-salary-good/',
+            defaultW: 420, defaultH: 580,
+            previewId: 'salarychkPreview',
+            codeId: 'salarychkEmbedCode',
+            copyBtnId: 'salarychkCopyBtn'
+        },
+        offer: {
+            src: 'https://salary-converter.com/offer-evaluator/',
+            defaultW: 420, defaultH: 580,
+            previewId: 'offerPreview',
+            codeId: 'offerEmbedCode',
+            copyBtnId: 'offerCopyBtn'
         }
     };
 
