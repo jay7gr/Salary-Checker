@@ -19,6 +19,7 @@
 <meta name="twitter:description" content="Compare two job offers: take-home pay, rent, purchasing power, and a definitive verdict.">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Job Offer Evaluator","url":"https://salary-converter.com/offer-evaluator/","description":"Compare two job offers by take-home pay, cost of living, and real purchasing power.","applicationCategory":"FinanceApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://salary-converter.com/"},{"@type":"ListItem","position":2,"name":"Offer Evaluator"}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the offer evaluator compare two job offers?","acceptedAnswer":{"@type":"Answer","text":"Enter the city, currency, and gross salary for each offer. The tool adjusts both salaries for the local cost of living index, calculates estimated take-home pay after taxes, and converts everything to a common baseline — showing which offer gives you more real purchasing power."}},{"@type":"Question","name":"What is a cost of living adjustment and why does it matter?","acceptedAnswer":{"@type":"Answer","text":"A cost of living adjustment converts a nominal salary into its real purchasing power. A $100,000 salary in New York City and a $70,000 salary in Austin can translate to almost identical lifestyles once local rent, groceries, and transport costs are factored in."}},{"@type":"Question","name":"Should I take a pay cut to relocate to a cheaper city?","acceptedAnswer":{"@type":"Answer","text":"It depends on the size of the pay cut relative to the cost of living difference. A 20% salary reduction from San Francisco to Denver could still leave you better off financially — Denver is roughly 40–50% cheaper for housing. Use the offer evaluator to run the exact numbers."}},{"@type":"Question","name":"How is take-home pay calculated for different countries?","acceptedAnswer":{"@type":"Answer","text":"The tool applies country-level effective tax rate estimates based on income brackets, including income tax and social contributions. These are approximations — actual take-home pay varies based on individual circumstances and local regulations."}},{"@type":"Question","name":"Can I compare offers in different currencies?","acceptedAnswer":{"@type":"Answer","text":"Yes. Select the appropriate currency for each offer and the tool converts both to a common baseline using current exchange rates and local purchasing power. Compare a £65,000 offer in London against a €75,000 offer in Amsterdam or a $110,000 offer in Toronto."}}]}</script>
 <style>
 :root{--bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;
             --nav-burger-bg: #f0f0f2;
@@ -1001,6 +1002,89 @@ window.addEventListener('DOMContentLoaded',()=>{
         articles.slice(0,3).forEach(function(a){a.style.display='';});
     })();
     </script>
+
+<!-- FAQ Section -->
+<style>
+.faq-section{max-width:800px;width:100%;margin:48px auto 0;padding:0 24px 48px}
+.faq-title{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
+.faq-item{border-bottom:1px solid var(--border-light);overflow:hidden}
+.faq-item:first-of-type{border-top:1px solid var(--border-light)}
+.faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;padding:18px 0;cursor:pointer;text-align:left;color:var(--text-primary);font-size:.95rem;font-weight:600;font-family:inherit;line-height:1.4}
+.faq-question:hover{color:var(--accent)}
+.faq-chevron{width:18px;height:18px;flex-shrink:0;color:var(--text-secondary);transition:transform .25s;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
+.faq-answer{display:none;padding:0 0 18px}
+.faq-item.open .faq-answer{display:block}
+.faq-answer p{font-size:.9rem;color:var(--text-body);line-height:1.7;margin:0}
+.faq-answer p+p{margin-top:10px}
+</style>
+<section class="faq-section" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-title">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>How does the offer evaluator compare two job offers?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>Enter the city, currency, and gross salary for each offer. The tool adjusts both salaries for the local cost of living index, calculates estimated take-home pay after taxes, and converts everything to a common baseline — making it easy to see which offer gives you more real purchasing power, not just a bigger number on paper.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>What is a cost of living adjustment and why does it matter?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>A cost of living adjustment converts a nominal salary into its real purchasing power for a specific city. A $100,000 salary in New York City and a $70,000 salary in Austin can translate to almost identical lifestyles once local rent, groceries, and transport costs are factored in. Without this adjustment, comparing offers across cities is misleading.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>Should I take a pay cut to relocate to a cheaper city?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>It depends on the size of the pay cut relative to the cost of living difference. A 20% salary reduction moving from San Francisco to Denver could still leave you better off financially — Denver is roughly 40–50% cheaper for housing. Use the offer evaluator to run the exact numbers for your situation before deciding.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>How is take-home pay calculated for different countries?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>The tool applies country-level effective tax rate estimates based on income brackets, including income tax and social contributions. These are approximations — actual take-home pay varies based on individual circumstances and local regulations. Use the results as a reliable guide, but consult a tax professional for precise figures.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>Can I compare offers in different currencies?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>Yes. Select the appropriate currency for each offer and the tool converts both to a common baseline using current exchange rates and local purchasing power. This makes it possible to meaningfully compare a £65,000 offer in London against a €75,000 offer in Amsterdam or a $110,000 offer in Toronto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  document.querySelectorAll('.faq-question').forEach(function(btn){
+    if(btn.dataset.faqBound) return;
+    btn.dataset.faqBound='1';
+    btn.addEventListener('click',function(){
+      var item=btn.closest('.faq-item');
+      var open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded','false');
+      });
+      if(!open){item.classList.add('open');btn.setAttribute('aria-expanded','true');}
+    });
+  });
+})();
+</script>
 
 <nav class="footer-links-grid" aria-label="Explore">
     <div class="footer-links-col">
