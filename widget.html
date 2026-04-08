@@ -282,17 +282,13 @@
         /* Widget tab switcher */
         .widget-tabs {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 0;
             margin-bottom: 36px;
         }
-        .widget-tab-row {
-            display: flex;
-        }
         .widget-tab {
-            padding: 12px 28px;
-            font-size: 0.9rem;
+            padding: 11px 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             font-family: inherit;
             border: 1.5px solid #2563eb;
@@ -300,9 +296,11 @@
             color: #2563eb;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
-        .widget-tab-row .widget-tab:first-child { border-radius: 10px 0 0 10px; border-right: none; }
-        .widget-tab-row .widget-tab:last-child { border-radius: 0 10px 10px 0; }
+        .widget-tab:first-child { border-radius: 10px 0 0 10px; border-right: none; }
+        .widget-tab:last-child { border-radius: 0 10px 10px 0; }
+        .widget-tab:not(:first-child):not(:last-child) { border-right: none; }
         .widget-tab.active {
             background: #2563eb;
             color: #fff;
@@ -364,14 +362,10 @@
 
         <!-- Widget Tab Switcher -->
         <div class="widget-tabs">
-            <div class="widget-tab-row">
-                <button class="widget-tab active" onclick="switchWidget('salary')">Salary Converter</button>
-                <button class="widget-tab" onclick="switchWidget('retire')">Retire Abroad</button>
-            </div>
-            <div class="widget-tab-row">
-                <button class="widget-tab" onclick="switchWidget('salarychk')">Salary Check</button>
-                <button class="widget-tab" onclick="switchWidget('offer')">Offer Evaluator</button>
-            </div>
+            <button class="widget-tab active" onclick="switchWidget('salary')">Salary Converter</button>
+            <button class="widget-tab" onclick="switchWidget('retire')">Retire Abroad</button>
+            <button class="widget-tab" onclick="switchWidget('salarychk')">Salary Check</button>
+            <button class="widget-tab" onclick="switchWidget('offer')">Offer Evaluator</button>
         </div>
 
         <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
@@ -478,7 +472,7 @@
         <div class="widget-panel" id="salarychkPanel">
             <div class="content">
                 <div class="preview-section">
-                    <iframe id="salarychkPreview" src="/is-my-salary-good/" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                    <iframe id="salarychkPreview" src="/is-my-salary-good/?embed=1" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
                 </div>
                 <div class="code-section">
                     <div class="code-card">
@@ -488,7 +482,7 @@
                             <button class="btn-copy" id="salarychkCopyBtn" onclick="copyCode('salarychk')">Copy</button>
                             <code id="salarychkEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;iframe</span>
-    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/is-my-salary-good/"</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/is-my-salary-good/?embed=1"</span>
     <span class="attr">width</span>=<span class="val">"420"</span>
     <span class="attr">height</span>=<span class="val">"580"</span>
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
@@ -528,7 +522,7 @@
         <div class="widget-panel" id="offerPanel">
             <div class="content">
                 <div class="preview-section">
-                    <iframe id="offerPreview" src="/offer-evaluator/" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                    <iframe id="offerPreview" src="/offer-evaluator/?embed=1" width="420" height="580" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
                 </div>
                 <div class="code-section">
                     <div class="code-card">
@@ -538,7 +532,7 @@
                             <button class="btn-copy" id="offerCopyBtn" onclick="copyCode('offer')">Copy</button>
                             <code id="offerEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;iframe</span>
-    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/offer-evaluator/"</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/offer-evaluator/?embed=1"</span>
     <span class="attr">width</span>=<span class="val">"420"</span>
     <span class="attr">height</span>=<span class="val">"580"</span>
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
@@ -598,14 +592,14 @@
             copyBtnId: 'retireCopyBtn'
         },
         salarychk: {
-            src: 'https://salary-converter.com/is-my-salary-good/',
+            src: 'https://salary-converter.com/is-my-salary-good/?embed=1',
             defaultW: 420, defaultH: 580,
             previewId: 'salarychkPreview',
             codeId: 'salarychkEmbedCode',
             copyBtnId: 'salarychkCopyBtn'
         },
         offer: {
-            src: 'https://salary-converter.com/offer-evaluator/',
+            src: 'https://salary-converter.com/offer-evaluator/?embed=1',
             defaultW: 420, defaultH: 580,
             previewId: 'offerPreview',
             codeId: 'offerEmbedCode',
