@@ -846,10 +846,8 @@
         <div class="tool-tabs-nav">
             <button class="tool-tab-btn active" data-tab="salary-converter">Salary Converter</button>
             <button class="tool-tab-btn" data-tab="retire-abroad">Retire Abroad</button>
+            <button class="tool-tab-btn" data-tab="salary-check">Salary Check</button>
             <button class="tool-tab-btn" data-tab="offer-evaluator">Offer Evaluator</button>
-            <button class="tool-tab-btn" data-tab="salary-benchmark">Salary Benchmark</button>
-            <button class="tool-tab-btn" data-tab="salary-needed">Salary Needed</button>
-            <button class="tool-tab-btn" data-tab="salaries-by-job">Salaries by Job</button>
         </div>
 
         <!-- Salary Converter -->
@@ -953,7 +951,7 @@
         </div>
 
         <!-- Salary Benchmark -->
-        <div class="tool-tab-panel" data-panel="salary-benchmark">
+        <div class="tool-tab-panel" data-panel="salary-check">
             <p class="tool-tab-desc">Show your readers where their salary ranks in their city — percentile, take-home pay, and spending power compared to peers in the same profession.</p>
             <div class="preview-wrapper" style="margin-bottom:32px;">
                 <div class="preview-toolbar">
@@ -982,62 +980,6 @@
         </div>
 
         <!-- Salary Needed -->
-        <div class="tool-tab-panel" data-panel="salary-needed">
-            <p class="tool-tab-desc">Show your readers the minimum salary needed to live comfortably in any of 182 cities — with neighborhood-level breakdowns.</p>
-            <div class="preview-wrapper" style="margin-bottom:32px;">
-                <div class="preview-toolbar">
-                    <span class="preview-toolbar-label">Live Preview</span>
-                </div>
-                <div class="preview-iframe-wrap"><iframe src="/salary-needed/new-york" width="100%" height="800" frameborder="0" title="Salary Needed Widget" loading="lazy"></iframe></div>
-            </div>
-            <div class="embed-card">
-                <h2>Embed the Salary Needed Tool</h2>
-                <p>Link to any city. Replace <code style="background:var(--stat-card-bg);padding:2px 6px;border-radius:4px;">new-york</code> with your city slug.</p>
-                <div class="code-block-wrap">
-                    <pre class="code-block"><span class="tag">&lt;iframe</span>
-  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/salary-needed/new-york"</span>
-  <span class="attr">width</span>=<span class="val">"100%"</span>
-  <span class="attr">height</span>=<span class="val">"900"</span>
-  <span class="attr">frameborder</span>=<span class="val">"0"</span>
-  <span class="attr">style</span>=<span class="val">"border:none; border-radius:12px;"</span>
-  <span class="attr">title</span>=<span class="val">"Salary Needed Calculator"</span><span class="tag">&gt;&lt;/iframe&gt;</span></pre>
-                    <button class="copy-btn" type="button" onclick="copyCode(this, 'https://salary-converter.com/salary-needed/new-york', 900, 'Salary Needed Calculator')">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        <span>Copy Code</span>
-                    </button>
-                </div>
-                <p class="embed-note">Available for all 182 cities. Powered by <a href="https://salary-converter.com/salary-needed/" style="color:var(--accent);">salary-converter.com</a>.</p>
-            </div>
-        </div>
-
-        <!-- Salaries by Job -->
-        <div class="tool-tab-panel" data-panel="salaries-by-job">
-            <p class="tool-tab-desc">Embed real salary data for any profession across 182 cities — with cost-of-living adjusted take-home pay comparisons.</p>
-            <div class="preview-wrapper" style="margin-bottom:32px;">
-                <div class="preview-toolbar">
-                    <span class="preview-toolbar-label">Live Preview</span>
-                </div>
-                <div class="preview-iframe-wrap"><iframe src="/salary/software-engineer/new-york" width="100%" height="800" frameborder="0" title="Salaries by Job Widget" loading="lazy"></iframe></div>
-            </div>
-            <div class="embed-card">
-                <h2>Embed Salaries by Job</h2>
-                <p>Link to any job + city combination. Browse all at <a href="/salary/" style="color:var(--accent);">salary-converter.com/salary/</a></p>
-                <div class="code-block-wrap">
-                    <pre class="code-block"><span class="tag">&lt;iframe</span>
-  <span class="attr">src</span>=<span class="val">"https://salary-converter.com/salary/software-engineer/new-york"</span>
-  <span class="attr">width</span>=<span class="val">"100%"</span>
-  <span class="attr">height</span>=<span class="val">"900"</span>
-  <span class="attr">frameborder</span>=<span class="val">"0"</span>
-  <span class="attr">style</span>=<span class="val">"border:none; border-radius:12px;"</span>
-  <span class="attr">title</span>=<span class="val">"Salaries by Job"</span><span class="tag">&gt;&lt;/iframe&gt;</span></pre>
-                    <button class="copy-btn" type="button" onclick="copyCode(this, 'https://salary-converter.com/salary/software-engineer/new-york', 900, 'Salaries by Job')">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        <span>Copy Code</span>
-                    </button>
-                </div>
-                <p class="embed-note">Covers 50+ professions × 182 cities. Powered by <a href="https://salary-converter.com/salary/" style="color:var(--accent);">salary-converter.com</a>.</p>
-            </div>
-        </div>
     </section>
 
     <!-- Features Section -->
