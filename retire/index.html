@@ -1209,15 +1209,17 @@
 
         /* ── Footer ── */
         .site-footer {
-            text-align: center;
-            padding: 40px 20px 24px;
-            max-width: 600px;
+            max-width: 1200px;
             width: 100%;
-            align-self: center;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border-light);
+            text-align: center;
         }
         .site-footer-logo {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
+            letter-spacing: -0.5px;
             color: var(--text-primary);
             margin-bottom: 6px;
         }
@@ -1225,21 +1227,25 @@
         .site-footer-text {
             font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
         .site-footer-links {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 6px 16px;
+            gap: 12px 24px;
+            flex-wrap: wrap;
         }
         .site-footer-links a {
-            font-size: 0.78rem;
+            font-size: 0.8rem;
+            font-weight: 500;
             color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.2s;
         }
-        .site-footer-links a:hover { color: var(--accent); }
+        .site-footer-links a:hover { color: var(--text-primary); }
+        .ai-disclaimer { font-size: 0.72rem; color: var(--text-secondary); margin-top: 14px; letter-spacing: 0.01em; }
+        .ai-disclaimer a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+        .ai-disclaimer a:hover { color: var(--accent); }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
@@ -1278,15 +1284,6 @@
         .footer-links-col a{display:block;font-size:0.75rem;color:var(--text-secondary);text-decoration:none;padding:2px 0;line-height:1.6;transition:color 0.15s}
         .footer-links-col a:hover{color:var(--accent)}
         @media(max-width:600px){.footer-links-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
-        .site-footer-logo{font-size:1.1rem;font-weight:700;letter-spacing:-0.5px;color:var(--text-primary);margin-bottom:6px}
-        .site-footer-logo span{color:var(--accent)}
-        .site-footer-text{font-size:0.8rem;color:var(--text-secondary);margin-bottom:14px}
-        .site-footer-links{display:flex;justify-content:center;gap:12px 24px;flex-wrap:wrap}
-        .site-footer-links a{font-size:0.8rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color 0.2s}
-        .site-footer-links a:hover{color:var(--text-primary)}
-        .ai-disclaimer{font-size:0.72rem;color:var(--text-secondary);margin-top:14px;letter-spacing:0.01em}
-        .ai-disclaimer a{color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px}
-        .ai-disclaimer a:hover{color:var(--accent)}
         .contact-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10003;align-items:center;justify-content:center}
         .contact-overlay.open{display:flex}
         .contact-modal{background:var(--card-bg,#fff);border-radius:16px;padding:28px;max-width:480px;width:calc(100% - 32px);position:relative;box-shadow:0 8px 40px rgba(0,0,0,0.2)}
