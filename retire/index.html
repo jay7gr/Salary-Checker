@@ -177,6 +177,7 @@
 
         .page-layout {
             display: flex;
+            flex-wrap: wrap;
             gap: 16px;
             max-width: 1200px;
             width: 100%;
@@ -192,6 +193,7 @@
             padding: 32px 28px;
             flex: 1;
             min-width: 0;
+            order: 1;
         }
 
         .sidebar {
@@ -205,9 +207,29 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            order: 2;
+            align-self: flex-start;
         }
 
         .sidebar::-webkit-scrollbar { width: 0; }
+
+        .sidebar-card { background: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; }
+        .sidebar-card h3 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-primary); margin-bottom: 16px; }
+        .sidebar-salary-link { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; background: var(--stat-card-bg, #f5f5f7); border-radius: 10px; text-decoration: none; color: var(--text-primary); font-size: 0.84rem; font-weight: 500; transition: background 0.2s, transform 0.15s; }
+        .sidebar-salary-link:hover { background: var(--accent); color: #fff; transform: translateX(3px); }
+        .sidebar-salary-link span { font-size: 0.78rem; color: var(--text-secondary); opacity: 0; transition: opacity 0.2s; }
+        .sidebar-salary-link:hover span { opacity: 1; color: #fff; }
+        .blog-article-card { display: block; text-decoration: none; padding: 16px; border-radius: 14px; background: var(--blog-card-bg); transition: all 0.2s; }
+        .blog-article-card:hover { background: var(--blog-card-hover); transform: translateY(-2px); }
+        .blog-article-tag { font-size: 0.6rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-light); margin-bottom: 6px; }
+        .blog-article-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; margin-bottom: 6px; }
+        .blog-article-meta { font-size: 0.65rem; color: var(--meta-color); }
+        .blog-card-cta { display: block; text-align: center; margin-top: 14px; font-size: 0.75rem; font-weight: 600; color: var(--accent-light); text-decoration: none; padding: 9px 16px; border-radius: 10px; background: var(--blog-cta-bg); transition: all 0.2s; }
+        .blog-card-cta:hover { background: var(--blog-cta-hover); }
+
+        /* Push footer elements to a new full-width row below container+sidebar */
+        .page-layout > .footer-links-grid { flex-basis: 100%; order: 10; }
+        .page-layout > footer { flex-basis: 100%; order: 11; }
 
         /* ── Header ── */
         .header {
