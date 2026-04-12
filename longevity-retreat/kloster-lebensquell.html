@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kloster Lebensquell — A Sanctuary for Longevity in the Bavarian Alps</title>
+<meta name="description" content="A private longevity retreat set within a restored 12th-century Bavarian monastery. Integrative medicine, detoxification, psychosomatic care, and movement — for the few who seek it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Kloster Lebensquell — Stylesheet
+   A quiet, high-end aesthetic: ivory, forest, muted gold.
+   ========================================================= */
+
+:root {
+  --ivory:    #f6f1e8;
+  --cream:    #ece4d3;
+  --parchment:#e3d9c2;
+  --stone:    #c7bfae;
+  --moss:     #5a6b4e;
+  --forest:   #2b3a2e;
+  --forest-deep: #1e2a21;
+  --charcoal: #1a1a1a;
+  --gold:     #b8935f;
+  --gold-soft:#d5b88a;
+  --text:     #2a2a28;
+  --text-muted: #6b675f;
+  --white:    #fdfbf6;
+  --line:     rgba(42, 42, 40, 0.12);
+  --line-dark:rgba(246, 241, 232, 0.15);
+
+  --serif: 'Cormorant Garamond', 'Garamond', serif;
+  --sans:  'Inter', system-ui, -apple-system, sans-serif;
+
+  --container: 1240px;
+  --radius: 2px;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--text);
+  background: var(--ivory);
+  line-height: 1.65;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; transition: color 0.25s ease; }
+button { border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--forest-deep);
+}
+h1 { font-size: clamp(2.75rem, 6vw, 5.25rem); font-weight: 300; letter-spacing: -0.02em; }
+h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
+h2 { font-size: clamp(2rem, 3.8vw, 3.25rem); }
+h3 { font-size: clamp(1.4rem, 2vw, 1.75rem); }
+h4 { font-size: 1.35rem; }
+
+.eyebrow, .label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--gold);
+}
+.num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.num-dark { color: var(--gold-soft); font-family: var(--serif); font-style: italic; font-size: 1.25rem; display: block; margin-bottom: 0.75rem; }
+
+.prose {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  max-width: 58ch;
+}
+.lead {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 1.6vw, 1.55rem);
+  font-weight: 300;
+  color: var(--text);
+  max-width: 60ch;
+  line-height: 1.5;
+  font-style: italic;
+}
+.lead-dark {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
+  font-weight: 300;
+  color: rgba(246, 241, 232, 0.78);
+  max-width: 56ch;
+  line-height: 1.55;
+  font-style: italic;
+}
+.signature {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--forest);
+  margin-top: 2rem;
+}
+.signature span {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-style: normal;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* Container */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Sections */
+.section { padding: clamp(5rem, 10vw, 9rem) 0; position: relative; }
+.section-light { background: var(--ivory); }
+.section-dark  { background: var(--forest-deep); color: var(--ivory); }
+.section-dark h2 { color: var(--ivory); }
+.section-stone { background: var(--cream); }
+.section-quote {
+  background: var(--forest);
+  color: var(--ivory);
+  padding: clamp(5rem, 8vw, 7rem) 0;
+  text-align: center;
+}
+.section-cta {
+  background: var(--parchment);
+  padding: clamp(5rem, 8vw, 7rem) 0;
+  text-align: center;
+}
+.section-head {
+  max-width: 820px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+.section-head .num, .section-head .num-dark { margin-bottom: 1rem; }
+.section-head h2 { margin-bottom: 1.25rem; }
+.section-head .lead, .section-head .lead-dark { margin: 0 auto; }
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem 0;
+  transition: all 0.35s ease;
+  background: transparent;
+}
+.nav.scrolled {
+  background: rgba(246, 241, 232, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--ivory);
+  transition: color 0.35s ease;
+}
+.nav.scrolled .brand { color: var(--forest-deep); }
+.brand-mark {
+  width: 38px; height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid currentColor;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+.brand-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+}
+.nav-links a {
+  color: var(--ivory);
+  font-size: 0.82rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+  position: relative;
+}
+.nav.scrolled .nav-links a { color: var(--forest-deep); }
+.nav-links a:not(.nav-cta)::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
+.nav-cta {
+  padding: 0.65rem 1.5rem;
+  border: 1px solid currentColor;
+  transition: all 0.3s ease;
+}
+.nav-cta:hover {
+  background: var(--gold);
+  color: var(--white) !important;
+  border-color: var(--gold);
+}
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+.nav-toggle span {
+  width: 26px; height: 1px;
+  background: currentColor;
+  transition: all 0.3s ease;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: var(--ivory);
+  overflow: hidden;
+}
+.hero-image {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  animation: slowZoom 20s ease-in-out infinite alternate;
+}
+@keyframes slowZoom {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.12); }
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(30, 42, 33, 0.55) 0%,
+    rgba(30, 42, 33, 0.35) 40%,
+    rgba(30, 42, 33, 0.75) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 8rem 2rem 4rem;
+  width: 100%;
+}
+.hero .eyebrow {
+  color: var(--gold-soft);
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+.hero h1 {
+  color: var(--ivory);
+  max-width: 14ch;
+  margin-bottom: 2rem;
+}
+.hero .lead {
+  color: rgba(246, 241, 232, 0.88);
+  max-width: 52ch;
+  margin-bottom: 3rem;
+  font-style: normal;
+  font-size: clamp(1.1rem, 1.35vw, 1.35rem);
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(246, 241, 232, 0.7);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.hero-scroll .line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--gold-soft), transparent);
+  animation: scrollLine 2.2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0.1); transform-origin: top; }
+  50%{ transform: scaleY(1);   transform-origin: top; }
+  51%{ transform: scaleY(1);   transform-origin: bottom;}
+  100%{transform: scaleY(0.1); transform-origin: bottom;}
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 1rem 2.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--white);
+  border-color: var(--gold);
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--gold);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ivory);
+  border-color: rgba(246, 241, 232, 0.5);
+}
+.btn-ghost:hover {
+  background: var(--ivory);
+  color: var(--forest-deep);
+  border-color: var(--ivory);
+}
+
+/* Grid helpers */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.grid-2-wide {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.col-label .num { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.col-label .label { display: block; color: var(--text-muted); }
+
+/* Pillars (Programs) */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  margin-top: 2rem;
+}
+.pillar {
+  background: rgba(246, 241, 232, 0.03);
+  border: 1px solid var(--line-dark);
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.pillar:hover {
+  border-color: rgba(213, 184, 138, 0.4);
+  transform: translateY(-4px);
+}
+.pillar-img {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.8s ease;
+  filter: saturate(0.85);
+}
+.pillar:hover .pillar-img { transform: scale(1.04); }
+.pillar-body { padding: 2.5rem; }
+.pillar-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--gold-soft);
+  letter-spacing: 0.1em;
+}
+.pillar h3 {
+  color: var(--ivory);
+  margin: 0.75rem 0 1rem;
+}
+.pillar p {
+  color: rgba(246, 241, 232, 0.72);
+  font-size: 0.98rem;
+  margin-bottom: 1.5rem;
+}
+.link-arrow {
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  position: relative;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(213, 184, 138, 0.3);
+  transition: all 0.3s ease;
+}
+.link-arrow::after {
+  content: ' →';
+  transition: transform 0.3s ease;
+  display: inline-block;
+  margin-left: 0.25rem;
+}
+.link-arrow:hover { color: var(--gold); border-color: var(--gold); }
+.link-arrow:hover::after { transform: translateX(4px); }
+
+/* Monastery section images */
+.col-image {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  min-height: 600px;
+  gap: 0;
+}
+.monastery-img {
+  grid-row: 1 / 4;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.9) brightness(0.95);
+  min-height: 600px;
+}
+.monastery-img-small {
+  position: absolute;
+  bottom: -2.5rem;
+  right: -2.5rem;
+  width: 55%;
+  height: 55%;
+  background-size: cover;
+  background-position: center;
+  border: 8px solid var(--cream);
+  box-shadow: 0 25px 50px rgba(30, 42, 33, 0.15);
+}
+
+.meta-list {
+  list-style: none;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+.meta-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.93rem;
+}
+.meta-list li span {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.meta-list li strong {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--forest-deep);
+}
+
+/* Schedule */
+.schedule {
+  max-width: 780px;
+  margin: 4rem auto 0;
+  border-top: 1px solid var(--line);
+}
+.sched-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 2rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.sched-time {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--gold);
+  font-style: italic;
+}
+.sched-item h4 { margin-bottom: 0.3rem; }
+.sched-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+/* Quote */
+.section-quote blockquote { max-width: 820px; margin: 0 auto; }
+.section-quote p {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ivory);
+  margin-bottom: 2rem;
+}
+.section-quote footer {
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+
+/* Team */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+.team-card { text-align: left; }
+.team-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.85) contrast(0.95);
+  margin-bottom: 1.5rem;
+  transition: filter 0.4s ease;
+}
+.team-card:hover .team-img { filter: saturate(1) contrast(1); }
+.team-card h4 { margin-bottom: 0.3rem; font-size: 1.2rem; }
+.team-card .role {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.9rem;
+}
+.team-card p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+/* CTA */
+.cta-inner { max-width: 720px; margin: 0 auto; }
+.section-cta h2 { color: var(--forest-deep); margin-bottom: 1.25rem; }
+.section-cta p {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  background: var(--forest-deep);
+  color: rgba(246, 241, 232, 0.7);
+  padding: 5rem 0 2rem;
+}
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1.4fr 3fr;
+  gap: 5rem;
+  margin-bottom: 4rem;
+}
+.footer-brand { display: flex; align-items: center; gap: 1rem; color: var(--ivory); }
+.footer-brand .brand-mark { width: 48px; height: 48px; font-size: 1.2rem; }
+.footer-brand .brand-full {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  color: var(--ivory);
+}
+.footer-brand .brand-full span {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(246, 241, 232, 0.5);
+}
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+.footer-cols h5 {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+.footer-cols a, .footer-cols p {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: rgba(246, 241, 232, 0.65);
+}
+.footer-cols a:hover { color: var(--gold); }
+.footer-cols p + p { margin-top: 0.75rem; }
+.footer-legal {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-dark);
+  font-size: 0.78rem;
+  color: rgba(246, 241, 232, 0.4);
+  letter-spacing: 0.08em;
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sub-page hero */
+.sub-hero {
+  padding: 12rem 0 5rem;
+  background: var(--forest-deep);
+  color: var(--ivory);
+  position: relative;
+  overflow: hidden;
+}
+.sub-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1542848284-8afa78a08ccb?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+}
+.sub-hero .container { position: relative; z-index: 2; }
+.sub-hero .eyebrow { color: var(--gold-soft); margin-bottom: 1.5rem; display: inline-block; }
+.sub-hero h1 { color: var(--ivory); font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: 18ch; }
+.sub-hero .lead { color: rgba(246, 241, 232, 0.82); margin-top: 1.75rem; max-width: 58ch; }
+
+/* Contact form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  max-width: 860px;
+  margin: 3rem auto 0;
+}
+.form-grid .full { grid-column: 1 / -1; }
+.form-field label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0.8rem 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.form-field textarea { resize: vertical; min-height: 120px; }
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: var(--gold);
+}
+.form-actions { text-align: center; margin-top: 3rem; }
+
+/* Detailed program blocks */
+.prog-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+.prog-block:nth-child(even) .prog-img { order: 2; }
+.prog-img {
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.9);
+}
+.prog-block h3 { margin: 1rem 0 1.25rem; }
+.prog-block .prose { margin-bottom: 1rem; }
+.prog-block ul {
+  list-style: none;
+  margin-top: 1.5rem;
+}
+.prog-block ul li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+.prog-block ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .grid-2, .grid-2-wide { grid-template-columns: 1fr; gap: 2.5rem; }
+  .pillars { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-cols { grid-template-columns: repeat(3, 1fr); }
+  .col-image { min-height: 420px; }
+  .monastery-img { min-height: 420px; }
+  .monastery-img-small { display: none; }
+  .prog-block { grid-template-columns: 1fr; gap: 2rem; }
+  .prog-block:nth-child(even) .prog-img { order: 0; }
+  .form-grid { grid-template-columns: 1fr; }
+  .sched-item { grid-template-columns: 90px 1fr; gap: 1rem; }
+  .footer-legal { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+@media (max-width: 560px) {
+  .team-grid, .footer-cols { grid-template-columns: 1fr; }
+  .brand-name { display: none; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .hero-actions .btn { width: 100%; text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">KL</span>
+      <span class="brand-name">Kloster Lebensquell</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#programs">Programs</a>
+      <a href="#monastery">The Monastery</a>
+      <a href="#experience">Experience</a>
+      <a href="#team">Physicians</a>
+      <a href="pages/contact.html" class="nav-cta">Enquire</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-image" style="background-image:url('https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=2000&q=80');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Bavaria · Est. MCMXXIV in a Monastery founded 1143</p>
+    <h1>Where silence<br><em>becomes medicine.</em></h1>
+    <p class="lead">A private sanctuary for longevity and psychosomatic recovery, set within the cloisters of a twelfth-century Benedictine monastery in the foothills of the Bavarian Alps.</p>
+    <div class="hero-actions">
+      <a href="#philosophy" class="btn btn-primary">Discover the Retreat</a>
+      <a href="pages/contact.html" class="btn btn-ghost">Request a Consultation</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Intro / Philosophy -->
+<section class="section section-light" id="philosophy">
+  <div class="container grid-2">
+    <div class="col-label">
+      <span class="num">I.</span>
+      <span class="label">Our Philosophy</span>
+    </div>
+    <div class="col-prose">
+      <h2>Longevity is not a treatment.<br>It is a way of living.</h2>
+      <p class="prose">At Kloster Lebensquell we do not believe in quick cures. We believe in the slow, patient work of restoring a human being to themselves — body, mind, and spirit — with the quiet rigour the monks of this house have practised for nearly nine hundred years.</p>
+      <p class="prose">Each guest receives a single, bespoke programme of integrative medicine, psychosomatic therapy, therapeutic movement, and contemplative rest. We accept only a handful of guests at a time. Absolute discretion is the condition of our work.</p>
+      <p class="signature">— Dr. med. Friederike von Auenheim<br><span>Medical Director</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- Pillars / Programs -->
+<section class="section section-dark" id="programs">
+  <div class="container">
+    <div class="section-head">
+      <span class="num-dark">II.</span>
+      <h2>Four pillars of the longevity programme</h2>
+      <p class="lead-dark">Every guest's stay is woven from these four disciplines, calibrated to their biology, biography, and intention. Programmes last from seven to twenty-eight days.</p>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar">
+        <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1000&q=80');"></div>
+        <div class="pillar-body">
+          <span class="pillar-num">01</span>
+          <h3>Medical Detoxification</h3>
+          <p>Cellular renewal through physician-supervised fasting protocols, intravenous chelation, ozone and oxygen therapy, and daily laboratory-guided adjustment. We treat the terrain, not the symptom.</p>
+          <a href="pages/programs.html#detox" class="link-arrow">Learn more</a>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1000&q=80');"></div>
+        <div class="pillar-body">
+          <span class="pillar-num">02</span>
+          <h3>Therapeutic Movement</h3>
+          <p>Private sessions in alpine hiking, breathwork, functional strength, Pilates, and forest bathing. Movement is prescribed in the same way a physician prescribes medicine: with precision and patience.</p>
+          <a href="pages/programs.html#movement" class="link-arrow">Learn more</a>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=80');"></div>
+        <div class="pillar-body">
+          <span class="pillar-num">03</span>
+          <h3>Contemplative Relaxation</h3>
+          <p>Roman-Irish baths in the monastery's restored cellar, Kneipp hydrotherapy, silent hours in the cloister, sound therapy, and the ancient practice of lectio divina — re-imagined for modern nervous systems.</p>
+          <a href="pages/programs.html#relaxation" class="link-arrow">Learn more</a>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar-img" style="background-image:url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=1000&q=80');"></div>
+        <div class="pillar-body">
+          <span class="pillar-num">04</span>
+          <h3>Psychosomatic Care</h3>
+          <p>Daily one-to-one work with senior psychotherapists and psychiatrists. We treat burnout, grief, addiction, trauma, and the quieter disturbances of a well-lived life — always in confidence, always in context.</p>
+          <a href="pages/programs.html#psychosomatic" class="link-arrow">Learn more</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- The Monastery -->
+<section class="section section-stone" id="monastery">
+  <div class="container grid-2-wide">
+    <div class="col-image">
+      <div class="monastery-img" style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=80');"></div>
+      <div class="monastery-img-small" style="background-image:url('https://images.unsplash.com/photo-1528114039593-4366cc08227d?auto=format&fit=crop&w=800&q=80');"></div>
+    </div>
+    <div class="col-prose">
+      <span class="num">III.</span>
+      <span class="label">The Monastery</span>
+      <h2>Nine centuries of stillness,<br>ten kilometres from the Alps.</h2>
+      <p class="prose">Founded in 1143 by Benedictine monks, our monastery has been a place of retreat for nearly nine hundred years. After a decade of restoration — guided by the Bavarian Landesamt für Denkmalpflege — its cells, chapel, refectory, and orchards have been quietly transformed into a contemporary clinic without erasing a single beam of spruce.</p>
+      <p class="prose">The estate extends across forty hectares of forest, meadow, and spring-fed lakes. There are fourteen guest cells, a single long-table refectory, a restored baroque library, and a thermal bathhouse built over a natural spring the monks have used since the thirteenth century.</p>
+      <ul class="meta-list">
+        <li><span>Location</span><strong>Upper Bavaria, 55 min from Munich</strong></li>
+        <li><span>Founded</span><strong>A.D. 1143</strong></li>
+        <li><span>Guest cells</span><strong>14</strong></li>
+        <li><span>Clinicians</span><strong>9 resident, 22 consulting</strong></li>
+        <li><span>Staff-to-guest ratio</span><strong>6 : 1</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- A Day at the Retreat -->
+<section class="section section-light" id="experience">
+  <div class="container">
+    <div class="section-head">
+      <span class="num">IV.</span>
+      <h2>A day at Kloster Lebensquell</h2>
+      <p class="lead">Rhythm is the first medicine. Each day is measured by the monastery's bronze bells — seven rings, seven invitations to breathe.</p>
+    </div>
+
+    <div class="schedule">
+      <div class="sched-item">
+        <span class="sched-time">06:30</span>
+        <div>
+          <h4>Lauds</h4>
+          <p>Silent walk through the cloister and orchards. Cold plunge for those so inclined.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">07:30</span>
+        <div>
+          <h4>Diagnostics</h4>
+          <p>Morning laboratory, HRV, continuous glucose readings reviewed with your physician.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">09:00</span>
+        <div>
+          <h4>Therapeutic work</h4>
+          <p>Infusion, hyperbaric, or physiotherapy, according to the day's protocol.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">12:00</span>
+        <div>
+          <h4>Refectory</h4>
+          <p>A single seasonal meal prepared by our kitchen from the monastery gardens. Silence is optional.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">14:30</span>
+        <div>
+          <h4>Psychotherapy</h4>
+          <p>One-to-one session with your assigned psychotherapist or psychiatrist.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">16:00</span>
+        <div>
+          <h4>Movement</h4>
+          <p>Alpine hike, Pilates, swim in the lake, or stillness in the bathhouse. Your choice.</p>
+        </div>
+      </div>
+      <div class="sched-item">
+        <span class="sched-time">19:00</span>
+        <div>
+          <h4>Vespers</h4>
+          <p>Sound bath in the baroque library, followed by a light supper or intermittent fast.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote / Testimonial -->
+<section class="section section-quote">
+  <div class="container">
+    <blockquote>
+      <p>“I arrived in fragments and left — not cured, but reassembled. The silence here is not empty; it is the most sophisticated medicine I have ever been prescribed.”</p>
+      <footer>— Guest, resident three weeks, spring 2025</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section section-light" id="team">
+  <div class="container">
+    <div class="section-head">
+      <span class="num">V.</span>
+      <h2>Our resident physicians</h2>
+      <p class="lead">A small, senior faculty. Every guest is assigned one lead physician and one lead psychotherapist for the duration of their stay.</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80');"></div>
+        <h4>Dr. med. Friederike von Auenheim</h4>
+        <span class="role">Medical Director · Internal Medicine, Longevity</span>
+        <p>Formerly of Charité Berlin. Twenty-two years in integrative internal medicine.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80');"></div>
+        <h4>Prof. Dr. med. Matthias Kranzberg</h4>
+        <span class="role">Head of Psychosomatic Medicine</span>
+        <p>Psychiatry, psychoanalysis, addiction medicine. Professor at LMU Munich.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80');"></div>
+        <h4>Dr. med. Anneliese Hoffer</h4>
+        <span class="role">Detoxification · Environmental Medicine</span>
+        <p>Heavy-metal chelation, mitochondrial medicine, molecular nutrition.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80');"></div>
+        <h4>Lukas Feldmann, M.Sc.</h4>
+        <span class="role">Therapeutic Movement · Alpinism</span>
+        <p>Former Olympic physiotherapist. Certified mountain guide (IFMGA).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-cta">
+  <div class="container cta-inner">
+    <h2>Admission is by consultation only.</h2>
+    <p>Every enquiry is received in confidence and answered personally by a member of the medical team, usually within forty-eight hours.</p>
+    <a href="pages/contact.html" class="btn btn-primary">Begin a private enquiry</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark">KL</span>
+      <p class="brand-full">Kloster Lebensquell<br><span>Bayern · Deutschland</span></p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h5>Retreat</h5>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#programs">Programs</a>
+        <a href="#monastery">The Monastery</a>
+        <a href="#team">Physicians</a>
+      </div>
+      <div>
+        <h5>Guests</h5>
+        <a href="pages/programs.html">Programmes</a>
+        <a href="pages/contact.html">Enquire</a>
+        <a href="pages/contact.html#arrival">Arrival</a>
+        <a href="pages/contact.html#press">Press</a>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <p>Klosterweg 1<br>83626 Upper Bavaria<br>Germany</p>
+        <p>+49 (0) 8024 — 000 000<br>welcome@lebensquell.care</p>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-legal">
+    <span>© MMXXVI Kloster Lebensquell GmbH · All rights reserved</span>
+    <span>Impressum · Datenschutz · AGB</span>
+  </div>
+</footer>
+
+<script>
+/* Kloster Lebensquell — small progressive enhancements */
+
+(function () {
+  'use strict';
+
+  // Sticky nav on scroll
+  const nav = document.getElementById('nav');
+  if (nav) {
+    const onScroll = () => {
+      if (window.scrollY > 60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Mobile toggle (simple)
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      links.style.display = open ? 'flex' : '';
+      links.style.position = open ? 'absolute' : '';
+      links.style.top = open ? '100%' : '';
+      links.style.left = open ? '0' : '';
+      links.style.right = open ? '0' : '';
+      links.style.background = open ? 'var(--ivory)' : '';
+      links.style.padding = open ? '2rem' : '';
+      links.style.flexDirection = open ? 'column' : '';
+      links.style.gap = open ? '1.5rem' : '';
+      links.style.borderBottom = open ? '1px solid var(--line)' : '';
+      // Ensure links render in forest color when the menu is open over ivory
+      if (open) {
+        links.querySelectorAll('a').forEach(a => a.style.color = 'var(--forest-deep)');
+      } else {
+        links.querySelectorAll('a').forEach(a => a.style.color = '');
+      }
+    });
+  }
+
+  // Reveal on scroll
+  const revealTargets = document.querySelectorAll(
+    '.section-head, .pillar, .team-card, .sched-item, .grid-2 .col-prose, .grid-2-wide .col-prose, .grid-2-wide .col-image, blockquote, .cta-inner, .prog-block'
+  );
+  revealTargets.forEach(el => el.classList.add('reveal'));
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealTargets.forEach(el => io.observe(el));
+  } else {
+    revealTargets.forEach(el => el.classList.add('in'));
+  }
+
+  // Smooth anchor for in-page links (accounts for sticky nav)
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id.length > 1) {
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          const y = target.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
+  // Gentle parallax on hero image
+  const heroImg = document.querySelector('.hero-image');
+  if (heroImg && window.matchMedia('(min-width: 760px)').matches) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight) {
+        heroImg.style.transform = `scale(1.05) translateY(${y * 0.15}px)`;
+      }
+    }, { passive: true });
+  }
+
+  // Contact form (demo, no backend)
+  const form = document.getElementById('enquiry-form');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const status = form.querySelector('.form-status');
+      if (status) {
+        status.textContent = 'Thank you. Your enquiry has been received. A member of our medical team will write to you personally within forty-eight hours.';
+        status.style.color = 'var(--gold)';
+      }
+      form.reset();
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
