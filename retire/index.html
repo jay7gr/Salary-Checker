@@ -1298,7 +1298,27 @@
         .form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
         .form-group textarea{resize:vertical;min-height:80px}
         .contact-success{text-align:center;color:var(--green,#16a34a);font-weight:600;padding:16px 0}
-    </style>
+    
+/* feedback-widget-v1 */
+.feedback-widget{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
+.feedback-widget h2{font-size:1.15rem;font-weight:700;color:var(--text-primary);margin:0 0 6px;letter-spacing:-.2px}
+.feedback-widget .fb-sub{font-size:.85rem;color:var(--text-secondary);margin:0 0 16px}
+.fb-stars{display:flex;gap:6px;margin-bottom:14px}
+.fb-star{cursor:pointer;width:32px;height:32px;background:transparent;border:none;padding:0;color:var(--border);transition:color .15s,transform .1s}
+.fb-star:hover{transform:scale(1.08)}
+.fb-star.is-filled{color:#f59e0b}
+.fb-star svg{width:100%;height:100%;display:block}
+.fb-row{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.fb-row input,.fb-row textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card-bg);color:var(--text-primary);font-family:inherit;font-size:.9rem;line-height:1.5;box-sizing:border-box}
+.fb-row textarea{min-height:84px;resize:vertical}
+.fb-row input:focus,.fb-row textarea:focus{outline:none;border-color:var(--accent)}
+.fb-submit{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.fb-submit:hover{opacity:.9}
+.fb-submit:disabled{opacity:.5;cursor:not-allowed}
+.fb-success{display:none;padding:14px 16px;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:10px;color:#16a34a;font-size:.9rem;font-weight:600}
+.feedback-widget.is-sent .fb-form{display:none}
+.feedback-widget.is-sent .fb-success{display:block}
+</style>
 
 <style>
 /* ── How it works ── */
@@ -8415,7 +8435,26 @@ document.querySelectorAll('.share-bar .share-btn').forEach(btn => {
             </div>
         </div>
     </div>
-</div>
+
+        <!-- feedback-widget-v1 -->
+        <section class="feedback-widget" data-tool="retire">
+          <h2>Was this helpful?</h2>
+          <p class="fb-sub">Rate this tool and leave a note — it helps us improve.</p>
+          <form class="fb-form" novalidate>
+            <div class="fb-stars" role="radiogroup" aria-label="Rating">
+              <button type="button" class="fb-star" data-value="1" aria-label="1 star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="2" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="3" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="4" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="5" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+            </div>
+            <div class="fb-row"><textarea name="comment" placeholder="What did you like or what could be better? (optional)" maxlength="1000"></textarea></div>
+            <div class="fb-row"><input type="text" name="name" placeholder="Your name (optional)" maxlength="80"></div>
+            <button type="submit" class="fb-submit">Send feedback</button>
+          </form>
+          <div class="fb-success" role="status">Thanks — your feedback was sent.</div>
+        </section>
+    </div>
 
     <script src="/chat.js?v=2"></script>
 <script>
@@ -8440,6 +8479,76 @@ document.querySelectorAll('.share-bar .share-btn').forEach(btn => {
       item.classList.add('open');
       btn.setAttribute('aria-expanded','true');
     }
+  });
+})();
+</script>
+<script>
+/* feedback-widget-v1 — Formspree endpoint optional; falls back to GA4 only */
+(function(){
+  if (window.__feedbackWidget) return;
+  window.__feedbackWidget = true;
+  // TODO: replace with your Formspree endpoint, e.g. https://formspree.io/f/xxxxxxxx
+  var ENDPOINT = '';
+  document.querySelectorAll('.feedback-widget').forEach(function(w){
+    var rating = 0;
+    var stars = w.querySelectorAll('.fb-star');
+    function paint(){
+      stars.forEach(function(s){
+        var v = parseInt(s.getAttribute('data-value'),10);
+        s.classList.toggle('is-filled', v <= rating);
+      });
+    }
+    stars.forEach(function(s){
+      s.addEventListener('click', function(){
+        rating = parseInt(s.getAttribute('data-value'),10);
+        paint();
+      });
+      s.addEventListener('mouseenter', function(){
+        var v = parseInt(s.getAttribute('data-value'),10);
+        stars.forEach(function(x){
+          var xv = parseInt(x.getAttribute('data-value'),10);
+          x.classList.toggle('is-filled', xv <= v);
+        });
+      });
+      s.addEventListener('mouseleave', paint);
+    });
+    var form = w.querySelector('.fb-form');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (rating < 1) { alert('Please pick a rating from 1 to 5 stars.'); return; }
+      var btn = form.querySelector('.fb-submit');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      var payload = {
+        tool: w.getAttribute('data-tool'),
+        rating: rating,
+        comment: form.elements['comment'].value || '',
+        name: form.elements['name'].value || '',
+        url: location.pathname,
+        ts: new Date().toISOString()
+      };
+      // GA4 event so the rating shows up in your analytics
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'tool_feedback', {
+            tool: payload.tool, rating: payload.rating,
+            has_comment: payload.comment.length > 0 ? 1 : 0,
+            comment_excerpt: payload.comment.slice(0,90)
+          });
+        }
+      } catch(_){}
+      function done(){ w.classList.add('is-sent'); }
+      function fail(){ btn.disabled = false; btn.textContent = 'Send feedback'; alert('Could not send feedback. Please try again later.'); }
+      if (ENDPOINT) {
+        fetch(ENDPOINT, {
+          method: 'POST',
+          headers: {'Accept':'application/json','Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        }).then(function(r){ if(r.ok) done(); else fail(); }).catch(fail);
+      } else {
+        // No endpoint configured — record to GA4 only and show success
+        done();
+      }
+    });
   });
 })();
 </script>
