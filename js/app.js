@@ -2994,6 +2994,7 @@
                 const fSent = document.getElementById('findingsSentence');
                 const fTs = document.getElementById('findingsTimestamp');
                 if (fTs) fTs.textContent = 'just now';
+                let stretchPct = 0;
                 if (fSent) {
                     const cCOLI = coliData[currentCity];
                     const tCOLI = coliData[targetCity];
@@ -3001,11 +3002,11 @@
                     if (cCOLI && tCOLI) {
                         const ratio = tCOLI / cCOLI;
                         if (ratio < 0.97) {
-                            const pct = Math.round((1 - ratio) * 100);
-                            sentence = `Your salary stretches roughly <strong>${pct}% further</strong> in ${targetCity} than in ${currentCity} — same lifestyle, more breathing room.`;
+                            stretchPct = Math.round((1 - ratio) * 100);
+                            sentence = `Your salary stretches roughly <strong>${stretchPct}% further</strong> in ${targetCity} than in ${currentCity} — same lifestyle, more breathing room.`;
                         } else if (ratio > 1.03) {
-                            const pct = Math.round((ratio - 1) * 100);
-                            sentence = `${targetCity} is about <strong>${pct}% more expensive</strong> than ${currentCity} — you'd need a meaningful raise to keep the same lifestyle.`;
+                            stretchPct = -Math.round((ratio - 1) * 100);
+                            sentence = `${targetCity} is about <strong>${Math.abs(stretchPct)}% more expensive</strong> than ${currentCity} — you'd need a meaningful raise to keep the same lifestyle.`;
                         } else {
                             sentence = `${targetCity} and ${currentCity} are <strong>roughly on par</strong> for cost of living — your salary buys about the same lifestyle either way.`;
                         }
@@ -3016,6 +3017,53 @@
                     } else {
                         fSent.style.display = 'none';
                     }
+                }
+
+                // T2.6 — Build share URL and wire buttons
+                const shareRow = document.getElementById('shareRow');
+                const copyBtn = document.getElementById('shareCopyBtn');
+                const tweetBtn = document.getElementById('shareTweetBtn');
+                const copyLabel = document.getElementById('shareBtnLabel');
+                if (shareRow && copyBtn && tweetBtn) {
+                    const params = new URLSearchParams();
+                    params.set('from', currentCity);
+                    params.set('to', targetCity);
+                    params.set('fromSal', String(Math.round(salary || 0)));
+                    params.set('toSal', String(Math.round(trueEquivalentSalary || coliEquivalentSalary || 0)));
+                    params.set('fromCur', currentCurrency);
+                    params.set('toCur', targetCurrency);
+                    params.set('stretch', String(stretchPct));
+                    const shareUrl = location.origin + '/share?' + params.toString();
+                    const tweetText = stretchPct >= 3
+                        ? `My salary goes ${Math.abs(stretchPct)}% further in ${targetCity} than ${currentCity} 🤯 same lifestyle, way more breathing room.`
+                        : stretchPct <= -3
+                        ? `${targetCity} costs ${Math.abs(stretchPct)}% more than ${currentCity} — eye-opening to see the real number.`
+                        : `Compared salaries between ${currentCity} and ${targetCity}. Surprising what cost of living does to a paycheck.`;
+                    tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(shareUrl);
+                    copyBtn.onclick = function(){
+                        const fallback = function(){
+                            const ta = document.createElement('textarea');
+                            ta.value = shareUrl; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                            document.body.appendChild(ta); ta.select();
+                            try { document.execCommand('copy'); } catch(_){}
+                            document.body.removeChild(ta);
+                        };
+                        const after = function(){
+                            copyBtn.classList.add('is-copied');
+                            if (copyLabel) copyLabel.textContent = 'Link copied!';
+                            setTimeout(function(){
+                                copyBtn.classList.remove('is-copied');
+                                if (copyLabel) copyLabel.textContent = 'Copy share link';
+                            }, 1800);
+                            try { if (typeof gtag === 'function') gtag('event', 'share_copy', { from: currentCity, to: targetCity }); } catch(_){}
+                        };
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(shareUrl).then(after).catch(function(){ fallback(); after(); });
+                        } else {
+                            fallback(); after();
+                        }
+                    };
+                    shareRow.style.display = '';
                 }
             } catch(_e) { /* keep robust */ }
 

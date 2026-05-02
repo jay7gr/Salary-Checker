@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Where does your salary go furthest? — salary:converter</title>
+<meta name="description" content="Tell us your salary and current city. We'll show you the cities worldwide where your money stretches furthest — ranked by real cost of living.">
+<link rel="canonical" href="https://salary-converter.com/furthest/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Where does your salary go furthest?">
+<meta property="og:description" content="Find the cities where your salary stretches the most. 182 cities ranked.">
+<meta property="og:url" content="https://salary-converter.com/furthest/">
+<meta property="og:image" content="https://salary-converter.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Where does your salary go furthest?">
+<meta name="twitter:description" content="Find the cities where your salary stretches the most. 182 cities ranked.">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MMZSM2Z96B');</script>
+
+<style>
+:root{--bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;--border:#e5e5ea;--border-light:#f0f0f2;--stat-card-bg:#f5f5f7;--good:#16a34a;--bad:#dc2626}
+[data-theme=dark]{--bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--border:#38383a;--border-light:#2c2c2e;--stat-card-bg:#2c2c2e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px;min-height:100vh;transition:background .3s,color .3s}
+.wrap{max-width:760px;margin:0 auto}
+.brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.brand-logo{font-size:1.05rem;font-weight:700;letter-spacing:-.5px;color:var(--text-primary);text-decoration:none}
+.brand-logo .colon{color:var(--accent)}
+.brand-nav{display:flex;gap:16px;font-size:.82rem}
+.brand-nav a{color:var(--text-secondary);text-decoration:none;font-weight:500}
+.brand-nav a:hover{color:var(--accent)}
+.theme-btn{background:none;border:1px solid var(--border);border-radius:100px;padding:5px 10px;font-size:.78rem;color:var(--text-secondary);cursor:pointer;font-family:inherit}
+
+.hero{text-align:center;margin:32px 0 24px}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:10px}
+h1{font-size:2.1rem;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:10px}
+h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--text-secondary);max-width:520px;margin:0 auto;line-height:1.55}
+
+.card{background:var(--card-bg);border-radius:24px;padding:28px;box-shadow:0 4px 24px rgba(0,0,0,.06);margin-bottom:24px}
+[data-theme=dark] .card{box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.form-row{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:520px){.form-row{grid-template-columns:1fr}}
+.form-row label{display:block;font-size:.78rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.form-row input,.form-row select{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:12px;background:var(--bg);color:var(--text-primary);font-family:inherit;font-size:.95rem;font-weight:500}
+.form-row input:focus,.form-row select:focus{outline:none;border-color:var(--accent);background:var(--card-bg)}
+.cta-row{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.cta{flex:1;min-width:160px;padding:13px 24px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s,transform .15s}
+.cta:hover{opacity:.92;transform:translateY(-1px)}
+.cta-secondary{background:var(--stat-card-bg);color:var(--text-primary);flex:0;padding:13px 18px}
+.cta-secondary:hover{background:var(--border-light);transform:none}
+
+.results{display:none}
+.results.show{display:block;animation:slideIn .4s ease-out}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.results-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);text-align:center;margin-bottom:8px}
+.results-title{font-size:1.45rem;font-weight:800;letter-spacing:-.5px;text-align:center;margin-bottom:8px;line-height:1.2}
+.results-sub{font-size:.92rem;color:var(--text-secondary);text-align:center;margin-bottom:22px}
+
+.tabs{display:flex;gap:6px;background:var(--stat-card-bg);padding:4px;border-radius:100px;margin-bottom:18px;width:fit-content;margin-left:auto;margin-right:auto}
+.tab{padding:8px 16px;font-size:.82rem;font-weight:600;border:none;background:transparent;color:var(--text-secondary);cursor:pointer;border-radius:100px;font-family:inherit;transition:all .2s}
+.tab.is-active{background:var(--card-bg);color:var(--text-primary);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+
+.city-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.city-row{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;padding:12px 14px;background:var(--stat-card-bg);border-radius:14px;transition:transform .15s}
+.city-row:hover{transform:translateX(2px)}
+.city-row.top1{background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(124,58,237,.08));border:1px solid rgba(37,99,235,.18)}
+.city-row.top2{background:linear-gradient(135deg,rgba(37,99,235,.05),rgba(124,58,237,.05))}
+.rank{font-size:.95rem;font-weight:700;color:var(--text-secondary);text-align:center;font-variant-numeric:tabular-nums}
+.city-row.top1 .rank{color:var(--accent)}
+.city-name{font-size:.95rem;font-weight:600;color:var(--text-primary);min-width:0}
+.city-meta{font-size:.74rem;color:var(--text-secondary);font-weight:500;margin-top:2px}
+.mult{font-size:1.05rem;font-weight:800;color:var(--good);font-variant-numeric:tabular-nums;text-align:right;letter-spacing:-.3px}
+.mult.lt1{color:var(--bad)}
+.equiv{font-size:.74rem;color:var(--text-secondary);text-align:right;font-weight:500;font-variant-numeric:tabular-nums;margin-top:2px}
+
+.share-cta{margin-top:24px;text-align:center}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-primary);border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .18s}
+.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+.share-btn.is-copied{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.foot-cta{text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--border-light)}
+.foot-cta a{color:var(--accent);text-decoration:none;font-weight:600;font-size:.88rem}
+
+.empty{padding:32px 16px;text-align:center;color:var(--text-secondary);font-size:.88rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <a href="/" class="brand-logo">salary<span class="colon">:</span>converter</a>
+    <div class="brand-nav">
+      <a href="/">Compare</a>
+      <a href="/blog/">Blog</a>
+      <button class="theme-btn" id="themeBtn" type="button">☾</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Surprise me</div>
+    <h1>Where does <em>your</em> salary go furthest?</h1>
+    <p class="hero-sub">Tell us what you earn and where you live. We'll rank every city in our database by how much more — or less — your money would buy.</p>
+  </section>
+
+  <div class="card">
+    <div class="form-row">
+      <div>
+        <label for="salary">Your annual salary</label>
+        <input id="salary" type="number" inputmode="numeric" placeholder="e.g. 80000" min="1">
+      </div>
+      <div>
+        <label for="currency">Currency</label>
+        <select id="currency">
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="CAD">CAD (C$)</option>
+          <option value="AUD">AUD (A$)</option>
+          <option value="JPY">JPY (¥)</option>
+          <option value="CHF">CHF</option>
+          <option value="SGD">SGD (S$)</option>
+          <option value="AED">AED</option>
+          <option value="HKD">HKD (HK$)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="city">Your current city</label>
+        <select id="city"><option value="">— Select your city —</option></select>
+      </div>
+      <div>
+        <label for="region">Show me</label>
+        <select id="region">
+          <option value="all">Anywhere in the world</option>
+          <option value="EU">Europe only</option>
+          <option value="ASIA">Asia &amp; Pacific</option>
+          <option value="AMER">Americas</option>
+          <option value="ME">Middle East &amp; Africa</option>
+        </select>
+      </div>
+    </div>
+    <div class="cta-row">
+      <button class="cta" id="goBtn" type="button">Find where my money goes furthest →</button>
+      <button class="cta cta-secondary" id="surpriseBtn" type="button" title="Random salary + city">🎲</button>
+    </div>
+  </div>
+
+  <section class="results card" id="results">
+    <div class="results-eyebrow" id="resultsEyebrow">Findings</div>
+    <h2 class="results-title" id="resultsTitle"></h2>
+    <p class="results-sub" id="resultsSub"></p>
+
+    <div class="tabs">
+      <button class="tab is-active" data-mode="best" type="button">Top 10 furthest</button>
+      <button class="tab" data-mode="worst" type="button">Where it shrinks</button>
+    </div>
+
+    <ul class="city-list" id="cityList"></ul>
+
+    <div class="share-cta">
+      <button class="share-btn" id="shareBtn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="shareLabel">Copy share link</span>
+      </button>
+    </div>
+
+    <div class="foot-cta">
+      Want a full breakdown for a specific city? <a href="/">Run a detailed comparison →</a>
+    </div>
+  </section>
+
+  <p class="empty" id="emptyState">Enter your salary and current city to see the ranking.</p>
+</div>
+
+<script src="/js/app-data.js?v=1"></script>
+<script>
+(function(){
+  // City classification for the region filter
+  var REGION = {
+    EU: ['London','Paris','Amsterdam','Berlin','Munich','Dublin','Brussels','Luxembourg City','Zurich','Geneva','Edinburgh','Nice','Madrid','Barcelona','Valencia','Málaga','Lisbon','Porto','Rome','Milan','Athens','Split','Stockholm','Copenhagen','Helsinki','Oslo','Vienna','Prague','Budapest','Warsaw','Krakow','Bucharest','Tallinn','Riga','Istanbul'],
+    ASIA: ['Tokyo','Osaka','Fukuoka','Seoul','Hong Kong','Taipei','Shanghai','Beijing','Shenzhen','Guangzhou','Singapore','Bangkok','Chiang Mai','Phuket','Kuala Lumpur','Ho Chi Minh City','Hanoi','Manila','Jakarta','Bali (Denpasar)','Phnom Penh','Mumbai','Bangalore','Delhi','Chennai','Sydney','Melbourne','Perth','Auckland'],
+    AMER: ['New York','San Francisco','Los Angeles','Chicago','Miami','Austin','Seattle','Denver','Boston','Washington DC','Houston','Charlotte','Las Vegas','Tampa','Raleigh','Dallas','Atlanta','Philadelphia','Phoenix','San Diego','Nashville','Minneapolis','Portland','Toronto','Vancouver','Montreal','Mexico City','Cancún','Panama City','São Paulo','Buenos Aires','Bogotá','Lima','Santiago','Medellín','Montevideo','San José (CR)','Playa del Carmen'],
+    ME: ['Dubai','Abu Dhabi','Doha','Riyadh','Tel Aviv','Cape Town','Nairobi','Lagos','Cairo','Marrakech','Casablanca']
+  };
+  var COLI = window.SalaryCheckerData && window.SalaryCheckerData.coliData ? window.SalaryCheckerData.coliData : null;
+  var CCY = window.SalaryCheckerData && window.SalaryCheckerData.cityToCurrency ? window.SalaryCheckerData.cityToCurrency : {};
+  var FX = window.SalaryCheckerData && window.SalaryCheckerData.exchangeRates ? window.SalaryCheckerData.exchangeRates : null;
+  var COUNTRY = window.SalaryCheckerData && window.SalaryCheckerData.cityCountry ? window.SalaryCheckerData.cityCountry : {};
+
+  if (!COLI || !FX) {
+    document.getElementById('emptyState').textContent = 'Data is loading… please refresh.';
+    return;
+  }
+
+  // Populate city select
+  var citySel = document.getElementById('city');
+  Object.keys(COLI).sort().forEach(function(name){
+    var o = document.createElement('option');
+    o.value = name; o.textContent = name;
+    citySel.appendChild(o);
+  });
+
+  // Theme toggle
+  var themeBtn = document.getElementById('themeBtn');
+  function applyTheme(t){ document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); themeBtn.textContent = t === 'dark' ? '☀' : '☾'; }
+  applyTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+  themeBtn.onclick = function(){ applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); };
+
+  // Auto-detect from /api/locate
+  fetch('/api/locate', { cache: 'force-cache' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    if (!d) return;
+    if (d.suggestedCity && COLI[d.suggestedCity] && !citySel.value) citySel.value = d.suggestedCity;
+    if (d.suggestedCurrency) {
+      var ccyOpt = document.querySelector('#currency option[value="' + d.suggestedCurrency + '"]');
+      if (ccyOpt && !document.getElementById('currency').dataset.userSet) document.getElementById('currency').value = d.suggestedCurrency;
+    }
+  });
+
+  // Calculation: equivalent salary in target city = salary × (target COLI / current COLI) × (target FX / current FX)
+  function rankCities(salary, fromCity, fromCcy, region) {
+    var fromCOLI = COLI[fromCity];
+    if (!fromCOLI) return [];
+    var fromFX = FX[fromCcy] || 1;
+    var allowed = region === 'all' ? null : new Set(REGION[region] || []);
+    var rows = [];
+    Object.keys(COLI).forEach(function(city){
+      if (city === fromCity) return;
+      if (allowed && !allowed.has(city)) return;
+      var tCOLI = COLI[city];
+      var tCcy = CCY[city] || fromCcy;
+      var tFX = FX[tCcy] || 1;
+      // multiplier = how much more (>1) or less (<1) your same-purchasing-power salary buys
+      // Equivalent salary in target city in target currency:
+      var equivInTarget = salary * (tCOLI / fromCOLI) * (tFX / fromFX);
+      // Multiplier in real purchasing-power terms (reciprocal of COLI ratio):
+      var mult = fromCOLI / tCOLI;
+      rows.push({
+        city: city,
+        country: COUNTRY[city] || '',
+        currency: tCcy,
+        equivInTarget: equivInTarget,
+        mult: mult,
+        coli: tCOLI
+      });
+    });
+    return rows;
+  }
+
+  function fmt(n, ccy){
+    try { return new Intl.NumberFormat('en-US', { style:'currency', currency: ccy, maximumFractionDigits: 0 }).format(n); }
+    catch(_){ return ccy + ' ' + Math.round(n).toLocaleString(); }
+  }
+
+  var lastResults = null, lastInputs = null, lastMode = 'best';
+
+  function render(mode){
+    if (!lastResults) return;
+    lastMode = mode;
+    var sorted = lastResults.slice().sort(function(a,b){ return mode === 'best' ? b.mult - a.mult : a.mult - b.mult; });
+    var top = sorted.slice(0, 10);
+    var list = document.getElementById('cityList');
+    list.innerHTML = '';
+    top.forEach(function(r, i){
+      var li = document.createElement('li');
+      li.className = 'city-row' + (i === 0 ? ' top1' : i < 3 ? ' top2' : '');
+      var multStr = (r.mult >= 1 ? r.mult.toFixed(2) : r.mult.toFixed(2)) + 'x';
+      li.innerHTML = ''
+        + '<div class="rank">#' + (i+1) + '</div>'
+        + '<div><div class="city-name">' + r.city + '</div><div class="city-meta">' + r.country + (r.currency !== lastInputs.currency ? ' · ' + r.currency : '') + '</div></div>'
+        + '<div><div class="mult' + (r.mult < 1 ? ' lt1' : '') + '">' + multStr + '</div><div class="equiv">' + fmt(r.equivInTarget, r.currency) + '</div></div>';
+      list.appendChild(li);
+    });
+
+    var titleEl = document.getElementById('resultsTitle');
+    var subEl = document.getElementById('resultsSub');
+    if (mode === 'best') {
+      titleEl.textContent = 'Where ' + fmt(lastInputs.salary, lastInputs.currency) + ' buys the most';
+      var best = sorted[0];
+      if (best && best.mult > 1.1) {
+        subEl.textContent = 'In ' + best.city + ', your money goes about ' + best.mult.toFixed(1) + '× as far as in ' + lastInputs.fromCity + '.';
+      } else {
+        subEl.textContent = 'Top cities in ' + (lastInputs.region === 'all' ? 'the world' : 'your selected region') + ' for purchasing power.';
+      }
+    } else {
+      titleEl.textContent = 'Where ' + fmt(lastInputs.salary, lastInputs.currency) + ' shrinks fastest';
+      subEl.textContent = 'These cities cost the most relative to ' + lastInputs.fromCity + '. Your same lifestyle would need a meaningful raise.';
+    }
+
+    document.getElementById('results').classList.add('show');
+    document.getElementById('emptyState').style.display = 'none';
+  }
+
+  function calc(){
+    var salary = parseFloat(document.getElementById('salary').value);
+    var ccy = document.getElementById('currency').value;
+    var fromCity = document.getElementById('city').value;
+    var region = document.getElementById('region').value;
+    if (!salary || salary <= 0) { document.getElementById('salary').focus(); return; }
+    if (!fromCity) { document.getElementById('city').focus(); return; }
+    lastInputs = { salary: salary, currency: ccy, fromCity: fromCity, region: region };
+    lastResults = rankCities(salary, fromCity, ccy, region);
+    render('best');
+    try { if (typeof gtag === 'function') gtag('event', 'furthest_run', { from: fromCity, region: region }); } catch(_){}
+  }
+
+  document.getElementById('goBtn').addEventListener('click', calc);
+  document.getElementById('salary').addEventListener('keydown', function(e){ if (e.key === 'Enter') calc(); });
+
+  document.getElementById('surpriseBtn').addEventListener('click', function(){
+    // Random plausible salary + random city
+    var salaries = [40000, 60000, 80000, 100000, 120000, 150000, 200000];
+    document.getElementById('salary').value = salaries[Math.floor(Math.random() * salaries.length)];
+    var cities = Object.keys(COLI);
+    document.getElementById('city').value = cities[Math.floor(Math.random() * cities.length)];
+    document.getElementById('city').dispatchEvent(new Event('change'));
+    calc();
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('is-active'); });
+      b.classList.add('is-active');
+      render(b.getAttribute('data-mode'));
+    });
+  });
+
+  // Share
+  document.getElementById('shareBtn').addEventListener('click', function(){
+    if (!lastInputs) return;
+    var u = location.origin + '/furthest/?sal=' + lastInputs.salary + '&cur=' + lastInputs.currency + '&from=' + encodeURIComponent(lastInputs.fromCity) + '&region=' + lastInputs.region;
+    var btn = this;
+    function done(){
+      btn.classList.add('is-copied');
+      document.getElementById('shareLabel').textContent = 'Link copied!';
+      setTimeout(function(){
+        btn.classList.remove('is-copied');
+        document.getElementById('shareLabel').textContent = 'Copy share link';
+      }, 1800);
+    }
+    if (navigator.clipboard) navigator.clipboard.writeText(u).then(done).catch(done);
+    else done();
+  });
+
+  // Hydrate from URL params (so shared links auto-run)
+  var qp = new URLSearchParams(location.search);
+  if (qp.get('sal') && qp.get('from')) {
+    document.getElementById('salary').value = qp.get('sal');
+    if (qp.get('cur')) document.getElementById('currency').value = qp.get('cur');
+    document.getElementById('city').value = qp.get('from');
+    if (qp.get('region')) document.getElementById('region').value = qp.get('region');
+    setTimeout(calc, 200);
+  }
+})();
+</script>
+</body>
+</html>
