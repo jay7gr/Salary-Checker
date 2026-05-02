@@ -909,6 +909,37 @@
             color: var(--text-primary);
             letter-spacing: -0.2px;
         }
+        /* T1.5 — Findings report styling */
+        .findings-eyebrow {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .findings-sentence {
+            font-size: 1.02rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            line-height: 1.55;
+            text-align: center;
+            margin: 16px auto 8px;
+            max-width: 560px;
+            padding: 0 8px;
+        }
+        .findings-sentence strong { color: var(--accent); font-weight: 700; }
+        .findings-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-light);
+        }
 
         .result-box.show {
             display: block;
@@ -2734,20 +2765,29 @@
                 <div class="analyzing-spinner"></div>
                 <div class="analyzing-text" id="analyzingText">Comparing 182 cities&hellip;</div>
             </div>
+            <!-- T1.5 — Findings header -->
+            <div class="findings-eyebrow">Findings &middot; <span id="findingsTimestamp">just now</span></div>
             <!-- 1. Headline -->
             <div class="result-title" id="resultTitle">Your True Equivalent Salary</div>
             <div class="result-amount" id="resultAmount"></div>
             <div class="result-subtitle" id="resultSubtitle"></div>
 
+            <!-- T1.5 — Findings narrative sentence -->
+            <div class="findings-sentence" id="findingsSentence" style="display:none;"></div>
+
             <!-- 2. Target Salary Comparison (is your target salary enough?) -->
             <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
+            <!-- T1.5 — Section label -->
+            <div class="findings-label" id="verdictLabel" style="display:none;">The verdict</div>
             <!-- 3. Verdict Banner (affordable + take-home comparison) -->
             <div class="verdict-banner" id="verdictBanner" style="display: none;">
                 <span class="verdict-icon" id="verdictIcon"></span>
                 <span id="verdictText"></span>
             </div>
 
+            <!-- T1.5 — Section label -->
+            <div class="findings-label" id="breakdownLabel" style="display:none;">The breakdown</div>
             <!-- 4. Full Breakdown Cards -->
             <div class="full-breakdown-section" id="fullBreakdownSection" style="display: none;">
                 <div class="breakdown-title">Full Breakdown: Gross to Disposable</div>
@@ -2756,6 +2796,8 @@
             </div>
 
 
+            <!-- T1.5 — Section label -->
+            <div class="findings-label" id="explanationLabel" style="display:none;">How we got there</div>
             <!-- 7. How We Calculated This -->
             <div class="explanation-section" id="explanationSection"></div>
 

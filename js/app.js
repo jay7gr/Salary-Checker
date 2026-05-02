@@ -2988,6 +2988,37 @@
                 headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
             }
             document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
+
+            // T1.5 — Findings narrative sentence (turn the numbers into a story)
+            try {
+                const fSent = document.getElementById('findingsSentence');
+                const fTs = document.getElementById('findingsTimestamp');
+                if (fTs) fTs.textContent = 'just now';
+                if (fSent) {
+                    const cCOLI = coliData[currentCity];
+                    const tCOLI = coliData[targetCity];
+                    let sentence = '';
+                    if (cCOLI && tCOLI) {
+                        const ratio = tCOLI / cCOLI;
+                        if (ratio < 0.97) {
+                            const pct = Math.round((1 - ratio) * 100);
+                            sentence = `Your salary stretches roughly <strong>${pct}% further</strong> in ${targetCity} than in ${currentCity} — same lifestyle, more breathing room.`;
+                        } else if (ratio > 1.03) {
+                            const pct = Math.round((ratio - 1) * 100);
+                            sentence = `${targetCity} is about <strong>${pct}% more expensive</strong> than ${currentCity} — you'd need a meaningful raise to keep the same lifestyle.`;
+                        } else {
+                            sentence = `${targetCity} and ${currentCity} are <strong>roughly on par</strong> for cost of living — your salary buys about the same lifestyle either way.`;
+                        }
+                    }
+                    if (sentence) {
+                        fSent.innerHTML = sentence;
+                        fSent.style.display = '';
+                    } else {
+                        fSent.style.display = 'none';
+                    }
+                }
+            } catch(_e) { /* keep robust */ }
+
             // T1.4 — animated counter
             (function(){
                 const el = document.getElementById('resultAmount');
@@ -3085,8 +3116,13 @@
                 document.getElementById('verdictIcon').textContent = verdictIcon;
                 document.getElementById('verdictText').innerHTML = verdictText;
                 verdictBanner.style.display = '';
+                // T1.5 — show "The verdict" section label
+                const _vl = document.getElementById('verdictLabel');
+                if (_vl) _vl.style.display = '';
             } else {
                 verdictBanner.style.display = 'none';
+                const _vl = document.getElementById('verdictLabel');
+                if (_vl) _vl.style.display = 'none';
             }
 
             // === 3. FULL BREAKDOWN CARDS ===
@@ -3266,8 +3302,12 @@
                     noteEl.innerHTML = 'All living costs adjusted for neighborhood. Annual estimates based on city averages.' + citationHtml;
                 }
                 breakdownSection.style.display = '';
+                const _bl = document.getElementById('breakdownLabel');
+                if (_bl) _bl.style.display = '';
             } else {
                 breakdownSection.style.display = 'none';
+                const _bl = document.getElementById('breakdownLabel');
+                if (_bl) _bl.style.display = 'none';
             }
 
             // === 5. OFFER COMPARISON ===
@@ -3382,6 +3422,9 @@
                 `;
             }
             document.getElementById('explanationSection').innerHTML = explanation;
+            // T1.5 — show "How we got there" section label
+            const _el = document.getElementById('explanationLabel');
+            if (_el) _el.style.display = '';
 
             // === 8. COLI REFERENCE (demoted) ===
             const coliRef = document.getElementById('coliReference');
