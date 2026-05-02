@@ -8483,12 +8483,12 @@ document.querySelectorAll('.share-bar .share-btn').forEach(btn => {
 })();
 </script>
 <script>
-/* feedback-widget-v1 — Formspree endpoint optional; falls back to GA4 only */
+/* feedback-widget-v1 — posts to /api/feedback (Cloudflare Pages Function + KV). Always logs a GA4 event too. */
 (function(){
   if (window.__feedbackWidget) return;
   window.__feedbackWidget = true;
-  // TODO: replace with your Formspree endpoint, e.g. https://formspree.io/f/xxxxxxxx
-  var ENDPOINT = '';
+  // Same-origin endpoint backed by Cloudflare Pages Function functions/api/feedback.js
+  var ENDPOINT = '/api/feedback';
   document.querySelectorAll('.feedback-widget').forEach(function(w){
     var rating = 0;
     var stars = w.querySelectorAll('.fb-star');
