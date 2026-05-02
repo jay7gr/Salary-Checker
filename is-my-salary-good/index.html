@@ -93,6 +93,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .percentile-track{height:10px;background:var(--border);border-radius:100px;position:relative;overflow:visible}
 .percentile-fill{height:100%;border-radius:100px;transition:width .6s ease}
 .percentile-marker{position:absolute;top:-4px;width:18px;height:18px;border-radius:50%;border:3px solid var(--card-bg);transform:translateX(-50%);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+/* T2.9 — Shareable percentile badge */
+.pct-badge-wrap{margin:24px 0 8px}
+.pct-badge{background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);color:#fff;border-radius:20px;padding:32px 28px;text-align:center;box-shadow:0 8px 32px rgba(37,99,235,.22);position:relative;overflow:hidden}
+.pct-badge::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:radial-gradient(circle,rgba(255,255,255,.18) 0%,transparent 70%);pointer-events:none}
+.pct-badge-eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.6px;opacity:.85;margin-bottom:12px;position:relative}
+.pct-badge-pct{font-size:3.4rem;font-weight:800;letter-spacing:-2px;line-height:1;margin-bottom:14px;font-variant-numeric:tabular-nums;position:relative}
+.pct-badge-pct sup{font-size:1.2rem;font-weight:700;vertical-align:super;margin-left:4px;opacity:.85;letter-spacing:0}
+.pct-badge-text{font-size:.98rem;font-weight:500;line-height:1.45;max-width:380px;margin:0 auto 22px;opacity:.95;position:relative}
+.pct-badge-foot{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;font-weight:600;opacity:.9;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);position:relative}
+.pct-badge-brand{letter-spacing:-.3px}
+.pct-badge-url{font-size:.74rem;opacity:.8;font-weight:500}
+.pct-share-row{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.pct-share-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-primary);border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .18s}
+.pct-share-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+.pct-share-btn.is-copied{background:var(--accent);color:#fff;border-color:var(--accent)}
 .oe-cta{border:1.5px solid var(--accent);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:8px}
 .oe-cta-text p{font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;color:var(--accent);margin-bottom:4px}
 .oe-cta-text h3{font-size:1rem;font-weight:700;color:var(--text-primary)}
@@ -402,6 +417,33 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="verdict-title" id="verdictTitle"></div>
       <div class="verdict-sub" id="verdictSub"></div>
       <div id="sourceBadge" style="margin-top:10px;font-size:0.7rem;opacity:0.75;"></div>
+    </div>
+
+    <!-- T2.9 — Shareable percentile badge -->
+    <div class="pct-badge-wrap" id="pctBadgeWrap" style="display:none;">
+      <div class="pct-badge" id="pctBadge">
+        <div class="pct-badge-eyebrow">salary findings</div>
+        <div class="pct-badge-pct" id="pctBadgePct">—</div>
+        <div class="pct-badge-text" id="pctBadgeText">—</div>
+        <div class="pct-badge-foot">
+          <span class="pct-badge-brand">salary<span style="color:#fff;opacity:.85;">:</span>converter</span>
+          <span class="pct-badge-url">salary-converter.com</span>
+        </div>
+      </div>
+      <div class="pct-share-row">
+        <button type="button" class="pct-share-btn" id="pctSaveBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Save as image</span>
+        </button>
+        <button type="button" class="pct-share-btn" id="pctCopyBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span id="pctCopyLabel">Copy link</span>
+        </button>
+        <a class="pct-share-btn" id="pctTweetBtn" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>Post on X</span>
+        </a>
+      </div>
     </div>
 
     <div class="stats-grid" id="statsGrid"></div>
@@ -969,6 +1011,104 @@ function checkSalary() {
     ? `⚠️ Estimated · ${srcInfo ? srcInfo.source : 'OECD wage ratios'}`
     : `🔴 COLI estimate only · no salary survey data for this region`;
   document.getElementById('sourceBadge').innerHTML = srcHtml;
+
+  // T2.9 — Populate the shareable percentile badge
+  try {
+    const wrap = document.getElementById('pctBadgeWrap');
+    const pctEl = document.getElementById('pctBadgePct');
+    const txtEl = document.getElementById('pctBadgeText');
+    if (wrap && pctEl && txtEl) {
+      const ord = (function(n){
+        const s = ['th','st','nd','rd'], v = n % 100;
+        return s[(v - 20) % 10] || s[v] || s[0];
+      })(pct);
+      pctEl.innerHTML = pct + '<sup>' + ord + '</sup>';
+      txtEl.textContent = 'You earn more than ' + pct + '% of ' + prof + 's in ' + city + '.';
+      wrap.style.display = '';
+
+      const tweet = 'I earn more than ' + pct + '% of ' + prof + 's in ' + city + '. Found out via salary-converter.com';
+      const shareUrl = location.origin + '/is-my-salary-good/?city=' + encodeURIComponent(city) + '&prof=' + encodeURIComponent(prof) + '&sal=' + encodeURIComponent(sal);
+      const tweetBtn = document.getElementById('pctTweetBtn');
+      if (tweetBtn) tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet) + '&url=' + encodeURIComponent(shareUrl);
+
+      const copyBtn = document.getElementById('pctCopyBtn');
+      const copyLab = document.getElementById('pctCopyLabel');
+      if (copyBtn) copyBtn.onclick = function(){
+        const after = function(){
+          copyBtn.classList.add('is-copied');
+          if (copyLab) copyLab.textContent = 'Link copied!';
+          setTimeout(function(){
+            copyBtn.classList.remove('is-copied');
+            if (copyLab) copyLab.textContent = 'Copy link';
+          }, 1800);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(shareUrl).then(after).catch(after);
+        } else {
+          const ta = document.createElement('textarea'); ta.value = shareUrl;
+          ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch(_){}
+          document.body.removeChild(ta);
+          after();
+        }
+      };
+
+      const saveBtn = document.getElementById('pctSaveBtn');
+      if (saveBtn) saveBtn.onclick = function(){
+        // Generate a downloadable PNG of the badge using canvas
+        const badge = document.getElementById('pctBadge');
+        const w = 1080, h = 1080;
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        // Gradient background
+        const grad = ctx.createLinearGradient(0, 0, w, h);
+        grad.addColorStop(0, '#2563eb'); grad.addColorStop(1, '#7c3aed');
+        ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
+        // Soft glow
+        const r = ctx.createRadialGradient(w * 0.85, h * 0.15, 0, w * 0.85, h * 0.15, w * 0.6);
+        r.addColorStop(0, 'rgba(255,255,255,0.18)'); r.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = r; ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        // Eyebrow
+        ctx.font = '600 22px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+        ctx.globalAlpha = 0.85;
+        ctx.fillText('SALARY FINDINGS', w/2, 220);
+        ctx.globalAlpha = 1;
+        // Big percentile
+        ctx.font = '800 280px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+        const pctStr = pct + ord;
+        ctx.fillText(pctStr, w/2, 540);
+        // Subline (auto-wrap if needed)
+        ctx.font = '500 38px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+        const text = 'You earn more than ' + pct + '% of';
+        const text2 = prof + 's in ' + city + '.';
+        ctx.globalAlpha = 0.95;
+        ctx.fillText(text, w/2, 700);
+        ctx.fillText(text2, w/2, 760);
+        ctx.globalAlpha = 1;
+        // Footer brand
+        ctx.font = '700 30px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+        ctx.globalAlpha = 0.9;
+        ctx.fillText('salary:converter', w/2, 970);
+        ctx.font = '500 22px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
+        ctx.globalAlpha = 0.7;
+        ctx.fillText('salary-converter.com', w/2, 1010);
+        ctx.globalAlpha = 1;
+        canvas.toBlob(function(blob){
+          if (!blob) return;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'salary-percentile-' + (city || '').replace(/\s+/g,'-').toLowerCase() + '.png';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000);
+          try { if (typeof gtag === 'function') gtag('event', 'pct_badge_save', { city: city, prof: prof, pct: pct }); } catch(_){}
+        }, 'image/png');
+      };
+    }
+  } catch(_e) { /* keep page robust */ }
 
   // Stats grid
   const statsGrid = document.getElementById('statsGrid');
