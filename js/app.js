@@ -2988,7 +2988,31 @@
                 headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
             }
             document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
-            document.getElementById('resultAmount').textContent = formattedAmount;
+            // T1.4 — animated counter
+            (function(){
+                const el = document.getElementById('resultAmount');
+                const finalText = formattedAmount;
+                // Extract numeric value from formatted text for animation
+                const match = finalText.match(/[\d,]+(\.\d+)?/);
+                if (!match) { el.textContent = finalText; return; }
+                const targetN = parseFloat(match[0].replace(/,/g,''));
+                if (!targetN || !isFinite(targetN)) { el.textContent = finalText; return; }
+                const prefix = finalText.slice(0, match.index);
+                const suffix = finalText.slice(match.index + match[0].length);
+                const dur = 800;
+                const t0 = performance.now();
+                const isInt = !match[1];
+                function step(t){
+                    const p = Math.min(1, (t - t0) / dur);
+                    // ease-out cubic
+                    const e = 1 - Math.pow(1 - p, 3);
+                    const v = targetN * e;
+                    const num = isInt ? Math.round(v).toLocaleString() : v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    el.textContent = prefix + num + suffix;
+                    if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            })();
 
             let subtitleHtml = '';
             if (household.remote) {
@@ -3363,6 +3387,32 @@
             const coliRef = document.getElementById('coliReference');
             document.getElementById('coliRefAmount').textContent = formatter.format(coliEquivalentSalary);
             coliRef.style.display = '';
+
+            // === T1.3 SHOW THE MATH ===
+            try {
+                const showMathEl = document.getElementById('showMath');
+                const showMathBody = document.getElementById('showMathBody');
+                if (showMathEl && showMathBody) {
+                    const currCOLI = coliData[currentCity];
+                    const tgtCOLI = coliData[targetCity];
+                    const fmtCur = function(n, ccy){ try { return new Intl.NumberFormat('en-US', { style:'currency', currency: ccy, minimumFractionDigits:0, maximumFractionDigits:0 }).format(n); } catch(_){ return ccy + ' ' + Math.round(n).toLocaleString(); } };
+                    const rows = [];
+                    rows.push('<div class="math-row"><span>Your salary</span><span>' + fmtCur(salary, currentCurrency) + ' in ' + currentCity + '</span></div>');
+                    if (currCOLI && tgtCOLI) {
+                        rows.push('<div class="math-row"><span>× COLI ratio</span><span><code>' + tgtCOLI.toFixed(1) + ' / ' + currCOLI.toFixed(1) + '</code> = ' + (tgtCOLI/currCOLI).toFixed(3) + '</span></div>');
+                    }
+                    if (exchangeRate && exchangeRate !== 1) {
+                        rows.push('<div class="math-row"><span>× Exchange rate</span><span><code>' + exchangeRate.toFixed(4) + '</code> ' + currentCurrency + '→' + targetCurrency + '</span></div>');
+                    }
+                    rows.push('<div class="math-row"><span>= COLI-equivalent salary</span><span>' + formatter.format(coliEquivalentSalary) + '</span></div>');
+                    if (typeof trueEquivalentSalary !== 'undefined' && trueEquivalentSalary && trueEquivalentSalary !== coliEquivalentSalary) {
+                        rows.push('<div class="math-row" style="border-top:1px solid var(--border);padding-top:10px;margin-top:6px;font-size:.74rem;color:var(--text-secondary);"><span>Then we adjust for local taxes &amp; cost-of-living basket</span><span></span></div>');
+                        rows.push('<div class="math-row"><span>= True equivalent</span><span>' + formatter.format(trueEquivalentSalary) + '</span></div>');
+                    }
+                    showMathBody.innerHTML = rows.join('');
+                    showMathEl.style.display = '';
+                }
+            } catch(_e) { /* keep page robust if anything is missing */ }
 
             // === SALARY RANGES BY JOB TITLE ===
             const rangesSection = document.getElementById('salaryRangesSection');

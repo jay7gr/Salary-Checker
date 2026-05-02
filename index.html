@@ -474,6 +474,33 @@
             .tool-switcher { width: 100%; }
             .tool-switcher a { flex: 1; min-width: 0; padding: 8px 6px; font-size: 0.75rem; text-align: center; white-space: normal; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
         }
+        /* Hero headline — emotional hook (T1.1) */
+        .hero-headline {
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+            margin: 22px 0 6px;
+            text-align: center;
+        }
+        .hero-headline em {
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 800;
+        }
+        .hero-sub {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.55;
+            max-width: 540px;
+            margin: 0 auto 4px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .hero-headline { font-size: 1.35rem; line-height: 1.2; margin-top: 18px; }
+            .hero-sub { font-size: 0.85rem; }
+        }
         @media (max-width: 480px) {
             .tool-switcher a { padding: 7px 4px; font-size: 0.68rem; }
         }
@@ -846,6 +873,41 @@
             display: none;
             border: 1px solid var(--border-section);
             overflow-x: hidden;
+            position: relative;
+        }
+        /* T1.4 — analyzing overlay */
+        .analyzing-overlay {
+            position: absolute;
+            inset: 0;
+            background: var(--stat-card-bg);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .result-box.is-analyzing .analyzing-overlay {
+            display: flex;
+            opacity: 1;
+        }
+        .analyzing-spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid var(--border-light);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.85s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .analyzing-text {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.2px;
         }
 
         .result-box.show {
@@ -1745,6 +1807,126 @@
             color: var(--text-secondary);
             line-height: 1.4;
         }
+        /* T1.3 — COLI tooltip */
+        .coli-info {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 0.6rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: 4px;
+            position: relative;
+            padding: 0;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .coli-info:hover { color: var(--accent); border-color: var(--accent); }
+        .coli-tip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            padding: 10px 12px;
+            background: var(--text-primary);
+            color: var(--card-bg);
+            font-size: 0.72rem;
+            font-weight: 400;
+            line-height: 1.45;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: 0;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            pointer-events: none;
+        }
+        .coli-tip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text-primary);
+        }
+        .coli-info:hover .coli-tip,
+        .coli-info.open .coli-tip,
+        .coli-info:focus .coli-tip { display: block; }
+
+        /* T1.3 — Show the math expandable */
+        .show-math {
+            margin: 18px 0 6px;
+            border-radius: 12px;
+            background: var(--stat-card-bg, #f5f5f7);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+        .show-math summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+        .show-math summary::-webkit-details-marker { display: none; }
+        .show-math summary::after {
+            content: '▾';
+            margin-left: auto;
+            color: var(--text-secondary);
+            transition: transform 0.2s;
+            font-size: 0.7rem;
+        }
+        .show-math[open] summary::after { transform: rotate(180deg); }
+        .show-math-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: 'SF Mono', Menlo, monospace;
+        }
+        .show-math-body {
+            padding: 0 16px 16px;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.82rem;
+            color: var(--text-body);
+            line-height: 1.7;
+        }
+        .show-math-body .math-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--border-light);
+            font-variant-numeric: tabular-nums;
+        }
+        .show-math-body .math-row:last-child { border-bottom: none; padding-top: 10px; font-weight: 700; color: var(--text-primary); }
+        .show-math-body code {
+            font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+            font-size: 0.78rem;
+            background: var(--card-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
 
 
         .ded-take-home-equiv {
@@ -2371,7 +2553,8 @@
                 <a href="/is-my-salary-good/">Salary Check</a>
                 <a href="/offer-evaluator/">Offer Evaluator</a>
             </div>
-            <p style="color: #86868b; font-size: 1.05rem; font-weight: 400; margin-top: 0;" id="hero-subtitle">Compare salaries across 182 cities and 3,400+ neighborhoods worldwide.</p>
+            <p class="hero-headline" id="hero-headline">What&rsquo;s your salary <em>actually</em> worth&nbsp;&mdash; anywhere?</p>
+            <p class="hero-sub" id="hero-subtitle">See your real purchasing power across 182 cities &middot; tax, rent &amp; cost of living all baked in.</p>
         </div>
 
 
@@ -2546,6 +2729,11 @@
         </div>
 
         <div class="result-box" id="resultBox">
+            <!-- T1.4 — Analyzing flash overlay -->
+            <div class="analyzing-overlay" id="analyzingOverlay" aria-hidden="true">
+                <div class="analyzing-spinner"></div>
+                <div class="analyzing-text" id="analyzingText">Comparing 182 cities&hellip;</div>
+            </div>
             <!-- 1. Headline -->
             <div class="result-title" id="resultTitle">Your True Equivalent Salary</div>
             <div class="result-amount" id="resultAmount"></div>
@@ -2571,9 +2759,15 @@
             <!-- 7. How We Calculated This -->
             <div class="explanation-section" id="explanationSection"></div>
 
+            <!-- T1.3 — Show the math expandable -->
+            <details class="show-math" id="showMath" style="display:none;">
+                <summary><span class="show-math-icon">∑</span> Show the math behind this number</summary>
+                <div class="show-math-body" id="showMathBody"></div>
+            </details>
+
             <!-- 8. COLI Reference (demoted) -->
             <div class="coli-reference" id="coliReference" style="display: none;">
-                <div class="coli-ref-label">For reference: COLI-only equivalent</div>
+                <div class="coli-ref-label">For reference: COLI-only equivalent <button type="button" class="coli-info" aria-label="What is COLI?" onclick="this.classList.toggle('open')">?<span class="coli-tip">Cost of Living Index. New York&nbsp;=&nbsp;100. A COLI of 50 means a city is roughly half as expensive; 120 means 20% more expensive. Lower&nbsp;=&nbsp;cheaper.</span></button></div>
                 <div class="coli-ref-amount" id="coliRefAmount"></div>
                 <div class="coli-ref-note">This simpler number only adjusts for cost-of-living index and exchange rate, without accounting for taxes or specific expenses.</div>
             </div>
@@ -3046,6 +3240,69 @@
       }
     });
   });
+})();
+</script>
+<script>
+/* T1.4 — Analyzing flash. Capture-phase listener so it fires before the
+   main calculate handler. Cycles through messages to feel like real research. */
+(function(){
+  var btn = document.getElementById('calculateBtn');
+  var box = document.getElementById('resultBox');
+  var text = document.getElementById('analyzingText');
+  if (!btn || !box || !text) return;
+  var phrases = ['Comparing 182 cities…','Pulling tax brackets…','Computing purchasing power…','Cross-checking rent &amp; cost basket…'];
+  btn.addEventListener('click', function(){
+    box.classList.add('is-analyzing');
+    box.classList.add('show');
+    var i = 0;
+    text.innerHTML = phrases[0];
+    var iv = setInterval(function(){
+      i = (i + 1) % phrases.length;
+      text.innerHTML = phrases[i];
+    }, 280);
+    setTimeout(function(){
+      clearInterval(iv);
+      box.classList.remove('is-analyzing');
+    }, 1100);
+  }, true);
+})();
+</script>
+<script>
+/* T1.2 — auto-detect visitor's currency and current city from Cloudflare geo */
+(function(){
+  function setSelect(id, value) {
+    var el = document.getElementById(id);
+    if (!el || !value) return false;
+    if (el.value) return false; // Don't overwrite user-set value
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].value === value) {
+        el.value = value;
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+        return true;
+      }
+    }
+    return false;
+  }
+  function init() {
+    fetch('/api/locate', { cache: 'force-cache' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        if (!data) return;
+        if (data.suggestedCurrency) {
+          setSelect('currentCurrency', data.suggestedCurrency);
+        }
+        if (data.suggestedCity) {
+          setSelect('currentCity', data.suggestedCity);
+        }
+      })
+      .catch(function(){ /* silent fail — visitor can still pick manually */ });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
 </script>
 </body>
