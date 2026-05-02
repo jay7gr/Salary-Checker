@@ -303,7 +303,7 @@ footer a{color:var(--accent);text-decoration:none}
         .contact-success{text-align:center;color:var(--green,#16a34a);font-weight:600;padding:16px 0}
 
 /* feedback-widget-v1 */
-.feedback-widget{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
+.feedback-widget{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light);display:none;opacity:0;transition:opacity .35s ease-out}.feedback-widget.is-revealed{display:block;opacity:1}
 .feedback-widget h2{font-size:1.15rem;font-weight:700;color:var(--text-primary);margin:0 0 6px;letter-spacing:-.2px}
 .feedback-widget .fb-sub{font-size:.85rem;color:var(--text-secondary);margin:0 0 16px}
 .fb-stars{display:flex;gap:6px;margin-bottom:14px}
@@ -1441,6 +1441,43 @@ if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const 
       }
     });
   });
+})();
+</script>
+<script>
+/* T1.x — feedback widget gate: only show after a result is rendered */
+(function(){
+  if (window.__fbGate) return;
+  window.__fbGate = true;
+  var widget = document.querySelector('.feedback-widget');
+  if (!widget) return;
+  // Selectors for each tool's primary result container
+  var resultSelectors = ['#resultBox', '#results', '#resultBoxOffer', '#resultBox2', '#calcResults', '.result-box', '.results-card'];
+  function isVisible(el){
+    if (!el) return false;
+    var s = window.getComputedStyle(el);
+    if (s.display === 'none' || s.visibility === 'hidden') return false;
+    // For .result-box pattern, also require .show class OR visible content
+    if (el.classList && el.classList.contains('result-box') && !el.classList.contains('show')) return false;
+    return el.offsetParent !== null || el.getClientRects().length > 0;
+  }
+  function check(){
+    for (var i = 0; i < resultSelectors.length; i++){
+      var els = document.querySelectorAll(resultSelectors[i]);
+      for (var j = 0; j < els.length; j++){
+        if (isVisible(els[j])) {
+          widget.classList.add('is-revealed');
+          if (mo) mo.disconnect();
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  if (check()) return;
+  var mo = new MutationObserver(check);
+  mo.observe(document.body, { attributes: true, attributeFilter: ['style','class'], subtree: true, childList: true });
+  // Also re-check after any click (covers buttons that synchronously render results)
+  document.addEventListener('click', function(){ setTimeout(check, 50); });
 })();
 </script>
 </body>

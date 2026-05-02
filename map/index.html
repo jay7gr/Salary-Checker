@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>World salary map: where does your pay go furthest? — salary:converter</title>
+<meta name="description" content="See an interactive world map where every country is shaded by how far your salary stretches there. Click any country for the equivalent figure.">
+<link rel="canonical" href="https://salary-converter.com/map/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Where does your salary go furthest? — interactive world map">
+<meta property="og:description" content="See every country shaded by purchasing power. Click for the equivalent salary.">
+<meta property="og:url" content="https://salary-converter.com/map/">
+<meta property="og:image" content="https://salary-converter.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MMZSM2Z96B');</script>
+
+<style>
+:root{--bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;--border:#e5e5ea;--border-light:#f0f0f2;--stat-card-bg:#f5f5f7;--country-fill:#e5e5ea;--country-no-data:#f0f0f2;--country-stroke:#fff}
+[data-theme=dark]{--bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--border:#38383a;--border-light:#2c2c2e;--stat-card-bg:#2c2c2e;--country-fill:#2c2c2e;--country-no-data:#1c1c1e;--country-stroke:#000}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.55;-webkit-font-smoothing:antialiased;padding:20px;min-height:100vh;transition:background .3s,color .3s}
+.wrap{max-width:1100px;margin:0 auto}
+.brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand-logo{font-size:1.05rem;font-weight:700;letter-spacing:-.5px;color:var(--text-primary);text-decoration:none}
+.brand-logo .colon{color:var(--accent)}
+.brand-nav{display:flex;gap:18px;font-size:.82rem;align-items:center}
+.brand-nav a{color:var(--text-secondary);text-decoration:none;font-weight:500}
+.brand-nav a:hover{color:var(--accent)}
+.theme-btn{background:none;border:1px solid var(--border);border-radius:100px;padding:5px 10px;font-size:.78rem;color:var(--text-secondary);cursor:pointer;font-family:inherit}
+
+.hero{text-align:center;margin:24px 0 22px}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
+h1{font-size:1.9rem;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:8px}
+.hero-sub{font-size:.95rem;color:var(--text-secondary);max-width:560px;margin:0 auto;line-height:1.55}
+
+.controls{background:var(--card-bg);border-radius:16px;padding:18px 22px;margin-bottom:18px;display:grid;grid-template-columns:1.4fr 1fr 1.4fr;gap:14px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+[data-theme=dark] .controls{box-shadow:0 1px 6px rgba(0,0,0,.4)}
+@media(max-width:720px){.controls{grid-template-columns:1fr}}
+.control label{display:block;font-size:.7rem;font-weight:700;color:var(--text-secondary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px}
+.control input,.control select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-primary);font-family:inherit;font-size:.92rem}
+.control input:focus,.control select:focus{outline:none;border-color:var(--accent);background:var(--card-bg)}
+
+.map-card{background:var(--card-bg);border-radius:16px;padding:8px;box-shadow:0 1px 6px rgba(0,0,0,.04);position:relative;overflow:hidden}
+[data-theme=dark] .map-card{box-shadow:0 1px 6px rgba(0,0,0,.4)}
+#mapSvg{width:100%;height:auto;display:block}
+.country{stroke:var(--country-stroke);stroke-width:.4;cursor:pointer;transition:opacity .15s}
+.country:hover{opacity:.78}
+.country.no-data{fill:var(--country-no-data)}
+.tooltip{position:absolute;pointer-events:none;background:var(--text-primary);color:var(--card-bg);font-size:.82rem;padding:8px 12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.18);transform:translate(-50%,calc(-100% - 12px));white-space:nowrap;opacity:0;transition:opacity .12s;z-index:10}
+.tooltip.show{opacity:1}
+.tooltip strong{display:block;font-size:.92rem;margin-bottom:2px;color:var(--card-bg)}
+.tooltip .sub{font-size:.75rem;opacity:.85}
+
+.legend{display:flex;align-items:center;gap:10px;margin:14px 4px 4px;font-size:.78rem;color:var(--text-secondary);flex-wrap:wrap}
+.legend-bar{display:flex;height:10px;width:280px;max-width:100%;border-radius:6px;overflow:hidden}
+.legend-bar > div{flex:1}
+.legend-tag{display:inline-flex;align-items:center;gap:4px}
+
+.tip-card{margin-top:18px;padding:18px 20px;background:var(--card-bg);border-radius:16px;font-size:.92rem;color:var(--text-body);box-shadow:0 1px 6px rgba(0,0,0,.04)}
+[data-theme=dark] .tip-card{box-shadow:0 1px 6px rgba(0,0,0,.4)}
+.tip-card strong{color:var(--text-primary)}
+
+.foot-cta{text-align:center;margin:28px 0 18px;padding:20px;background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border-radius:16px}
+.foot-cta a{color:var(--accent);text-decoration:none;font-weight:600}
+
+footer{text-align:center;font-size:.78rem;color:var(--text-secondary);margin-top:24px;padding-top:18px;border-top:1px solid var(--border-light)}
+footer a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <a href="/" class="brand-logo">salary<span class="colon">:</span>converter</a>
+    <nav class="brand-nav">
+      <a href="/">Compare</a>
+      <a href="/furthest/">Furthest</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/blog/">Blog</a>
+      <button class="theme-btn" id="themeBtn" type="button">☾</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">World salary map</div>
+    <h1>Where does your salary go furthest?</h1>
+    <p class="hero-sub">Enter your salary, currency, and home city. Every country is shaded by how far your money stretches there.</p>
+  </section>
+
+  <div class="controls">
+    <div class="control">
+      <label for="salary">Your salary</label>
+      <input id="salary" type="number" inputmode="numeric" placeholder="e.g. 80000" min="1" value="100000">
+    </div>
+    <div class="control">
+      <label for="currency">Currency</label>
+      <select id="currency">
+        <option value="USD" selected>USD ($)</option>
+        <option value="GBP">GBP (£)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="CAD">CAD (C$)</option>
+        <option value="AUD">AUD (A$)</option>
+        <option value="JPY">JPY (¥)</option>
+        <option value="CHF">CHF</option>
+        <option value="SGD">SGD (S$)</option>
+        <option value="AED">AED</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="city">From city</label>
+      <select id="city"><option value="">— Select your city —</option></select>
+    </div>
+  </div>
+
+  <div class="map-card">
+    <svg id="mapSvg" viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" aria-label="World map shaded by salary purchasing power"></svg>
+    <div class="tooltip" id="mapTooltip"></div>
+  </div>
+
+  <div class="legend">
+    <span class="legend-tag">Less goes further</span>
+    <div class="legend-bar" id="legendBar"></div>
+    <span class="legend-tag">Money stretches</span>
+    <span style="margin-left:auto;font-size:.74rem;">Grey = no data</span>
+  </div>
+
+  <div class="tip-card">
+    💡 <strong>How to read this:</strong> Darker blue = your salary buys <em>more</em> there. Lighter (or red) = it buys <em>less</em>. Click any country to open a detailed comparison. Cities not in our database show as grey.
+  </div>
+
+  <section class="foot-cta">
+    Want a full breakdown for a specific city? <a href="/">Run a detailed comparison →</a>
+  </section>
+
+  <footer>
+    &copy; 2026 <a href="/">salary:converter</a> &middot; <a href="/about/">About</a> &middot; <a href="/blog/">Blog</a>
+  </footer>
+</div>
+
+<script src="/js/app-data.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3"></script>
+<script>
+(function(){
+  // Theme
+  var t = document.getElementById('themeBtn');
+  function set(m){ document.documentElement.setAttribute('data-theme', m); localStorage.setItem('theme', m); t.textContent = m === 'dark' ? '☀' : '☾'; }
+  set(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+  t.onclick = function(){ set(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); render(); };
+
+  var D = window.SalaryCheckerData || {};
+  var COLI = D.coliData || {};
+  var CCY = D.cityToCurrency || {};
+  var COUNTRY = D.cityCountry || {};
+  var FX = D.exchangeRates || {};
+
+  // Build a country -> best-matching city map (use the city with highest COLI as the "main" city for that country)
+  var countryToCity = {};
+  Object.keys(COLI).forEach(function(city){
+    var country = COUNTRY[city];
+    if (!country) return;
+    if (!countryToCity[country] || COLI[city] > COLI[countryToCity[country]]) {
+      countryToCity[country] = city;
+    }
+  });
+
+  // Country name → ISO3 mapping for the GeoJSON we'll fetch
+  var countryNameToCode = {
+    'United States':'USA','Canada':'CAN','Mexico':'MEX','Panama':'PAN','United Kingdom':'GBR','Ireland':'IRL',
+    'France':'FRA','Germany':'DEU','Spain':'ESP','Italy':'ITA','Portugal':'PRT','Netherlands':'NLD','Belgium':'BEL',
+    'Austria':'AUT','Switzerland':'CHE','Sweden':'SWE','Norway':'NOR','Denmark':'DNK','Finland':'FIN','Iceland':'ISL',
+    'Poland':'POL','Czech Republic':'CZE','Hungary':'HUN','Romania':'ROU','Bulgaria':'BGR','Greece':'GRC','Croatia':'HRV',
+    'Estonia':'EST','Latvia':'LVA','Lithuania':'LTU','Turkey':'TUR','Russia':'RUS','Ukraine':'UKR','Luxembourg':'LUX',
+    'Australia':'AUS','New Zealand':'NZL','Japan':'JPN','China':'CHN','China (SAR)':'HKG','South Korea':'KOR',
+    'Taiwan':'TWN','Singapore':'SGP','Thailand':'THA','Malaysia':'MYS','Indonesia':'IDN','Vietnam':'VNM',
+    'Philippines':'PHL','India':'IND','Cambodia':'KHM',
+    'UAE':'ARE','Saudi Arabia':'SAU','Qatar':'QAT','Israel':'ISR',
+    'South Africa':'ZAF','Nigeria':'NGA','Kenya':'KEN','Egypt':'EGY','Morocco':'MAR',
+    'Brazil':'BRA','Argentina':'ARG','Colombia':'COL','Peru':'PER','Chile':'CHL','Uruguay':'URY','Costa Rica':'CRI'
+  };
+  var codeToCountryName = {};
+  Object.keys(countryNameToCode).forEach(function(name){ codeToCountryName[countryNameToCode[name]] = name; });
+
+  // Populate city select
+  var citySel = document.getElementById('city');
+  Object.keys(COLI).sort().forEach(function(name){
+    var o = document.createElement('option'); o.value = name; o.textContent = name;
+    citySel.appendChild(o);
+  });
+
+  // Auto-detect from /api/locate
+  fetch('/api/locate', { cache: 'force-cache' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    if (!d) return;
+    if (d.suggestedCity && COLI[d.suggestedCity] && !citySel.value) { citySel.value = d.suggestedCity; render(); }
+    if (d.suggestedCurrency) {
+      var ccyOpt = document.querySelector('#currency option[value="' + d.suggestedCurrency + '"]');
+      if (ccyOpt) document.getElementById('currency').value = d.suggestedCurrency;
+    }
+  });
+
+  // Color scale: low multiplier (expensive) -> red; high multiplier (cheap) -> blue
+  function colorFor(mult){
+    if (mult == null) return null;
+    // Logarithmic so extremes don't blow out the scale
+    var x = Math.log(mult) / Math.log(4); // mult=1 -> 0; mult=4 -> 1; mult=0.25 -> -1
+    x = Math.max(-1, Math.min(1, x));
+    if (x >= 0) {
+      // 0 → light, 1 → strong blue
+      var pct = x;
+      var r = Math.round(229 - (229 - 37) * pct);
+      var g = Math.round(229 - (229 - 99) * pct);
+      var b = Math.round(234 - (234 - 235) * pct);
+      return 'rgb(' + r + ',' + g + ',' + b + ')';
+    } else {
+      // -1 → strong red, 0 → light
+      var pct2 = -x;
+      var r2 = Math.round(229 - (229 - 220) * pct2);
+      var g2 = Math.round(229 - (229 - 38) * pct2);
+      var b2 = Math.round(234 - (234 - 38) * pct2);
+      return 'rgb(' + r2 + ',' + g2 + ',' + b2 + ')';
+    }
+  }
+
+  // Build legend bar
+  (function(){
+    var bar = document.getElementById('legendBar');
+    var stops = [-1, -0.66, -0.33, 0, 0.33, 0.66, 1];
+    stops.forEach(function(v){
+      var div = document.createElement('div');
+      div.style.background = colorFor(Math.pow(4, v));
+      bar.appendChild(div);
+    });
+  })();
+
+  var svg = document.getElementById('mapSvg');
+  var tooltip = document.getElementById('mapTooltip');
+  var mapCard = document.querySelector('.map-card');
+  var paths = []; // {path, code, country}
+
+  // Fetch a small world geojson (~250kb)
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(r){ return r.json(); }).then(function(world){
+    // We need topojson decoder. Use the lightweight one.
+    return Promise.resolve().then(function(){
+      // Inline topojson feature decoder
+      // Source: simplified from topojson-client; just enough for arcs->polygons
+      function topoFeature(topology, oName){
+        var o = topology.objects[oName];
+        var arcs = topology.arcs;
+        var transform = topology.transform || null;
+        function tx(p){ if (!transform) return p; return [p[0] * transform.scale[0] + transform.translate[0], p[1] * transform.scale[1] + transform.translate[1]]; }
+        function arc(i, points){
+          var rev = i < 0; if (rev) i = ~i;
+          var a = arcs[i], dx = 0, dy = 0;
+          for (var k = 0; k < a.length; k++){
+            var p = a[k];
+            if (transform){ dx += p[0]; dy += p[1]; points.push(tx([dx, dy])); }
+            else points.push([p[0], p[1]]);
+          }
+          if (rev) points.reverse();
+        }
+        function ring(arcs){
+          var pts = [];
+          for (var i = 0; i < arcs.length; i++){
+            var idx = arcs[i];
+            var local = [];
+            arc(idx, local);
+            if (i > 0) local.shift();
+            pts = pts.concat(local);
+          }
+          return pts;
+        }
+        function polygon(arcs){ return arcs.map(ring); }
+        function multiPolygon(arcs){ return arcs.map(polygon); }
+        var features = (o.geometries || []).map(function(g){
+          var geom;
+          if (g.type === 'Polygon') geom = { type: 'Polygon', coordinates: polygon(g.arcs) };
+          else if (g.type === 'MultiPolygon') geom = { type: 'MultiPolygon', coordinates: multiPolygon(g.arcs) };
+          else return null;
+          return { type: 'Feature', id: g.id, properties: g.properties || {}, geometry: geom };
+        }).filter(Boolean);
+        return { type: 'FeatureCollection', features: features };
+      }
+      return topoFeature(world, 'countries');
+    });
+  }).then(function(fc){
+    // Numeric ID -> ISO3 lookup. world-atlas uses M49 numeric codes.
+    var numToIso3 = {'4':'AFG','8':'ALB','12':'DZA','20':'AND','24':'AGO','31':'AZE','32':'ARG','36':'AUS','40':'AUT','44':'BHS','48':'BHR','50':'BGD','51':'ARM','52':'BRB','56':'BEL','64':'BTN','68':'BOL','70':'BIH','72':'BWA','76':'BRA','84':'BLZ','90':'SLB','96':'BRN','100':'BGR','104':'MMR','108':'BDI','112':'BLR','116':'KHM','120':'CMR','124':'CAN','140':'CAF','144':'LKA','148':'TCD','152':'CHL','156':'CHN','158':'TWN','170':'COL','174':'COM','178':'COG','180':'COD','188':'CRI','191':'HRV','192':'CUB','196':'CYP','203':'CZE','204':'BEN','208':'DNK','214':'DOM','218':'ECU','222':'SLV','226':'GNQ','231':'ETH','232':'ERI','233':'EST','242':'FJI','246':'FIN','250':'FRA','262':'DJI','266':'GAB','268':'GEO','270':'GMB','276':'DEU','288':'GHA','300':'GRC','316':'GUM','320':'GTM','324':'GIN','328':'GUY','332':'HTI','340':'HND','344':'HKG','348':'HUN','352':'ISL','356':'IND','360':'IDN','364':'IRN','368':'IRQ','372':'IRL','376':'ISR','380':'ITA','384':'CIV','388':'JAM','392':'JPN','398':'KAZ','400':'JOR','404':'KEN','408':'PRK','410':'KOR','414':'KWT','417':'KGZ','418':'LAO','422':'LBN','426':'LSO','428':'LVA','430':'LBR','434':'LBY','440':'LTU','442':'LUX','450':'MDG','454':'MWI','458':'MYS','466':'MLI','478':'MRT','484':'MEX','496':'MNG','498':'MDA','499':'MNE','504':'MAR','508':'MOZ','512':'OMN','516':'NAM','524':'NPL','528':'NLD','540':'NCL','548':'VUT','554':'NZL','558':'NIC','562':'NER','566':'NGA','578':'NOR','586':'PAK','591':'PAN','598':'PNG','600':'PRY','604':'PER','608':'PHL','616':'POL','620':'PRT','626':'TLS','630':'PRI','634':'QAT','642':'ROU','643':'RUS','646':'RWA','682':'SAU','686':'SEN','688':'SRB','694':'SLE','702':'SGP','703':'SVK','704':'VNM','705':'SVN','706':'SOM','710':'ZAF','716':'ZWE','724':'ESP','728':'SSD','729':'SDN','740':'SUR','748':'SWZ','752':'SWE','756':'CHE','760':'SYR','762':'TJK','764':'THA','768':'TGO','780':'TTO','784':'ARE','788':'TUN','792':'TUR','795':'TKM','800':'UGA','804':'UKR','807':'MKD','818':'EGY','826':'GBR','834':'TZA','840':'USA','854':'BFA','858':'URY','860':'UZB','862':'VEN','882':'WSM','887':'YEM','894':'ZMB'};
+
+    var projection = d3.geoNaturalEarth1().scale(165).translate([480, 240]);
+    var pathGen = d3.geoPath(projection);
+
+    fc.features.forEach(function(f){
+      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', pathGen(f) || '');
+      p.setAttribute('class', 'country');
+      var iso3 = numToIso3[String(f.id)] || null;
+      var name = iso3 && codeToCountryName[iso3] ? codeToCountryName[iso3] : (f.properties && f.properties.name) || '';
+      p.dataset.code = iso3 || '';
+      p.dataset.name = name;
+      svg.appendChild(p);
+      paths.push(p);
+    });
+    render();
+  }).catch(function(e){
+    console.error('Map data load failed', e);
+    document.querySelector('.map-card').innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-secondary);">Could not load map data. Please refresh.</div>';
+  });
+
+  function render(){
+    if (!paths.length) return;
+    var salary = parseFloat(document.getElementById('salary').value) || 100000;
+    var ccy = document.getElementById('currency').value;
+    var fromCity = document.getElementById('city').value;
+    if (!fromCity || !COLI[fromCity]) {
+      // If no city set, default to a sensible one
+      var pick = (COUNTRY[ccy === 'GBP' ? 'London' : ccy === 'EUR' ? 'Paris' : ccy === 'JPY' ? 'Tokyo' : 'New York']) ? (ccy === 'GBP' ? 'London' : ccy === 'EUR' ? 'Paris' : ccy === 'JPY' ? 'Tokyo' : 'New York') : 'New York';
+      fromCity = pick;
+      document.getElementById('city').value = pick;
+    }
+    var fromCOLI = COLI[fromCity];
+    var fromFX = FX[ccy] || 1;
+
+    paths.forEach(function(p){
+      var name = p.dataset.name;
+      var country = name;
+      var city = countryToCity[country];
+      if (!city) {
+        p.setAttribute('class', 'country no-data');
+        p.style.fill = '';
+        p.removeAttribute('data-mult');
+        return;
+      }
+      var tCOLI = COLI[city];
+      var tCcy = CCY[city] || ccy;
+      var tFX = FX[tCcy] || 1;
+      var equivInTarget = salary * (tCOLI / fromCOLI) * (tFX / fromFX);
+      var mult = fromCOLI / tCOLI;
+      var fmt = function(n, c){ try { return new Intl.NumberFormat('en-US', { style:'currency', currency: c, maximumFractionDigits: 0 }).format(n); } catch(_){ return c + ' ' + Math.round(n).toLocaleString(); } };
+      p.setAttribute('class', 'country');
+      p.style.fill = colorFor(mult);
+      p.dataset.mult = mult.toFixed(2);
+      p.dataset.equiv = fmt(equivInTarget, tCcy);
+      p.dataset.city = city;
+    });
+  }
+
+  // Tooltip
+  svg.addEventListener('mousemove', function(e){
+    var t = e.target;
+    if (t.tagName !== 'path') { tooltip.classList.remove('show'); return; }
+    var name = t.dataset.name;
+    var mult = t.dataset.mult;
+    var equiv = t.dataset.equiv;
+    var city = t.dataset.city;
+    if (!mult || !city) {
+      tooltip.innerHTML = '<strong>' + (name || '—') + '</strong><div class="sub">No data</div>';
+    } else {
+      var direction = parseFloat(mult) >= 1 ? 'further' : 'shorter';
+      var pct = Math.round(Math.abs((parseFloat(mult) - 1) * 100));
+      tooltip.innerHTML = '<strong>' + name + '</strong><div class="sub">≈ ' + equiv + ' in ' + city + '<br>' + (parseFloat(mult) >= 1 ? '+' : '−') + pct + '% purchasing power</div>';
+    }
+    var r = mapCard.getBoundingClientRect();
+    tooltip.style.left = (e.clientX - r.left) + 'px';
+    tooltip.style.top = (e.clientY - r.top) + 'px';
+    tooltip.classList.add('show');
+  });
+  svg.addEventListener('mouseleave', function(){ tooltip.classList.remove('show'); });
+  svg.addEventListener('click', function(e){
+    var t = e.target;
+    if (t.tagName !== 'path' || !t.dataset.city) return;
+    // Open detailed comparison in main tool
+    var fromCity = document.getElementById('city').value;
+    var ccy = document.getElementById('currency').value;
+    var sal = document.getElementById('salary').value;
+    var url = '/?from=' + encodeURIComponent(fromCity) + '&to=' + encodeURIComponent(t.dataset.city) + '&sal=' + encodeURIComponent(sal) + '&cur=' + encodeURIComponent(ccy);
+    window.location.href = url;
+  });
+
+  // Re-render on input changes
+  ['salary','currency','city'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', render);
+    document.getElementById(id).addEventListener('input', render);
+  });
+})();
+</script>
+</body>
+</html>
