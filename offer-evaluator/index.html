@@ -399,7 +399,7 @@ footer a:hover{color:var(--accent)}
 
 <style>
 /* ── How it works ── */
-.how-it-works{max-width:800px;width:100%;margin:48px auto 0;padding:0 24px}
+.how-it-works{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
 .how-it-works h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
 .steps-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
 .step-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--border-light)}
@@ -409,7 +409,7 @@ footer a:hover{color:var(--accent)}
 .step-body strong{font-size:.95rem;font-weight:600;color:var(--text-primary)}
 .step-body span{font-size:.88rem;color:var(--text-secondary);line-height:1.5}
 /* ── Tool FAQ ── */
-.tool-faq{max-width:800px;width:100%;margin:40px auto 0;padding:0 24px 48px}
+.tool-faq{margin:32px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
 .tool-faq h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
 .tool-faq .faq-item{border-bottom:1px solid var(--border-light);overflow:hidden}
 .tool-faq .faq-item:first-of-type{border-top:1px solid var(--border-light)}
@@ -418,22 +418,7 @@ footer a:hover{color:var(--accent)}
 .tool-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
 .tool-faq .faq-answer{display:none;padding:0 0 18px;font-size:.9rem;color:var(--text-body,var(--text-secondary));line-height:1.6}
 .tool-faq .faq-item.open .faq-answer{display:block}
-/*override*/
-.how-it-works,.tool-faq{
-  max-width:900px;
-  background:var(--card-bg);
-  border-radius:20px;
-  box-shadow:0 2px 20px rgba(0,0,0,.06);
-  margin:32px auto 0;
-  padding:32px 32px;
-}
-[data-theme=dark] .how-it-works,[data-theme=dark] .tool-faq{
-  box-shadow:0 2px 20px rgba(0,0,0,.3);
-}
-.tool-faq{margin-top:20px;padding-bottom:32px}
-@media(max-width:768px){
-  .how-it-works,.tool-faq{border-radius:0;margin-left:0;margin-right:0;padding:24px 20px}
-}/*/ override end*/
+
 </style>
 </head>
 <body>
@@ -778,6 +763,68 @@ footer a:hover{color:var(--accent)}
     <p style="font-size:.78rem;color:var(--text-secondary);margin-top:12px">Tax calculations are estimates for a single filer with no special deductions. Actual figures depend on your individual circumstances. <a href="/about/" style="color:var(--accent)">Data sources &rarr;</a></p>
   </div>
 
+
+  <section class="how-it-works" aria-labelledby="hiw-heading">
+  <h2 id="hiw-heading">How it works</h2>
+  <ol class="steps-list">
+  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Enter the first offer</strong><span>Add the salary, city, and currency for Offer A.</span></div></li>
+  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Enter the second offer</strong><span>Add the salary, city, and currency for Offer B — even if it's a different country or currency.</span></div></li>
+  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>We calculate take-home pay for both</strong><span>Using local tax rates and deductions, we convert both gross salaries to net take-home pay in a comparable currency.</span></div></li>
+  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>See which offer wins on real purchasing power</strong><span>We adjust each take-home figure for the city's cost of living, so you see which offer actually lets you live better — not just which number is bigger.</span></div></li>
+  </ol>
+</section>
+
+  <section class="faq-section" aria-labelledby="faq-heading">
+  <h2 id="faq-heading" class="faq-title">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>How does the offer evaluator compare two job offers?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>Enter the city, currency, and gross salary for each offer. The tool adjusts both salaries for the local cost of living index, calculates estimated take-home pay after taxes, and converts everything to a common baseline — making it easy to see which offer gives you more real purchasing power, not just a bigger number on paper.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>What is a cost of living adjustment and why does it matter?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>A cost of living adjustment converts a nominal salary into its real purchasing power for a specific city. A $100,000 salary in New York City and a $70,000 salary in Austin can translate to almost identical lifestyles once local rent, groceries, and transport costs are factored in. Without this adjustment, comparing offers across cities is misleading.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>Should I take a pay cut to relocate to a cheaper city?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>It depends on the size of the pay cut relative to the cost of living difference. A 20% salary reduction moving from San Francisco to Denver could still leave you better off financially — Denver is roughly 40–50% cheaper for housing. Use the offer evaluator to run the exact numbers for your situation before deciding.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>How is take-home pay calculated for different countries?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>The tool applies country-level effective tax rate estimates based on income brackets, including income tax and social contributions. These are approximations — actual take-home pay varies based on individual circumstances and local regulations. Use the results as a reliable guide, but consult a tax professional for precise figures.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false" type="button">
+        <span>Can I compare offers in different currencies?</span>
+        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-answer" role="region">
+        <p>Yes. Select the appropriate currency for each offer and the tool converts both to a common baseline using current exchange rates and local purchasing power. This makes it possible to meaningfully compare a £65,000 offer in London against a €75,000 offer in Amsterdam or a $110,000 offer in Toronto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
   <footer>
     <a href="/">Salary Converter</a><a href="/salary/">Salaries</a><a href="/city/">Cities</a>
     <a href="/compare/">Compare</a><a href="/retire/">Retire Abroad</a><a href="/blog/">Blog</a>
@@ -1057,88 +1104,6 @@ window.addEventListener('DOMContentLoaded',()=>{
 .faq-answer p{font-size:.9rem;color:var(--text-body);line-height:1.7;margin:0}
 .faq-answer p+p{margin-top:10px}
 </style>
-<section class="how-it-works" aria-labelledby="hiw-heading">
-  <h2 id="hiw-heading">How it works</h2>
-  <ol class="steps-list">
-  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Enter the first offer</strong><span>Add the salary, city, and currency for Offer A.</span></div></li>
-  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Enter the second offer</strong><span>Add the salary, city, and currency for Offer B — even if it's a different country or currency.</span></div></li>
-  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>We calculate take-home pay for both</strong><span>Using local tax rates and deductions, we convert both gross salaries to net take-home pay in a comparable currency.</span></div></li>
-  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>See which offer wins on real purchasing power</strong><span>We adjust each take-home figure for the city's cost of living, so you see which offer actually lets you live better — not just which number is bigger.</span></div></li>
-  </ol>
-</section>
-<section class="faq-section" aria-labelledby="faq-heading">
-  <h2 id="faq-heading" class="faq-title">Frequently Asked Questions</h2>
-  <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-question" aria-expanded="false" type="button">
-        <span>How does the offer evaluator compare two job offers?</span>
-        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="faq-answer" role="region">
-        <p>Enter the city, currency, and gross salary for each offer. The tool adjusts both salaries for the local cost of living index, calculates estimated take-home pay after taxes, and converts everything to a common baseline — making it easy to see which offer gives you more real purchasing power, not just a bigger number on paper.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" aria-expanded="false" type="button">
-        <span>What is a cost of living adjustment and why does it matter?</span>
-        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="faq-answer" role="region">
-        <p>A cost of living adjustment converts a nominal salary into its real purchasing power for a specific city. A $100,000 salary in New York City and a $70,000 salary in Austin can translate to almost identical lifestyles once local rent, groceries, and transport costs are factored in. Without this adjustment, comparing offers across cities is misleading.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" aria-expanded="false" type="button">
-        <span>Should I take a pay cut to relocate to a cheaper city?</span>
-        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="faq-answer" role="region">
-        <p>It depends on the size of the pay cut relative to the cost of living difference. A 20% salary reduction moving from San Francisco to Denver could still leave you better off financially — Denver is roughly 40–50% cheaper for housing. Use the offer evaluator to run the exact numbers for your situation before deciding.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" aria-expanded="false" type="button">
-        <span>How is take-home pay calculated for different countries?</span>
-        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="faq-answer" role="region">
-        <p>The tool applies country-level effective tax rate estimates based on income brackets, including income tax and social contributions. These are approximations — actual take-home pay varies based on individual circumstances and local regulations. Use the results as a reliable guide, but consult a tax professional for precise figures.</p>
-      </div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-question" aria-expanded="false" type="button">
-        <span>Can I compare offers in different currencies?</span>
-        <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
-      <div class="faq-answer" role="region">
-        <p>Yes. Select the appropriate currency for each offer and the tool converts both to a common baseline using current exchange rates and local purchasing power. This makes it possible to meaningfully compare a £65,000 offer in London against a €75,000 offer in Amsterdam or a $110,000 offer in Toronto.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="tool-faq" aria-labelledby="offer-faq-heading">
-  <h2 id="offer-faq-heading">Frequently asked questions</h2>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="offer-faq-a0">What does 'cost-of-living adjusted' mean?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="offer-faq-a0">A $130,000 salary in San Francisco and a $90,000 salary in Lisbon might feel very different on paper, but after taxes and local living costs, the Lisbon offer could leave you with more disposable income. COL-adjustment shows you the real difference.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="offer-faq-a1">Does it factor in taxes for each country?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="offer-faq-a1">Yes. We apply estimated effective income tax rates and mandatory social contributions for each country. Note that personal circumstances (deductions, status, benefits) can shift the exact figure.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="offer-faq-a2">What if both offers are in the same city?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="offer-faq-a2">The tool still calculates take-home pay for both and shows the net difference — useful for comparing gross salary offers at the same employer or in the same location.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="offer-faq-a3">Can I compare offers in different currencies?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="offer-faq-a3">Yes. We convert everything to USD for comparison using current exchange rates, so you can compare a GBP offer in London against a USD offer in New York directly.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="offer-faq-a4">What does 'disposable income' mean in the results?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="offer-faq-a4">Disposable income is take-home pay minus estimated monthly living costs (rent, groceries, utilities, transport) for that city. It's the amount left over for savings, travel, and everything else.</div>
-  </div>
-</section>
 <script>
 (function(){
   document.querySelectorAll('.faq-question').forEach(function(btn){
@@ -1293,5 +1258,30 @@ const _cf=document.getElementById('contactForm');
 if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const btn=_cf.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Sending...';try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(_cf)});if(r.ok){_cf.style.display='none';document.getElementById('contactSuccess').style.display='block';}else{btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}}catch(err){btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}});
 </script>
     <script src="/chat.js?v=2"></script>
+<script>
+(function(){
+  if (window.__faqDelegated) return;
+  window.__faqDelegated = true;
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('.faq-question');
+    if (!btn) return;
+    var item = btn.closest('.faq-item');
+    if (!item) return;
+    var open = item.classList.contains('open');
+    var section = item.closest('.faq-section, .tool-faq, .faq-list');
+    if (section) {
+      section.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        var q = el.querySelector('.faq-question');
+        if (q) q.setAttribute('aria-expanded','false');
+      });
+    }
+    if (!open) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+    }
+  });
+})();
+</script>
 </body>
 </html>

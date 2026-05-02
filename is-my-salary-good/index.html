@@ -292,7 +292,7 @@ footer a{color:var(--accent);text-decoration:none}
 
 <style>
 /* ── How it works ── */
-.how-it-works{max-width:800px;width:100%;margin:48px auto 0;padding:0 24px}
+.how-it-works{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
 .how-it-works h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
 .steps-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
 .step-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--border-light)}
@@ -302,7 +302,7 @@ footer a{color:var(--accent);text-decoration:none}
 .step-body strong{font-size:.95rem;font-weight:600;color:var(--text-primary)}
 .step-body span{font-size:.88rem;color:var(--text-secondary);line-height:1.5}
 /* ── Tool FAQ ── */
-.tool-faq{max-width:800px;width:100%;margin:40px auto 0;padding:0 24px 48px}
+.tool-faq{margin:32px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light)}
 .tool-faq h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
 .tool-faq .faq-item{border-bottom:1px solid var(--border-light);overflow:hidden}
 .tool-faq .faq-item:first-of-type{border-top:1px solid var(--border-light)}
@@ -311,22 +311,7 @@ footer a{color:var(--accent);text-decoration:none}
 .tool-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
 .tool-faq .faq-answer{display:none;padding:0 0 18px;font-size:.9rem;color:var(--text-body,var(--text-secondary));line-height:1.6}
 .tool-faq .faq-item.open .faq-answer{display:block}
-/*override*/
-.how-it-works,.tool-faq{
-  max-width:760px;
-  background:var(--card-bg);
-  border-radius:20px;
-  box-shadow:0 2px 20px rgba(0,0,0,.06);
-  margin:32px auto 0;
-  padding:32px 32px;
-}
-[data-theme=dark] .how-it-works,[data-theme=dark] .tool-faq{
-  box-shadow:0 2px 20px rgba(0,0,0,.3);
-}
-.tool-faq{margin-top:20px;padding-bottom:32px}
-@media(max-width:768px){
-  .how-it-works,.tool-faq{border-radius:0;margin-left:0;margin-right:0;padding:24px 20px}
-}/*/ override end*/
+
 </style>
 </head>
 <body>
@@ -423,6 +408,16 @@ footer a{color:var(--accent);text-decoration:none}
       </div>
     </div>
   </div>
+
+  <section class="how-it-works" aria-labelledby="hiw-heading">
+  <h2 id="hiw-heading">How it works</h2>
+  <ol class="steps-list">
+  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Select your city and profession</strong><span>Choose from 182 cities and 37 job categories so we can benchmark against the right local market.</span></div></li>
+  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Enter your annual salary</strong><span>Input your gross (before-tax) salary in your local currency.</span></div></li>
+  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>We calculate your salary percentile</strong><span>We compare your pay against the range for your profession in that city — from entry-level to senior — and place you on the scale.</span></div></li>
+  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>Get your full financial picture</strong><span>See take-home pay after tax, real purchasing power vs the city's cost of living, and how your salary stacks up globally.</span></div></li>
+  </ol>
+</section>
 
   <section class="faq">
     <h2>Frequently Asked Questions</h2>
@@ -1038,38 +1033,6 @@ window.addEventListener('DOMContentLoaded', () => {
     })();
     </script>
 
-<section class="how-it-works" aria-labelledby="hiw-heading">
-  <h2 id="hiw-heading">How it works</h2>
-  <ol class="steps-list">
-  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Select your city and profession</strong><span>Choose from 182 cities and 37 job categories so we can benchmark against the right local market.</span></div></li>
-  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Enter your annual salary</strong><span>Input your gross (before-tax) salary in your local currency.</span></div></li>
-  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>We calculate your salary percentile</strong><span>We compare your pay against the range for your profession in that city — from entry-level to senior — and place you on the scale.</span></div></li>
-  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>Get your full financial picture</strong><span>See take-home pay after tax, real purchasing power vs the city's cost of living, and how your salary stacks up globally.</span></div></li>
-  </ol>
-</section>
-<section class="tool-faq" aria-labelledby="sg-faq-heading">
-  <h2 id="sg-faq-heading">Frequently asked questions</h2>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="sg-faq-a0">What does salary percentile mean?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="sg-faq-a0">If you're at the 70th percentile, you earn more than 70% of people in your profession in that city. It's a more useful benchmark than a raw average because averages can be skewed by a small number of very high earners.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="sg-faq-a1">How is take-home pay calculated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="sg-faq-a1">We apply estimated income tax rates and mandatory deductions (social security, national insurance, etc.) for the selected country to your gross salary. The result is an approximation — exact amounts depend on your personal tax situation.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="sg-faq-a2">How current is the salary data?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="sg-faq-a2">Salary ranges are updated annually using data from government statistical offices, industry surveys, and platforms like LinkedIn Salary and Glassdoor. The year is shown on each result.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="sg-faq-a3">What professions are covered?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="sg-faq-a3">We cover 37 job categories across healthcare, tech, engineering, finance, law, marketing, management, education, and skilled trades. More are added regularly.</div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-question" aria-expanded="false" aria-controls="sg-faq-a4">Why might my percentile differ from other sites?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
-    <div class="faq-answer" id="sg-faq-a4">Different sources use different salary pools (all workers vs. advertised jobs vs. self-reported). We blend multiple sources and weight by city, which can produce different results from a single-source platform like Glassdoor or Payscale.</div>
-  </div>
-</section>
 <nav class="footer-links-grid" aria-label="Explore">
     <div class="footer-links-col">
         <h4>Cities</h4>
@@ -1206,5 +1169,30 @@ const _cf=document.getElementById('contactForm');
 if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const btn=_cf.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Sending...';try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(_cf)});if(r.ok){_cf.style.display='none';document.getElementById('contactSuccess').style.display='block';}else{btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}}catch(err){btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}});
 </script>
     <script src="/chat.js?v=2"></script>
+<script>
+(function(){
+  if (window.__faqDelegated) return;
+  window.__faqDelegated = true;
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('.faq-question');
+    if (!btn) return;
+    var item = btn.closest('.faq-item');
+    if (!item) return;
+    var open = item.classList.contains('open');
+    var section = item.closest('.faq-section, .tool-faq, .faq-list');
+    if (section) {
+      section.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        var q = el.querySelector('.faq-question');
+        if (q) q.setAttribute('aria-expanded','false');
+      });
+    }
+    if (!open) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+    }
+  });
+})();
+</script>
 </body>
 </html>
