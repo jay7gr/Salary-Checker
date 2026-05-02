@@ -101,6 +101,7 @@
         ]
     }
     </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What data does salary:converter use?","acceptedAnswer":{"@type":"Answer","text":"We use a proprietary Cost of Living Index built from Numbeo, EIU, Mercer, and government CPI data, covering 182 cities and 3,400+ neighbourhoods. Tax estimates use official brackets and social-security rates for each country."}},{"@type":"Question","name":"What is a Cost of Living Index (COLI)?","acceptedAnswer":{"@type":"Answer","text":"COLI is a number showing how expensive a city is relative to a baseline. We use New York City as 100. A COLI of 50 means roughly half the cost; 120 means 20% more expensive than New York."}},{"@type":"Question","name":"Does salary:converter account for taxes?","acceptedAnswer":{"@type":"Answer","text":"Yes. We estimate effective income tax rates and mandatory social-security contributions for each country. Tax law is complex, so figures are estimates — consult a local adviser for exact numbers."}},{"@type":"Question","name":"How often is the data updated?","acceptedAnswer":{"@type":"Answer","text":"Core cost-of-living data is reviewed quarterly. Exchange rates and major CPI changes are incorporated on a rolling basis."}},{"@type":"Question","name":"Can I compare two cities at once?","acceptedAnswer":{"@type":"Answer","text":"Yes — use the Offer Evaluator at /offer-evaluator/ to enter two salaries in two different cities and get a side-by-side take-home pay comparison adjusted for cost of living."}}]}</script>
 
     <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
     <script>
@@ -2283,6 +2284,29 @@
 
     </style>
     <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
+
+<style>
+/* ── How it works ── */
+.how-it-works{max-width:800px;width:100%;margin:48px auto 0;padding:0 24px}
+.how-it-works h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
+.steps-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--border-light)}
+.step-item:last-child{border-bottom:none}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-body{display:flex;flex-direction:column;gap:4px}
+.step-body strong{font-size:.95rem;font-weight:600;color:var(--text-primary)}
+.step-body span{font-size:.88rem;color:var(--text-secondary);line-height:1.5}
+/* ── Tool FAQ ── */
+.tool-faq{max-width:800px;width:100%;margin:40px auto 0;padding:0 24px 48px}
+.tool-faq h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
+.tool-faq .faq-item{border-bottom:1px solid var(--border-light);overflow:hidden}
+.tool-faq .faq-item:first-of-type{border-top:1px solid var(--border-light)}
+.tool-faq .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;padding:18px 0;cursor:pointer;text-align:left;color:var(--text-primary);font-size:.95rem;font-weight:600;font-family:inherit;line-height:1.4}
+.tool-faq .faq-chevron{width:18px;height:18px;flex-shrink:0;color:var(--text-secondary);transition:transform .25s}
+.tool-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
+.tool-faq .faq-answer{display:none;padding:0 0 18px;font-size:.9rem;color:var(--text-body,var(--text-secondary));line-height:1.6}
+.tool-faq .faq-item.open .faq-answer{display:block}
+</style>
 </head>
 <body>
     <button class="sidebar-burger" id="sidebarBurger" aria-label="Toggle stats panel">
@@ -2722,7 +2746,39 @@
     </div>
 
     <!-- Compact footer link grid (SEO internal links) -->
-    <nav class="footer-links-grid" aria-label="Explore">
+    <section class="how-it-works" aria-labelledby="hiw-heading">
+  <h2 id="hiw-heading">How it works</h2>
+  <ol class="steps-list">
+  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Enter your salary and current city</strong><span>Tell us where you're based and what you earn — any currency, any city from our 182-city database.</span></div></li>
+  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>We apply cost-of-living and tax data</strong><span>We index your salary against each city's real cost of living, then estimate take-home pay after local income tax and deductions.</span></div></li>
+  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>See your real purchasing power everywhere</strong><span>Every city shows what your salary actually buys — adjusted rent, groceries, transport — not just a raw currency conversion.</span></div></li>
+  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>Compare neighbourhoods, not just cities</strong><span>Drill into 3,400+ neighbourhoods to see exactly how costs shift from the city centre to the suburbs.</span></div></li>
+  </ol>
+</section>
+<section class="tool-faq" aria-labelledby="main-faq-heading">
+  <h2 id="main-faq-heading">Frequently asked questions</h2>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="main-faq-a0">What data does salary:converter use?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="main-faq-a0">We use a proprietary Cost of Living Index (COLI) built from Numbeo, EIU, Mercer, and government CPI data, covering 182 cities and 3,400+ neighbourhoods. Tax estimates use official brackets and social-security rates for each country.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="main-faq-a1">What is a Cost of Living Index (COLI)?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="main-faq-a1">COLI is a number that shows how expensive a city is relative to a baseline. We use New York City as 100. A city with a COLI of 50 costs roughly half as much to live in as New York. A COLI of 120 means it's 20% more expensive.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="main-faq-a2">Does salary:converter account for taxes?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="main-faq-a2">Yes. We estimate effective income tax rates and mandatory social-security contributions for each country. Tax law is complex and changes frequently, so figures are estimates — consult a local tax adviser for exact numbers.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="main-faq-a3">How often is the data updated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="main-faq-a3">Core cost-of-living data is reviewed quarterly. Exchange rates and major CPI changes are incorporated on a rolling basis. Each page shows its data date.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="main-faq-a4">Can I compare two cities at once?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="main-faq-a4">Yes — use the Offer Evaluator at /offer-evaluator/ to enter two salaries in two different cities and get a side-by-side take-home pay comparison adjusted for cost of living.</div>
+  </div>
+</section>
+<nav class="footer-links-grid" aria-label="Explore">
         <div class="footer-links-col">
             <h4>Cities</h4>
             <a href="/city/london">London</a>

@@ -46,7 +46,7 @@
         "creator": { "@type": "Organization", "name": "salary:converter", "url": "https://salary-converter.com", "sameAs": ["https://github.com/jay7gr", "https://x.com/salaryconverter"] }
     }
     </script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much money do you need to retire abroad?","acceptedAnswer":{"@type":"Answer","text":"In affordable countries like Thailand, Portugal, Colombia, or Vietnam, many retirees live comfortably on $1,500–$2,500 per month. In Western Europe, budgets of $3,500–$5,000+ are more realistic. Use the Retire Abroad calculator to estimate your exact budget by country."}},{"@type":"Question","name":"Which countries are the most affordable for retirement?","acceptedAnswer":{"@type":"Answer","text":"Top affordable retirement destinations include Portugal, Mexico (Oaxaca, Mérida, San Miguel de Allende), Thailand (Chiang Mai, Hua Hin), Colombia (Medellín), and Georgia (Tbilisi). These combine low costs with good healthcare and straightforward retirement visa options."}},{"@type":"Question","name":"Can I receive Social Security or my pension while living abroad?","acceptedAnswer":{"@type":"Answer","text":"In most cases, yes. US Social Security can be received in nearly all countries with a few exceptions. Most private pensions can also be paid internationally. However, you will likely still owe US taxes. Medicare does not cover overseas care, so private health insurance is essential."}},{"@type":"Question","name":"What are the hidden costs of retiring abroad that people overlook?","acceptedAnswer":{"@type":"Answer","text":"Commonly overlooked costs include private health insurance ($200–$600/month), flights home for family visits ($1,000–$3,000 annually), currency exchange risk, visa renewal fees, and unexpected medical expenses. Budget a 15–20% contingency above estimated monthly expenses."}},{"@type":"Question","name":"How does the cost of living index affect my retirement budget?","acceptedAnswer":{"@type":"Answer","text":"A country with a COLI of 45 means your money goes roughly twice as far there compared to the baseline. Multiply your current monthly expenses by the COLI ratio to estimate what an equivalent lifestyle costs in your target retirement destination."}}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type": "Question", "name": "How much money do you need to retire abroad?", "acceptedAnswer": {"@type": "Answer", "text": "In affordable countries like Thailand, Portugal, Colombia, or Vietnam, many retirees live comfortably on $1,500–$2,500 per month. In Western Europe, budgets of $3,500–$5,000+ are more realistic. Use the Retire Abroad calculator to estimate your exact budget by country."}}, {"@type": "Question", "name": "Which countries are the most affordable for retirement?", "acceptedAnswer": {"@type": "Answer", "text": "Top affordable retirement destinations include Portugal, Mexico (Oaxaca, Mérida, San Miguel de Allende), Thailand (Chiang Mai, Hua Hin), Colombia (Medellín), and Georgia (Tbilisi). These combine low costs with good healthcare and straightforward retirement visa options."}}, {"@type": "Question", "name": "Can I receive Social Security or my pension while living abroad?", "acceptedAnswer": {"@type": "Answer", "text": "In most cases, yes. US Social Security can be received in nearly all countries with a few exceptions. Most private pensions can also be paid internationally. However, you will likely still owe US taxes. Medicare does not cover overseas care, so private health insurance is essential."}}, {"@type": "Question", "name": "What are the hidden costs of retiring abroad that people overlook?", "acceptedAnswer": {"@type": "Answer", "text": "Commonly overlooked costs include private health insurance ($200–$600/month), flights home for family visits ($1,000–$3,000 annually), currency exchange risk, visa renewal fees, and unexpected medical expenses. Budget a 15–20% contingency above estimated monthly expenses."}}, {"@type": "Question", "name": "How does the cost of living index affect my retirement budget?", "acceptedAnswer": {"@type": "Answer", "text": "A country with a COLI of 45 means your money goes roughly twice as far there compared to the baseline. Multiply your current monthly expenses by the COLI ratio to estimate what an equivalent lifestyle costs in your target retirement destination."}}, {"@type": "Question", "name": "How is the retirement runway calculated?", "acceptedAnswer": {"@type": "Answer", "text": "We take your total savings, add monthly passive income (pension/Social Security), subtract estimated monthly living costs for your chosen lifestyle in each country, and model how many years your money lasts — factoring in your assumed investment return rate."}}, {"@type": "Question", "name": "Can I include Social Security or a pension in the Retire Abroad calculator?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — enter any recurring monthly income in Step 1. It offsets your monthly spending, extending your runway significantly in low-cost countries."}}]}</script>
 
     <!-- Google Consent Mode v2 -->
     <script>
@@ -1299,6 +1299,29 @@
         .form-group textarea{resize:vertical;min-height:80px}
         .contact-success{text-align:center;color:var(--green,#16a34a);font-weight:600;padding:16px 0}
     </style>
+
+<style>
+/* ── How it works ── */
+.how-it-works{max-width:800px;width:100%;margin:48px auto 0;padding:0 24px}
+.how-it-works h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
+.steps-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+.step-item{display:flex;align-items:flex-start;gap:16px;padding:20px 0;border-bottom:1px solid var(--border-light)}
+.step-item:last-child{border-bottom:none}
+.step-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step-body{display:flex;flex-direction:column;gap:4px}
+.step-body strong{font-size:.95rem;font-weight:600;color:var(--text-primary)}
+.step-body span{font-size:.88rem;color:var(--text-secondary);line-height:1.5}
+/* ── Tool FAQ ── */
+.tool-faq{max-width:800px;width:100%;margin:40px auto 0;padding:0 24px 48px}
+.tool-faq h2{font-size:1.35rem;font-weight:700;letter-spacing:-.3px;color:var(--text-primary);margin-bottom:24px}
+.tool-faq .faq-item{border-bottom:1px solid var(--border-light);overflow:hidden}
+.tool-faq .faq-item:first-of-type{border-top:1px solid var(--border-light)}
+.tool-faq .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:transparent;border:none;padding:18px 0;cursor:pointer;text-align:left;color:var(--text-primary);font-size:.95rem;font-weight:600;font-family:inherit;line-height:1.4}
+.tool-faq .faq-chevron{width:18px;height:18px;flex-shrink:0;color:var(--text-secondary);transition:transform .25s}
+.tool-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
+.tool-faq .faq-answer{display:none;padding:0 0 18px;font-size:.9rem;color:var(--text-body,var(--text-secondary));line-height:1.6}
+.tool-faq .faq-item.open .faq-answer{display:block}
+</style>
 </head>
 <body>
 <div class="page-layout">
@@ -1677,6 +1700,15 @@
 .faq-answer p{font-size:.9rem;color:var(--text-body);line-height:1.7;margin:0}
 .faq-answer p+p{margin-top:10px}
 </style>
+<section class="how-it-works" aria-labelledby="hiw-heading">
+  <h2 id="hiw-heading">How it works</h2>
+  <ol class="steps-list">
+  <li class="step-item"><div class="step-num">1</div><div class="step-body"><strong>Enter your retirement finances</strong><span>Tell us your total savings, any monthly pension or Social Security income, and your preferred currency.</span></div></li>
+  <li class="step-item"><div class="step-num">2</div><div class="step-body"><strong>Choose your lifestyle and timeline</strong><span>Select budget, comfortable, or premium lifestyle — and how many years you want your money to last.</span></div></li>
+  <li class="step-item"><div class="step-num">3</div><div class="step-body"><strong>We model your retirement across 50+ countries</strong><span>Using real cost-of-living data, we calculate your monthly spend, how long your savings last, and what annual return rate you need.</span></div></li>
+  <li class="step-item"><div class="step-num">4</div><div class="step-body"><strong>Compare destinations side by side</strong><span>See a ranked list of countries showing monthly costs, runway years, and a visa/tax summary to help you plan your move.</span></div></li>
+  </ol>
+</section>
 <section class="faq-section" aria-labelledby="faq-heading-retire">
   <h2 id="faq-heading-retire" class="faq-title">Frequently Asked Questions</h2>
   <div class="faq-list">
@@ -1725,6 +1757,29 @@
         <p>The cost of living index (COLI) compares the overall price level of a city to a baseline. A country with a COLI of 45 means your money goes roughly twice as far there as in the baseline. Multiply your current monthly expenses by the COLI ratio to estimate what an equivalent lifestyle would cost in your target retirement destination.</p>
       </div>
     </div>
+  </div>
+</section>
+<section class="tool-faq" aria-labelledby="retire-faq-heading">
+  <h2 id="retire-faq-heading">Frequently asked questions</h2>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="retire-faq-a0">How is the retirement runway calculated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="retire-faq-a0">We take your total savings, add your monthly passive income (pension/Social Security), subtract estimated monthly living costs for your chosen lifestyle in each country, and model how many years your money lasts — factoring in an assumed investment return rate.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="retire-faq-a1">How are monthly living costs estimated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="retire-faq-a1">Costs are derived from our cost-of-living database covering rent (1BR in a mid-range area), groceries, utilities, transport, dining, and healthcare — calibrated to budget, comfortable, or premium lifestyle tiers.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="retire-faq-a2">Does it account for inflation?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="retire-faq-a2">You can set an inflation assumption in Step 2. We apply this to both costs and investment return to give a real (inflation-adjusted) estimate of your runway.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="retire-faq-a3">Can I include Social Security or a pension?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="retire-faq-a3">Yes — enter any recurring monthly income in Step 1. It offsets your monthly spending, extending your runway significantly in low-cost countries.</div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question" aria-expanded="false" aria-controls="retire-faq-a4">How often is the data updated?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="faq-answer" id="retire-faq-a4">Cost-of-living data is reviewed quarterly. Exchange rates are updated regularly. Healthcare and visa information is reviewed annually and noted where it may have changed.</div>
   </div>
 </section>
 <script>
