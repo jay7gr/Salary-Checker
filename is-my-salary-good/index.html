@@ -311,6 +311,22 @@ footer a{color:var(--accent);text-decoration:none}
 .tool-faq .faq-item.open .faq-chevron{transform:rotate(180deg);color:var(--accent)}
 .tool-faq .faq-answer{display:none;padding:0 0 18px;font-size:.9rem;color:var(--text-body,var(--text-secondary));line-height:1.6}
 .tool-faq .faq-item.open .faq-answer{display:block}
+/*override*/
+.how-it-works,.tool-faq{
+  max-width:760px;
+  background:var(--card-bg);
+  border-radius:20px;
+  box-shadow:0 2px 20px rgba(0,0,0,.06);
+  margin:32px auto 0;
+  padding:32px 32px;
+}
+[data-theme=dark] .how-it-works,[data-theme=dark] .tool-faq{
+  box-shadow:0 2px 20px rgba(0,0,0,.3);
+}
+.tool-faq{margin-top:20px;padding-bottom:32px}
+@media(max-width:768px){
+  .how-it-works,.tool-faq{border-radius:0;margin-left:0;margin-right:0;padding:24px 20px}
+}/*/ override end*/
 </style>
 </head>
 <body>
