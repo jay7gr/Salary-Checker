@@ -110,6 +110,40 @@ footer a{color:var(--accent);text-decoration:none}
     
     
 <style>@media(max-width:768px){.nav-links a{display:none!important}}html{touch-action:pan-x pan-y}</style>
+
+<style>
+/* blog-shared-fixes-v1 */
+/* CTA button (used in 37 articles, .cta-btn equivalent) */
+.cta-button{display:inline-block;padding:11px 26px;background:var(--accent,#2563eb);color:#fff;border-radius:100px;text-decoration:none;font-size:.9rem;font-weight:700;margin:4px 6px;transition:opacity .2s}
+.cta-button:hover{opacity:.85;color:#fff}
+
+/* Table styling — applies to all <table> in articles for consistent look */
+.article-card table,article table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.85rem;background:var(--card-bg,#fff);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.article-card table th,article table th{text-align:left;padding:10px 12px;background:var(--stat-card-bg,#f5f5f7);font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;color:var(--text-secondary,#86868b);border-bottom:2px solid var(--border,#e5e5ea)}
+.article-card table td,article table td{padding:10px 12px;border-bottom:1px solid var(--border-light,#f0f0f2);color:var(--text-body,#4a4a4c)}
+.article-card table tr:last-child td,article table tr:last-child td{border-bottom:none}
+.article-card table tr:hover td,article table tr:hover td{background:var(--stat-card-bg,#f5f5f7)}
+.table-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0;border-radius:12px}
+.table-wrapper table{margin:0}
+
+/* Highlighted row (e.g. current year) */
+.highlight-row td,tr.highlight-row td{background:rgba(37,99,235,.06)!important;font-weight:600;color:var(--text-primary,#1d1d1f)!important}
+
+/* Meta dot — small bullet between date/read-time */
+.meta-dot{display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--text-secondary,#86868b);opacity:.55}
+.article-meta-divider{display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--text-secondary,#86868b);opacity:.55}
+
+/* Formula / equation block */
+.formula-block{background:var(--stat-card-bg,#f5f5f7);border-left:4px solid var(--accent,#2563eb);border-radius:0 10px 10px 0;padding:14px 18px;margin:20px 0;font-family:'SF Mono',Menlo,Monaco,Consolas,monospace;font-size:.85rem;color:var(--text-primary,#1d1d1f);line-height:1.6;overflow-x:auto;white-space:pre-wrap}
+
+/* Negotiation-script / dialog block */
+.script-block{background:var(--stat-card-bg,#f5f5f7);border-left:4px solid var(--accent,#2563eb);border-radius:0 10px 10px 0;padding:16px 20px;margin:18px 0}
+.script-block p{margin:0;font-size:.92rem;font-style:italic;color:var(--text-body,#4a4a4c)}
+.script-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent,#2563eb);margin-bottom:6px;display:block;font-style:normal!important}
+
+/* Mobile tweaks */
+@media(max-width:600px){.article-card table,article table{font-size:.78rem}.article-card table th,.article-card table td,article table th,article table td{padding:8px 8px}}
+</style>
 </head>
 <body>
     <nav>
@@ -132,10 +166,12 @@ footer a{color:var(--accent);text-decoration:none}
     </nav>
 
     <main>
+        <div class="back-link-container">
         <a href="/blog/" class="back-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
             Back to Blog
         </a>
+        </div>
 
         <article class="article-card">
             <div class="article-meta">
