@@ -1,0 +1,76 @@
+/* Shared subtle transitions — opt-in stylesheet linked from tool pages.
+   Respects prefers-reduced-motion. */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Buttons get a subtle press feel */
+  button, .btn, .cta, a.cta {
+    transition: transform 0.12s ease-out, opacity 0.18s, background 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s;
+  }
+  button:active, .btn:active, .cta:active {
+    transform: scale(0.97);
+  }
+
+  /* Inputs */
+  input, select, textarea {
+    transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  }
+
+  /* Cards and surfaces lift on hover where they're interactive */
+  a[class*="card"]:not([class*="-card-"]):hover,
+  .sidebar-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Result reveal — fade + slide */
+  .result-box.show,
+  .results.show,
+  #results.show {
+    animation: scResultIn 0.45s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes scResultIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Verdict banner — gentle pop on appear */
+  .verdict-banner {
+    animation: scVerdictPop 0.5s cubic-bezier(.34,1.4,.64,1);
+  }
+  @keyframes scVerdictPop {
+    0%   { opacity: 0; transform: scale(0.94); }
+    70%  { transform: scale(1.015); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Stats / breakdown cards — staggered fade-in when their grid first renders */
+  .breakdown-cards > *,
+  .stats-grid > * {
+    animation: scFadeUp 0.4s ease-out backwards;
+  }
+  .breakdown-cards > *:nth-child(1),
+  .stats-grid > *:nth-child(1) { animation-delay: 0.05s; }
+  .breakdown-cards > *:nth-child(2),
+  .stats-grid > *:nth-child(2) { animation-delay: 0.10s; }
+  .breakdown-cards > *:nth-child(3),
+  .stats-grid > *:nth-child(3) { animation-delay: 0.15s; }
+  .breakdown-cards > *:nth-child(4),
+  .stats-grid > *:nth-child(4) { animation-delay: 0.20s; }
+  .breakdown-cards > *:nth-child(n+5),
+  .stats-grid > *:nth-child(n+5) { animation-delay: 0.25s; }
+  @keyframes scFadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* Findings sentence — subtle entry */
+  .findings-sentence,
+  .findings-eyebrow {
+    animation: scFadeUp 0.4s ease-out 0.15s backwards;
+  }
+
+  /* Section labels */
+  .findings-label {
+    animation: scFadeUp 0.4s ease-out backwards;
+  }
+}
