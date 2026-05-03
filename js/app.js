@@ -3633,6 +3633,52 @@
             // Signal to the feedback popup that a real result is on screen
             try { window.dispatchEvent(new CustomEvent('sc:result-shown', { detail: { tool: 'main' } })); } catch(_){}
 
+            // Store result snapshot for PDF report generation
+            try {
+                var _vb = document.getElementById('verdictBanner');
+                var _vClass = (_vb && _vb.style.display !== 'none') ? _vb.className.replace('verdict-banner', '').trim() : '';
+                window._scLastResult = {
+                    currentCity: currentCity, targetCity: targetCity,
+                    currentLabel: currentLabel, targetLabel: targetLabel,
+                    currentCurrency: currentCurrency, targetCurrency: targetCurrency,
+                    totalSalary: totalSalary, formattedOriginalCurrent: formattedOriginalCurrent,
+                    trueEquivalentSalary: trueEquivalentSalary || coliEquivalentSalary,
+                    formattedAmount: formattedAmount,
+                    coliEquivalentSalary: coliEquivalentSalary, colRatio: colRatio,
+                    verdictClass: _vClass,
+                    currentDisposable: currentDisposable, targetDisposable: targetDisposable,
+                    currentExpenses: hasFullData && currentExpenses ? Object.assign({}, currentExpenses) : null,
+                    targetExpenses: hasFullData && targetExpenses ? Object.assign({}, targetExpenses) : null,
+                    combinedCurrentTakeHome: hasFullData ? combinedCurrentTakeHome : null,
+                    combinedTargetTakeHome: hasFullData && typeof combinedTargetTakeHome !== 'undefined' ? combinedTargetTakeHome : null,
+                    exchangeRate: exchangeRate,
+                    household: Object.assign({}, household),
+                    hasFullData: hasFullData, hasTaxData: hasTaxData,
+                    hasOffer: hasOffer, targetSalaryOffer: hasOffer ? targetSalaryOffer : null,
+                    generatedAt: new Date().toISOString()
+                };
+                // Show report capture CTA
+                var _rc = document.getElementById('reportCapture');
+                if (_rc) {
+                    _rc.style.display = '';
+                    var _rcFrom = document.getElementById('rcFromCity');
+                    var _rcTo = document.getElementById('rcToCity');
+                    if (_rcFrom) _rcFrom.textContent = currentLabel;
+                    if (_rcTo) _rcTo.textContent = targetLabel;
+                    // Reset form state in case user recalculated
+                    var _rcForm = document.getElementById('reportCaptureForm');
+                    var _rcSuccess = document.getElementById('reportCaptureSuccess');
+                    var _rcErr = document.getElementById('reportCaptureError');
+                    var _rcBtn = document.getElementById('reportSubmitBtn');
+                    var _rcLbl = document.getElementById('reportSubmitLabel');
+                    if (_rcForm) _rcForm.style.display = '';
+                    if (_rcSuccess) _rcSuccess.style.display = 'none';
+                    if (_rcErr) _rcErr.style.display = 'none';
+                    if (_rcBtn) _rcBtn.disabled = false;
+                    if (_rcLbl) _rcLbl.textContent = 'Send my free report';
+                }
+            } catch(_rcErr) { console.warn('Report capture setup error:', _rcErr); }
+
             // GA4 event — successful calculation
             if (typeof gtag === 'function') {
                 gtag('event', 'salary_calculated', {
@@ -3677,6 +3723,8 @@
             document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('retireCrossPromo').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
+            const _rcReset = document.getElementById('reportCapture');
+            if (_rcReset) _rcReset.style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.currency-hint').forEach(h => h.classList.remove('show'));
             // Reset household state

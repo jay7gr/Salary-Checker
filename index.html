@@ -1021,6 +1021,7 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.8px;
+            text-align: center;
         }
 
         .result-amount {
@@ -1030,6 +1031,7 @@
             word-break: break-word;
             letter-spacing: -0.5px;
             color: var(--text-primary);
+            text-align: center;
         }
 
         .coli-badge {
@@ -1678,6 +1680,7 @@
             max-width: 480px;
             margin-left: auto;
             margin-right: auto;
+            text-align: center;
         }
 
         /* Verdict Banner */
@@ -2583,6 +2586,24 @@
 .feedback-popup-close:hover{background:var(--input-border)}
 .feedback-popup-modal .feedback-widget{display:block!important;opacity:1!important;margin:0;padding:0;border-top:none}
 .feedback-popup-modal .feedback-widget h2{font-size:1.25rem;margin-top:0;padding-right:36px}
+
+/* Report capture CTA */
+.report-capture-card{background:linear-gradient(135deg,rgba(34,197,94,.07) 0%,rgba(16,185,129,.04) 100%);border:1.5px solid rgba(34,197,94,.22);border-radius:16px;padding:22px 20px 18px}
+.rc-badge{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#16a34a;background:rgba(34,197,94,.12);padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.rc-heading{font-size:1rem;font-weight:700;color:var(--text-primary);margin:0 0 5px;letter-spacing:-.2px}
+.rc-sub{font-size:.84rem;color:var(--text-secondary);margin:0 0 12px;line-height:1.5}
+.rc-bullets{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:5px}
+.rc-bullets li{font-size:.83rem;color:var(--text-primary);display:flex;align-items:baseline;gap:7px}
+.rc-check{color:#16a34a;font-weight:700;flex-shrink:0}
+.rc-field-row{display:flex;gap:8px;align-items:stretch}
+.rc-email{flex:1;min-width:0;padding:11px 14px;border:1.5px solid var(--border-light,#e5e7eb);border-radius:10px;font-size:.9rem;background:var(--card-bg,#fff);color:var(--text-primary);outline:none;font-family:inherit;transition:border-color .15s,box-shadow .15s}
+.rc-email:focus{border-color:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.12)}
+.rc-submit{display:flex;align-items:center;gap:6px;padding:11px 16px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-size:.87rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s,transform .1s;flex-shrink:0}
+.rc-submit:hover{background:#15803d}.rc-submit:active{transform:scale(0.97)}.rc-submit:disabled{opacity:.6;cursor:not-allowed}
+.rc-privacy{font-size:.72rem;color:var(--text-secondary);margin:7px 0 0;text-align:center}
+.rc-success{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(34,197,94,.09);border-radius:10px;color:#16a34a;font-size:.87rem;font-weight:600}
+.rc-error-msg{font-size:.82rem;color:#dc2626;padding:7px 0 0;text-align:center}
+@media(max-width:480px){.rc-field-row{flex-direction:column}.rc-submit{justify-content:center}}
 </style>
     <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 
@@ -2929,6 +2950,36 @@
                 <p style="font-size:0.78rem; color:var(--text-secondary); margin:0 0 10px;">Our new tool analyzes 182 cities for retirement — with visa info, tax data &amp; quality of life scores.</p>
                 <a href="/retire/" style="display:inline-block; padding:8px 20px; background:var(--accent); color:#fff; border-radius:10px; text-decoration:none; font-size:0.82rem; font-weight:600;">Try Retire Abroad Calculator &rarr;</a>
             </div>
+
+            <!-- Report Capture CTA — shown after a successful result -->
+            <div id="reportCapture" style="display:none; margin-top:20px;">
+              <div class="report-capture-card">
+                <div class="rc-badge">📄 Free Personalized Report</div>
+                <h3 class="rc-heading">Get your Salary Negotiation Report</h3>
+                <p class="rc-sub">A professional PDF you can forward directly to HR — backed by real data from 182 cities.</p>
+                <ul class="rc-bullets">
+                  <li><span class="rc-check">✓</span> 3 negotiation talking points tailored to <strong id="rcFromCity">your situation</strong> → <strong id="rcToCity"></strong></li>
+                  <li><span class="rc-check">✓</span> Monthly take-home vs. expenses breakdown</li>
+                  <li><span class="rc-check">✓</span> Full methodology you can cite in any email or meeting</li>
+                  <li><span class="rc-check">✓</span> Relocation checklist for your destination city</li>
+                </ul>
+                <form id="reportCaptureForm" class="rc-form" novalidate>
+                  <div class="rc-field-row">
+                    <input type="email" id="reportEmail" class="rc-email" placeholder="your@email.com" autocomplete="email" required>
+                    <button type="submit" class="rc-submit" id="reportSubmitBtn">
+                      <span id="reportSubmitLabel">Send my free report</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                  </div>
+                  <p class="rc-privacy">No spam. Just your report. One email, that&rsquo;s it.</p>
+                  <div id="reportCaptureError" class="rc-error-msg" style="display:none"></div>
+                </form>
+                <div id="reportCaptureSuccess" class="rc-success" style="display:none">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Your report is on its way — check your inbox in the next few minutes.</span>
+                </div>
+              </div>
+            </div>
         </div>
     
         <section class="how-it-works" aria-labelledby="hiw-heading">
@@ -3274,7 +3325,7 @@
         <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
     </footer>
 
-    <script src="/js/app.js?v=5"></script>
+    <script src="/js/app.js?v=6"></script>
     <script src="/chat.js?v=2"></script>
 <script>
 (function(){
@@ -3504,6 +3555,299 @@
   }
   new MutationObserver(fallbackCheck).observe(resultBox, { attributes: true, attributeFilter: ['class'] });
   fallbackCheck();
+})();
+</script>
+
+<!-- Report capture: PDF generation + email submission -->
+<script>
+(function(){
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function fmtC(v, cur) {
+    return new Intl.NumberFormat('en-US', { style:'currency', currency:cur, minimumFractionDigits:0, maximumFractionDigits:0 }).format(v);
+  }
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  // ── Negotiation talking points ────────────────────────────────────────────
+  function buildTalkingPoints(d) {
+    var pts = [];
+    // 1. Core methodology point
+    pts.push('The true equivalent of ' + d.formattedOriginalCurrent + ' in ' + d.currentLabel + ' is ' + d.formattedAmount + ' in ' + d.targetLabel + ' — calculated after adjusting for local income-tax rates, a 182-city cost-of-living index, and live exchange rates. A raw currency conversion would materially misstate the real cost of maintaining the same lifestyle.');
+    // 2. Disposable income impact
+    if (d.hasFullData && d.currentDisposable != null && d.targetDisposable != null && d.currentDisposable !== 0) {
+      var dispDiff = d.targetDisposable - d.currentDisposable * d.exchangeRate;
+      var absPct = Math.abs(Math.round((dispDiff / Math.abs(d.currentDisposable * d.exchangeRate)) * 100));
+      if (dispDiff > 0) {
+        pts.push('On a true-equivalent salary, disposable income in ' + d.targetLabel + ' would be approximately ' + absPct + '% higher than in ' + d.currentLabel + ' — the lower cost base creates genuine financial headroom that a nominal comparison would miss.');
+      } else if (dispDiff < 0) {
+        pts.push('Even at the true equivalent salary, monthly disposable income in ' + d.targetLabel + ' would be approximately ' + absPct + '% lower than in ' + d.currentLabel + ' — reflecting higher local costs, taxes, or both. This gap should be factored into any offer negotiation.');
+      } else {
+        pts.push('A salary of ' + d.formattedAmount + ' in ' + d.targetLabel + ' produces roughly equivalent monthly disposable income to ' + d.formattedOriginalCurrent + ' in ' + d.currentLabel + ' — confirming it is a fair, like-for-like equivalent.');
+      }
+    } else if (d.colRatio) {
+      var cheaper = d.colRatio < 1;
+      var pct = Math.abs(Math.round((d.colRatio - 1) * 100));
+      pts.push(d.targetLabel + ' is approximately ' + pct + '% ' + (cheaper ? 'less expensive' : 'more expensive') + ' than ' + d.currentLabel + '. This cost difference compounds over time and is the primary driver of the adjusted figure.');
+    }
+    // 3. Monthly cash flow
+    if (d.hasFullData && d.combinedCurrentTakeHome && d.currentExpenses) {
+      var thM = Math.round(d.combinedCurrentTakeHome / 12);
+      var expM = Math.round((d.currentExpenses.total || 0) / 12);
+      var dispM = Math.round((d.currentDisposable || 0) / 12);
+      pts.push('Current monthly profile in ' + d.currentLabel + ': take-home ' + fmtC(thM, d.currentCurrency) + '/mo — living costs ' + fmtC(expM, d.currentCurrency) + '/mo — disposable ' + fmtC(dispM, d.currentCurrency) + '/mo. Any offer in ' + d.targetLabel + ' should produce comparable disposable income after local taxes and expenses.');
+    }
+    // 4. Offer-specific
+    if (d.hasOffer && d.targetSalaryOffer && d.trueEquivalentSalary) {
+      var gap = d.targetSalaryOffer - d.trueEquivalentSalary;
+      var gapPct = Math.abs(Math.round((gap / d.trueEquivalentSalary) * 100));
+      var fmtOffer = fmtC(d.targetSalaryOffer, d.targetCurrency);
+      if (gap < -0.01 * d.trueEquivalentSalary) {
+        pts.push('The offered salary of ' + fmtOffer + ' is ' + gapPct + '% below the true equivalent of ' + d.formattedAmount + '. On a purchasing-power-adjusted basis this represents a real pay cut. A counter-offer of ' + d.formattedAmount + ' is grounded in the same methodology used by leading global employers for international compensation benchmarking.');
+      } else if (gap > 0.01 * d.trueEquivalentSalary) {
+        pts.push('The offered salary of ' + fmtOffer + ' is ' + gapPct + '% above the true equivalent — a genuinely favorable outcome. This report confirms the offer exceeds what is needed to maintain equivalent purchasing power, which is a strong position for negotiating other components such as relocation allowance, sign-on bonus, or additional leave.');
+      } else {
+        pts.push('The offered salary of ' + fmtOffer + ' closely matches the true equivalent of ' + d.formattedAmount + ' — within ' + gapPct + '% — confirming it is a fair, market-aligned offer when adjusted for local costs and taxes.');
+      }
+    }
+    return pts;
+  }
+
+  // ── Relocation checklist ─────────────────────────────────────────────────
+  function getChecklist() {
+    return [
+      'Research average rent in target neighborhoods',
+      'Compare private vs. public healthcare costs',
+      'Check visa and work permit requirements',
+      'Understand local income tax filing obligations',
+      'Open a local bank account before arrival',
+      'Confirm international driving license validity',
+      'Research local school options (if applicable)',
+      'Arrange contents and health insurance cover',
+      'Transfer pension / retirement contributions',
+      'Notify current bank of address change',
+      'Budget for first-month deposit + agency fees',
+      'Check double-taxation treaty with home country',
+      'Plan for temporary accommodation on arrival',
+      'Register with local authorities if required',
+      'Get qualifications officially recognised locally',
+      'Research local mobile plan pricing',
+    ];
+  }
+
+  // ── PDF generation ───────────────────────────────────────────────────────
+  function generatePDF(d) {
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    var G = [22, 163, 74], DK = [15, 23, 42], GY = [107, 114, 128], LG = [240, 253, 244];
+    var W = 210, M = 18, CW = W - M * 2;
+    var y = 0;
+
+    // Header strip
+    doc.setFillColor(G[0], G[1], G[2]);
+    doc.rect(0, 0, W, 34, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255);
+    doc.text('salary:converter', M, 12);
+    doc.setFontSize(17);
+    doc.text('Salary Negotiation Report', M, 24);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    var dt = new Date(d.generatedAt).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    doc.text(dt, W - M, 12, { align: 'right' });
+    doc.text('Confidential — prepared for your use only', W - M, 18, { align: 'right' });
+    y = 40;
+
+    // Situation box
+    doc.setFillColor(LG[0], LG[1], LG[2]);
+    doc.roundedRect(M, y, CW, 20, 2, 2, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(GY[0], GY[1], GY[2]);
+    doc.text('CURRENT', M + 6, y + 7);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(DK[0], DK[1], DK[2]);
+    doc.text(d.formattedOriginalCurrent + '  in  ' + d.currentLabel, M + 6, y + 14);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(G[0], G[1], G[2]);
+    doc.text('→', W / 2, y + 14, { align: 'center' });
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(GY[0], GY[1], GY[2]);
+    doc.text('COMPARING TO', W / 2 + 14, y + 7);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(DK[0], DK[1], DK[2]);
+    doc.text(d.targetLabel, W / 2 + 14, y + 14);
+    y += 26;
+
+    // True equivalent
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(GY[0], GY[1], GY[2]);
+    doc.text('TRUE EQUIVALENT SALARY', M, y + 5);
+    doc.setFontSize(26); doc.setTextColor(G[0], G[1], G[2]);
+    doc.text(d.formattedAmount, M, y + 16);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(GY[0], GY[1], GY[2]);
+    var sub = d.hasFullData
+      ? 'To maintain the same disposable income as ' + d.formattedOriginalCurrent + ' in ' + d.currentLabel
+      : 'Adjusted for cost-of-living index, taxes, and exchange rate';
+    doc.text(sub, M, y + 22);
+    y += 30;
+
+    // Verdict
+    var vt = (document.getElementById('verdictText') || {}).textContent || '';
+    vt = vt.replace(/\s+/g, ' ').trim();
+    if (vt) {
+      doc.setDrawColor(220, 252, 231); doc.setLineWidth(0.4);
+      doc.line(M, y, W - M, y); y += 6;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(GY[0], GY[1], GY[2]);
+      doc.text('THE VERDICT', M, y + 4);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(DK[0], DK[1], DK[2]);
+      var vtLines = doc.splitTextToSize(vt, CW);
+      doc.text(vtLines, M, y + 10);
+      y += 10 + vtLines.length * 4.8 + 6;
+    }
+
+    // Talking points section
+    var pts = buildTalkingPoints(d);
+    doc.setFillColor(G[0], G[1], G[2]);
+    doc.rect(M, y, CW, 7, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(255, 255, 255);
+    doc.text('NEGOTIATION TALKING POINTS', M + 4, y + 5);
+    y += 10;
+    pts.forEach(function(pt, i) {
+      var lines = doc.splitTextToSize((i + 1) + '.  ' + pt, CW - 8);
+      var h = Math.max(9, lines.length * 4.5 + 4);
+      doc.setFillColor(i % 2 === 0 ? 249 : 255, i % 2 === 0 ? 250 : 255, i % 2 === 0 ? 251 : 255);
+      doc.rect(M, y, CW, h, 'F');
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(DK[0], DK[1], DK[2]);
+      doc.text(lines, M + 4, y + 5);
+      y += h + 1;
+    });
+    y += 5;
+
+    // Monthly cash flow table
+    if (d.hasFullData && d.currentExpenses && d.targetExpenses && d.combinedCurrentTakeHome) {
+      if (y > 220) { doc.addPage(); y = 18; }
+      doc.setFillColor(G[0], G[1], G[2]);
+      doc.rect(M, y, CW, 7, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(255, 255, 255);
+      doc.text('MONTHLY CASH FLOW COMPARISON', M + 4, y + 5);
+      y += 10;
+      var fM = function(v, cur) { return fmtC(Math.round(v / 12), cur); };
+      var fMT = function(v) { return fM(v, d.targetCurrency); };
+      var tRows = [
+        ['Take-home pay', fM(d.combinedCurrentTakeHome, d.currentCurrency), fMT(d.combinedTargetTakeHome || d.trueEquivalentSalary * 0.72)],
+        ['Housing & rent', fM(d.currentExpenses.rent || 0, d.currentCurrency), fMT(d.targetExpenses.rent || 0)],
+        ['Groceries', fM(d.currentExpenses.groceries || 0, d.currentCurrency), fMT(d.targetExpenses.groceries || 0)],
+        ['Transport', fM(d.currentExpenses.transport || 0, d.currentCurrency), fMT(d.targetExpenses.transport || 0)],
+        ['Utilities', fM(d.currentExpenses.utilities || 0, d.currentCurrency), fMT(d.targetExpenses.utilities || 0)],
+        ['Healthcare', fM(d.currentExpenses.healthcare || 0, d.currentCurrency), fMT(d.targetExpenses.healthcare || 0)],
+      ];
+      if (d.currentDisposable != null) {
+        tRows.push(['Monthly disposable', fM(d.currentDisposable, d.currentCurrency), fMT(d.targetDisposable || 0)]);
+      }
+      doc.autoTable({
+        startY: y,
+        head: [['', d.currentLabel.slice(0, 28), d.targetLabel.slice(0, 28)]],
+        body: tRows,
+        margin: { left: M, right: M },
+        styles: { fontSize: 8.5, cellPadding: 2.5 },
+        headStyles: { fillColor: LG, textColor: G, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [249, 250, 251] },
+        columnStyles: { 0: { fontStyle: 'bold', cellWidth: 50 }, 1: { halign: 'right' }, 2: { halign: 'right' } },
+      });
+      y = doc.lastAutoTable.finalY + 8;
+    }
+
+    // Relocation checklist
+    var cl = getChecklist();
+    if (y > 228) { doc.addPage(); y = 18; }
+    doc.setFillColor(G[0], G[1], G[2]);
+    doc.rect(M, y, CW, 7, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.setTextColor(255, 255, 255);
+    doc.text('RELOCATION CHECKLIST — ' + d.targetLabel.toUpperCase().slice(0, 36), M + 4, y + 5);
+    y += 10;
+    var colW = (CW - 4) / 2;
+    cl.forEach(function(item, i) {
+      var col = i % 2;
+      var row = Math.floor(i / 2);
+      var xc = M + col * (colW + 4);
+      var yy = y + row * 8;
+      doc.setFillColor(249, 250, 251);
+      doc.rect(xc, yy, colW, 7, 'F');
+      doc.setDrawColor(229, 231, 235); doc.setLineWidth(0.25);
+      doc.rect(xc, yy, colW, 7, 'S');
+      doc.setDrawColor(G[0], G[1], G[2]); doc.setLineWidth(0.35);
+      doc.rect(xc + 2, yy + 1.5, 3.5, 3.5, 'S');
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(DK[0], DK[1], DK[2]);
+      doc.text(item, xc + 8, yy + 4.8);
+    });
+    y += Math.ceil(cl.length / 2) * 8 + 4;
+
+    // Footer on every page
+    var pages = doc.internal.getNumberOfPages();
+    for (var p = 1; p <= pages; p++) {
+      doc.setPage(p);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(GY[0], GY[1], GY[2]);
+      doc.setDrawColor(229, 231, 235); doc.setLineWidth(0.25);
+      doc.line(M, 287, W - M, 287);
+      doc.text('salary-converter.com  ·  This is an estimate. Consult a qualified adviser for tax and financial advice.  ·  Page ' + p + '/' + pages, W / 2, 292, { align: 'center' });
+    }
+
+    return doc.output('datauristring').split(',')[1];
+  }
+
+  // ── Form wiring ──────────────────────────────────────────────────────────
+  var form = document.getElementById('reportCaptureForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = (document.getElementById('reportEmail').value || '').trim();
+    if (!email || !email.includes('@')) return;
+    var btn = document.getElementById('reportSubmitBtn');
+    var lbl = document.getElementById('reportSubmitLabel');
+    var errEl = document.getElementById('reportCaptureError');
+    var successEl = document.getElementById('reportCaptureSuccess');
+    btn.disabled = true;
+    lbl.textContent = 'Generating your report…';
+    errEl.style.display = 'none';
+
+    var jsPDFReady = window.jspdf && window.jspdf.jsPDF;
+    var loadPromise = jsPDFReady
+      ? Promise.resolve()
+      : loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js')
+          .then(function() { return loadScript('https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js'); });
+
+    loadPromise.then(function() {
+      var d = window._scLastResult;
+      if (!d) throw new Error('No result data available');
+      var pdfBase64 = generatePDF(d);
+      lbl.textContent = 'Sending…';
+      return fetch('/api/report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          pdfBase64: pdfBase64,
+          reportData: {
+            currentLabel: d.currentLabel,
+            targetLabel: d.targetLabel,
+            formattedOriginalCurrent: d.formattedOriginalCurrent,
+            formattedAmount: d.formattedAmount,
+            generatedAt: d.generatedAt,
+          }
+        })
+      });
+    }).then(function(res) {
+      if (!res.ok) throw new Error('send failed');
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
+      try { if (typeof gtag === 'function') gtag('event', 'report_requested', { from_city: (window._scLastResult||{}).currentCity, to_city: (window._scLastResult||{}).targetCity }); } catch(_) {}
+    }).catch(function(err) {
+      btn.disabled = false;
+      lbl.textContent = 'Send my free report';
+      errEl.textContent = 'Something went wrong — please try again.';
+      errEl.style.display = 'block';
+      console.error('Report error:', err);
+    });
+  });
 })();
 </script>
 </body>
