@@ -2680,16 +2680,24 @@
 
         // Show/hide error with scroll-to and field highlight
         function showError(message, fieldId) {
-            // Stop the analyzing overlay immediately on any validation failure
             const _rb = document.getElementById('resultBox');
-            if (_rb) _rb.classList.remove('is-analyzing');
-            const errorDiv = document.getElementById('error');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
+            if (_rb) {
+                _rb.classList.remove('is-analyzing');
+                // Always show the result box with error content so mobile users
+                // see feedback without having to scroll back up to the error banner
+                const titleEl = document.getElementById('resultTitle');
+                const subtitleEl = document.getElementById('resultSubtitle');
+                if (titleEl) titleEl.textContent = 'Check your inputs';
+                if (subtitleEl) subtitleEl.textContent = message;
+                document.getElementById('resultAmount').textContent = '';
+                _rb.classList.add('show');
+                setTimeout(() => {
+                    _rb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            }
             if (fieldId) {
                 const field = document.getElementById(fieldId);
                 if (field) {
-                    field.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     field.style.borderColor = '#dc2626';
                     field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.15)';
                     field.focus();
@@ -2699,9 +2707,6 @@
                     }, 3000);
                 }
             }
-            setTimeout(() => {
-                errorDiv.classList.remove('show');
-            }, 20000);
         }
 
         // Format salary input with commas as user types
@@ -2752,14 +2757,18 @@
         document.getElementById('offer2Salary').addEventListener('input', formatSalaryInput);
 
         // Calculate salary
-        document.getElementById('calculateBtn').addEventListener('click', () => { try {
-            // Clear any stale result or error from a previous calculation before starting
+        document.getElementById('calculateBtn').addEventListener('click', () => {
+            // Synchronous: clear previous state and show loading overlay immediately
             const _rb = document.getElementById('resultBox');
             _rb.classList.remove('show');
+            _rb.classList.add('is-analyzing');
             document.getElementById('error').classList.remove('show');
             document.getElementById('resultAmount').textContent = '';
             document.getElementById('shareRow').style.display = 'none';
 
+            // Defer calculation to next event-loop tick so the browser can repaint
+            // and actually show the loading overlay before the synchronous work blocks
+            setTimeout(() => { try {
             const household = getHousehold();
             let salary, salary2 = null;
 
@@ -3599,7 +3608,7 @@
             }
             if (household.remote) shareParams.set('remote', '1');
             if (household.noCommute) shareParams.set('noCommute', '1');
-            history.replaceState(null, '', '?' + shareParams.toString());
+            try { history.replaceState(null, '', '?' + shareParams.toString()); } catch(_) {}
 
             // Populate share bar
             const shareBar = document.getElementById('resultShareBar');
@@ -3632,16 +3641,16 @@
                 });
             }
         } catch(calcErr) {
-            // Surface any unexpected runtime error instead of silently failing
-            const _errRb = document.getElementById('resultBox');
-            _errRb.classList.remove('is-analyzing');
-            _errRb.classList.add('show');
+            // Surface any unexpected runtime error — show the result box with an error state
+            _rb.classList.remove('is-analyzing');
             document.getElementById('resultTitle').textContent = 'Could not complete calculation';
             document.getElementById('resultAmount').textContent = '—';
-            document.getElementById('resultSubtitle').textContent = 'An error occurred. Please check your inputs and try again.';
+            document.getElementById('resultSubtitle').textContent =
+                'An unexpected error occurred: ' + (calcErr && calcErr.message ? calcErr.message : 'please check your inputs and try again.');
+            _rb.classList.add('show');
+            setTimeout(() => { _rb.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
             console.error('Calculation error:', calcErr);
-            showError('Calculation error: ' + (calcErr && calcErr.message ? calcErr.message : 'Unknown error. Check your inputs.'));
-        }});
+        }}, 0); });
 
 
         // Reset form
