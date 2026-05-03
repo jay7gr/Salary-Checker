@@ -2701,7 +2701,7 @@
             }
             setTimeout(() => {
                 errorDiv.classList.remove('show');
-            }, 5000);
+            }, 20000);
         }
 
         // Format salary input with commas as user types
@@ -2753,9 +2753,10 @@
 
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => { try {
-            // Clear any stale result from a previous calculation before starting
+            // Clear any stale result or error from a previous calculation before starting
             const _rb = document.getElementById('resultBox');
             _rb.classList.remove('show');
+            document.getElementById('error').classList.remove('show');
             document.getElementById('resultAmount').textContent = '';
             document.getElementById('shareRow').style.display = 'none';
 
@@ -3613,6 +3614,7 @@
 
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
+            resultBox.classList.remove('is-analyzing');
             resultBox.classList.add('show');
             document.getElementById('dataSourcesFootnote').style.display = 'block';
             document.getElementById('retireCrossPromo').style.display = 'block';
@@ -3631,9 +3633,14 @@
             }
         } catch(calcErr) {
             // Surface any unexpected runtime error instead of silently failing
-            document.getElementById('resultBox').classList.remove('is-analyzing');
+            const _errRb = document.getElementById('resultBox');
+            _errRb.classList.remove('is-analyzing');
+            _errRb.classList.add('show');
+            document.getElementById('resultTitle').textContent = 'Could not complete calculation';
+            document.getElementById('resultAmount').textContent = '—';
+            document.getElementById('resultSubtitle').textContent = 'An error occurred. Please check your inputs and try again.';
             console.error('Calculation error:', calcErr);
-            showError('Something went wrong. Please check your inputs and try again.');
+            showError('Calculation error: ' + (calcErr && calcErr.message ? calcErr.message : 'Unknown error. Check your inputs.'));
         }});
 
 
