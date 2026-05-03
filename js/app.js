@@ -2680,6 +2680,9 @@
 
         // Show/hide error with scroll-to and field highlight
         function showError(message, fieldId) {
+            // Stop the analyzing overlay immediately on any validation failure
+            const _rb = document.getElementById('resultBox');
+            if (_rb) _rb.classList.remove('is-analyzing');
             const errorDiv = document.getElementById('error');
             errorDiv.textContent = message;
             errorDiv.classList.add('show');
@@ -2749,7 +2752,7 @@
         document.getElementById('offer2Salary').addEventListener('input', formatSalaryInput);
 
         // Calculate salary
-        document.getElementById('calculateBtn').addEventListener('click', () => {
+        document.getElementById('calculateBtn').addEventListener('click', () => { try {
             const household = getHousehold();
             let salary, salary2 = null;
 
@@ -2820,14 +2823,7 @@
                 showError('Please select a target currency', 'targetCurrency');
                 return;
             }
-            if (cityNeighborhoods[currentCity] && !currentNeighborhood && !window._fromUrlParams) {
-                showError('Please select a neighborhood for your current city', 'currentNeighborhood');
-                return;
-            }
-            if (cityNeighborhoods[targetCity] && !targetNeighborhood && !window._fromUrlParams) {
-                showError('Please select a neighborhood for your target city', 'targetNeighborhood');
-                return;
-            }
+            // Neighborhoods are optional — code defaults to city-average multiplier (1.0) when omitted
             window._fromUrlParams = false;
 
             // Get base cost of living indices
@@ -3627,7 +3623,13 @@
                     household_mode: household.mode
                 });
             }
-        });
+        } catch(calcErr) {
+            // Surface any unexpected runtime error instead of silently failing
+            document.getElementById('resultBox').classList.remove('is-analyzing');
+            console.error('Calculation error:', calcErr);
+            showError('Something went wrong. Please check your inputs and try again.');
+        }});
+
 
         // Reset form
         document.getElementById('resetBtn').addEventListener('click', () => {

@@ -909,6 +909,9 @@
             opacity: 0;
             transition: opacity 0.25s;
         }
+        .result-box.is-analyzing {
+            display: block;
+        }
         .result-box.is-analyzing .analyzing-overlay {
             display: flex;
             opacity: 1;
@@ -2734,9 +2737,9 @@
                 <div class="form-group">
                     <label for="currentNeighborhood">Neighborhood</label>
                     <select id="currentNeighborhood">
-                        <option value="">Select a neighborhood...</option>
+                        <option value="">Optional — defaults to city average</option>
                     </select>
-                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Pick a neighborhood for more precise estimates (optional)</div>
                 </div>
             </div>
             <div class="two-column">
@@ -2766,9 +2769,9 @@
                 <div class="form-group">
                     <label for="targetNeighborhood">Neighborhood</label>
                     <select id="targetNeighborhood">
-                        <option value="">Select a neighborhood...</option>
+                        <option value="">Optional — defaults to city average</option>
                     </select>
-                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Pick a neighborhood for more precise estimates (optional)</div>
                 </div>
             </div>
             <div class="two-column">
@@ -3363,7 +3366,6 @@
   var phrases = ['Comparing 182 cities…','Pulling tax brackets…','Computing purchasing power…','Cross-checking rent &amp; cost basket…'];
   btn.addEventListener('click', function(){
     box.classList.add('is-analyzing');
-    box.classList.add('show');
     var i = 0;
     text.innerHTML = phrases[0];
     var iv = setInterval(function(){
