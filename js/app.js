@@ -2753,6 +2753,12 @@
 
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => { try {
+            // Clear any stale result from a previous calculation before starting
+            const _rb = document.getElementById('resultBox');
+            _rb.classList.remove('show');
+            document.getElementById('resultAmount').textContent = '';
+            document.getElementById('shareRow').style.display = 'none';
+
             const household = getHousehold();
             let salary, salary2 = null;
 
@@ -3647,6 +3653,9 @@
             document.getElementById('offer2Salary').value = '';
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
+            document.getElementById('resultAmount').textContent = '';
+            document.getElementById('shareRow').style.display = 'none';
+            document.getElementById('findingsSentence').style.display = 'none';
             document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('retireCrossPromo').style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
