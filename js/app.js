@@ -3630,6 +3630,8 @@
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
+            // Signal to the feedback popup that a real result is on screen
+            try { window.dispatchEvent(new CustomEvent('sc:result-shown', { detail: { tool: 'main' } })); } catch(_){}
 
             // GA4 event — successful calculation
             if (typeof gtag === 'function') {

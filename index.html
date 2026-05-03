@@ -3274,7 +3274,7 @@
         <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
     </footer>
 
-    <script src="/js/app.js?v=4"></script>
+    <script src="/js/app.js?v=5"></script>
     <script src="/chat.js?v=2"></script>
 <script>
 (function(){
@@ -3434,13 +3434,15 @@
 })();
 </script>
 <script>
-/* feedback popup — auto-opens 3.5s after a successful calculation result.
-   Only opens once per session, dismissible via X / ESC / click-outside. */
+/* feedback popup — auto-opens 2s after a successful calculation result.
+   Triggered by the 'sc:result-shown' event dispatched from app.js, with a
+   MutationObserver fallback. Once per session, dismissible via X / ESC /
+   click-outside. */
 (function(){
   if (window.__fbPopup) return;
   window.__fbPopup = true;
-  var SESSION_KEY = 'sc_fb_popup_shown';
-  var DELAY_MS = 3500;
+  var SESSION_KEY = 'sc_fb_popup_shown_v2';
+  var DELAY_MS = 2000;
   var overlay = document.getElementById('feedbackPopup');
   var resultBox = document.getElementById('resultBox');
   if (!overlay || !resultBox) return;
@@ -3450,6 +3452,7 @@
 
   function open(){
     if (openedThisSession) return;
+    if (overlay.classList.contains('open')) return;
     openedThisSession = true;
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(_){}
     overlay.classList.add('open');
@@ -3460,6 +3463,8 @@
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
   }
+  // Expose for manual testing in console: window.scOpenFeedback()
+  window.scOpenFeedback = function(){ openedThisSession = false; try { sessionStorage.removeItem(SESSION_KEY); } catch(_){} open(); };
 
   // Close handlers
   var closeBtn = document.getElementById('feedbackPopupClose');
@@ -3477,28 +3482,28 @@
     }).observe(widget, { attributes: true, attributeFilter: ['class'] });
   }
 
-  // Detect when result box shows a *successful* result
-  // (not a validation error or runtime error — those use distinct titles)
-  var ERROR_TITLES = ['Check your inputs', 'Could not complete calculation'];
   var pendingTimer = null;
-  function maybeSchedule(){
-    if (openedThisSession) return;
+  function schedule(){
+    if (openedThisSession || pendingTimer) return;
+    pendingTimer = setTimeout(function(){ pendingTimer = null; open(); }, DELAY_MS);
+  }
+
+  // Primary signal: explicit event from the calculation success path
+  window.addEventListener('sc:result-shown', schedule);
+
+  // Fallback: watch for the result box getting `show` class with a non-error title
+  // (covers code paths that don't dispatch the event, e.g. URL-param auto-calc)
+  var ERROR_TITLES = ['Check your inputs', 'Could not complete calculation'];
+  function fallbackCheck(){
+    if (openedThisSession || pendingTimer) return;
     if (!resultBox.classList.contains('show')) return;
     var titleEl = document.getElementById('resultTitle');
     var t = titleEl ? (titleEl.textContent || '').trim() : '';
     if (!t || ERROR_TITLES.indexOf(t) !== -1) return;
-    if (pendingTimer) return; // already scheduled
-    pendingTimer = setTimeout(function(){
-      pendingTimer = null;
-      // Re-check title in case it changed
-      var t2 = titleEl ? (titleEl.textContent || '').trim() : '';
-      if (t2 && ERROR_TITLES.indexOf(t2) === -1) open();
-    }, DELAY_MS);
+    schedule();
   }
-  // Watch class changes on result box
-  new MutationObserver(maybeSchedule).observe(resultBox, { attributes: true, attributeFilter: ['class'] });
-  // Initial check (in case result is already shown via URL params)
-  maybeSchedule();
+  new MutationObserver(fallbackCheck).observe(resultBox, { attributes: true, attributeFilter: ['class'] });
+  fallbackCheck();
 })();
 </script>
 </body>
