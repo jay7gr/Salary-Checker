@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>salary:converter — Issue №01, A field guide to compensation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf6ed;
+  --paper-deep:#f3eddd;
+  --ink:#1a1a1a;
+  --ink-soft:#5a544c;
+  --ink-faint:#9a948a;
+  --rule:#d6cdb8;
+  --red:#c1322a;
+  --red-deep:#9b2620;
+  --green:#1c4d3e;
+  --gold:#9c7a1f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Inter",sans-serif;
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(193,50,42,.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(28,77,62,.04) 0%, transparent 40%);
+}
+.serif{font-family:"Fraunces",Georgia,serif}
+h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif}
+a{color:inherit;text-decoration:none}
+
+/* ── Masthead ────────────────────────────────────────── */
+.masthead{
+  border-bottom:2px solid var(--ink);
+  padding:14px 32px 12px;
+}
+.masthead-inner{
+  max-width:1240px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:center;
+}
+.masthead-left{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.masthead-title{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:32px;font-weight:600;letter-spacing:-1.2px;text-align:center;
+}
+.masthead-title .red{color:var(--red);font-style:italic}
+.masthead-right{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-soft);text-align:right;font-weight:500}
+
+.subnav{
+  border-bottom:1px solid var(--rule);
+  padding:10px 32px;
+}
+.subnav-inner{
+  max-width:1240px;margin:0 auto;
+  display:flex;justify-content:center;gap:32px;
+  font-size:12px;letter-spacing:1.2px;text-transform:uppercase;font-weight:500;
+}
+.subnav a{padding:4px 0;border-bottom:2px solid transparent;transition:border-color .15s}
+.subnav a:hover,.subnav a.active{border-color:var(--red)}
+
+/* ── Issue header ────────────────────────────────────── */
+.issue-bar{
+  max-width:1240px;
+  margin:32px auto 0;
+  padding:0 32px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-soft);
+  font-weight:500;
+}
+.issue-bar .center{text-align:center;color:var(--red)}
+.issue-bar .right{text-align:right}
+
+/* ── Cover (asymmetric hero) ─────────────────────────── */
+.cover{
+  max-width:1240px;
+  margin:24px auto 0;
+  padding:0 32px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:64px;
+  align-items:start;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:64px;
+}
+.cover-eyebrow{
+  font-size:12px;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--red);font-weight:600;
+  margin-bottom:16px;
+}
+.cover h1{
+  font-size:clamp(56px,8vw,128px);
+  font-weight:600;
+  letter-spacing:-4px;
+  line-height:.92;
+  margin-bottom:32px;
+}
+.cover h1 em{font-style:italic;color:var(--red);font-weight:500}
+.cover h1 .ampersand{font-style:italic;color:var(--gold);font-weight:400}
+
+.cover-lede{
+  font-size:18px;line-height:1.6;color:var(--ink-soft);
+  max-width:560px;
+  margin-bottom:24px;
+}
+.cover-lede .dropcap{
+  float:left;
+  font-family:"Fraunces",Georgia,serif;
+  font-size:72px;
+  line-height:.85;
+  font-weight:600;
+  color:var(--red);
+  margin:6px 10px 0 0;
+}
+.cover-meta{
+  font-family:"Fraunces",Georgia,serif;
+  font-style:italic;
+  font-size:14px;color:var(--ink-faint);
+  border-top:1px solid var(--rule);
+  padding-top:14px;
+  margin-top:24px;
+}
+
+.cover-aside{
+  background:var(--paper-deep);
+  border:1px solid var(--rule);
+  padding:32px 28px;
+  position:relative;
+}
+.cover-aside::before{
+  content:"FROM THE EDITOR";
+  position:absolute;top:-10px;left:24px;
+  background:var(--paper);
+  padding:0 10px;
+  font-size:10px;letter-spacing:1.4px;font-weight:600;color:var(--red);
+}
+.cover-aside h3{
+  font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1.2;
+  margin-bottom:14px;
+}
+.cover-aside h3 em{font-style:italic;color:var(--red)}
+.cover-aside p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;margin-bottom:14px}
+.cover-aside .stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid var(--rule);
+}
+.cover-aside .stat-num{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:32px;font-weight:600;letter-spacing:-.8px;line-height:1;
+  color:var(--red);
+}
+.cover-aside .stat-lbl{
+  font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);
+  margin-top:4px;font-weight:500;
+}
+
+/* ── Big numerical break ─────────────────────────────── */
+.break-stats{
+  max-width:1240px;
+  margin:64px auto 0;
+  padding:0 32px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+}
+.break-stat{
+  padding:32px 24px 32px 0;
+  border-right:1px solid var(--rule);
+}
+.break-stat:last-child{border-right:none}
+.break-stat:not(:first-child){padding-left:24px}
+.break-stat-num{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:54px;font-weight:600;letter-spacing:-2px;line-height:1;
+  margin-bottom:8px;
+}
+.break-stat-num em{font-style:italic;color:var(--red)}
+.break-stat-lbl{
+  font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);
+  font-weight:500;
+}
+
+/* ── Departments (tools as magazine sections) ────────── */
+.departments{
+  max-width:1240px;
+  margin:80px auto 0;
+  padding:0 32px;
+}
+.dept-header{
+  display:grid;grid-template-columns:1fr 2fr;
+  gap:48px;
+  align-items:end;
+  padding-bottom:24px;
+  border-bottom:2px solid var(--ink);
+  margin-bottom:0;
+}
+.dept-label{
+  font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--red);
+  font-weight:600;
+}
+.dept-h2{
+  font-size:48px;font-weight:600;letter-spacing:-1.4px;line-height:1.05;
+}
+.dept-h2 em{font-style:italic;color:var(--red)}
+
+.dept{
+  display:grid;
+  grid-template-columns:140px 1fr 1fr 100px;
+  gap:32px;
+  align-items:start;
+  padding:32px 0;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+  transition:transform .2s;
+}
+.dept:hover{transform:translateX(4px)}
+.dept-num{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:48px;font-weight:600;letter-spacing:-1.4px;line-height:1;
+  color:var(--red);
+}
+.dept-num small{font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);font-family:"Inter",sans-serif;font-style:normal;font-weight:500;display:block;margin-bottom:6px}
+.dept-title{
+  font-size:26px;font-weight:600;letter-spacing:-.6px;line-height:1.15;
+  margin-bottom:6px;
+}
+.dept-title em{font-style:italic;color:var(--red)}
+.dept-kicker{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;
+  font-size:14px;color:var(--gold);
+  margin-bottom:8px;
+}
+.dept-desc{
+  font-size:15px;color:var(--ink-soft);line-height:1.6;
+}
+.dept-cta{
+  font-family:"Fraunces",Georgia,serif;font-style:italic;
+  font-size:15px;color:var(--ink);text-align:right;
+  align-self:center;
+  white-space:nowrap;
+}
+.dept-cta::after{content:" →";color:var(--red)}
+
+/* ── Quote block ─────────────────────────────────────── */
+.quote-spread{
+  max-width:980px;
+  margin:96px auto 0;
+  padding:0 32px;
+  text-align:center;
+}
+.quote-mark{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:96px;line-height:.6;color:var(--red);
+  font-weight:600;
+  margin-bottom:24px;
+}
+.quote-text{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:clamp(28px,3.6vw,42px);
+  line-height:1.3;letter-spacing:-.6px;
+  font-weight:500;
+  margin-bottom:24px;
+}
+.quote-text em{font-style:italic;color:var(--red)}
+.quote-attr{
+  font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-soft);
+  font-weight:500;
+}
+
+/* ── Method grid ─────────────────────────────────────── */
+.method{
+  max-width:1240px;
+  margin:96px auto 0;
+  padding:0 32px;
+}
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:32px;
+  margin-top:32px;
+}
+.method-card{
+  border-top:2px solid var(--ink);
+  padding:24px 0 0;
+}
+.method-num{
+  font-family:"Fraunces",Georgia,serif;
+  font-style:italic;
+  font-size:14px;color:var(--red);
+  margin-bottom:14px;
+}
+.method-title{
+  font-size:24px;font-weight:600;letter-spacing:-.5px;margin-bottom:10px;
+}
+.method-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.6}
+
+/* ── End slab ────────────────────────────────────────── */
+.colophon{
+  max-width:1240px;
+  margin:96px auto 0;
+  padding:0 32px;
+}
+.colophon-inner{
+  background:var(--ink);
+  color:var(--paper);
+  padding:80px 64px;
+  display:grid;grid-template-columns:1.6fr 1fr;gap:48px;align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.colophon-inner::before{
+  content:"№01";
+  position:absolute;
+  top:24px;right:32px;
+  font-family:"Fraunces",Georgia,serif;
+  font-size:14px;font-style:italic;color:rgba(255,255,255,.4);
+  letter-spacing:1px;
+}
+.colophon h2{
+  font-size:clamp(36px,5vw,64px);
+  font-weight:600;letter-spacing:-1.6px;line-height:1.05;
+}
+.colophon h2 em{font-style:italic;color:#f7c873}
+.colophon p{font-size:15px;color:rgba(250,246,237,.7);margin-top:16px;line-height:1.55;max-width:480px}
+.colophon-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--paper);color:var(--ink);
+  padding:18px 28px;
+  font-size:14px;font-weight:600;letter-spacing:.3px;
+  font-family:"Fraunces",Georgia,serif;font-style:italic;
+  transition:transform .15s;
+  align-self:start;justify-self:end;
+}
+.colophon-btn:hover{transform:translateX(6px)}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer{
+  max-width:1240px;margin:64px auto 0;
+  padding:48px 32px;
+  border-top:2px solid var(--ink);
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
+}
+.footer-brand{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:24px;font-weight:600;letter-spacing:-.6px;
+  margin-bottom:8px;
+}
+.footer-brand em{font-style:italic;color:var(--red)}
+.footer-tag{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:14px;color:var(--ink-soft);max-width:300px;line-height:1.55}
+.footer h4{
+  font-size:11px;letter-spacing:1.4px;text-transform:uppercase;
+  margin-bottom:14px;color:var(--red);font-weight:600;
+}
+.footer ul{list-style:none}
+.footer li{margin-bottom:6px;font-size:14px}
+.footer a{color:var(--ink-soft)}
+.footer a:hover{color:var(--ink)}
+.footer-base{
+  grid-column:1/-1;
+  margin-top:24px;padding-top:24px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;
+  font-family:"Fraunces",Georgia,serif;font-style:italic;
+  font-size:13px;color:var(--ink-faint);
+}
+
+@media(max-width:880px){
+  .masthead{padding:12px 18px}
+  .masthead-inner{grid-template-columns:1fr;gap:8px;text-align:center}
+  .masthead-left,.masthead-right{text-align:center}
+  .subnav-inner{flex-wrap:wrap;gap:18px;justify-content:flex-start}
+  .issue-bar{grid-template-columns:1fr;gap:6px;text-align:left}
+  .issue-bar .center,.issue-bar .right{text-align:left}
+  .cover{grid-template-columns:1fr;gap:32px;padding:0 18px 48px}
+  .cover h1{font-size:56px;letter-spacing:-2px}
+  .break-stats{grid-template-columns:1fr 1fr;padding:0 18px;margin-top:48px}
+  .break-stat{padding:20px 16px 20px 0!important;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .break-stat:nth-child(2n){border-right:none;padding-right:0!important}
+  .break-stat:nth-child(n+3){border-bottom:none}
+  .break-stat-num{font-size:36px}
+  .departments{padding:0 18px;margin-top:56px}
+  .dept-header{grid-template-columns:1fr;gap:16px}
+  .dept-h2{font-size:34px}
+  .dept{grid-template-columns:1fr;gap:8px;padding:24px 0}
+  .dept-num{font-size:36px}
+  .dept-cta{text-align:left}
+  .quote-spread{padding:0 18px;margin-top:64px}
+  .method{padding:0 18px;margin-top:64px}
+  .method-grid{grid-template-columns:1fr;gap:24px}
+  .colophon{padding:0 18px;margin-top:64px}
+  .colophon-inner{grid-template-columns:1fr;padding:48px 28px;gap:24px}
+  .colophon-btn{justify-self:start}
+  .footer{grid-template-columns:1fr 1fr;padding:32px 18px;gap:24px;margin-top:48px}
+  .footer-base{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-left">Established 2026 · Quarterly</div>
+    <h1 class="masthead-title">salary<span class="red">:</span>converter</h1>
+    <div class="masthead-right">№01 · Vol. 1 · 2026</div>
+  </div>
+</header>
+
+<nav class="subnav">
+  <div class="subnav-inner">
+    <a href="#" class="active">Cover</a>
+    <a href="#departments">Tools</a>
+    <a href="#method">Method</a>
+    <a href="/blog/">Journal</a>
+    <a href="/about/">Masthead</a>
+  </div>
+</nav>
+
+<div class="issue-bar">
+  <div>Issue №01 — A field guide to compensation</div>
+  <div class="center">— Free, in every browser —</div>
+  <div class="right">Published 03 May 2026</div>
+</div>
+
+<section class="cover">
+  <div class="cover-main">
+    <div class="cover-eyebrow">The cover essay</div>
+    <h1>What's it<br><em>worth</em>, really?<br>The numbers <span class="ampersand">&amp;</span> the truth.</h1>
+    <p class="cover-lede">
+      <span class="dropcap">A</span> salary in San Francisco is not a salary in Lisbon. The currency converter is the easy part — the hard part is everything underneath: rent, tax, transit, the cost of a coffee on a Tuesday morning. We built salary:converter to do the hard part. Type in what you earn, where you live, and where you're curious about. We'll tell you what your pay is actually worth on the ground.
+    </p>
+    <div class="cover-meta">By the editors · Estimated read: 4 minutes · Plus six tools, inside</div>
+  </div>
+  <aside class="cover-aside">
+    <h3>The <em>premise</em>, in one paragraph.</h3>
+    <p>You earn $120,000 in San Francisco. After tax and rent and transit and groceries, you keep $X. In Porto, the same lifestyle costs $Y. We do the maths in real time, with real data, and tell you what your salary actually means — wherever you'd like to be next.</p>
+    <div class="stats">
+      <div>
+        <div class="stat-num">182</div>
+        <div class="stat-lbl">Cities, indexed</div>
+      </div>
+      <div>
+        <div class="stat-num">3,400+</div>
+        <div class="stat-lbl">Neighbourhoods</div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="break-stats">
+  <div class="break-stat">
+    <div class="break-stat-num">76</div>
+    <div class="break-stat-lbl">Currencies & tax systems modelled</div>
+  </div>
+  <div class="break-stat">
+    <div class="break-stat-num">100<em>%</em></div>
+    <div class="break-stat-lbl">Free, no account, no sales call</div>
+  </div>
+  <div class="break-stat">
+    <div class="break-stat-num">&lt;1<em>s</em></div>
+    <div class="break-stat-lbl">Time to a useful answer</div>
+  </div>
+  <div class="break-stat">
+    <div class="break-stat-num">Q1</div>
+    <div class="break-stat-lbl">Data refreshed every quarter</div>
+  </div>
+</section>
+
+<section id="departments" class="departments">
+  <header class="dept-header">
+    <div class="dept-label">— Departments</div>
+    <h2 class="dept-h2">Six tools.<br>One <em>question</em>, asked six ways.</h2>
+  </header>
+
+  <a class="dept" href="/">
+    <div class="dept-num"><small>№</small>01</div>
+    <div>
+      <div class="dept-kicker">The flagship</div>
+      <h3 class="dept-title">Salary <em>Converter</em></h3>
+    </div>
+    <p class="dept-desc">Translate a salary from one city to another, with full tax, rent, and cost-of-living adjustments. Start here if you don't know where to start.</p>
+    <div class="dept-cta">Read the issue</div>
+  </a>
+
+  <a class="dept" href="/offer-evaluator/">
+    <div class="dept-num"><small>№</small>02</div>
+    <div>
+      <div class="dept-kicker">For the negotiator</div>
+      <h3 class="dept-title">Offer <em>Evaluator</em></h3>
+    </div>
+    <p class="dept-desc">You have two offers, in two different cities. We line them up side by side and tell you which one actually leaves you better off — and by how much.</p>
+    <div class="dept-cta">Compare two</div>
+  </a>
+
+  <a class="dept" href="/furthest/">
+    <div class="dept-num"><small>№</small>03</div>
+    <div>
+      <div class="dept-kicker">For the dreamer</div>
+      <h3 class="dept-title">Furthest <em>Reach</em></h3>
+    </div>
+    <p class="dept-desc">Enter a salary, and we'll show you the cities on earth where it stretches the furthest. A leaderboard for the geographically curious.</p>
+    <div class="dept-cta">Explore the map</div>
+  </a>
+
+  <a class="dept" href="/retire/">
+    <div class="dept-num"><small>№</small>04</div>
+    <div>
+      <div class="dept-kicker">For the planner</div>
+      <h3 class="dept-title">Retire <em>Abroad</em></h3>
+    </div>
+    <p class="dept-desc">Project your savings against the cost of living in 182 cities. Visa eligibility, tax treatment, and quality-of-life data all included.</p>
+    <div class="dept-cta">Plan ahead</div>
+  </a>
+
+  <a class="dept" href="/digital-nomad/">
+    <div class="dept-num"><small>№</small>05</div>
+    <div>
+      <div class="dept-kicker">For the remote</div>
+      <h3 class="dept-title">Digital <em>Nomad</em></h3>
+    </div>
+    <p class="dept-desc">Stretch a remote salary across the world. Filter by visa policy, time zone, and tax treatment for digital nomads.</p>
+    <div class="dept-cta">Find your spot</div>
+  </a>
+
+  <a class="dept" href="/rankings/">
+    <div class="dept-num"><small>№</small>06</div>
+    <div>
+      <div class="dept-kicker">The atlas</div>
+      <h3 class="dept-title">City <em>Rankings</em></h3>
+    </div>
+    <p class="dept-desc">Every city we cover, in one ranked atlas. Sortable by purchasing power, taxes, rent, and quality-of-life metrics.</p>
+    <div class="dept-cta">See the atlas</div>
+  </a>
+</section>
+
+<section class="quote-spread">
+  <div class="quote-mark">"</div>
+  <p class="quote-text">$120,000 in San Francisco buys roughly the same life as <em>€54,200 in Porto</em>. The currency conversion is the easy part — everything else is what we built this for.</p>
+  <p class="quote-attr">— From the methodology, January 2026</p>
+</section>
+
+<section id="method" class="method">
+  <header class="dept-header">
+    <div class="dept-label">— The method</div>
+    <h2 class="dept-h2">Three layers, one <em>honest number</em>.</h2>
+  </header>
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-num">i. — Cost of living</div>
+      <h3 class="method-title">A real index, not vibes.</h3>
+      <p class="method-desc">Numbeo, EIU, Mercer, and government CPI data, normalised so New York City equals 100. Updated quarterly. No ad-hoc adjustments.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-num">ii. — Tax & deductions</div>
+      <h3 class="method-title">Effective rates, not headlines.</h3>
+      <p class="method-desc">Country-level income tax brackets and social-security contributions, applied to your specific gross. Effective, not marginal — what you'll actually keep.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-num">iii. — Real expenses</div>
+      <h3 class="method-title">Down to the neighbourhood.</h3>
+      <p class="method-desc">Rent, groceries, transport, healthcare, childcare. By neighbourhood where the data exists, by city otherwise. Always the latest source pull.</p>
+    </div>
+  </div>
+</section>
+
+<section class="colophon">
+  <div class="colophon-inner">
+    <div>
+      <h2>Walk into your next pay conversation with <em>numbers</em>.</h2>
+      <p>Generate a personalised PDF report with negotiation talking points, monthly cash flow, and a relocation checklist — emailed straight to you, free.</p>
+    </div>
+    <a href="/" class="colophon-btn">Get your report —</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-brand">salary<em>:</em>converter</div>
+    <p class="footer-tag">A field guide to compensation, from a small team that takes the data seriously and the rest with humour.</p>
+  </div>
+  <div>
+    <h4>— Departments</h4>
+    <ul>
+      <li><a href="/">Salary converter</a></li>
+      <li><a href="/offer-evaluator/">Offer evaluator</a></li>
+      <li><a href="/retire/">Retire abroad</a></li>
+      <li><a href="/digital-nomad/">Digital nomad</a></li>
+      <li><a href="/rankings/">City rankings</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>— The masthead</h4>
+    <ul>
+      <li><a href="/blog/">The journal</a></li>
+      <li><a href="/about/">Methodology</a></li>
+      <li><a href="/about/">About us</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>— Subscribe</h4>
+    <ul>
+      <li><a href="https://x.com/salaryconverter">X / @salaryconverter</a></li>
+      <li><a href="mailto:hello@salary-converter.com">hello@salary-converter.com</a></li>
+    </ul>
+  </div>
+  <div class="footer-base">
+    <span>© Vol. 1, 2026, salary:converter</span>
+    <span>Estimates only — consult a qualified adviser</span>
+  </div>
+</footer>
+
+</body>
+</html>
