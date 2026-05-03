@@ -926,7 +926,7 @@ function calcTax(income,country){
   if(!brackets.length)return{tax:0,rate:0};
   let tax=0,prev=0;
   for(const[lim,r]of brackets){
-    if(income<=prev)break;
+    if(income<=prev||lim==null||lim<=prev)break;
     tax+=(Math.min(income,lim)-prev)*(r/100);
     prev=lim;
   }
@@ -992,12 +992,13 @@ function compare(){
 }
 function nameA(){const l=document.getElementById('labelA').value.trim();return l||'Offer A';}
 function nameB(){const l=document.getElementById('labelB').value.trim();return l||'Offer B';}
+function escH(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function renderResults(a,b){
   // Verdict
   const diff=b.purchPower-a.purchPower;
   const pct=Math.abs(a.purchPower)>0?Math.abs(diff/a.purchPower)*100:0;
   const vEl=document.getElementById('verdict');
-  const nA=nameA(),nB=nameB();
+  const nA=escH(nameA()),nB=escH(nameB());
   if(pct<5){
     vEl.className='verdict tied';
     vEl.innerHTML='<div class="verdict-title">These offers are roughly equivalent</div><div class="verdict-sub">Real purchasing power is within 5% after tax, rent &amp; cost-of-living adjustment.</div>';
