@@ -751,6 +751,10 @@
                 font-size: 1.6rem;
             }
 
+            .tool-tabs-section {
+                padding: 0 16px 60px;
+            }
+
             .preview-section {
                 padding: 0 16px 60px;
             }
@@ -759,56 +763,115 @@
                 height: 600px;
             }
 
+            .preview-toolbar {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
             .embed-card {
-                padding: 28px 20px;
-                border-radius: 20px;
+                padding: 24px 16px;
+                border-radius: 16px;
             }
 
             .embed-card h2 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
 
             .code-block {
                 font-size: 0.75rem;
-                padding: 18px;
+                padding: 42px 14px 14px;
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .copy-btn {
+                top: 8px;
+                right: 8px;
+                padding: 5px 12px;
+                font-size: 0.72rem;
             }
 
             .size-options {
                 flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .size-btn {
+                font-size: 0.78rem;
+                padding: 7px 14px;
             }
 
             .faq-section {
-                padding: 0 20px 60px;
+                padding: 0 16px 60px;
+            }
+
+            .faq-question {
+                font-size: 0.95rem;
+                padding: 20px 0;
             }
 
             .bottom-cta-card {
-                padding: 40px 24px;
+                padding: 36px 20px;
                 border-radius: 20px;
             }
 
             .bottom-cta-card h2 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 12px 20px;
+                justify-content: center;
             }
 
             .nav-links a.nav-link-text {
                 display: none;
             }
 
-            .theme-toggle {
-                position: fixed !important;
-                top: 16px !important;
-                right: 16px !important;
-                z-index: 10001 !important;
+            .nav-inner {
+                padding: 14px 16px;
             }
         }
 
         @media (max-width: 480px) {
+            .hero {
+                padding: 36px 16px 32px;
+            }
+
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .hero-cta {
+                font-size: 0.9rem;
+                padding: 12px 24px;
             }
 
             .feature-card {
                 padding: 24px 20px;
+            }
+
+            .tool-tab-btn {
+                font-size: 0.8rem;
+                padding: 8px 14px;
+            }
+
+            .preview-iframe-wrap iframe {
+                height: 520px;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .embed-card h2 {
+                font-size: 1.35rem;
             }
         }
     </style>
