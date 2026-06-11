@@ -33,4 +33,3 @@ User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://salary-converter.com/sitemap.xml
-Sitemap: https://salary-converter.com/sitemap-index.xml
