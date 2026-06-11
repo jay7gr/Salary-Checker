@@ -322,7 +322,7 @@ footer a{color:var(--accent);text-decoration:none}
 .feedback-widget.is-sent .fb-form{display:none}
 .feedback-widget.is-sent .fb-success{display:block}
 </style>
-<script>(function(){if(new URLSearchParams(location.search).get('embed')==='1'){document.documentElement.classList.add('embed-mode');window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'widget_embedded',widget_type:'salary_check',embedding_domain:document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)'});}})()</script>
+<script>(function(){if(new URLSearchParams(location.search).get('embed')==='1'){document.documentElement.classList.add('embed-mode');window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'widget_embedded',widget_type:'salary_check',embedding_domain:document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)',embedding_url:document.referrer?document.referrer.slice(0,100):'(direct)'});}})()</script>
 <style>.embed-mode .nav-burger,.embed-mode .nav-dropdown,.embed-mode .tool-switcher,.embed-mode footer,.embed-mode nav.footer-links-grid,.embed-mode .site-footer,.embed-mode .contact-overlay{display:none!important}</style>
 
 <style>
