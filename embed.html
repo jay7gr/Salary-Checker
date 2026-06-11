@@ -4829,6 +4829,7 @@
             let currentDed = null, currentDed2 = null;
             let targetAdult1Gross = null, targetAdult2Gross = null;
             let combinedCurrentTakeHome = 0;
+            let usedColiFallback = false;
 
             if (household.mode === 'family' && household.adults === 2) {
                 // Family mode with 2 working adults: tax each salary separately
@@ -4868,6 +4869,7 @@
                 // equivalent. Fall back to the cost-of-living-adjusted equivalent,
                 // which stays positive and is consistent with the headline ratio.
                 if (currentDisposable <= 0 || targetTakeHomeNeeded <= 0) {
+                    usedColiFallback = true;
                     if (household.mode === 'family' && household.adults === 2) {
                         const totalInput = salary + salary2;
                         targetAdult1Gross = coliEquivalentSalary * (salary / totalInput);
@@ -4971,6 +4973,11 @@
                     : hasTaxData
                         ? `To maintain the same take-home pay you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, accounting for taxes.`
                         : `Based on cost-of-living index comparison (limited data available).`;
+            }
+            if (usedColiFallback) {
+                // Source-city expenses exceed take-home pay, so there's no positive
+                // disposable income to match. Explain the cost-of-living basis instead.
+                subtitleHtml = `Your expenses already exceed your take-home pay in ${currentLabel}, so we&rsquo;re showing the <strong>cost-of-living-adjusted equivalent</strong> of your <strong>${formattedOriginalCurrent}</strong> salary instead.`;
             }
             document.getElementById('resultSubtitle').innerHTML = subtitleHtml;
 
