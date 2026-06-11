@@ -2923,7 +2923,22 @@
                 const targetDisposableNeeded = currentDisposable * exchangeRate;
                 const targetTakeHomeNeeded = targetDisposableNeeded + targetExpenses.total;
 
-                if (household.mode === 'family' && household.adults === 2) {
+                // Edge case: source-city disposable income is non-positive (annual
+                // expenses already meet or exceed take-home pay — common for a low
+                // salary in an expensive city). "Matching" a negative disposable
+                // collapses the reverse-gross to 0, producing a meaningless "0"
+                // equivalent. Fall back to the cost-of-living-adjusted equivalent,
+                // which stays positive and is consistent with the headline ratio.
+                if (currentDisposable <= 0 || targetTakeHomeNeeded <= 0) {
+                    if (household.mode === 'family' && household.adults === 2) {
+                        const totalInput = salary + salary2;
+                        targetAdult1Gross = coliEquivalentSalary * (salary / totalInput);
+                        targetAdult2Gross = coliEquivalentSalary * (salary2 / totalInput);
+                        trueEquivalentSalary = targetAdult1Gross + targetAdult2Gross;
+                    } else {
+                        trueEquivalentSalary = coliEquivalentSalary;
+                    }
+                } else if (household.mode === 'family' && household.adults === 2) {
                     // Split target take-home by salary ratio, reverse-engineer each
                     const totalInput = salary + salary2;
                     const ratio1 = salary / totalInput;
