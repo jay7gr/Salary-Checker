@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cost of Living: City vs City Comparison 2026 — salary:converter</title>
+<meta name="description" content="Compare the cost of living between any two cities — overall index, 1-bed rent, safety, healthcare and climate. See the salary you'd need to keep the same lifestyle. Free, 100+ cities.">
+<link rel="canonical" href="https://salary-converter.com/cost-of-living/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cost of Living: City vs City Comparison">
+<meta property="og:description" content="Compare cost of living, rent, safety, healthcare and climate between any two cities — and the salary you'd need to match your lifestyle.">
+<meta property="og:url" content="https://salary-converter.com/cost-of-living/">
+<meta property="og:image" content="https://salary-converter.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MMZSM2Z96B');</script>
+
+<style>
+:root{--bg:#f5f5f7;--card-bg:#fff;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;--border:#e5e5ea;--border-light:#f0f0f2;--stat-card-bg:#f5f5f7;--good:#16a34a;--bad:#dc2626;--gold:#d97706}
+[data-theme=dark]{--bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--border:#38383a;--border-light:#2c2c2e;--stat-card-bg:#2c2c2e;--gold:#fbbf24}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px;min-height:100vh;transition:background .3s,color .3s}
+.wrap{max-width:720px;margin:0 auto}
+.brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.brand-logo{font-size:1.05rem;font-weight:700;letter-spacing:-.5px;color:var(--text-primary);text-decoration:none}
+.brand-logo .colon{color:var(--accent)}
+.brand-nav{display:flex;gap:18px;font-size:.82rem;align-items:center}
+.brand-nav a{color:var(--text-secondary);text-decoration:none;font-weight:500}
+.brand-nav a:hover{color:var(--accent)}
+.theme-btn{background:none;border:1px solid var(--border);border-radius:100px;padding:5px 10px;font-size:.78rem;color:var(--text-secondary);cursor:pointer;font-family:inherit}
+
+.hero{text-align:center;margin:30px 0 20px}
+.eyebrow{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
+h1{font-size:2rem;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:8px}
+h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:.95rem;color:var(--text-secondary);max-width:520px;margin:0 auto;line-height:1.55}
+
+.controls{background:var(--card-bg);border-radius:16px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.04);margin-bottom:18px}
+[data-theme=dark] .controls{box-shadow:0 1px 6px rgba(0,0,0,.4)}
+.city-row{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:end}
+.field label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-secondary);margin-bottom:6px}
+select,input{width:100%;padding:11px 12px;font-size:.95rem;font-family:inherit;color:var(--text-primary);background:var(--bg);border:1px solid var(--border);border-radius:10px;-webkit-appearance:none;appearance:none}
+select:focus,input:focus{outline:none;border-color:var(--accent)}
+.swap{align-self:end;margin-bottom:3px;background:var(--stat-card-bg);border:1px solid var(--border);color:var(--text-secondary);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;flex:none;transition:all .15s}
+.swap:hover{border-color:var(--accent);color:var(--accent)}
+.income-field{margin-top:14px}
+
+.verdict{text-align:center;margin:22px 0 6px;font-size:1.35rem;font-weight:800;letter-spacing:-.5px;line-height:1.25}
+.verdict .up{color:var(--bad)}
+.verdict .down{color:var(--good)}
+.equiv{text-align:center;font-size:.95rem;color:var(--text-body);max-width:560px;margin:0 auto 22px;line-height:1.6}
+.equiv strong{color:var(--text-primary)}
+
+.cmp{background:var(--card-bg);border-radius:16px;padding:6px 6px 4px;box-shadow:0 1px 6px rgba(0,0,0,.04);overflow:hidden}
+[data-theme=dark] .cmp{box-shadow:0 1px 6px rgba(0,0,0,.4)}
+.cmp-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--border-light)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-head{padding-top:14px;padding-bottom:14px}
+.cmp-head .metric{font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:var(--text-secondary);font-weight:700}
+.cmp-city{text-align:right;font-weight:700;color:var(--text-primary);font-size:.9rem;line-height:1.2}
+.cmp-city .ccy{display:block;font-size:.68rem;font-weight:500;color:var(--text-secondary);margin-top:2px}
+.metric{font-size:.88rem;color:var(--text-body);font-weight:500}
+.metric .hint{display:block;font-size:.68rem;color:var(--text-secondary);font-weight:400;margin-top:1px}
+.val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:.95rem;color:var(--text-primary)}
+.val.win{color:var(--good)}
+.val .pill{display:inline-block;font-size:.62rem;font-weight:700;margin-left:5px;padding:1px 5px;border-radius:100px;background:rgba(22,163,74,.12);color:var(--good);vertical-align:middle}
+
+.share-row{display:flex;gap:10px;justify-content:center;margin:22px 0 12px;flex-wrap:wrap}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-primary);border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .18s}
+.share-btn:hover{border-color:var(--accent);color:var(--accent)}
+.share-btn.is-copied{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.foot-cta{text-align:center;margin:26px 0 14px;padding:22px;background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border-radius:16px;font-size:.95rem;color:var(--text-body)}
+.foot-cta a{color:var(--accent);text-decoration:none;font-weight:600}
+.method{margin-top:24px;padding:18px 22px;background:var(--card-bg);border-radius:14px;font-size:.82rem;color:var(--text-body);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+[data-theme=dark] .method{box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.method strong{color:var(--text-primary)}
+footer{text-align:center;font-size:.78rem;color:var(--text-secondary);margin-top:24px;padding-top:18px;border-top:1px solid var(--border-light)}
+footer a{color:var(--accent);text-decoration:none}
+
+@media(max-width:520px){
+  body{padding:16px}
+  h1{font-size:1.5rem}
+  .city-row{grid-template-columns:1fr;gap:10px}
+  .swap{justify-self:center;transform:rotate(90deg)}
+  .swap:hover{transform:rotate(90deg)}
+  .verdict{font-size:1.15rem}
+  .cmp-row{padding:11px 10px;gap:6px}
+  .cmp-city,.val{font-size:.85rem}
+  .metric{font-size:.82rem}
+}
+</style>
+<script>(function(){if(new URLSearchParams(location.search).get('embed')==='1'){document.documentElement.classList.add('embed-mode');window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'widget_embedded',widget_type:'cost_of_living_compare',embedding_domain:document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)',embedding_url:document.referrer?document.referrer.slice(0,100):'(direct)'});}})()</script>
+<style>.embed-mode header,.embed-mode footer,.embed-mode .brand-nav,.embed-mode .page-footer,.embed-mode .nav-burger,.embed-mode .nav-dropdown,.embed-mode .tool-switcher,.embed-mode .site-footer,.embed-mode .footer-links-grid,.embed-mode .contact-overlay,.embed-mode #chatWidget,.embed-mode .chat-fab,.embed-mode .chat-bubble{display:none!important}.embed-mode body{padding:14px}.embed-mode .hero{margin-top:6px}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <a href="/" class="brand-logo">salary<span class="colon">:</span>converter</a>
+    <nav class="brand-nav">
+      <a href="/">Converter</a>
+      <a href="/leaderboard/">Leaderboard</a>
+      <a href="/map/">Map</a>
+      <a href="/blog/">Blog</a>
+      <button class="theme-btn" id="themeBtn" type="button">☾</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Cost of living</div>
+    <h1>Compare <em>any two cities</em></h1>
+    <p class="hero-sub">Cost of living, rent, safety, healthcare and climate — side by side. Plus the salary you'd need to keep the same lifestyle.</p>
+  </section>
+
+  <div class="controls">
+    <div class="city-row">
+      <div class="field"><label for="cityA">City A</label><select id="cityA"></select></div>
+      <button class="swap" id="swapBtn" type="button" title="Swap cities" aria-label="Swap cities">⇄</button>
+      <div class="field"><label for="cityB">City B</label><select id="cityB"></select></div>
+    </div>
+    <div class="field income-field">
+      <label for="income" id="incLabel">Your annual salary in City A</label>
+      <input id="income" inputmode="numeric" autocomplete="off" placeholder="100,000">
+    </div>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+  <div class="equiv" id="equiv"></div>
+  <div class="cmp" id="cmp"></div>
+
+  <div class="share-row">
+    <button class="share-btn" id="copyBtn" type="button">🔗 Copy link to this comparison</button>
+  </div>
+
+  <section class="foot-cta">
+    Want it tax-adjusted, with neighborhoods and 182 cities? <a href="/">Use the full salary converter →</a>
+  </section>
+
+  <div class="method">
+    <strong>Methodology:</strong> Overall cost index is relative to New York = 100. The equivalent salary = your amount × (City B cost ÷ City A cost), converted to City B's currency at current rates. Rent is the typical 1-bedroom monthly rent in USD. Safety, healthcare and climate are 0–100 scores (higher is better). Data: Numbeo + government sources, refreshed quarterly.
+  </div>
+
+  <footer>
+    &copy; 2026 <a href="/">salary:converter</a> &middot; <a href="/about/">About</a> &middot; <a href="/leaderboard/">Leaderboard</a> &middot; <a href="/blog/">Blog</a>
+  </footer>
+</div>
+
+<script src="/js/app-data.js?v=1"></script>
+<script>
+(function(){
+  // ---- theme ----
+  var t = document.getElementById('themeBtn');
+  function setT(m){ document.documentElement.setAttribute('data-theme', m); try{localStorage.setItem('theme', m);}catch(e){} t.textContent = m === 'dark' ? '☀' : '☾'; }
+  var saved; try{ saved = localStorage.getItem('theme'); }catch(e){}
+  setT(saved || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+  t.onclick = function(){ setT(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); };
+
+  // ---- data ----
+  var D = window.SalaryCheckerData || {};
+  var COLI = D.coliData || {}, CCY = D.cityToCurrency || {}, COUNTRY = D.cityCountry || {},
+      FX = D.exchangeRates || {}, RENT = D.cityRent1BR || {}, SYM = D.currencySymbols || {},
+      SAFE = D.safetyScores || {}, HEALTH = D.healthScores || {}, CLIM = D.climateScores || {};
+  var cities = Object.keys(COLI).sort(function(a,b){ return a.localeCompare(b); });
+
+  var selA = document.getElementById('cityA'), selB = document.getElementById('cityB'),
+      inc = document.getElementById('income');
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+  var optsHTML = cities.map(function(c){
+    return '<option value="' + esc(c) + '">' + esc(c) + (COUNTRY[c] ? ' — ' + esc(COUNTRY[c]) : '') + '</option>';
+  }).join('');
+  selA.innerHTML = optsHTML; selB.innerHTML = optsHTML;
+
+  function money(n, ccy){
+    try { return new Intl.NumberFormat('en-US', { style:'currency', currency:ccy, maximumFractionDigits:0 }).format(n); }
+    catch(_){ return (SYM[ccy] || (ccy + ' ')) + Math.round(n).toLocaleString(); }
+  }
+  function usd(n){ return '$' + Math.round(n).toLocaleString(); }
+
+  // ---- initial state from URL ----
+  var p = new URLSearchParams(location.search);
+  function pick(v, def){ return (v && COLI[v] != null) ? v : def; }
+  selA.value = pick(p.get('a'), 'London');
+  selB.value = pick(p.get('b'), 'New York');
+  if (selA.value === selB.value){ selB.value = cities.find(function(c){ return c !== selA.value; }); }
+  var sal0 = parseFloat((p.get('salary') || '').replace(/[^\d.]/g, ''));
+  inc.value = (sal0 && sal0 > 0) ? Math.round(sal0).toLocaleString() : '100,000';
+
+  function row(metric, hint, aVal, bVal, aRaw, bRaw, betterHigh){
+    var aWin = (aRaw === bRaw) ? false : (betterHigh ? aRaw > bRaw : aRaw < bRaw);
+    var bWin = (aRaw === bRaw) ? false : !aWin;
+    return '<div class="cmp-row">' +
+      '<div class="metric">' + metric + (hint ? '<span class="hint">' + hint + '</span>' : '') + '</div>' +
+      '<div class="val' + (aWin ? ' win' : '') + '">' + aVal + (aWin ? '<span class="pill">best</span>' : '') + '</div>' +
+      '<div class="val' + (bWin ? ' win' : '') + '">' + bVal + (bWin ? '<span class="pill">best</span>' : '') + '</div>' +
+    '</div>';
+  }
+  function score(city, map){ return (map[city] != null) ? map[city] : null; }
+  function scoreCell(v){ return v == null ? '—' : v + '<span style="color:var(--text-secondary);font-weight:500;font-size:.78em"> /100</span>'; }
+
+  function render(){
+    var a = selA.value, b = selB.value;
+    var ccyA = CCY[a] || 'USD', ccyB = CCY[b] || 'USD';
+    var coliA = COLI[a], coliB = COLI[b];
+    var amtA = parseFloat((inc.value || '').replace(/[^\d.]/g, '')) || 0;
+
+    document.getElementById('incLabel').textContent = 'Your annual salary in ' + a + ' (' + ccyA + ')';
+
+    // verdict
+    var ratio = coliB / coliA;            // >1 => B pricier
+    var pct = Math.round((ratio - 1) * 100);
+    var vEl = document.getElementById('verdict');
+    if (pct > 0)      vEl.innerHTML = esc(b) + ' is <span class="up">' + pct + '% more expensive</span> than ' + esc(a);
+    else if (pct < 0) vEl.innerHTML = esc(b) + ' is <span class="down">' + Math.abs(pct) + '% cheaper</span> than ' + esc(a);
+    else              vEl.innerHTML = esc(a) + ' and ' + esc(b) + ' cost about the same';
+
+    // equivalent salary
+    var eqEl = document.getElementById('equiv');
+    if (amtA > 0){
+      var amtB = amtA * ratio * ((FX[ccyB] || 1) / (FX[ccyA] || 1));
+      eqEl.innerHTML = 'To keep the same lifestyle as <strong>' + money(amtA, ccyA) + '</strong> in ' + esc(a) +
+                       ', you’d need about <strong>' + money(amtB, ccyB) + '</strong> in ' + esc(b) + '.';
+    } else {
+      eqEl.innerHTML = 'Enter a salary above to see the equivalent in ' + esc(b) + '.';
+    }
+
+    // comparison table
+    var safeA = score(a, SAFE), safeB = score(b, SAFE),
+        heaA = score(a, HEALTH), heaB = score(b, HEALTH),
+        cliA = score(a, CLIM), cliB = score(b, CLIM);
+    var head = '<div class="cmp-row cmp-head">' +
+        '<div class="metric">Metric</div>' +
+        '<div class="cmp-city">' + esc(a) + '<span class="ccy">' + ccyA + '</span></div>' +
+        '<div class="cmp-city">' + esc(b) + '<span class="ccy">' + ccyB + '</span></div>' +
+      '</div>';
+    var html = head +
+      row('Overall cost', 'NYC = 100, lower is cheaper', coliA, coliB, coliA, coliB, false) +
+      row('1-bed rent', 'typical, USD/month', RENT[a] != null ? usd(RENT[a]) : '—', RENT[b] != null ? usd(RENT[b]) : '—',
+          RENT[a] != null ? RENT[a] : Infinity, RENT[b] != null ? RENT[b] : Infinity, false) +
+      row('Safety', 'higher is safer', scoreCell(safeA), scoreCell(safeB), safeA == null ? -1 : safeA, safeB == null ? -1 : safeB, true) +
+      row('Healthcare', null, scoreCell(heaA), scoreCell(heaB), heaA == null ? -1 : heaA, heaB == null ? -1 : heaB, true) +
+      row('Climate', null, scoreCell(cliA), scoreCell(cliB), cliA == null ? -1 : cliA, cliB == null ? -1 : cliB, true);
+    document.getElementById('cmp').innerHTML = html;
+
+    // sync URL (no history spam)
+    var qs = '?a=' + encodeURIComponent(a) + '&b=' + encodeURIComponent(b) + (amtA > 0 ? '&salary=' + Math.round(amtA) : '');
+    try { history.replaceState(null, '', location.pathname + qs); } catch(e){}
+  }
+
+  selA.addEventListener('change', function(){ if (selA.value === selB.value){ swap(); return; } render(); });
+  selB.addEventListener('change', function(){ if (selA.value === selB.value){ swap(); return; } render(); });
+  inc.addEventListener('input', render);
+  function swap(){ var v = selA.value; selA.value = selB.value; selB.value = v; render(); }
+  document.getElementById('swapBtn').addEventListener('click', swap);
+
+  // copy link
+  var cb = document.getElementById('copyBtn');
+  cb.addEventListener('click', function(){
+    var url = location.origin + location.pathname + location.search;
+    function done(){ cb.classList.add('is-copied'); cb.textContent = '✓ Link copied'; setTimeout(function(){ cb.classList.remove('is-copied'); cb.textContent = '🔗 Copy link to this comparison'; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done, done); }
+    else { try { var ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); } catch(e){} }
+  });
+
+  render();
+})();
+</script>
+<script src="/js/embed-promo.js?v=1" defer></script>
+</body>
+</html>

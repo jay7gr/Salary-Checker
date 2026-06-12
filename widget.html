@@ -424,6 +424,7 @@
             <button class="widget-tab" onclick="switchWidget('leaderboard')">Salary Leaderboard</button>
             <button class="widget-tab" onclick="switchWidget('furthest')">Goes Furthest</button>
             <button class="widget-tab" onclick="switchWidget('salaryneeded')">Salary Needed</button>
+            <button class="widget-tab" onclick="switchWidget('costofliving')">City vs City</button>
         </div>
 
         <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
@@ -774,6 +775,55 @@
             </div>
         </div>
 
+        <!-- ═══════ CITY VS CITY WIDGET ═══════ -->
+        <div class="widget-panel" id="costoflivingPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="costoflivingPreview" src="/cost-of-living/?embed=1" width="480" height="700" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="costoflivingCopyBtn" onclick="copyCode('costofliving')">Copy</button>
+                            <code id="costoflivingEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:480px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/cost-of-living/?embed=1"</span>
+    <span class="attr">width</span>=<span class="val">"480"</span>
+    <span class="attr">height</span>=<span class="val">"700"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/cost-of-living/"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('costofliving', 360, 780, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('costofliving', 480, 700, this)">Standard (480px)</button>
+                                <button class="size-btn" onclick="setSize('costofliving', 600, 680, this)">Wide (600px)</button>
+                                <button class="size-btn" onclick="setSize('costofliving', '100%', 700, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost of living: city vs city</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 100+ cities compared</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Rent, safety, healthcare & climate</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Equivalent-salary calculator</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="page-footer">
             <a href="https://salary-converter.com">Salary Converter</a>
@@ -839,6 +889,14 @@
             previewId: 'salaryneededPreview',
             codeId: 'salaryneededEmbedCode',
             copyBtnId: 'salaryneededCopyBtn'
+        },
+        costofliving: {
+            src: 'https://salary-converter.com/cost-of-living/?embed=1',
+            credit: 'https://salary-converter.com/cost-of-living/',
+            defaultW: 480, defaultH: 700,
+            previewId: 'costoflivingPreview',
+            codeId: 'costoflivingEmbedCode',
+            copyBtnId: 'costoflivingCopyBtn'
         }
     };
 
