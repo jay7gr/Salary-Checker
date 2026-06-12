@@ -2671,52 +2671,12 @@
             </div>
             <p class="hero-headline" id="hero-headline">What&rsquo;s your salary <em>actually</em> worth&nbsp;&mdash; anywhere?</p>
             <p class="hero-sub" id="hero-subtitle">See your real purchasing power across 182 cities &middot; tax, rent &amp; cost of living all baked in.</p>
+            <p style="margin:16px 0 0;"><a href="/?from=London&amp;to=New%20York&amp;salary=60000" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:rgba(37,99,235,0.08);color:#2563eb;border:1px solid rgba(37,99,235,0.25);border-radius:100px;text-decoration:none;font-size:0.92rem;font-weight:600;">&#9654;&nbsp;See an example &mdash; &pound;60k in London vs New York</a></p>
             <p class="hero-meta"><a href="/furthest/" class="hero-link">🌍 Or skip ahead — find where your salary goes furthest →</a></p>
         </div>
 
 
         <div class="error-message" id="error"></div>
-
-        <div class="form-section household-section" id="householdSection">
-            <h2>👥 Household</h2>
-            <div class="household-mode-toggle" id="householdModeToggle">
-                <button class="mode-btn active" data-mode="single" type="button">Single</button>
-                <button class="mode-btn" data-mode="family" type="button">Family</button>
-            </div>
-            <div class="family-options" id="familyOptions" style="display:none;">
-                <div class="chip-group">
-                    <label>Working Adults</label>
-                    <div class="chips" id="adultsChips">
-                        <button class="chip" data-value="1" type="button">1</button>
-                        <button class="chip active" data-value="2" type="button">2</button>
-                    </div>
-                </div>
-                <div class="chip-group">
-                    <label>Children</label>
-                    <div class="chips" id="childrenChips">
-                        <button class="chip" data-value="0" type="button">0</button>
-                        <button class="chip active" data-value="1" type="button">1</button>
-                        <button class="chip" data-value="2" type="button">2</button>
-                        <button class="chip" data-value="3" type="button">3</button>
-                        <button class="chip" data-value="4" type="button">4</button>
-                    </div>
-                </div>
-            </div>
-            <div class="remote-toggle" id="remoteToggle">
-                <label class="remote-label">
-                    <input type="checkbox" id="remoteCheckbox">
-                    <span class="remote-check"></span>
-                    <span>I keep my salary remotely <span style="color:var(--text-secondary);font-weight:400;">— I earn in one city but live in another</span></span>
-                </label>
-                <div class="commute-sub" id="commuteSub" style="display:none;">
-                    <label class="remote-label commute-label">
-                        <input type="checkbox" id="noCommuteCheckbox">
-                        <span class="remote-check"></span>
-                        <span>I don't commute <span style="color:var(--text-secondary);font-weight:400;">— remove transport costs</span></span>
-                    </label>
-                </div>
-            </div>
-        </div>
 
         <div class="form-section">
             <h2>📍 Current Location</h2>
@@ -2838,6 +2798,47 @@
                 </div>
             </div>
             <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
+        </div>
+
+        <div class="form-section household-section" id="householdSection">
+            <h2>👥 Household</h2>
+            <div class="household-mode-toggle" id="householdModeToggle">
+                <button class="mode-btn active" data-mode="single" type="button">Single</button>
+                <button class="mode-btn" data-mode="family" type="button">Family</button>
+            </div>
+            <div class="family-options" id="familyOptions" style="display:none;">
+                <div class="chip-group">
+                    <label>Working Adults</label>
+                    <div class="chips" id="adultsChips">
+                        <button class="chip" data-value="1" type="button">1</button>
+                        <button class="chip active" data-value="2" type="button">2</button>
+                    </div>
+                </div>
+                <div class="chip-group">
+                    <label>Children</label>
+                    <div class="chips" id="childrenChips">
+                        <button class="chip" data-value="0" type="button">0</button>
+                        <button class="chip active" data-value="1" type="button">1</button>
+                        <button class="chip" data-value="2" type="button">2</button>
+                        <button class="chip" data-value="3" type="button">3</button>
+                        <button class="chip" data-value="4" type="button">4</button>
+                    </div>
+                </div>
+            </div>
+            <div class="remote-toggle" id="remoteToggle">
+                <label class="remote-label">
+                    <input type="checkbox" id="remoteCheckbox">
+                    <span class="remote-check"></span>
+                    <span>I keep my salary remotely <span style="color:var(--text-secondary);font-weight:400;">— I earn in one city but live in another</span></span>
+                </label>
+                <div class="commute-sub" id="commuteSub" style="display:none;">
+                    <label class="remote-label commute-label">
+                        <input type="checkbox" id="noCommuteCheckbox">
+                        <span class="remote-check"></span>
+                        <span>I don't commute <span style="color:var(--text-secondary);font-weight:400;">— remove transport costs</span></span>
+                    </label>
+                </div>
+            </div>
         </div>
 
         <div class="button-group">
