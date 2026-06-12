@@ -1,0 +1,45 @@
+name: IndexNow
+
+# Pings Bing / Yandex / Seznam (and their syndication partners DuckDuckGo,
+# Yahoo, Ecosia) to re-crawl pages quickly. Google does not participate, but
+# the Bing ecosystem is where our live search traffic comes from.
+#
+# - push to main: submit only the URLs whose HTML changed in that push
+# - manual run (workflow_dispatch): submit every URL in the sitemaps
+# - weekly schedule: resubmit everything as a safety net
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'sitemap*.xml'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'  # Mondays 06:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # need the previous commit to diff changed files
+
+      - name: Submit changed URLs (push)
+        if: github.event_name == 'push'
+        run: |
+          CHANGED=$(git diff --name-only --diff-filter=ACM HEAD~1 HEAD -- '*.html' '**/*.html' || true)
+          if [ -n "$CHANGED" ]; then
+            echo "Changed HTML files:"; echo "$CHANGED"
+            python3 submit-indexnow.py --files $CHANGED
+          else
+            echo "No HTML files changed; nothing to submit."
+          fi
+
+      - name: Submit all URLs (manual / scheduled)
+        if: github.event_name != 'push'
+        run: python3 submit-indexnow.py
