@@ -5460,6 +5460,18 @@
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
             resultBox.classList.add('show');
+            // GA4: a calculation completed inside the embedded widget. Lets us
+            // measure conversions driven by in-article / external embeds.
+            try {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'salary_calculated', {
+                        from: currentCity,
+                        to: targetCity,
+                        source: 'embed',
+                        embedding_url: (document.referrer ? document.referrer.slice(0, 100) : '(direct)')
+                    });
+                }
+            } catch(_) {}
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
