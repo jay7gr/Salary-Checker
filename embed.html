@@ -5433,7 +5433,22 @@
 
             // Populate share bar
             const shareBar = document.getElementById('resultShareBar');
-            const shareUrl = 'https://salary-converter.com/?' + shareParams.toString();
+            // Share the rich /share card (custom OG image) so links unfurl with
+            // the user's result on LinkedIn / WhatsApp / X — not the generic
+            // homepage preview. Fall back to the prefill URL if anything is off.
+            let shareUrl;
+            try {
+                const ogParams = new URLSearchParams();
+                ogParams.set('from', currentCity);
+                ogParams.set('to', targetCity);
+                ogParams.set('fromSal', String(Math.round(salary || 0)));
+                ogParams.set('toSal', String(Math.round(trueEquivalentSalary || coliEquivalentSalary || 0)));
+                ogParams.set('fromCur', currentCurrency);
+                ogParams.set('toCur', targetCurrency);
+                shareUrl = 'https://salary-converter.com/share?' + ogParams.toString();
+            } catch(_) {
+                shareUrl = 'https://salary-converter.com/?' + shareParams.toString();
+            }
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
             const shareText = household.remote

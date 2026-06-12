@@ -3069,6 +3069,11 @@
                         ? `${targetCity} costs ${Math.abs(stretchPct)}% more than ${currentCity} — eye-opening to see the real number.`
                         : `Compared salaries between ${currentCity} and ${targetCity}. Surprising what cost of living does to a paycheck.`;
                     tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(shareUrl);
+                    // On touch devices, the primary button opens the native
+                    // share sheet (WhatsApp, Messages, Instagram, …) — the
+                    // highest-converting mobile share path. Desktop keeps copy.
+                    const canNativeShare = !!navigator.share && ((navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches));
+                    if (canNativeShare && copyLabel) copyLabel.textContent = 'Share';
                     copyBtn.onclick = function(){
                         const fallback = function(){
                             const ta = document.createElement('textarea');
@@ -3086,6 +3091,12 @@
                             }, 1800);
                             try { if (typeof gtag === 'function') gtag('event', 'share_copy', { from: currentCity, to: targetCity }); } catch(_){}
                         };
+                        if (canNativeShare) {
+                            navigator.share({ title: 'salary:converter', text: tweetText, url: shareUrl })
+                                .then(function(){ try { if (typeof gtag === 'function') gtag('event', 'share', { method: 'native', from: currentCity, to: targetCity }); } catch(_){} })
+                                .catch(function(){ /* user cancelled the sheet — no-op */ });
+                            return;
+                        }
                         if (navigator.clipboard && navigator.clipboard.writeText) {
                             navigator.clipboard.writeText(shareUrl).then(after).catch(function(){ fallback(); after(); });
                         } else {
