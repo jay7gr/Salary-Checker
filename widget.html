@@ -421,6 +421,9 @@
             <button class="widget-tab" onclick="switchWidget('retire')">Retire Abroad</button>
             <button class="widget-tab" onclick="switchWidget('salarychk')">Salary Check</button>
             <button class="widget-tab" onclick="switchWidget('offer')">Offer Evaluator</button>
+            <button class="widget-tab" onclick="switchWidget('leaderboard')">Salary Leaderboard</button>
+            <button class="widget-tab" onclick="switchWidget('furthest')">Goes Furthest</button>
+            <button class="widget-tab" onclick="switchWidget('salaryneeded')">Salary Needed</button>
         </div>
 
         <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
@@ -624,6 +627,153 @@
                 </div>
             </div>
         </div>
+        <!-- ═══════ SALARY LEADERBOARD WIDGET ═══════ -->
+        <div class="widget-panel" id="leaderboardPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="leaderboardPreview" src="/leaderboard/?embed=1" width="600" height="720" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="leaderboardCopyBtn" onclick="copyCode('leaderboard')">Copy</button>
+                            <code id="leaderboardEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:600px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/leaderboard/?embed=1"</span>
+    <span class="attr">width</span>=<span class="val">"600"</span>
+    <span class="attr">height</span>=<span class="val">"720"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/leaderboard/"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('leaderboard', 420, 720, this)">Compact (420px)</button>
+                                <button class="size-btn active" onclick="setSize('leaderboard', 600, 720, this)">Standard (600px)</button>
+                                <button class="size-btn" onclick="setSize('leaderboard', 780, 760, this)">Wide (780px)</button>
+                                <button class="size-btn" onclick="setSize('leaderboard', '100%', 720, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Best cities for $100k / $150k / $250k</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 182 cities ranked</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Net income after tax & rent</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost-of-living adjusted</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ GOES FURTHEST WIDGET ═══════ -->
+        <div class="widget-panel" id="furthestPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="furthestPreview" src="/furthest/?embed=1" width="480" height="680" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="furthestCopyBtn" onclick="copyCode('furthest')">Copy</button>
+                            <code id="furthestEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:480px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/furthest/?embed=1"</span>
+    <span class="attr">width</span>=<span class="val">"480"</span>
+    <span class="attr">height</span>=<span class="val">"680"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/furthest/"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('furthest', 360, 680, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('furthest', 480, 680, this)">Standard (480px)</button>
+                                <button class="size-btn" onclick="setSize('furthest', 600, 720, this)">Wide (600px)</button>
+                                <button class="size-btn" onclick="setSize('furthest', '100%', 680, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Where your salary goes furthest</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 182 cities ranked</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Purchasing-power adjusted</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Live currency conversion</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════ SALARY NEEDED WIDGET ═══════ -->
+        <div class="widget-panel" id="salaryneededPanel">
+            <div class="content">
+                <div class="preview-section">
+                    <iframe id="salaryneededPreview" src="/salary-needed/?embed=1" width="420" height="600" frameborder="0" style="border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); max-width: 100%;"></iframe>
+                </div>
+                <div class="code-section">
+                    <div class="code-card">
+                        <h2>Embed Code</h2>
+                        <p>Copy and paste this snippet into your website's HTML.</p>
+                        <div class="code-block">
+                            <button class="btn-copy" id="salaryneededCopyBtn" onclick="copyCode('salaryneeded')">Copy</button>
+                            <code id="salaryneededEmbedCode"><span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:420px"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;iframe</span>
+    <span class="attr">src</span>=<span class="val">"https://salary-converter.com/salary-needed/?embed=1"</span>
+    <span class="attr">width</span>=<span class="val">"420"</span>
+    <span class="attr">height</span>=<span class="val">"600"</span>
+    <span class="attr">frameborder</span>=<span class="val">"0"</span>
+    <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
+  <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/salary-needed/"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code>
+                        </div>
+                        <div class="customize-section">
+                            <h3>Quick Sizes</h3>
+                            <div class="size-options">
+                                <button class="size-btn" onclick="setSize('salaryneeded', 360, 600, this)">Compact (360px)</button>
+                                <button class="size-btn active" onclick="setSize('salaryneeded', 420, 600, this)">Standard (420px)</button>
+                                <button class="size-btn" onclick="setSize('salaryneeded', 500, 620, this)">Wide (500px)</button>
+                                <button class="size-btn" onclick="setSize('salaryneeded', '100%', 600, this)">Full Width</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-card">
+                        <h2>What's Included</h2>
+                        <div class="features-list">
+                            <div class="feature-item"><span class="feature-check">✓</span> Salary needed to live in any city</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> 113 cities compared</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Cost-of-living based</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Currency aware</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Self-contained (no deps)</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Free to use</div>
+                            <div class="feature-item"><span class="feature-check">✓</span> Dark mode support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="page-footer">
             <a href="https://salary-converter.com">Salary Converter</a>
@@ -665,6 +815,30 @@
             previewId: 'offerPreview',
             codeId: 'offerEmbedCode',
             copyBtnId: 'offerCopyBtn'
+        },
+        leaderboard: {
+            src: 'https://salary-converter.com/leaderboard/?embed=1',
+            credit: 'https://salary-converter.com/leaderboard/',
+            defaultW: 600, defaultH: 720,
+            previewId: 'leaderboardPreview',
+            codeId: 'leaderboardEmbedCode',
+            copyBtnId: 'leaderboardCopyBtn'
+        },
+        furthest: {
+            src: 'https://salary-converter.com/furthest/?embed=1',
+            credit: 'https://salary-converter.com/furthest/',
+            defaultW: 480, defaultH: 680,
+            previewId: 'furthestPreview',
+            codeId: 'furthestEmbedCode',
+            copyBtnId: 'furthestCopyBtn'
+        },
+        salaryneeded: {
+            src: 'https://salary-converter.com/salary-needed/?embed=1',
+            credit: 'https://salary-converter.com/salary-needed/',
+            defaultW: 420, defaultH: 600,
+            previewId: 'salaryneededPreview',
+            codeId: 'salaryneededEmbedCode',
+            copyBtnId: 'salaryneededCopyBtn'
         }
     };
 
