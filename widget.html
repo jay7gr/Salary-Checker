@@ -443,6 +443,7 @@
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
     <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
   <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span></code>
                         </div>
                         <div class="customize-section">
@@ -493,6 +494,7 @@
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
     <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
   <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com/retire/"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span></code>
                         </div>
                         <div class="customize-section">
@@ -634,6 +636,7 @@
     const widgetConfig = {
         salary: {
             src: 'https://salary-converter.com/embed.html',
+            credit: 'https://salary-converter.com',
             defaultW: 420, defaultH: 520,
             previewId: 'salaryPreview',
             codeId: 'salaryEmbedCode',
@@ -641,6 +644,7 @@
         },
         retire: {
             src: 'https://salary-converter.com/retire-embed.html',
+            credit: 'https://salary-converter.com/retire/',
             defaultW: 420, defaultH: 680,
             previewId: 'retirePreview',
             codeId: 'retireEmbedCode',
@@ -648,6 +652,7 @@
         },
         salarychk: {
             src: 'https://salary-converter.com/is-my-salary-good/?embed=1',
+            credit: 'https://salary-converter.com/is-my-salary-good/',
             defaultW: 420, defaultH: 580,
             previewId: 'salarychkPreview',
             codeId: 'salarychkEmbedCode',
@@ -655,6 +660,7 @@
         },
         offer: {
             src: 'https://salary-converter.com/offer-evaluator/?embed=1',
+            credit: 'https://salary-converter.com/offer-evaluator/',
             defaultW: 420, defaultH: 580,
             previewId: 'offerPreview',
             codeId: 'offerEmbedCode',
@@ -674,7 +680,7 @@
 
     function copyCode(type) {
         const cfg = widgetConfig[type];
-        const code = `<div style="max-width:420px"><iframe src="${cfg.src}" width="${cfg.defaultW}" height="${cfg.defaultH}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe></div>`;
+        const code = `<div style="max-width:${cfg.defaultW}px"><iframe src="${cfg.src}" width="${cfg.defaultW}" height="${cfg.defaultH}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
         navigator.clipboard.writeText(window['_code_' + type] || code).then(() => {
             const btn = document.getElementById(cfg.copyBtnId);
             btn.textContent = 'Copied!';
@@ -706,9 +712,10 @@
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
     <span class="attr">style</span>=<span class="val">"border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"</span>
   <span class="tag">&gt;&lt;/iframe&gt;</span>
+  <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"${cfg.credit}"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span>`;
 
-        window['_code_' + type] = `<div style="max-width:${mw}"><iframe src="${cfg.src}" width="${wVal}" height="${h}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe></div>`;
+        window['_code_' + type] = `<div style="max-width:${mw}"><iframe src="${cfg.src}" width="${wVal}" height="${h}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
     }
 
     // Handle URL hash for direct linking
