@@ -3632,9 +3632,21 @@
             if (household.noCommute) shareParams.set('noCommute', '1');
             try { history.replaceState(null, '', '?' + shareParams.toString()); } catch(_) {}
 
-            // Populate share bar
+            // Populate share bar.
+            // Share the rich /share page (custom OG card) so the link unfurls
+            // with the user's specific result on LinkedIn / WhatsApp / X /
+            // iMessage / Slack — not the generic homepage preview. The address
+            // bar keeps the /?... prefill URL (set via replaceState above).
             const shareBar = document.getElementById('resultShareBar');
-            const shareUrl = window.location.origin + '/?' + shareParams.toString();
+            const ogParams = new URLSearchParams();
+            ogParams.set('from', currentCity);
+            ogParams.set('to', targetCity);
+            ogParams.set('fromSal', String(Math.round(salary || 0)));
+            ogParams.set('toSal', String(Math.round(trueEquivalentSalary || coliEquivalentSalary || 0)));
+            ogParams.set('fromCur', currentCurrency);
+            ogParams.set('toCur', targetCurrency);
+            ogParams.set('stretch', String(stretchPct || 0));
+            const shareUrl = window.location.origin + '/share?' + ogParams.toString();
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
             const shareText = household.remote
