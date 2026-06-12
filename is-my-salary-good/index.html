@@ -1337,7 +1337,7 @@ document.getElementById('contactOverlay').addEventListener('click',function(e){i
 const _cf=document.getElementById('contactForm');
 if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const btn=_cf.querySelector('button[type="submit"]');btn.disabled=true;btn.textContent='Sending...';try{const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(_cf)});if(r.ok){_cf.style.display='none';document.getElementById('contactSuccess').style.display='block';}else{btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}}catch(err){btn.disabled=false;btn.textContent='Send Message';alert('Something went wrong. Please try again.');}});
 </script>
-    <script src="/chat.js?v=2"></script>
+    <script src="/chat.js?v=3"></script>
 <script>
 (function(){
   if (window.__faqDelegated) return;

@@ -5,6 +5,13 @@
 (function() {
     'use strict';
 
+    // Never run inside an embedded widget — the AI chat must not appear on
+    // other sites where our tools are embedded via ?embed=1.
+    try {
+        if (new URLSearchParams(location.search).get('embed') === '1' ||
+            document.documentElement.classList.contains('embed-mode')) return;
+    } catch (e) {}
+
     // --- CSS (inject into <head>) ---
     var style = document.createElement('style');
     style.textContent = [
