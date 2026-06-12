@@ -5614,6 +5614,46 @@
         
 
     </script>
+    <script>
+    /* Pre-fill the widget from URL params so blog/embed authors can target a
+       specific city pair — e.g. embed.html?from=London&to=Berlin
+       (optional: &salary=60000&fromN=Soho&toN=Mitte). Runs after the selects
+       are populated. Best-effort and fully isolated: never breaks the widget. */
+    (function(){
+        try {
+            var qp = new URLSearchParams(location.search);
+            var from = qp.get('from'), to = qp.get('to');
+            var sal = qp.get('salary'), fromN = qp.get('fromN'), toN = qp.get('toN');
+            if (!from && !to && !sal) return;
+            function setSelect(id, val){
+                if (!val) return false;
+                var el = document.getElementById(id);
+                if (!el) return false;
+                var match = Array.prototype.some.call(el.options, function(o){ return o.value === val; });
+                if (!match) return false;
+                el.value = val;
+                el.dispatchEvent(new Event('change'));
+                return true;
+            }
+            var haveFrom = setSelect('currentCity', from);
+            if (haveFrom && fromN) setSelect('currentNeighborhood', fromN);
+            var haveTo = setSelect('targetCity', to);
+            if (haveTo && toN) setSelect('targetNeighborhood', toN);
+            if (sal) {
+                var s = document.getElementById('currentSalary');
+                var n = parseFloat(String(sal).replace(/[^\d.]/g, ''));
+                if (s && isFinite(n) && n > 0) {
+                    s.value = String(Math.round(n));
+                    s.dispatchEvent(new Event('input'));
+                }
+            }
+            // Auto-calculate only when we have a complete from + to + salary set.
+            if (haveFrom && haveTo && sal) {
+                setTimeout(function(){ var b = document.getElementById('calculateBtn'); if (b) b.click(); }, 60);
+            }
+        } catch(_) { /* prefill is best-effort; never break the widget */ }
+    })();
+    </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
