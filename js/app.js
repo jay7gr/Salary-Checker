@@ -3019,11 +3019,13 @@
             document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
 
             // T1.5 — Findings narrative sentence (turn the numbers into a story)
+            // Function-scoped so the OG/share-card builder further down can read it too.
+            let stretchPct = 0;
             try {
                 const fSent = document.getElementById('findingsSentence');
                 const fTs = document.getElementById('findingsTimestamp');
                 if (fTs) fTs.textContent = 'just now';
-                let stretchPct = 0;
+                stretchPct = 0;
                 if (fSent) {
                     const cCOLI = coliData[currentCity];
                     const tCOLI = coliData[targetCity];
