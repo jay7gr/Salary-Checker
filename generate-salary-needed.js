@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 /**
  * Generates "What Salary Do I Need in {City}?" pages
- * Reads data from index.html, generates static HTML for each city + neighborhood
+ * Reads data from js/app.js (the main calculator's canonical data source),
+ * generates static HTML for each city + neighborhood.
  */
 
 const fs = require('fs');
 const path = require('path');
 
-// Read index.html and extract data
-const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+// Read the main calculator's engine and extract its data objects.
+// NOTE: the data lives in js/app.js (it used to be inlined in index.html,
+// but moved when the calculator was split into an external script). Reading
+// index.html here would silently match nothing and regenerate every page
+// with placeholder defaults — so this MUST point at js/app.js.
+const indexHtml = fs.readFileSync(path.join(__dirname, 'js', 'app.js'), 'utf8');
 
 function extractObject(varName) {
     // Match: const varName = { ... };
