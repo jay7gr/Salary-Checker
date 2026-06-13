@@ -933,6 +933,10 @@ function checkSalary() {
   const country = cityCountry[city] || '';
   const coli = coliData[city] || 50;
   const ranges = salaryRanges[prof];
+  if (!ranges) {
+    alert('Please select a valid profession.');
+    return;
+  }
 
   // Convert user salary to USD
   const salaryUSD = toUSD(salary, currency);
@@ -996,6 +1000,7 @@ function checkSalary() {
     sub = `Your salary is below the local benchmark for ${prof}s in ${city}.`;
   }
   pct = Math.max(1, Math.min(99, pct));
+  const pctR = Math.round(pct); // whole-number percentile for all user-facing copy
 
   // Render verdict
   const banner = document.getElementById('verdictBanner');
@@ -1022,12 +1027,12 @@ function checkSalary() {
       const ord = (function(n){
         const s = ['th','st','nd','rd'], v = n % 100;
         return s[(v - 20) % 10] || s[v] || s[0];
-      })(pct);
-      pctEl.innerHTML = pct + '<sup>' + ord + '</sup>';
-      txtEl.textContent = 'You earn more than ' + pct + '% of ' + prof + 's in ' + city + '.';
+      })(pctR);
+      pctEl.innerHTML = pctR + '<sup>' + ord + '</sup>';
+      txtEl.textContent = 'You earn more than ' + pctR + '% of ' + prof + 's in ' + city + '.';
       wrap.style.display = '';
 
-      const tweet = 'I earn more than ' + pct + '% of ' + prof + 's in ' + city + '. Found out via salary-converter.com';
+      const tweet = 'I earn more than ' + pctR + '% of ' + prof + 's in ' + city + '. Found out via salary-converter.com';
       const shareUrl = location.origin + '/is-my-salary-good/?city=' + encodeURIComponent(city) + '&prof=' + encodeURIComponent(prof) + '&sal=' + encodeURIComponent(sal);
       const tweetBtn = document.getElementById('pctTweetBtn');
       if (tweetBtn) tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet) + '&url=' + encodeURIComponent(shareUrl);
@@ -1080,11 +1085,11 @@ function checkSalary() {
         ctx.globalAlpha = 1;
         // Big percentile
         ctx.font = '800 280px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
-        const pctStr = pct + ord;
+        const pctStr = pctR + ord;
         ctx.fillText(pctStr, w/2, 540);
         // Subline (auto-wrap if needed)
         ctx.font = '500 38px -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif';
-        const text = 'You earn more than ' + pct + '% of';
+        const text = 'You earn more than ' + pctR + '% of';
         const text2 = prof + 's in ' + city + '.';
         ctx.globalAlpha = 0.95;
         ctx.fillText(text, w/2, 700);
