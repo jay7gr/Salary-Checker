@@ -9,7 +9,9 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   if (!env.FEEDBACK_KV) {
-    return json({ error: "FEEDBACK_KV namespace is not bound" }, 500);
+    // KV not bound — GA4 already captured the rating client-side, so
+    // return success rather than showing an error to the user.
+    return json({ ok: true, stored: false });
   }
 
   let body;
