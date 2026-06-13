@@ -3107,6 +3107,50 @@
                     };
                     shareRow.style.display = '';
                 }
+
+                // Populate result share card
+                (function(){
+                    var _sc = document.getElementById('shareCard');
+                    if (!_sc) return;
+                    var _fc = document.getElementById('scFromCity');
+                    var _tc = document.getElementById('scToCity');
+                    var _fv = document.getElementById('scFromVal');
+                    var _tv = document.getElementById('scToVal');
+                    var _bg = document.getElementById('scBadge');
+                    var _cb = document.getElementById('scCopyBtn');
+                    if (_fc) _fc.textContent = currentLabel;
+                    if (_tc) _tc.textContent = targetLabel;
+                    if (_fv) _fv.textContent = formattedOriginalCurrent;
+                    if (_tv) _tv.textContent = formattedAmount;
+                    if (_bg) {
+                        if (stretchPct >= 3) { _bg.textContent = '↑ ' + stretchPct + '% further'; _bg.className = 'sc-badge pos'; }
+                        else if (stretchPct <= -3) { _bg.textContent = '↓ ' + Math.abs(stretchPct) + '% more expensive'; _bg.className = 'sc-badge neg'; }
+                        else { _bg.textContent = '≈ Roughly equivalent cost of living'; _bg.className = 'sc-badge neu'; }
+                    }
+                    if (_cb) {
+                        var _txt = stretchPct >= 3
+                            ? 'My ' + formattedOriginalCurrent + ' in ' + currentLabel + ' = ' + formattedAmount + ' in ' + targetLabel + ' — stretches ' + stretchPct + '% further 🤯\nsalary-converter.com'
+                            : stretchPct <= -3
+                            ? 'My ' + formattedOriginalCurrent + ' in ' + currentLabel + ' = ' + formattedAmount + ' in ' + targetLabel + ' (' + Math.abs(stretchPct) + '% pricier than home)\nsalary-converter.com'
+                            : currentLabel + ' vs ' + targetLabel + ': ' + formattedOriginalCurrent + ' ≈ ' + formattedAmount + ' after taxes & cost of living\nsalary-converter.com';
+                        _cb.onclick = function() {
+                            var _done = function() {
+                                _cb.textContent = '✓ Copied!';
+                                _cb.classList.add('done');
+                                setTimeout(function() {
+                                    _cb.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy for social';
+                                    _cb.classList.remove('done');
+                                }, 2000);
+                                try { if (typeof gtag === 'function') gtag('event', 'share_card_copy', {from: currentCity, to: targetCity}); } catch(_){}
+                            };
+                            var _fb = function() { var ta=document.createElement('textarea');ta.value=_txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(_){}document.body.removeChild(ta); };
+                            if (navigator.clipboard && navigator.clipboard.writeText) {
+                                navigator.clipboard.writeText(_txt).then(_done).catch(function(){ _fb(); _done(); });
+                            } else { _fb(); _done(); }
+                        };
+                    }
+                    _sc.style.display = 'block';
+                })();
             } catch(_e) { /* keep robust */ }
 
             // T1.4 — animated counter
@@ -3771,6 +3815,7 @@
             document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('retireCrossPromo').style.display = 'none';
             document.getElementById('wiseCta').style.display = 'none';
+            var _scHide = document.getElementById('shareCard'); if (_scHide) _scHide.style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             const _rcReset = document.getElementById('reportCapture');
             if (_rcReset) _rcReset.style.display = 'none';

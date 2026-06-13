@@ -2608,6 +2608,27 @@
 .wise-cta-btn{display:inline-block;padding:11px 22px;background:#9fe870;color:#1a1a1a;border-radius:100px;font-weight:700;font-size:.88rem;text-decoration:none;white-space:nowrap;flex-shrink:0}
 .wise-cta-btn:hover{background:#8cd85a;text-decoration:none;color:#1a1a1a}
 @media(max-width:520px){.wise-cta-row{flex-direction:column;align-items:stretch}.wise-cta-btn{text-align:center;padding:13px 22px;font-size:.92rem}}
+/* Result share card */
+#shareCard{border-radius:18px;background:linear-gradient(135deg,#1c3252 0%,#0e1f35 100%);color:#fff;padding:22px 22px 18px;margin:16px 0}
+.sc-header{display:flex;align-items:center;gap:8px;font-size:.75rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px;flex-wrap:wrap}
+.sc-city{color:rgba(255,255,255,.85);font-size:.82rem}
+.sc-arr{color:rgba(255,255,255,.3)}
+.sc-vals{display:flex;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.sc-val-group{flex:1;min-width:110px}
+.sc-val-label{font-size:.65rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.sc-val-num{font-size:1.6rem;font-weight:800;letter-spacing:-.5px;line-height:1}
+.sc-val-num.to{color:#9fe870}
+.sc-sep{font-size:1.1rem;color:rgba(255,255,255,.25);flex-shrink:0;align-self:center}
+.sc-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;margin-bottom:14px}
+.sc-badge.pos{background:rgba(159,232,112,.15);color:#9fe870;border:1px solid rgba(159,232,112,.3)}
+.sc-badge.neg{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.25)}
+.sc-badge.neu{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.15)}
+.sc-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sc-copy{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
+.sc-copy:hover{background:rgba(255,255,255,.2)}
+.sc-copy.done{background:rgba(159,232,112,.18);border-color:rgba(159,232,112,.35);color:#9fe870}
+.sc-brand{font-size:.7rem;color:rgba(255,255,255,.3);letter-spacing:.3px}
+@media(max-width:480px){.sc-vals{flex-direction:column;gap:10px}.sc-sep{display:none}.sc-val-num{font-size:1.35rem}.sc-actions{flex-direction:column;align-items:stretch}.sc-copy{justify-content:center;padding:11px 18px}}
 </style>
     <script>/* early-theme-detect */(function(){var t=localStorage.getItem("theme");if(t){document.documentElement.setAttribute("data-theme",t)}else if(window.matchMedia("(prefers-color-scheme:dark)").matches){document.documentElement.setAttribute("data-theme","dark")}})();</script>
 
@@ -2870,6 +2891,34 @@
 
             <!-- T1.5 — Findings narrative sentence -->
             <div class="findings-sentence" id="findingsSentence" style="display:none;"></div>
+
+            <!-- Visual result share card -->
+            <div id="shareCard" style="display:none;">
+              <div class="sc-header">
+                <span class="sc-city" id="scFromCity"></span>
+                <span class="sc-arr">&#8594;</span>
+                <span class="sc-city" id="scToCity"></span>
+              </div>
+              <div class="sc-vals">
+                <div class="sc-val-group">
+                  <div class="sc-val-label">You earn</div>
+                  <div class="sc-val-num" id="scFromVal"></div>
+                </div>
+                <div class="sc-sep">=</div>
+                <div class="sc-val-group">
+                  <div class="sc-val-label">Equivalent after costs</div>
+                  <div class="sc-val-num to" id="scToVal"></div>
+                </div>
+              </div>
+              <div class="sc-badge" id="scBadge"></div>
+              <div class="sc-actions">
+                <button class="sc-copy" id="scCopyBtn">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy for social
+                </button>
+                <span class="sc-brand">salary-converter.com</span>
+              </div>
+            </div>
 
             <!-- T2.6 — Share buttons -->
             <div class="share-row" id="shareRow" style="display:none;">
@@ -3334,7 +3383,7 @@
         <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
     </footer>
 
-    <script src="/js/app.js?v=12"></script>
+    <script src="/js/app.js?v=13"></script>
     <script src="/chat.js?v=2"></script>
 <script>
 (function(){
