@@ -2921,7 +2921,11 @@
                 targetAdult1Gross = targetGrossSingle;
                 if (isFamily2Early) targetAdult2Gross = targetGross2;
             } else if (hasFullData) {
-                const targetDisposableNeeded = currentDisposable * exchangeRate;
+                // Disposable income is cost-of-living adjusted, not just FX-converted.
+                // Discretionary money buys more in a cheaper city and less in a pricier
+                // one, so we scale it by the COLI ratio to preserve real purchasing power
+                // rather than nominal currency value. (colRatio = targetCOLI / currentCOLI)
+                const targetDisposableNeeded = currentDisposable * exchangeRate * colRatio;
                 const targetTakeHomeNeeded = targetDisposableNeeded + targetExpenses.total;
 
                 // Edge case: source-city disposable income is non-positive (annual
@@ -2954,7 +2958,10 @@
                     trueEquivalentSalary = reverseGrossFromNet(Math.max(targetTakeHomeNeeded, 0), targetCountry, targetCity, targetNeighborhood);
                 }
             } else if (hasTaxData) {
-                const targetTakeHomeNeeded = combinedCurrentTakeHome * exchangeRate;
+                // No expense breakdown available, so match take-home pay — but still
+                // COL-adjust it (consistent with the full-data path above) so a cheaper
+                // city doesn't overstate the salary you'd need.
+                const targetTakeHomeNeeded = combinedCurrentTakeHome * exchangeRate * colRatio;
                 if (household.mode === 'family' && household.adults === 2) {
                     const totalInput = salary + salary2;
                     const ratio1 = salary / totalInput;
@@ -3188,12 +3195,12 @@
                 }
             } else if (isFamily2) {
                 subtitleHtml = `Adult 1: <strong>${fmtCurr(targetAdult1Gross || 0, targetCurrency)}</strong> + Adult 2: <strong>${fmtCurr(targetAdult2Gross || 0, targetCurrency)}</strong>`;
-                if (hasFullData) subtitleHtml += `<br><span style="font-size:0.82rem;color:var(--text-secondary);">To maintain the same household disposable income from <strong>${fmtCurr(totalSalary, currentCurrency)}</strong> in ${currentLabel}.</span>`;
+                if (hasFullData) subtitleHtml += `<br><span style="font-size:0.82rem;color:var(--text-secondary);">To match the household standard of living you have on <strong>${fmtCurr(totalSalary, currentCurrency)}</strong> in ${currentLabel}.</span>`;
             } else {
                 subtitleHtml = hasFullData
-                    ? `To maintain the same disposable income you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, accounting for taxes, rent, and living costs.`
+                    ? `To maintain the same standard of living you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel} — your disposable income adjusted for taxes, rent, and local prices.`
                     : hasTaxData
-                        ? `To maintain the same take-home pay you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, accounting for taxes.`
+                        ? `To maintain the same purchasing power you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, adjusted for taxes and local prices.`
                         : `Based on cost-of-living index comparison (limited data available).`;
             }
             if (usedColiFallback) {
@@ -3544,7 +3551,7 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">4</div>
-                        <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 this is what we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
+                        <div class="step-text"><strong>${isFamily ? 'Household' : 'Your'} disposable income:</strong> ${hasFullData ? fmtCurr(currentDisposable, currentCurrency) + '/yr \u2014 the purchasing power we match in ' + targetCity : 'Cannot calculate \u2014 incomplete data'}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">5</div>
@@ -3552,11 +3559,11 @@
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">6</div>
-                        <div class="step-text"><strong>Target take-home needed:</strong> ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) + ' (' + fmtCurr(currentDisposable * exchangeRate, targetCurrency) + ' disposable + ' + fmtCurr(targetExpenses.total, targetCurrency) + ' expenses)' : 'Cannot calculate'}</div>
+                        <div class="step-text"><strong>Target take-home needed:</strong> ${hasFullData ? fmtCurr(currentDisposable * exchangeRate * colRatio + targetExpenses.total, targetCurrency) + ' (' + fmtCurr(currentDisposable * exchangeRate * colRatio, targetCurrency) + ' cost-of-living-adjusted disposable + ' + fmtCurr(targetExpenses.total, targetCurrency) + ' expenses)' : 'Cannot calculate'}</div>
                     </div>
                     <div class="explanation-step">
                         <div class="step-number">7</div>
-                        <div class="step-text"><strong>Reverse-engineer gross:</strong> To take home ${hasFullData ? fmtCurr(currentDisposable * exchangeRate + targetExpenses.total, targetCurrency) : '?'} in ${targetCity}, ${grossDesc}</div>
+                        <div class="step-text"><strong>Reverse-engineer gross:</strong> To take home ${hasFullData ? fmtCurr(currentDisposable * exchangeRate * colRatio + targetExpenses.total, targetCurrency) : '?'} in ${targetCity}, ${grossDesc}</div>
                     </div>
                 `;
             }
