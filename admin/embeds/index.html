@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Embed Tracker · salary:converter</title>
+<style>
+:root{--bg:#f4eee2;--card-bg:#fcf9f2;--text-primary:#1d1d1f;--text-secondary:#86868b;--text-body:#4a4a4c;--accent:#2563eb;--border:#e5e5ea;--border-light:#f0f0f2}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card-bg:#1c1c1e;--text-primary:#f5f5f7;--text-secondary:#98989f;--text-body:#b0b0b5;--accent:#3b82f6;--border:#38383a;--border-light:#2c2c2e}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text-primary);line-height:1.5;-webkit-font-smoothing:antialiased;padding:24px;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+h1{font-size:1.4rem;font-weight:700;letter-spacing:-.3px}
+.muted{color:var(--text-secondary);font-size:.85rem;margin-top:2px}
+.token-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.token-row input{padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);color:var(--text-primary);font-family:inherit;font-size:.85rem;min-width:240px}
+.token-row button{padding:8px 16px;border:none;background:var(--accent);color:#fff;border-radius:8px;cursor:pointer;font-weight:600;font-size:.85rem}
+.token-row button:hover{opacity:.9}
+.summary{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+.kpi{flex:1;min-width:140px;background:var(--card-bg);border:1px solid var(--border-light);border-radius:12px;padding:14px 18px}
+.kpi .lab{font-size:.7rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.kpi .val{font-size:1.4rem;font-weight:700;color:var(--text-primary)}
+table{width:100%;border-collapse:collapse;background:var(--card-bg);border:1px solid var(--border-light);border-radius:12px;overflow:hidden;font-size:.85rem}
+th{text-align:left;padding:10px 14px;background:var(--bg);font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;color:var(--text-secondary);border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border-light);color:var(--text-body);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.domain{font-weight:600;color:var(--text-primary);word-break:break-all}
+.domain a{color:var(--accent);text-decoration:none}
+.domain a:hover{text-decoration:underline}
+.badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.72rem;font-weight:700;background:rgba(37,99,235,.1);color:var(--accent)}
+.hits-bar{height:4px;background:var(--accent);border-radius:2px;margin-top:4px;opacity:.5}
+.empty{padding:60px 20px;text-align:center;color:var(--text-secondary)}
+.error{padding:14px 18px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);border-radius:10px;color:#dc2626;margin-bottom:14px;font-size:.88rem}
+.refresh{background:none!important;color:var(--text-secondary)!important;border:1px solid var(--border)!important}
+.raw-toggle{font-size:.75rem;color:var(--text-secondary);cursor:pointer;text-decoration:underline;margin-top:16px;display:inline-block}
+#rawSection{display:none;margin-top:12px}
+#rawOut{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:.78rem;font-family:monospace;white-space:pre-wrap;word-break:break-all;max-height:400px;overflow-y:auto;color:var(--text-body)}
+@media(max-width:600px){body{padding:12px}td,th{padding:8px 8px;font-size:.78rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Embed Tracker</h1>
+      <p class="muted">Sites that have embedded your widgets. Newest pings first.</p>
+    </div>
+    <div class="token-row">
+      <input id="token" type="password" placeholder="Admin token" autocomplete="current-password">
+      <button id="loadBtn">Load</button>
+      <button id="refreshBtn" class="refresh" title="Refresh">⟳</button>
+    </div>
+  </header>
+
+  <div id="error" class="error" style="display:none"></div>
+
+  <div id="summary" class="summary" style="display:none">
+    <div class="kpi"><div class="lab">Unique Sites</div><div class="val" id="kpiSites">—</div></div>
+    <div class="kpi"><div class="lab">Total Hits</div><div class="val" id="kpiHits">—</div></div>
+    <div class="kpi"><div class="lab">Last Ping</div><div class="val" id="kpiLast">—</div></div>
+  </div>
+
+  <div id="tableWrap" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Hits</th>
+          <th>Countries</th>
+          <th>First Seen</th>
+          <th>Last Seen</th>
+          <th>Example URL</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <span class="raw-toggle" id="rawToggle">Show raw JSON</span>
+    <div id="rawSection"><pre id="rawOut"></pre></div>
+  </div>
+
+  <div id="empty" class="empty" style="display:none">No embed pings yet. Make sure EMBEDS_KV is bound in Cloudflare Pages → Settings → Functions.</div>
+</div>
+
+<script>
+(function(){
+  var tokenKey = 'embed_admin_token';
+  var tokenEl = document.getElementById('token');
+  var saved = sessionStorage.getItem(tokenKey);
+  if (saved) tokenEl.value = saved;
+
+  function load() {
+    var tok = tokenEl.value.trim();
+    if (!tok) { show('error', 'Enter your admin token.'); return; }
+    sessionStorage.setItem(tokenKey, tok);
+    hide('error');
+    fetch('/api/embed-list?token=' + encodeURIComponent(tok) + '&limit=1000')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (!data.ok) { show('error', data.error || 'Unknown error'); return; }
+        render(data.entries || []);
+      })
+      .catch(function(e){ show('error', 'Network error: ' + e.message); });
+  }
+
+  document.getElementById('loadBtn').addEventListener('click', load);
+  document.getElementById('refreshBtn').addEventListener('click', load);
+  tokenEl.addEventListener('keydown', function(e){ if(e.key==='Enter') load(); });
+  if (saved) load();
+
+  function render(entries) {
+    // Group by origin
+    var sites = {};
+    entries.forEach(function(e){
+      var o = e.origin || 'unknown';
+      if (!sites[o]) sites[o] = { origin: o, hits: 0, countries: {}, first: e.ts, last: e.ts, example: e.ref };
+      sites[o].hits++;
+      if (e.country) sites[o].countries[e.country] = (sites[o].countries[e.country]||0)+1;
+      if (e.ts < sites[o].first) sites[o].first = e.ts;
+      if (e.ts > sites[o].last) { sites[o].last = e.ts; sites[o].example = e.ref; }
+    });
+
+    var arr = Object.values(sites).sort(function(a,b){ return b.hits - a.hits; });
+    var maxHits = arr.length ? arr[0].hits : 1;
+
+    // KPIs
+    document.getElementById('kpiSites').textContent = arr.length;
+    document.getElementById('kpiHits').textContent = entries.length;
+    var lastTs = entries.length ? entries.reduce(function(a,b){ return a.ts>b.ts?a:b; }).ts : null;
+    document.getElementById('kpiLast').textContent = lastTs ? fmtDate(lastTs) : '—';
+    show('summary');
+
+    var tbody = document.getElementById('tbody');
+    if (!arr.length) { hide('tableWrap'); show('empty'); return; }
+    show('tableWrap'); hide('empty');
+
+    tbody.innerHTML = arr.map(function(s){
+      var pct = Math.round((s.hits/maxHits)*100);
+      var countries = Object.entries(s.countries).sort(function(a,b){return b[1]-a[1];}).slice(0,5).map(function(e){return e[0];}).join(', ');
+      var exUrl = s.example && s.example.length > 60 ? s.example.slice(0,60)+'…' : (s.example||'');
+      return '<tr>' +
+        '<td><div class="domain"><a href="'+esc(s.origin)+'" target="_blank" rel="noopener">'+esc(s.origin)+'</a></div></td>' +
+        '<td><span class="badge">'+s.hits+'</span><div class="hits-bar" style="width:'+pct+'%;max-width:80px"></div></td>' +
+        '<td>'+esc(countries||'—')+'</td>' +
+        '<td>'+fmtDate(s.first)+'</td>' +
+        '<td>'+fmtDate(s.last)+'</td>' +
+        '<td style="font-size:.78rem;color:var(--text-secondary);word-break:break-all;" title="'+esc(s.example||'')+'">'+esc(exUrl)+'</td>' +
+        '</tr>';
+    }).join('');
+
+    document.getElementById('rawOut').textContent = JSON.stringify(entries, null, 2);
+  }
+
+  document.getElementById('rawToggle').addEventListener('click', function(){
+    var sec = document.getElementById('rawSection');
+    var visible = sec.style.display !== 'none';
+    sec.style.display = visible ? 'none' : 'block';
+    this.textContent = visible ? 'Show raw JSON' : 'Hide raw JSON';
+  });
+
+  function fmtDate(iso){
+    if(!iso) return '—';
+    try { return new Date(iso).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}); } catch(_){ return iso; }
+  }
+  function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function show(id){ document.getElementById(id).style.display=''; }
+  function hide(id){ document.getElementById(id).style.display='none'; }
+})();
+</script>
+</body>
+</html>

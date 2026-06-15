@@ -5677,5 +5677,16 @@ gtag('event','widget_embedded',{
   embedding_url:document.referrer?document.referrer.slice(0,100):'(direct)'
 });
 </script>
+<script>
+(function(){
+  try {
+    var ref = document.referrer;
+    if (!ref) return;
+    var refOrigin = new URL(ref).origin;
+    if (refOrigin === location.origin) return;
+    fetch('/api/widget-ping?ref=' + encodeURIComponent(ref), { keepalive: true }).catch(function(){});
+  } catch(_){}
+})();
+</script>
 </body>
 </html>
