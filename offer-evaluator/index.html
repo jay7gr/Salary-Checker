@@ -1420,5 +1420,15 @@ if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const 
 })();
 </script>
     <script src="/js/embed-promo.js?v=2" defer></script>
+<script>
+(function(){
+  try {
+    if (window.top === window.self) return; // only track real iframe embeds
+    var ref = document.referrer;
+    if (ref && new URL(ref).origin === location.origin) return;
+    fetch('/api/widget-ping?w=offer-evaluator&ref=' + encodeURIComponent(ref || ''), { keepalive: true }).catch(function(){});
+  } catch(_){}
+})();
+</script>
 </body>
 </html>

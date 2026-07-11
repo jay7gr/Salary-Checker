@@ -7,6 +7,7 @@ export async function onRequestGet(context) {
 
   const u = new URL(request.url);
   const ref = (u.searchParams.get('ref') || '').slice(0, 500);
+  const widget = (u.searchParams.get('w') || 'unknown').slice(0, 40);
 
   let origin = '';
   try {
@@ -25,6 +26,7 @@ export async function onRequestGet(context) {
       await env.EMBEDS_KV.put(key, JSON.stringify({
         ref,
         origin,
+        widget,
         country: request.cf?.country || '',
         ts,
       }), { expirationTtl: 60 * 60 * 24 * 90 });

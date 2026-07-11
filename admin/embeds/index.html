@@ -67,6 +67,7 @@ tr:last-child td{border-bottom:none}
       <thead>
         <tr>
           <th>Domain</th>
+          <th>Widget</th>
           <th>Hits</th>
           <th>Countries</th>
           <th>First Seen</th>
@@ -114,9 +115,11 @@ tr:last-child td{border-bottom:none}
     var sites = {};
     entries.forEach(function(e){
       var o = e.origin || 'unknown';
-      if (!sites[o]) sites[o] = { origin: o, hits: 0, countries: {}, first: e.ts, last: e.ts, example: e.ref };
+      if (!sites[o]) sites[o] = { origin: o, hits: 0, countries: {}, widgets: {}, first: e.ts, last: e.ts, example: e.ref };
       sites[o].hits++;
       if (e.country) sites[o].countries[e.country] = (sites[o].countries[e.country]||0)+1;
+      var wk = e.widget || 'unknown';
+      sites[o].widgets[wk] = (sites[o].widgets[wk]||0)+1;
       if (e.ts < sites[o].first) sites[o].first = e.ts;
       if (e.ts > sites[o].last) { sites[o].last = e.ts; sites[o].example = e.ref; }
     });
@@ -138,9 +141,11 @@ tr:last-child td{border-bottom:none}
     tbody.innerHTML = arr.map(function(s){
       var pct = Math.round((s.hits/maxHits)*100);
       var countries = Object.entries(s.countries).sort(function(a,b){return b[1]-a[1];}).slice(0,5).map(function(e){return e[0];}).join(', ');
+      var widgets = Object.entries(s.widgets).sort(function(a,b){return b[1]-a[1];}).map(function(e){return e[0];}).join(', ');
       var exUrl = s.example && s.example.length > 60 ? s.example.slice(0,60)+'…' : (s.example||'');
       return '<tr>' +
         '<td><div class="domain"><a href="'+esc(s.origin)+'" target="_blank" rel="noopener">'+esc(s.origin)+'</a></div></td>' +
+        '<td>'+esc(widgets||'—')+'</td>' +
         '<td><span class="badge">'+s.hits+'</span><div class="hits-bar" style="width:'+pct+'%;max-width:80px"></div></td>' +
         '<td>'+esc(countries||'—')+'</td>' +
         '<td>'+fmtDate(s.first)+'</td>' +
