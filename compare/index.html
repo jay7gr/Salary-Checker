@@ -1,0 +1,639 @@
+<!-- salary-nav-v1 --><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Comparisons — 6,328 Cost of Living & Salary Comparisons 2026</title>
+    <meta name="description" content="Compare cost of living and salaries between any two cities. 6,328 city-to-city comparisons with neighborhoods, tax rates, and purchasing power.">
+    <meta name="author" content="salary:converter">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://salary-converter.com/compare/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://salary-converter.com/compare/">
+    <meta property="og:title" content="6,328 City Cost of Living Comparisons 2026">
+    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between any two of 182 cities worldwide.">
+    <meta property="og:image" content="https://salary-converter.com/og-image.png">
+    <meta property="og:site_name" content="salary:converter">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "City Cost of Living Comparisons",
+        "description": "6,328 city-to-city comparisons across 182 cities worldwide",
+        "url": "https://salary-converter.com/compare/",
+        "numberOfItems": 6328
+    }
+    </script>
+
+    <!-- Google Consent Mode v2 — ad signals denied in strict consent regions only -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'granted',
+            'wait_for_update': 500,
+            'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
+        });
+        gtag('consent', 'default', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MMZSM2Z96B');
+    </script>
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { overflow-x: hidden; }
+        html { touch-action: manipulation; -ms-touch-action: manipulation; }
+
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --text-body: #4a4a4c;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --shadow: 0 2px 20px rgba(0,0,0,0.06);
+            --border: #e5e5ea;
+            --border-light: #f0f0f2;
+            --table-stripe: #f9f9fb;
+            --tag-bg: #f0f0f2;
+            --stat-card-bg: #f5f5f7;
+        }
+        [data-theme="dark"] {
+            --bg: #000000;
+            --card-bg: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #98989f;
+            --text-body: #b0b0b5;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --shadow: 0 2px 20px rgba(0,0,0,0.3);
+            --border: #38383a;
+            --border-light: #2c2c2e;
+            --table-stripe: #2c2c2e;
+            --tag-bg: #2c2c2e;
+            --stat-card-bg: #2c2c2e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg); color: var(--text-primary); min-height: 100vh;
+            padding: 20px 12px; -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+        }
+        .page-wrapper { max-width: 900px; margin: 0 auto; }
+        .nav-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 32px; flex-wrap: wrap; gap: 12px;
+        }
+        .nav-logo {
+            font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+            color: var(--text-primary); text-decoration: none;
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        .theme-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            width: 38px;
+            height: 22px;
+            background: var(--border);
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .theme-toggle:hover {
+            background: var(--text-secondary);
+        }
+        .theme-toggle .toggle-thumb {
+            position: absolute;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+        [data-theme="dark"] .theme-toggle {
+            background: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle:hover {
+            background: #60a5fa;
+        }
+        [data-theme="dark"] .theme-toggle .toggle-thumb {
+            transform: translateX(16px);
+            box-shadow: 0 0 0 2px #93c5fd, 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .theme-toggle .toggle-icon {
+            width: 11px;
+            height: 11px;
+        }
+        .theme-toggle .icon-sun {
+            color: #f59e0b;
+        }
+        .theme-toggle .icon-moon {
+            display: none;
+            color: #3b82f6;
+        }
+        [data-theme="dark"] .theme-toggle .icon-sun {
+            display: none;
+        }
+        [data-theme="dark"] .theme-toggle .icon-moon {
+            display: block;
+            color: #3b82f6;
+        }
+        @media (max-width: 768px) {
+            .theme-toggle {
+                position: fixed !important;
+                top: 16px !important;
+                right: 16px !important;
+                z-index: 10001 !important;
+            }
+        }
+
+        .hero {
+            background: var(--card-bg); border-radius: 20px; padding: 40px 32px;
+            box-shadow: var(--shadow); margin-bottom: 24px;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .hero p { color: var(--text-secondary); font-size: 1rem; margin-bottom: 24px; }
+        .compare-form {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px; flex-wrap: wrap;
+        }
+        .compare-form-label {
+            font-size: 1rem; font-weight: 600; color: var(--text-primary);
+        }
+        .city-select {
+            padding: 12px 16px; border: 2px solid var(--border);
+            border-radius: 12px; font-size: 0.95rem; font-family: inherit;
+            outline: none; transition: border-color 0.2s;
+            background: var(--stat-card-bg); color: var(--text-primary);
+            cursor: pointer; min-width: 180px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2386868b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 36px;
+        }
+        .city-select:focus { border-color: var(--accent); background-color: var(--card-bg); }
+        .compare-btn {
+            padding: 12px 28px; border: none; border-radius: 12px;
+            background: var(--accent); color: white; font-size: 0.95rem;
+            font-weight: 600; font-family: inherit; cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .compare-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+        .compare-btn:disabled {
+            opacity: 0.5; cursor: not-allowed; transform: none;
+        }
+        .compare-error {
+            color: #ef4444; font-size: 0.82rem; margin-top: 12px;
+            min-height: 1.2em;
+        }
+        .section-title {
+            font-size: 1.1rem; font-weight: 700; margin: 32px 0 16px;
+            letter-spacing: -0.3px;
+        }
+        .compare-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        }
+        .compare-card {
+            background: var(--card-bg); border-radius: 14px; padding: 18px;
+            box-shadow: var(--shadow); text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s; display: block;
+        }
+        .compare-card:hover {
+            transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+        }
+        .compare-card-cities {
+            font-size: 0.9rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;
+        }
+        .compare-card-cities .vs {
+            color: var(--accent); font-size: 0.75rem; margin: 0 4px;
+        }
+        .compare-card-stats {
+            font-size: 0.75rem; color: var(--text-secondary);
+        }
+        .page-footer {
+            text-align: center; padding: 32px 0 16px; margin-top: 24px;
+            border-top: 1px solid var(--border);
+            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 20px;
+        }
+        .page-footer a {
+            font-size: 0.82rem; color: var(--text-secondary); text-decoration: none;
+        }
+        .page-footer a:hover { color: var(--accent); }
+        @media (max-width: 768px) {
+            body { padding: 0; background: var(--bg); }
+            .page-wrapper { padding: 0 16px; }
+            .nav-links { padding-right: 48px; }
+            .hero { border-radius: 0; padding: 32px 16px; box-shadow: none; }
+            .hero h1 { font-size: 1.5rem; }
+            .compare-form { flex-direction: column; gap: 10px; }
+            .city-select { min-width: 100%; }
+            .compare-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <nav class="nav-bar">
+            <a href="/" class="nav-logo">salary<span>:</span>converter</a>
+            <div class="nav-links">
+                <a href="/">Converter</a>
+                <a href="/city/">Cities</a>
+                <a href="/salary/">Salaries</a>
+                <a href="/retire/">Retire Abroad</a>
+                <a href="/blog/">Blog</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+            <span class="toggle-thumb">
+                <svg class="toggle-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="toggle-icon icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+        </button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>City Comparisons</h1>
+            <p>6,328 city-to-city comparisons across 182 cities</p>
+            <div class="compare-form">
+                <span class="compare-form-label">Compare</span>
+                <select id="cityA" class="city-select">
+                    <option value="">Select a city...</option>
+                        <option value="Abu Dhabi">Abu Dhabi</option>
+                        <option value="Amsterdam">Amsterdam</option>
+                        <option value="Athens">Athens</option>
+                        <option value="Atlanta">Atlanta</option>
+                        <option value="Auckland">Auckland</option>
+                        <option value="Austin">Austin</option>
+                        <option value="Bali (Denpasar)">Bali (Denpasar)</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Bangkok">Bangkok</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Beijing">Beijing</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Bogotá">Bogotá</option>
+                        <option value="Boston">Boston</option>
+                        <option value="Brussels">Brussels</option>
+                        <option value="Bucharest">Bucharest</option>
+                        <option value="Budapest">Budapest</option>
+                        <option value="Buenos Aires">Buenos Aires</option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Cancún">Cancún</option>
+                        <option value="Cape Town">Cape Town</option>
+                        <option value="Casablanca">Casablanca</option>
+                        <option value="Charlotte">Charlotte</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Chiang Mai">Chiang Mai</option>
+                        <option value="Chicago">Chicago</option>
+                        <option value="Copenhagen">Copenhagen</option>
+                        <option value="Dallas">Dallas</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Denver">Denver</option>
+                        <option value="Doha">Doha</option>
+                        <option value="Dubai">Dubai</option>
+                        <option value="Dublin">Dublin</option>
+                        <option value="Edinburgh">Edinburgh</option>
+                        <option value="Fukuoka">Fukuoka</option>
+                        <option value="Geneva">Geneva</option>
+                        <option value="Guangzhou">Guangzhou</option>
+                        <option value="Hanoi">Hanoi</option>
+                        <option value="Helsinki">Helsinki</option>
+                        <option value="Ho Chi Minh City">Ho Chi Minh City</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Houston">Houston</option>
+                        <option value="Istanbul">Istanbul</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Krakow">Krakow</option>
+                        <option value="Kuala Lumpur">Kuala Lumpur</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Las Vegas">Las Vegas</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Lisbon">Lisbon</option>
+                        <option value="London">London</option>
+                        <option value="Los Angeles">Los Angeles</option>
+                        <option value="Luxembourg City">Luxembourg City</option>
+                        <option value="Madrid">Madrid</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Marrakech">Marrakech</option>
+                        <option value="Medellín">Medellín</option>
+                        <option value="Melbourne">Melbourne</option>
+                        <option value="Mexico City">Mexico City</option>
+                        <option value="Miami">Miami</option>
+                        <option value="Milan">Milan</option>
+                        <option value="Minneapolis">Minneapolis</option>
+                        <option value="Montevideo">Montevideo</option>
+                        <option value="Montreal">Montreal</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Munich">Munich</option>
+                        <option value="Málaga">Málaga</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Nashville">Nashville</option>
+                        <option value="New York">New York</option>
+                        <option value="Nice">Nice</option>
+                        <option value="Osaka">Osaka</option>
+                        <option value="Oslo">Oslo</option>
+                        <option value="Panama City">Panama City</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Perth">Perth</option>
+                        <option value="Philadelphia">Philadelphia</option>
+                        <option value="Phnom Penh">Phnom Penh</option>
+                        <option value="Phoenix">Phoenix</option>
+                        <option value="Phuket">Phuket</option>
+                        <option value="Playa del Carmen">Playa del Carmen</option>
+                        <option value="Portland">Portland</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Prague">Prague</option>
+                        <option value="Raleigh">Raleigh</option>
+                        <option value="Riga">Riga</option>
+                        <option value="Riyadh">Riyadh</option>
+                        <option value="Rome">Rome</option>
+                        <option value="San Diego">San Diego</option>
+                        <option value="San Francisco">San Francisco</option>
+                        <option value="San José (CR)">San José (CR)</option>
+                        <option value="Santiago">Santiago</option>
+                        <option value="Seattle">Seattle</option>
+                        <option value="Seoul">Seoul</option>
+                        <option value="Shanghai">Shanghai</option>
+                        <option value="Shenzhen">Shenzhen</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Split">Split</option>
+                        <option value="Stockholm">Stockholm</option>
+                        <option value="Sydney">Sydney</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Taipei">Taipei</option>
+                        <option value="Tallinn">Tallinn</option>
+                        <option value="Tampa">Tampa</option>
+                        <option value="Tel Aviv">Tel Aviv</option>
+                        <option value="Tokyo">Tokyo</option>
+                        <option value="Toronto">Toronto</option>
+                        <option value="Valencia">Valencia</option>
+                        <option value="Vancouver">Vancouver</option>
+                        <option value="Vienna">Vienna</option>
+                        <option value="Warsaw">Warsaw</option>
+                        <option value="Washington DC">Washington DC</option>
+                        <option value="Zurich">Zurich</option>
+                </select>
+                <span class="compare-form-label">to</span>
+                <select id="cityB" class="city-select">
+                    <option value="">Select a city...</option>
+                        <option value="Abu Dhabi">Abu Dhabi</option>
+                        <option value="Amsterdam">Amsterdam</option>
+                        <option value="Athens">Athens</option>
+                        <option value="Atlanta">Atlanta</option>
+                        <option value="Auckland">Auckland</option>
+                        <option value="Austin">Austin</option>
+                        <option value="Bali (Denpasar)">Bali (Denpasar)</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Bangkok">Bangkok</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Beijing">Beijing</option>
+                        <option value="Berlin">Berlin</option>
+                        <option value="Bogotá">Bogotá</option>
+                        <option value="Boston">Boston</option>
+                        <option value="Brussels">Brussels</option>
+                        <option value="Bucharest">Bucharest</option>
+                        <option value="Budapest">Budapest</option>
+                        <option value="Buenos Aires">Buenos Aires</option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Cancún">Cancún</option>
+                        <option value="Cape Town">Cape Town</option>
+                        <option value="Casablanca">Casablanca</option>
+                        <option value="Charlotte">Charlotte</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Chiang Mai">Chiang Mai</option>
+                        <option value="Chicago">Chicago</option>
+                        <option value="Copenhagen">Copenhagen</option>
+                        <option value="Dallas">Dallas</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Denver">Denver</option>
+                        <option value="Doha">Doha</option>
+                        <option value="Dubai">Dubai</option>
+                        <option value="Dublin">Dublin</option>
+                        <option value="Edinburgh">Edinburgh</option>
+                        <option value="Fukuoka">Fukuoka</option>
+                        <option value="Geneva">Geneva</option>
+                        <option value="Guangzhou">Guangzhou</option>
+                        <option value="Hanoi">Hanoi</option>
+                        <option value="Helsinki">Helsinki</option>
+                        <option value="Ho Chi Minh City">Ho Chi Minh City</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Houston">Houston</option>
+                        <option value="Istanbul">Istanbul</option>
+                        <option value="Jakarta">Jakarta</option>
+                        <option value="Krakow">Krakow</option>
+                        <option value="Kuala Lumpur">Kuala Lumpur</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Las Vegas">Las Vegas</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Lisbon">Lisbon</option>
+                        <option value="London">London</option>
+                        <option value="Los Angeles">Los Angeles</option>
+                        <option value="Luxembourg City">Luxembourg City</option>
+                        <option value="Madrid">Madrid</option>
+                        <option value="Manila">Manila</option>
+                        <option value="Marrakech">Marrakech</option>
+                        <option value="Medellín">Medellín</option>
+                        <option value="Melbourne">Melbourne</option>
+                        <option value="Mexico City">Mexico City</option>
+                        <option value="Miami">Miami</option>
+                        <option value="Milan">Milan</option>
+                        <option value="Minneapolis">Minneapolis</option>
+                        <option value="Montevideo">Montevideo</option>
+                        <option value="Montreal">Montreal</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Munich">Munich</option>
+                        <option value="Málaga">Málaga</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Nashville">Nashville</option>
+                        <option value="New York">New York</option>
+                        <option value="Nice">Nice</option>
+                        <option value="Osaka">Osaka</option>
+                        <option value="Oslo">Oslo</option>
+                        <option value="Panama City">Panama City</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Perth">Perth</option>
+                        <option value="Philadelphia">Philadelphia</option>
+                        <option value="Phnom Penh">Phnom Penh</option>
+                        <option value="Phoenix">Phoenix</option>
+                        <option value="Phuket">Phuket</option>
+                        <option value="Playa del Carmen">Playa del Carmen</option>
+                        <option value="Portland">Portland</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Prague">Prague</option>
+                        <option value="Raleigh">Raleigh</option>
+                        <option value="Riga">Riga</option>
+                        <option value="Riyadh">Riyadh</option>
+                        <option value="Rome">Rome</option>
+                        <option value="San Diego">San Diego</option>
+                        <option value="San Francisco">San Francisco</option>
+                        <option value="San José (CR)">San José (CR)</option>
+                        <option value="Santiago">Santiago</option>
+                        <option value="Seattle">Seattle</option>
+                        <option value="Seoul">Seoul</option>
+                        <option value="Shanghai">Shanghai</option>
+                        <option value="Shenzhen">Shenzhen</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Split">Split</option>
+                        <option value="Stockholm">Stockholm</option>
+                        <option value="Sydney">Sydney</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Taipei">Taipei</option>
+                        <option value="Tallinn">Tallinn</option>
+                        <option value="Tampa">Tampa</option>
+                        <option value="Tel Aviv">Tel Aviv</option>
+                        <option value="Tokyo">Tokyo</option>
+                        <option value="Toronto">Toronto</option>
+                        <option value="Valencia">Valencia</option>
+                        <option value="Vancouver">Vancouver</option>
+                        <option value="Vienna">Vienna</option>
+                        <option value="Warsaw">Warsaw</option>
+                        <option value="Washington DC">Washington DC</option>
+                        <option value="Zurich">Zurich</option>
+                </select>
+                <button id="compareBtn" class="compare-btn" disabled>Compare</button>
+            </div>
+            <div class="compare-error" id="compareError"></div>
+        </section>
+
+        <h2 class="section-title">Popular Comparisons</h2>
+        <div class="compare-grid">
+                <a href="/compare/abu-dhabi-vs-dubai" class="compare-card">
+                    <div class="compare-card-cities">Abu Dhabi <span class="vs">vs</span> Dubai</div>
+                    <div class="compare-card-stats">COLI: 67.8 vs 72.4 &middot; 6% difference</div>
+                </a>
+                <a href="/compare/amsterdam-vs-berlin" class="compare-card">
+                    <div class="compare-card-cities">Amsterdam <span class="vs">vs</span> Berlin</div>
+                    <div class="compare-card-stats">COLI: 82.6 vs 51.2 &middot; 38% difference</div>
+                </a>
+                <a href="/compare/amsterdam-vs-london" class="compare-card">
+                    <div class="compare-card-cities">Amsterdam <span class="vs">vs</span> London</div>
+                    <div class="compare-card-stats">COLI: 82.6 vs 87.5 &middot; 6% difference</div>
+                </a>
+                <a href="/compare/amsterdam-vs-paris" class="compare-card">
+                    <div class="compare-card-cities">Amsterdam <span class="vs">vs</span> Paris</div>
+                    <div class="compare-card-stats">COLI: 82.6 vs 46.9 &middot; 43% difference</div>
+                </a>
+                <a href="/compare/auckland-vs-sydney" class="compare-card">
+                    <div class="compare-card-cities">Auckland <span class="vs">vs</span> Sydney</div>
+                    <div class="compare-card-stats">COLI: 60.8 vs 74.5 &middot; 18% difference</div>
+                </a>
+                <a href="/compare/austin-vs-san-francisco" class="compare-card">
+                    <div class="compare-card-cities">Austin <span class="vs">vs</span> San Francisco</div>
+                    <div class="compare-card-stats">COLI: 64.8 vs 97.6 &middot; 34% difference</div>
+                </a>
+                <a href="/compare/bali-vs-bangkok" class="compare-card">
+                    <div class="compare-card-cities">Bali (Denpasar) <span class="vs">vs</span> Bangkok</div>
+                    <div class="compare-card-stats">COLI: 25.3 vs 37.2 &middot; 32% difference</div>
+                </a>
+                <a href="/compare/bangalore-vs-mumbai" class="compare-card">
+                    <div class="compare-card-cities">Bangalore <span class="vs">vs</span> Mumbai</div>
+                    <div class="compare-card-stats">COLI: 20.8 vs 22.3 &middot; 7% difference</div>
+                </a>
+                <a href="/compare/bangkok-vs-chiang-mai" class="compare-card">
+                    <div class="compare-card-cities">Bangkok <span class="vs">vs</span> Chiang Mai</div>
+                    <div class="compare-card-stats">COLI: 37.2 vs 22.6 &middot; 39% difference</div>
+                </a>
+                <a href="/compare/bangkok-vs-dubai" class="compare-card">
+                    <div class="compare-card-cities">Bangkok <span class="vs">vs</span> Dubai</div>
+                    <div class="compare-card-stats">COLI: 37.2 vs 72.4 &middot; 49% difference</div>
+                </a>
+        </div>
+
+        <footer class="page-footer">
+            <a href="/">Salary Converter</a>
+            <a href="/city/">All Cities</a>
+            <a href="/salary/">Salaries</a>
+            <a href="/retire/">Retire Abroad</a>
+            <a href="/blog/">Blog</a>
+        
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/terms/">Terms</a>
+                    <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
+    </footer>
+    </div>
+
+    <script>
+    (function() {
+        var cityA = document.getElementById('cityA');
+        var cityB = document.getElementById('cityB');
+        var btn = document.getElementById('compareBtn');
+        var err = document.getElementById('compareError');
+
+        function slugify(s) {
+            return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+
+        function validate() {
+            var a = cityA.value, b = cityB.value;
+            if (!a || !b) {
+                btn.disabled = true;
+                err.textContent = '';
+            } else if (a === b) {
+                btn.disabled = true;
+                err.textContent = 'Please select two different cities.';
+            } else {
+                btn.disabled = false;
+                err.textContent = '';
+            }
+        }
+
+        cityA.addEventListener('change', validate);
+        cityB.addEventListener('change', validate);
+
+        btn.addEventListener('click', function() {
+            var a = cityA.value, b = cityB.value;
+            if (!a || !b || a === b) return;
+            var cities = [a, b].sort();
+            var url = '/compare/' + slugify(cities[0]) + '-vs-' + slugify(cities[1]);
+            window.location.href = url;
+        });
+    })();
+    </script>
+
+    <script>
+    (function(){
+        var t=document.getElementById('themeToggle');
+        function g(){var s=localStorage.getItem('theme');if(s)return s;return matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}
+        function a(m){document.documentElement.setAttribute('data-theme',m);localStorage.setItem('theme',m);t.setAttribute('aria-label',m==='dark'?'Switch to light mode':'Switch to dark mode')}
+        a(g());
+        t.addEventListener('click',function(){a(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')});
+        matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
+    })();
+    </script>
+
+</body>
+</html>
