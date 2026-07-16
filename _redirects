@@ -1,8 +1,9 @@
 # salary-converter.com _redirects
 # Generated redirect rules for broken city/neighborhood URLs
 # These fix 404s from salary-needed pages linking to wrong city slugs
-
-/compare/* /offer-evaluator/ 301
+#
+# NOTE: Do NOT blanket-redirect /compare/* — real compare HTML pages live under
+# /compare/ and must be crawlable/indexable. (Removed /compare/* → /offer-evaluator/)
 
 /city/amsterdam/canal-ring /city/amsterdam/canal-ring-centrum 308
 /city/austin/south-congress /city/austin/south-congress-soco 308
