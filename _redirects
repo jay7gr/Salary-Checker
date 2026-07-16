@@ -5,6 +5,38 @@
 # NOTE: Do NOT blanket-redirect /compare/* — real compare HTML pages live under
 # /compare/ and must be crawlable/indexable. (Removed /compare/* → /offer-evaluator/)
 
+# Broken UTF-8 / mangled city slugs (GSC 404s) → correct ASCII
+/salary-needed/bogot /salary-needed/bogota 301
+/salary-needed/bogot/* /salary-needed/bogota/:splat 301
+/city/bogot /city/bogota 301
+/city/bogot/* /city/bogota/:splat 301
+/retire/city/bogot /retire/city/bogota 301
+/retire/city/bogot/* /retire/city/bogota/:splat 301
+/salary-needed/medell-n /salary-needed/medellin 301
+/salary-needed/medell-n/* /salary-needed/medellin/:splat 301
+/city/medell-n /city/medellin 301
+/city/medell-n/* /city/medellin/:splat 301
+/retire/city/medell-n /retire/city/medellin 301
+/retire/city/medell-n/* /retire/city/medellin/:splat 301
+/salary-needed/s-o-paulo /salary-needed/sao-paulo 301
+/salary-needed/s-o-paulo/* /salary-needed/sao-paulo/:splat 301
+/city/s-o-paulo /city/sao-paulo 301
+/city/s-o-paulo/* /city/sao-paulo/:splat 301
+/retire/city/s-o-paulo /retire/city/sao-paulo 301
+/retire/city/s-o-paulo/* /retire/city/sao-paulo/:splat 301
+/salary-needed/m-laga /salary-needed/malaga 301
+/salary-needed/m-laga/* /salary-needed/malaga/:splat 301
+/city/m-laga /city/malaga 301
+/city/m-laga/* /city/malaga/:splat 301
+/retire/city/m-laga /retire/city/malaga 301
+/retire/city/m-laga/* /retire/city/malaga/:splat 301
+/salary-needed/malag /salary-needed/malaga 301
+/salary-needed/malag/* /salary-needed/malaga/:splat 301
+/city/malag /city/malaga 301
+/city/malag/* /city/malaga/:splat 301
+/retire/city/malag /retire/city/malaga 301
+/retire/city/malag/* /retire/city/malaga/:splat 301
+
 /city/amsterdam/canal-ring /city/amsterdam/canal-ring-centrum 308
 /city/austin/south-congress /city/austin/south-congress-soco 308
 /city/bangkok/sukhumvit /city/bangkok/sukhumvit-asoke 308
