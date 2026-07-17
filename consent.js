@@ -1,10 +1,11 @@
 /**
  * Consent Management Platform (CMP) for salary-converter.com
  *
- * - Analytics (GA4) always runs — no consent needed
- * - Only gates ad signals (ad_storage, ad_user_data, ad_personalization)
- * - Banner shown ONLY in strict consent regions (EU/EEA, UK, CH, BR, CA)
- * - Two-tier UI: Accept + More Options → toggles + Save/Decline All
+ * Consent Mode v2:
+ * - In strict consent regions (EU/EEA, UK, CH, BR, CA): analytics + ads denied
+ *   until the user accepts (or grants via More Options).
+ * - Elsewhere: analytics + ads granted by default (no banner).
+ * - Essential: sc_consent preference cookie only after interaction.
  */
 (function() {
     'use strict';
@@ -14,7 +15,6 @@
     var GEO_API = 'https://api.country.is/';
     var GEO_TIMEOUT = 2000;
 
-    // Regions where banner is shown (ISO 3166-1 alpha-2)
     var CMP_REGIONS = [
         'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR',
         'DE','GR','HU','IE','IT','LV','LT','LU','MT','NL',
@@ -22,8 +22,6 @@
         'IS','LI','NO',
         'GB','CH','BR','CA'
     ];
-
-    // --- Cookie Manager ---
 
     function getCookie(name) {
         var match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'));
@@ -43,46 +41,52 @@
     }
 
     function storeConsent(obj) {
-        obj.v = 1;
+        obj.v = 2;
         obj.ts = Math.floor(Date.now() / 1000);
         setCookie(COOKIE_NAME, encodeURIComponent(JSON.stringify(obj)), COOKIE_DAYS);
     }
 
-    // --- Consent Engine ---
-
     function applyConsent(obj) {
-        if (typeof gtag === 'function') {
-            gtag('consent', 'update', {
-                'ad_storage': obj.ad_storage || 'denied',
-                'ad_user_data': obj.ad_user_data || 'denied',
-                'ad_personalization': obj.ad_personalization || 'denied'
-            });
-        }
+        if (typeof gtag !== 'function') return;
+        gtag('consent', 'update', {
+            'ad_storage': obj.ad_storage || 'denied',
+            'ad_user_data': obj.ad_user_data || 'denied',
+            'ad_personalization': obj.ad_personalization || 'denied',
+            'analytics_storage': obj.analytics_storage || 'denied'
+        });
+    }
+
+    function consentPayload(ad, analytics) {
+        var a = ad ? 'granted' : 'denied';
+        var g = analytics ? 'granted' : 'denied';
+        return {
+            ad_storage: a,
+            ad_user_data: a,
+            ad_personalization: a,
+            analytics_storage: g
+        };
     }
 
     function acceptAll() {
-        var c = { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted' };
+        var c = consentPayload(true, true);
         applyConsent(c);
         storeConsent(c);
         destroyBanner();
     }
 
     function declineAll() {
-        var c = { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' };
+        var c = consentPayload(false, false);
         applyConsent(c);
         storeConsent(c);
         destroyBanner();
     }
 
-    function savePreferences(adEnabled) {
-        var val = adEnabled ? 'granted' : 'denied';
-        var c = { ad_storage: val, ad_user_data: val, ad_personalization: val };
+    function savePreferences(adEnabled, analyticsEnabled) {
+        var c = consentPayload(!!adEnabled, !!analyticsEnabled);
         applyConsent(c);
         storeConsent(c);
         destroyBanner();
     }
-
-    // --- Region Detection ---
 
     function detectRegion() {
         return new Promise(function(resolve) {
@@ -105,18 +109,14 @@
             if (!tz) return null;
             var parts = tz.split('/');
             if (parts[0] === 'Europe') return 'EU_LIKELY';
-            // Brazil
-            if (tz === 'America/Sao_Paulo' || tz === 'America/Fortaleza' || tz === 'America/Recife' ||
-                tz === 'America/Bahia' || tz === 'America/Belem' || tz === 'America/Manaus' ||
-                tz === 'America/Cuiaba' || tz === 'America/Porto_Velho' || tz === 'America/Boa_Vista' ||
-                tz === 'America/Campo_Grande' || tz === 'America/Araguaina' || tz === 'America/Maceio' ||
-                tz === 'America/Noronha' || tz === 'America/Rio_Branco') return 'BR';
-            // Canada
-            if (tz === 'America/Toronto' || tz === 'America/Vancouver' || tz === 'America/Edmonton' ||
-                tz === 'America/Winnipeg' || tz === 'America/Halifax' || tz === 'America/St_Johns' ||
-                tz === 'America/Regina' || tz === 'America/Moncton' || tz === 'America/Thunder_Bay' ||
-                tz === 'America/Iqaluit' || tz === 'America/Whitehorse' || tz === 'America/Yellowknife') return 'CA';
-            // UK (covers Atlantic/Reykjavik too which is Iceland)
+            if (tz.indexOf('America/Sao_Paulo') === 0 || tz.indexOf('America/Fortaleza') === 0 ||
+                tz.indexOf('America/Recife') === 0 || tz.indexOf('America/Bahia') === 0 ||
+                tz.indexOf('America/Manaus') === 0 || tz.indexOf('America/Belem') === 0 ||
+                tz.indexOf('America/Cuiaba') === 0 || tz.indexOf('America/Rio_Branco') === 0) return 'BR';
+            if (tz.indexOf('America/Toronto') === 0 || tz.indexOf('America/Vancouver') === 0 ||
+                tz.indexOf('America/Edmonton') === 0 || tz.indexOf('America/Winnipeg') === 0 ||
+                tz.indexOf('America/Halifax') === 0 || tz.indexOf('America/St_Johns') === 0 ||
+                tz.indexOf('America/Regina') === 0 || tz.indexOf('America/Moncton') === 0) return 'CA';
             if (tz === 'Atlantic/Reykjavik') return 'IS';
             return null;
         } catch(e) { return null; }
@@ -127,8 +127,6 @@
         if (code === 'EU_LIKELY') return true;
         return CMP_REGIONS.indexOf(code.toUpperCase()) !== -1;
     }
-
-    // --- Banner Renderer ---
 
     var bannerEl = null;
 
@@ -141,44 +139,31 @@
             'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;',
             'transform:translateY(100%);transition:transform .3s ease;',
             'color:var(--text-primary,#1d1d1f)}',
-
             '.sc-cb.sc-cb-show{transform:translateY(0)}',
-
             '.sc-cb-t1{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}',
             '.sc-cb-text{margin:0;font-size:14px;color:var(--text-body,#4a4a4c);flex:1 1 300px;line-height:1.5}',
             '.sc-cb-link{color:var(--accent,#2563eb);text-decoration:underline}',
-            '.sc-cb-actions{display:flex;gap:10px;flex-shrink:0}',
-
+            '.sc-cb-actions{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}',
             '.sc-cb-btn{border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}',
             '.sc-cb-btn:hover{opacity:0.85}',
             '.sc-cb-accept{background:var(--accent,#2563eb);color:#fff}',
             '.sc-cb-more{background:var(--tag-bg,#f0f0f2);color:var(--text-primary,#1d1d1f)}',
-            '.sc-cb-save{background:var(--accent,#2563eb);color:#fff}',
             '.sc-cb-decline{background:var(--tag-bg,#f0f0f2);color:var(--text-primary,#1d1d1f)}',
-
             '.sc-cb-t2{display:none;padding-top:16px}',
             '.sc-cb-t2.sc-cb-t2-show{display:block}',
             '.sc-cb-heading{margin:0 0 14px;font-size:16px;font-weight:700;color:var(--text-primary,#1d1d1f)}',
-
             '.sc-cb-option{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border,#e5e5ea)}',
             '.sc-cb-option:last-of-type{border-bottom:none}',
             '.sc-cb-opt-info{flex:1}',
             '.sc-cb-opt-label{display:block;font-size:14px;font-weight:600;color:var(--text-primary,#1d1d1f)}',
             '.sc-cb-opt-desc{display:block;font-size:12px;color:var(--text-secondary,#86868b);margin-top:2px}',
-
-            // Toggle switch
             '.sc-cb-toggle{position:relative;width:44px;height:24px;flex-shrink:0;margin-left:12px}',
             '.sc-cb-toggle input{opacity:0;width:0;height:0;position:absolute}',
             '.sc-cb-slider{position:absolute;inset:0;background:var(--border-mid,#d2d2d7);border-radius:24px;cursor:pointer;transition:background .2s}',
             '.sc-cb-slider::before{content:"";position:absolute;left:2px;top:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .2s}',
             '.sc-cb-toggle input:checked+.sc-cb-slider{background:var(--accent,#2563eb)}',
             '.sc-cb-toggle input:checked+.sc-cb-slider::before{transform:translateX(20px)}',
-            '.sc-cb-toggle.sc-cb-disabled{opacity:0.5}',
-            '.sc-cb-toggle.sc-cb-disabled .sc-cb-slider{cursor:not-allowed}',
-
-            '.sc-cb-t2-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}',
-
-            // Mobile
+            '.sc-cb-t2-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}',
             '@media(max-width:600px){',
             '.sc-cb{padding:14px 16px}',
             '.sc-cb-t1{flex-direction:column;align-items:stretch;gap:12px}',
@@ -190,94 +175,9 @@
         document.head.appendChild(style);
     }
 
-    function showBanner() {
-        bannerEl = document.createElement('div');
-        bannerEl.id = 'sc-consent-banner';
-        bannerEl.className = 'sc-cb';
-        bannerEl.setAttribute('role', 'dialog');
-        bannerEl.setAttribute('aria-label', 'Cookie consent');
-
-        // Tier 1
-        var t1 = document.createElement('div');
-        t1.className = 'sc-cb-t1';
-
-        var text = document.createElement('p');
-        text.className = 'sc-cb-text';
-        text.innerHTML = 'We use cookies to improve your experience and for advertising personalization. ' +
-            '<a href="/privacy/" class="sc-cb-link">Learn more</a>';
-
-        var actions1 = document.createElement('div');
-        actions1.className = 'sc-cb-actions';
-
-        var btnAccept = document.createElement('button');
-        btnAccept.className = 'sc-cb-btn sc-cb-accept';
-        btnAccept.textContent = 'Accept';
-        btnAccept.addEventListener('click', acceptAll);
-
-        var btnMore = document.createElement('button');
-        btnMore.className = 'sc-cb-btn sc-cb-more';
-        btnMore.textContent = 'More Options';
-        btnMore.addEventListener('click', function() {
-            t1.style.display = 'none';
-            t2.classList.add('sc-cb-t2-show');
-        });
-
-        actions1.appendChild(btnAccept);
-        actions1.appendChild(btnMore);
-        t1.appendChild(text);
-        t1.appendChild(actions1);
-
-        // Tier 2
-        var t2 = document.createElement('div');
-        t2.className = 'sc-cb-t2';
-
-        var heading = document.createElement('h3');
-        heading.className = 'sc-cb-heading';
-        heading.textContent = 'Cookie Preferences';
-
-        // Advertising option (defaults ON — user can toggle off)
-        var adToggleInput = null;
-        var optAd = createOption('Advertising & Personalization', 'Used for ad targeting and personalization', true, false);
-        adToggleInput = optAd.querySelector('input');
-
-        var actions2 = document.createElement('div');
-        actions2.className = 'sc-cb-t2-actions';
-
-        var btnAcceptAll = document.createElement('button');
-        btnAcceptAll.className = 'sc-cb-btn sc-cb-accept';
-        btnAcceptAll.textContent = 'Accept All';
-        btnAcceptAll.addEventListener('click', function() {
-            savePreferences(adToggleInput && adToggleInput.checked);
-        });
-
-        var btnReject = document.createElement('button');
-        btnReject.className = 'sc-cb-btn sc-cb-decline';
-        btnReject.textContent = 'Reject All';
-        btnReject.addEventListener('click', declineAll);
-
-        actions2.appendChild(btnAcceptAll);
-        actions2.appendChild(btnReject);
-
-        t2.appendChild(heading);
-        t2.appendChild(optAd);
-        t2.appendChild(actions2);
-
-        bannerEl.appendChild(t1);
-        bannerEl.appendChild(t2);
-        document.body.appendChild(bannerEl);
-
-        // Trigger animation
-        requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-                bannerEl.classList.add('sc-cb-show');
-            });
-        });
-    }
-
-    function createOption(label, desc, checked, disabled) {
+    function createOption(label, desc, checked) {
         var opt = document.createElement('div');
         opt.className = 'sc-cb-option';
-
         var info = document.createElement('div');
         info.className = 'sc-cb-opt-info';
         var lbl = document.createElement('span');
@@ -288,21 +188,114 @@
         d.textContent = desc;
         info.appendChild(lbl);
         info.appendChild(d);
-
         var toggle = document.createElement('label');
-        toggle.className = 'sc-cb-toggle' + (disabled ? ' sc-cb-disabled' : '');
+        toggle.className = 'sc-cb-toggle';
         var input = document.createElement('input');
         input.type = 'checkbox';
         input.checked = checked;
-        if (disabled) input.disabled = true;
         var slider = document.createElement('span');
         slider.className = 'sc-cb-slider';
         toggle.appendChild(input);
         toggle.appendChild(slider);
-
         opt.appendChild(info);
         opt.appendChild(toggle);
         return opt;
+    }
+
+    function showBanner() {
+        bannerEl = document.createElement('div');
+        bannerEl.id = 'sc-consent-banner';
+        bannerEl.className = 'sc-cb';
+        bannerEl.setAttribute('role', 'dialog');
+        bannerEl.setAttribute('aria-label', 'Cookie consent');
+
+        var t1 = document.createElement('div');
+        t1.className = 'sc-cb-t1';
+
+        var text = document.createElement('p');
+        text.className = 'sc-cb-text';
+        text.innerHTML = 'We use cookies for analytics and advertising. You can accept, reject, or choose preferences. ' +
+            '<a href="/privacy/" class="sc-cb-link">Privacy Policy</a>';
+
+        var actions1 = document.createElement('div');
+        actions1.className = 'sc-cb-actions';
+
+        var btnAccept = document.createElement('button');
+        btnAccept.className = 'sc-cb-btn sc-cb-accept';
+        btnAccept.textContent = 'Accept all';
+        btnAccept.addEventListener('click', acceptAll);
+
+        var btnReject = document.createElement('button');
+        btnReject.className = 'sc-cb-btn sc-cb-decline';
+        btnReject.textContent = 'Reject all';
+        btnReject.addEventListener('click', declineAll);
+
+        var btnMore = document.createElement('button');
+        btnMore.className = 'sc-cb-btn sc-cb-more';
+        btnMore.textContent = 'More options';
+        btnMore.addEventListener('click', function() {
+            t1.style.display = 'none';
+            t2.classList.add('sc-cb-t2-show');
+        });
+
+        actions1.appendChild(btnAccept);
+        actions1.appendChild(btnReject);
+        actions1.appendChild(btnMore);
+        t1.appendChild(text);
+        t1.appendChild(actions1);
+
+        var t2 = document.createElement('div');
+        t2.className = 'sc-cb-t2';
+
+        var heading = document.createElement('h3');
+        heading.className = 'sc-cb-heading';
+        heading.textContent = 'Cookie preferences';
+
+        var optAnalytics = createOption(
+            'Analytics',
+            'Helps us understand site usage (Google Analytics). Off by default in your region until you opt in.',
+            false
+        );
+        var optAd = createOption(
+            'Advertising',
+            'Used for Google AdSense ad measurement and personalization.',
+            false
+        );
+        var analyticsInput = optAnalytics.querySelector('input');
+        var adInput = optAd.querySelector('input');
+
+        var actions2 = document.createElement('div');
+        actions2.className = 'sc-cb-t2-actions';
+
+        var btnSave = document.createElement('button');
+        btnSave.className = 'sc-cb-btn sc-cb-accept';
+        btnSave.textContent = 'Save preferences';
+        btnSave.addEventListener('click', function() {
+            savePreferences(adInput && adInput.checked, analyticsInput && analyticsInput.checked);
+        });
+
+        var btnDecline2 = document.createElement('button');
+        btnDecline2.className = 'sc-cb-btn sc-cb-decline';
+        btnDecline2.textContent = 'Reject all';
+        btnDecline2.addEventListener('click', declineAll);
+
+        actions2.appendChild(btnSave);
+        actions2.appendChild(btnDecline2);
+
+        t2.appendChild(heading);
+        t2.appendChild(optAnalytics);
+        t2.appendChild(optAd);
+        t2.appendChild(actions2);
+
+        bannerEl.appendChild(t1);
+        bannerEl.appendChild(t2);
+        document.body.appendChild(bannerEl);
+
+        requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+                bannerEl.classList.add('sc-cb-show');
+            });
+        });
     }
 
     function destroyBanner() {
@@ -317,29 +310,27 @@
         }
     }
 
-    // --- Init ---
-
     function main() {
-        // 1. Check stored consent
         var stored = getStoredConsent();
         if (stored) {
+            // Migrate v1 cookies (no analytics_storage) → treat analytics as granted if any ads were granted
+            if (!stored.analytics_storage) {
+                stored.analytics_storage = (stored.ad_storage === 'granted') ? 'granted' : 'denied';
+            }
             applyConsent(stored);
             return;
         }
 
-        // 2. Detect region
         detectRegion().then(function(country) {
-            var region = country;
-            if (!region) {
-                region = getTimezoneRegion();
-            }
+            var region = country || getTimezoneRegion();
             if (isConsentRequired(region)) {
+                // Keep defaults denied until user chooses (set in page head Consent Mode defaults)
                 injectStyles();
                 showBanner();
             }
+            // Non-CMP regions: page head defaults already grant analytics + ads
         });
     }
 
-    // Script is deferred, DOM is ready
     main();
 })();
