@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Denver Cost of Living: $1,900/mo Rent (2026)</title>
     <meta name="description" content="1BR rent: $1,900/mo. Ranked #30/113 globally. 24 neighborhoods incl. Cherry Creek, Five Points & Wheat Ridge. Taxes, groceries & salary data.">
     <meta name="keywords" content="Denver cost of living, Denver salary, Denver neighborhoods, cost of living United States, salary comparison Denver, Denver rent prices 2026">
@@ -27,8 +27,8 @@
         "headline": "Cost of Living in Denver, United States — 2026 Guide",
         "description": "Comprehensive cost of living guide for Denver with neighborhood data, salary comparisons, and tax information.",
         "url": "https://salary-converter.com/city/denver",
-        "datePublished": "2026-04-02",
-        "dateModified": "2026-04-02",
+        "datePublished": "2026-08-31",
+        "dateModified": "2026-08-31",
         "publisher": {
             "@type": "Organization",
             "name": "salary:converter",
@@ -51,7 +51,7 @@
     {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Denver is 65.7, which ranks #30 out of 113 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Denver to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately $49,275 in Denver."}}, {"@type": "Question", "name": "What is the average rent in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Denver is approximately $1,900 USD."}}, {"@type": "Question", "name": "What are the total payroll deductions in United States?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in United States is approximately 12%. Including social security and other mandatory contributions, total deductions are approximately 24.0%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The most affordable neighborhoods include Montbello, Globeville, Federal Heights."}}, {"@type": "Question", "name": "What are the most expensive areas in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The most expensive neighborhoods are Cherry Creek, LoDo (Lower Downtown), RiNo (River North)."}}]
+        "mainEntity": [{"@type": "Question", "name": "What is the cost of living index for Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The cost of living index (COLI) for Denver is 65.7, which ranks #30 out of 113 cities globally. New York is the baseline at 100."}}, {"@type": "Question", "name": "How much salary do I need in Denver to match $75,000 in New York?", "acceptedAnswer": {"@type": "Answer", "text": "To maintain the same purchasing power as $75,000 USD in New York, you would need approximately $49,275 in Denver."}}, {"@type": "Question", "name": "What is the average rent in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The average monthly rent for a one-bedroom apartment in the city center of Denver is approximately $1,900 per month (local currency)."}}, {"@type": "Question", "name": "What are the total payroll deductions in United States?", "acceptedAnswer": {"@type": "Answer", "text": "The approximate effective income tax rate for a mid-range earner in United States is approximately 12%. Including social security and other mandatory contributions, total deductions are approximately 24.0%."}}, {"@type": "Question", "name": "What are the cheapest neighborhoods in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The most affordable neighborhoods include Montbello, Globeville, Federal Heights."}}, {"@type": "Question", "name": "What are the most expensive areas in Denver?", "acceptedAnswer": {"@type": "Answer", "text": "The most expensive neighborhoods are Cherry Creek, LoDo (Lower Downtown), RiNo (River North)."}}]
     }
     </script>
 
@@ -63,7 +63,7 @@
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
+            'analytics_storage': 'granted',
             'wait_for_update': 500,
             'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
         });
@@ -90,8 +90,8 @@
         html { touch-action: manipulation; -ms-touch-action: manipulation; }
 
         :root {
-            --bg: #f4eee2;
-            --card-bg: #fcf9f2;
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --text-body: #4a4a4c;
@@ -102,7 +102,7 @@
             --border-light: #f0f0f2;
             --table-stripe: #f9f9fb;
             --tag-bg: #f0f0f2;
-            --stat-card-bg: #ece5d6;
+            --stat-card-bg: #f5f5f7;
         }
         [data-theme="dark"] {
             --bg: #000000;
@@ -349,6 +349,7 @@
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
@@ -434,240 +435,18 @@
 
         <section class="content-card">
             <h2>Salary Ranges by Job Title in Denver (2026)</h2>
-            <p>Estimated annual salaries in Denver (USD) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <p>Two numbers per role: <strong>local market</strong> (verified national stats, OECD estimate, or COLI fallback — same badges as /is-my-salary-good/) and a <strong>lifestyle equivalent</strong> (NYC baseline × city COLI / 100). The equivalent is not market pay. Senior column is COLI-scaled.</p>
             <div style="overflow-x: auto;">
             <table>
                 <thead>
                     <tr>
                         <th>Job Title</th>
-                        <th style="text-align: center;">Entry Level</th>
-                        <th style="text-align: center;">Mid Level</th>
-                        <th style="text-align: right;">Senior Level</th>
+                        <th style="text-align: center;">Local market (mid)</th>
+                        <th style="text-align: center;">Lifestyle equivalent (mid)</th>
+                        <th style="text-align: right;">COLI senior equivalent</th>
                     </tr>
                 </thead>
-                <tbody>
-                        <tr>
-                            <td style="font-weight: 500;">Doctor (General)</td>
-                            <td style="text-align: center;">$52,560</td>
-                            <td style="text-align: center; font-weight: 600;">$118,260</td>
-                            <td style="text-align: right;">$229,950</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Surgeon</td>
-                            <td style="text-align: center;">$78,840</td>
-                            <td style="text-align: center; font-weight: 600;">$183,960</td>
-                            <td style="text-align: right;">$328,500</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Dentist</td>
-                            <td style="text-align: center;">$45,990</td>
-                            <td style="text-align: center; font-weight: 600;">$105,120</td>
-                            <td style="text-align: right;">$197,100</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Pharmacist</td>
-                            <td style="text-align: center;">$39,420</td>
-                            <td style="text-align: center; font-weight: 600;">$82,125</td>
-                            <td style="text-align: right;">$131,400</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Nurse</td>
-                            <td style="text-align: center;">$19,710</td>
-                            <td style="text-align: center; font-weight: 600;">$38,106</td>
-                            <td style="text-align: right;">$65,700</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Psychologist</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$55,845</td>
-                            <td style="text-align: right;">$98,550</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Software Engineer</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$55,845</td>
-                            <td style="text-align: right;">$118,260</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">DevOps Engineer</td>
-                            <td style="text-align: center;">$32,850</td>
-                            <td style="text-align: center; font-weight: 600;">$62,415</td>
-                            <td style="text-align: right;">$114,975</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Data Scientist</td>
-                            <td style="text-align: center;">$32,850</td>
-                            <td style="text-align: center; font-weight: 600;">$62,415</td>
-                            <td style="text-align: right;">$111,690</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Mechanical Engineer</td>
-                            <td style="text-align: center;">$26,280</td>
-                            <td style="text-align: center; font-weight: 600;">$51,246</td>
-                            <td style="text-align: right;">$91,980</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Civil Engineer</td>
-                            <td style="text-align: center;">$24,966</td>
-                            <td style="text-align: center; font-weight: 600;">$47,304</td>
-                            <td style="text-align: right;">$88,695</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Electrical Engineer</td>
-                            <td style="text-align: center;">$27,594</td>
-                            <td style="text-align: center; font-weight: 600;">$52,560</td>
-                            <td style="text-align: right;">$95,265</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Architect</td>
-                            <td style="text-align: center;">$24,966</td>
-                            <td style="text-align: center; font-weight: 600;">$47,304</td>
-                            <td style="text-align: right;">$85,410</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">UX Designer</td>
-                            <td style="text-align: center;">$26,280</td>
-                            <td style="text-align: center; font-weight: 600;">$49,275</td>
-                            <td style="text-align: right;">$91,980</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Product Manager</td>
-                            <td style="text-align: center;">$36,135</td>
-                            <td style="text-align: center; font-weight: 600;">$65,700</td>
-                            <td style="text-align: right;">$124,830</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Project Manager</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$52,560</td>
-                            <td style="text-align: right;">$98,550</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Financial Analyst</td>
-                            <td style="text-align: center;">$27,594</td>
-                            <td style="text-align: center; font-weight: 600;">$51,246</td>
-                            <td style="text-align: right;">$95,265</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Accountant</td>
-                            <td style="text-align: center;">$22,995</td>
-                            <td style="text-align: center; font-weight: 600;">$40,734</td>
-                            <td style="text-align: right;">$72,270</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Business Analyst</td>
-                            <td style="text-align: center;">$27,594</td>
-                            <td style="text-align: center; font-weight: 600;">$49,275</td>
-                            <td style="text-align: right;">$91,980</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Consultant</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$59,130</td>
-                            <td style="text-align: right;">$118,260</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Investment Banker</td>
-                            <td style="text-align: center;">$52,560</td>
-                            <td style="text-align: center; font-weight: 600;">$98,550</td>
-                            <td style="text-align: right;">$229,950</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Actuary</td>
-                            <td style="text-align: center;">$39,420</td>
-                            <td style="text-align: center; font-weight: 600;">$72,270</td>
-                            <td style="text-align: right;">$131,400</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Lawyer</td>
-                            <td style="text-align: center;">$32,850</td>
-                            <td style="text-align: center; font-weight: 600;">$65,700</td>
-                            <td style="text-align: right;">$144,540</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Paralegal</td>
-                            <td style="text-align: center;">$19,710</td>
-                            <td style="text-align: center; font-weight: 600;">$34,164</td>
-                            <td style="text-align: right;">$55,845</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Marketing Manager</td>
-                            <td style="text-align: center;">$24,966</td>
-                            <td style="text-align: center; font-weight: 600;">$47,304</td>
-                            <td style="text-align: right;">$88,695</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Sales Manager</td>
-                            <td style="text-align: center;">$26,280</td>
-                            <td style="text-align: center; font-weight: 600;">$52,560</td>
-                            <td style="text-align: right;">$105,120</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Graphic Designer</td>
-                            <td style="text-align: center;">$19,710</td>
-                            <td style="text-align: center; font-weight: 600;">$36,135</td>
-                            <td style="text-align: right;">$65,700</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Content Writer</td>
-                            <td style="text-align: center;">$16,425</td>
-                            <td style="text-align: center; font-weight: 600;">$32,850</td>
-                            <td style="text-align: right;">$59,130</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">HR Manager</td>
-                            <td style="text-align: center;">$24,966</td>
-                            <td style="text-align: center; font-weight: 600;">$45,990</td>
-                            <td style="text-align: right;">$85,410</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Operations Manager</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$53,874</td>
-                            <td style="text-align: right;">$98,550</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">CEO / Executive</td>
-                            <td style="text-align: center;">$65,700</td>
-                            <td style="text-align: center; font-weight: 600;">$144,540</td>
-                            <td style="text-align: right;">$328,500</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Teacher</td>
-                            <td style="text-align: center;">$16,425</td>
-                            <td style="text-align: center; font-weight: 600;">$31,536</td>
-                            <td style="text-align: right;">$55,845</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Professor</td>
-                            <td style="text-align: center;">$32,850</td>
-                            <td style="text-align: center; font-weight: 600;">$62,415</td>
-                            <td style="text-align: right;">$118,260</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Research Scientist</td>
-                            <td style="text-align: center;">$29,565</td>
-                            <td style="text-align: center; font-weight: 600;">$55,845</td>
-                            <td style="text-align: right;">$101,835</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Pilot</td>
-                            <td style="text-align: center;">$32,850</td>
-                            <td style="text-align: center; font-weight: 600;">$78,840</td>
-                            <td style="text-align: right;">$164,250</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Chef</td>
-                            <td style="text-align: center;">$16,425</td>
-                            <td style="text-align: center; font-weight: 600;">$32,850</td>
-                            <td style="text-align: right;">$65,700</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 500;">Journalist</td>
-                            <td style="text-align: center;">$16,425</td>
-                            <td style="text-align: center; font-weight: 600;">$34,164</td>
-                            <td style="text-align: right;">$62,415</td>
-                        </tr>
+                <tbody><tr><td style="font-weight: 500;"><a href="/salary/doctor-general/denver" style="color:var(--accent);text-decoration:none;">Doctor (General)</a></td><td style="text-align: center;">$180,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$118,260<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$229,950</td></tr><tr><td style="font-weight: 500;"><a href="/salary/surgeon/denver" style="color:var(--accent);text-decoration:none;">Surgeon</a></td><td style="text-align: center;">$280,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$183,960<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$328,500</td></tr><tr><td style="font-weight: 500;"><a href="/salary/dentist/denver" style="color:var(--accent);text-decoration:none;">Dentist</a></td><td style="text-align: center;">$160,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$105,120<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$197,100</td></tr><tr><td style="font-weight: 500;"><a href="/salary/pharmacist/denver" style="color:var(--accent);text-decoration:none;">Pharmacist</a></td><td style="text-align: center;">$125,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$82,125<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$131,400</td></tr><tr><td style="font-weight: 500;"><a href="/salary/nurse/denver" style="color:var(--accent);text-decoration:none;">Nurse</a></td><td style="text-align: center;">$58,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$38,106<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$65,700</td></tr><tr><td style="font-weight: 500;"><a href="/salary/psychologist/denver" style="color:var(--accent);text-decoration:none;">Psychologist</a></td><td style="text-align: center;">$85,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$55,845<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$98,550</td></tr><tr><td style="font-weight: 500;"><a href="/salary/software-engineer/denver" style="color:var(--accent);text-decoration:none;">Software Engineer</a></td><td style="text-align: center;">$85,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$55,845<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$118,260</td></tr><tr><td style="font-weight: 500;"><a href="/salary/devops-engineer/denver" style="color:var(--accent);text-decoration:none;">DevOps Engineer</a></td><td style="text-align: center;">$95,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$62,415<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$114,975</td></tr><tr><td style="font-weight: 500;"><a href="/salary/data-scientist/denver" style="color:var(--accent);text-decoration:none;">Data Scientist</a></td><td style="text-align: center;">$95,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$62,415<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$111,690</td></tr><tr><td style="font-weight: 500;"><a href="/salary/mechanical-engineer/denver" style="color:var(--accent);text-decoration:none;">Mechanical Engineer</a></td><td style="text-align: center;">$78,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$51,246<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$91,980</td></tr><tr><td style="font-weight: 500;"><a href="/salary/civil-engineer/denver" style="color:var(--accent);text-decoration:none;">Civil Engineer</a></td><td style="text-align: center;">$72,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$47,304<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$88,695</td></tr><tr><td style="font-weight: 500;"><a href="/salary/electrical-engineer/denver" style="color:var(--accent);text-decoration:none;">Electrical Engineer</a></td><td style="text-align: center;">$80,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$52,560<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$95,265</td></tr><tr><td style="font-weight: 500;"><a href="/salary/architect/denver" style="color:var(--accent);text-decoration:none;">Architect</a></td><td style="text-align: center;">$72,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$47,304<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$85,410</td></tr><tr><td style="font-weight: 500;"><a href="/salary/ux-designer/denver" style="color:var(--accent);text-decoration:none;">UX Designer</a></td><td style="text-align: center;">$75,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$49,275<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$91,980</td></tr><tr><td style="font-weight: 500;"><a href="/salary/product-manager/denver" style="color:var(--accent);text-decoration:none;">Product Manager</a></td><td style="text-align: center;">$100,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$65,700<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$124,830</td></tr><tr><td style="font-weight: 500;"><a href="/salary/project-manager/denver" style="color:var(--accent);text-decoration:none;">Project Manager</a></td><td style="text-align: center;">$80,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$52,560<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$98,550</td></tr><tr><td style="font-weight: 500;"><a href="/salary/financial-analyst/denver" style="color:var(--accent);text-decoration:none;">Financial Analyst</a></td><td style="text-align: center;">$78,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$51,246<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$95,265</td></tr><tr><td style="font-weight: 500;"><a href="/salary/accountant/denver" style="color:var(--accent);text-decoration:none;">Accountant</a></td><td style="text-align: center;">$62,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$40,734<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$72,270</td></tr><tr><td style="font-weight: 500;"><a href="/salary/business-analyst/denver" style="color:var(--accent);text-decoration:none;">Business Analyst</a></td><td style="text-align: center;">$75,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$49,275<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$91,980</td></tr><tr><td style="font-weight: 500;"><a href="/salary/consultant/denver" style="color:var(--accent);text-decoration:none;">Consultant</a></td><td style="text-align: center;">$90,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$59,130<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$118,260</td></tr><tr><td style="font-weight: 500;"><a href="/salary/investment-banker/denver" style="color:var(--accent);text-decoration:none;">Investment Banker</a></td><td style="text-align: center;">$150,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$98,550<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$229,950</td></tr><tr><td style="font-weight: 500;"><a href="/salary/actuary/denver" style="color:var(--accent);text-decoration:none;">Actuary</a></td><td style="text-align: center;">$110,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$72,270<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$131,400</td></tr><tr><td style="font-weight: 500;"><a href="/salary/lawyer/denver" style="color:var(--accent);text-decoration:none;">Lawyer</a></td><td style="text-align: center;">$100,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$65,700<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$144,540</td></tr><tr><td style="font-weight: 500;"><a href="/salary/paralegal/denver" style="color:var(--accent);text-decoration:none;">Paralegal</a></td><td style="text-align: center;">$52,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$34,164<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$55,845</td></tr><tr><td style="font-weight: 500;"><a href="/salary/marketing-manager/denver" style="color:var(--accent);text-decoration:none;">Marketing Manager</a></td><td style="text-align: center;">$72,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$47,304<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$88,695</td></tr><tr><td style="font-weight: 500;"><a href="/salary/sales-manager/denver" style="color:var(--accent);text-decoration:none;">Sales Manager</a></td><td style="text-align: center;">$80,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$52,560<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$105,120</td></tr><tr><td style="font-weight: 500;"><a href="/salary/graphic-designer/denver" style="color:var(--accent);text-decoration:none;">Graphic Designer</a></td><td style="text-align: center;">$36,135<div style="font-size:0.68rem;color:var(--text-secondary);">COLI estimate only — not market pay</div></td><td style="text-align: center; font-weight: 600;">$36,135<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$65,700</td></tr><tr><td style="font-weight: 500;"><a href="/salary/content-writer/denver" style="color:var(--accent);text-decoration:none;">Content Writer</a></td><td style="text-align: center;">$32,850<div style="font-size:0.68rem;color:var(--text-secondary);">COLI estimate only — not market pay</div></td><td style="text-align: center; font-weight: 600;">$32,850<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$59,130</td></tr><tr><td style="font-weight: 500;"><a href="/salary/hr-manager/denver" style="color:var(--accent);text-decoration:none;">HR Manager</a></td><td style="text-align: center;">$70,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$45,990<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$85,410</td></tr><tr><td style="font-weight: 500;"><a href="/salary/operations-manager/denver" style="color:var(--accent);text-decoration:none;">Operations Manager</a></td><td style="text-align: center;">$82,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$53,874<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$98,550</td></tr><tr><td style="font-weight: 500;"><a href="/salary/ceo-executive/denver" style="color:var(--accent);text-decoration:none;">CEO / Executive</a></td><td style="text-align: center;">$220,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$144,540<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$328,500</td></tr><tr><td style="font-weight: 500;"><a href="/salary/teacher/denver" style="color:var(--accent);text-decoration:none;">Teacher</a></td><td style="text-align: center;">$48,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$31,536<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$55,845</td></tr><tr><td style="font-weight: 500;"><a href="/salary/professor/denver" style="color:var(--accent);text-decoration:none;">Professor</a></td><td style="text-align: center;">$95,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$62,415<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$118,260</td></tr><tr><td style="font-weight: 500;"><a href="/salary/research-scientist/denver" style="color:var(--accent);text-decoration:none;">Research Scientist</a></td><td style="text-align: center;">$85,000<div style="font-size:0.68rem;color:var(--text-secondary);">Verified · BLS OES May 2024 · Doximity 2025 · NALP 2025 · Levels.fyi</div></td><td style="text-align: center; font-weight: 600;">$55,845<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$101,835</td></tr><tr><td style="font-weight: 500;"><a href="/salary/pilot/denver" style="color:var(--accent);text-decoration:none;">Pilot</a></td><td style="text-align: center;">$78,840<div style="font-size:0.68rem;color:var(--text-secondary);">COLI estimate only — not market pay</div></td><td style="text-align: center; font-weight: 600;">$78,840<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$164,250</td></tr><tr><td style="font-weight: 500;"><a href="/salary/chef/denver" style="color:var(--accent);text-decoration:none;">Chef</a></td><td style="text-align: center;">$32,850<div style="font-size:0.68rem;color:var(--text-secondary);">COLI estimate only — not market pay</div></td><td style="text-align: center; font-weight: 600;">$32,850<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$65,700</td></tr><tr><td style="font-weight: 500;"><a href="/salary/journalist/denver" style="color:var(--accent);text-decoration:none;">Journalist</a></td><td style="text-align: center;">$34,164<div style="font-size:0.68rem;color:var(--text-secondary);">COLI estimate only — not market pay</div></td><td style="text-align: center; font-weight: 600;">$34,164<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td><td style="text-align: right;">$62,415</td></tr>
                 </tbody>
             </table>
             </div>
@@ -941,6 +720,120 @@
             </table>
         </section>
 
+        <section class="content-card"><h2>Compare Denver With Other Cities</h2><p>See detailed side-by-side comparisons of salaries, rent, taxes, and neighborhoods.</p><div class="similar-cities"><a href="/compare/abu-dhabi-vs-denver" class="similar-city-link">Denver vs Abu Dhabi</a>
+<a href="/compare/amsterdam-vs-denver" class="similar-city-link">Denver vs Amsterdam</a>
+<a href="/compare/athens-vs-denver" class="similar-city-link">Denver vs Athens</a>
+<a href="/compare/atlanta-vs-denver" class="similar-city-link">Denver vs Atlanta</a>
+<a href="/compare/auckland-vs-denver" class="similar-city-link">Denver vs Auckland</a>
+<a href="/compare/austin-vs-denver" class="similar-city-link">Denver vs Austin</a>
+<a href="/compare/bali-vs-denver" class="similar-city-link">Denver vs Bali (Denpasar)</a>
+<a href="/compare/bangalore-vs-denver" class="similar-city-link">Denver vs Bangalore</a>
+<a href="/compare/bangkok-vs-denver" class="similar-city-link">Denver vs Bangkok</a>
+<a href="/compare/barcelona-vs-denver" class="similar-city-link">Denver vs Barcelona</a>
+<a href="/compare/beijing-vs-denver" class="similar-city-link">Denver vs Beijing</a>
+<a href="/compare/berlin-vs-denver" class="similar-city-link">Denver vs Berlin</a>
+<a href="/compare/bogota-vs-denver" class="similar-city-link">Denver vs Bogotá</a>
+<a href="/compare/boston-vs-denver" class="similar-city-link">Denver vs Boston</a>
+<a href="/compare/brussels-vs-denver" class="similar-city-link">Denver vs Brussels</a>
+<a href="/compare/bucharest-vs-denver" class="similar-city-link">Denver vs Bucharest</a>
+<a href="/compare/budapest-vs-denver" class="similar-city-link">Denver vs Budapest</a>
+<a href="/compare/buenos-aires-vs-denver" class="similar-city-link">Denver vs Buenos Aires</a>
+<a href="/compare/cairo-vs-denver" class="similar-city-link">Denver vs Cairo</a>
+<a href="/compare/cancun-vs-denver" class="similar-city-link">Denver vs Cancún</a>
+<a href="/compare/cape-town-vs-denver" class="similar-city-link">Denver vs Cape Town</a>
+<a href="/compare/casablanca-vs-denver" class="similar-city-link">Denver vs Casablanca</a>
+<a href="/compare/charlotte-vs-denver" class="similar-city-link">Denver vs Charlotte</a>
+<a href="/compare/chennai-vs-denver" class="similar-city-link">Denver vs Chennai</a>
+<a href="/compare/chiang-mai-vs-denver" class="similar-city-link">Denver vs Chiang Mai</a>
+<a href="/compare/chicago-vs-denver" class="similar-city-link">Denver vs Chicago</a>
+<a href="/compare/copenhagen-vs-denver" class="similar-city-link">Denver vs Copenhagen</a>
+<a href="/compare/dallas-vs-denver" class="similar-city-link">Denver vs Dallas</a>
+<a href="/compare/delhi-vs-denver" class="similar-city-link">Denver vs Delhi</a>
+<a href="/compare/denver-vs-doha" class="similar-city-link">Denver vs Doha</a>
+<a href="/compare/denver-vs-dubai" class="similar-city-link">Denver vs Dubai</a>
+<a href="/compare/denver-vs-dublin" class="similar-city-link">Denver vs Dublin</a>
+<a href="/compare/denver-vs-edinburgh" class="similar-city-link">Denver vs Edinburgh</a>
+<a href="/compare/denver-vs-fukuoka" class="similar-city-link">Denver vs Fukuoka</a>
+<a href="/compare/denver-vs-geneva" class="similar-city-link">Denver vs Geneva</a>
+<a href="/compare/denver-vs-guangzhou" class="similar-city-link">Denver vs Guangzhou</a>
+<a href="/compare/denver-vs-hanoi" class="similar-city-link">Denver vs Hanoi</a>
+<a href="/compare/denver-vs-helsinki" class="similar-city-link">Denver vs Helsinki</a>
+<a href="/compare/denver-vs-ho-chi-minh-city" class="similar-city-link">Denver vs Ho Chi Minh City</a>
+<a href="/compare/denver-vs-hong-kong" class="similar-city-link">Denver vs Hong Kong</a>
+<a href="/compare/denver-vs-houston" class="similar-city-link">Denver vs Houston</a>
+<a href="/compare/denver-vs-istanbul" class="similar-city-link">Denver vs Istanbul</a>
+<a href="/compare/denver-vs-jakarta" class="similar-city-link">Denver vs Jakarta</a>
+<a href="/compare/denver-vs-krakow" class="similar-city-link">Denver vs Krakow</a>
+<a href="/compare/denver-vs-kuala-lumpur" class="similar-city-link">Denver vs Kuala Lumpur</a>
+<a href="/compare/denver-vs-lagos" class="similar-city-link">Denver vs Lagos</a>
+<a href="/compare/denver-vs-las-vegas" class="similar-city-link">Denver vs Las Vegas</a>
+<a href="/compare/denver-vs-lima" class="similar-city-link">Denver vs Lima</a>
+<a href="/compare/denver-vs-lisbon" class="similar-city-link">Denver vs Lisbon</a>
+<a href="/compare/denver-vs-london" class="similar-city-link">Denver vs London</a>
+<a href="/compare/denver-vs-los-angeles" class="similar-city-link">Denver vs Los Angeles</a>
+<a href="/compare/denver-vs-luxembourg-city" class="similar-city-link">Denver vs Luxembourg City</a>
+<a href="/compare/denver-vs-madrid" class="similar-city-link">Denver vs Madrid</a>
+<a href="/compare/denver-vs-manila" class="similar-city-link">Denver vs Manila</a>
+<a href="/compare/denver-vs-marrakech" class="similar-city-link">Denver vs Marrakech</a>
+<a href="/compare/denver-vs-medellin" class="similar-city-link">Denver vs Medellín</a>
+<a href="/compare/denver-vs-melbourne" class="similar-city-link">Denver vs Melbourne</a>
+<a href="/compare/denver-vs-mexico-city" class="similar-city-link">Denver vs Mexico City</a>
+<a href="/compare/denver-vs-miami" class="similar-city-link">Denver vs Miami</a>
+<a href="/compare/denver-vs-milan" class="similar-city-link">Denver vs Milan</a>
+<a href="/compare/denver-vs-minneapolis" class="similar-city-link">Denver vs Minneapolis</a>
+<a href="/compare/denver-vs-montevideo" class="similar-city-link">Denver vs Montevideo</a>
+<a href="/compare/denver-vs-montreal" class="similar-city-link">Denver vs Montreal</a>
+<a href="/compare/denver-vs-mumbai" class="similar-city-link">Denver vs Mumbai</a>
+<a href="/compare/denver-vs-munich" class="similar-city-link">Denver vs Munich</a>
+<a href="/compare/denver-vs-malaga" class="similar-city-link">Denver vs Málaga</a>
+<a href="/compare/denver-vs-nairobi" class="similar-city-link">Denver vs Nairobi</a>
+<a href="/compare/denver-vs-nashville" class="similar-city-link">Denver vs Nashville</a>
+<a href="/compare/denver-vs-new-york" class="similar-city-link">Denver vs New York</a>
+<a href="/compare/denver-vs-nice" class="similar-city-link">Denver vs Nice</a>
+<a href="/compare/denver-vs-osaka" class="similar-city-link">Denver vs Osaka</a>
+<a href="/compare/denver-vs-oslo" class="similar-city-link">Denver vs Oslo</a>
+<a href="/compare/denver-vs-panama-city" class="similar-city-link">Denver vs Panama City</a>
+<a href="/compare/denver-vs-paris" class="similar-city-link">Denver vs Paris</a>
+<a href="/compare/denver-vs-perth" class="similar-city-link">Denver vs Perth</a>
+<a href="/compare/denver-vs-philadelphia" class="similar-city-link">Denver vs Philadelphia</a>
+<a href="/compare/denver-vs-phnom-penh" class="similar-city-link">Denver vs Phnom Penh</a>
+<a href="/compare/denver-vs-phoenix" class="similar-city-link">Denver vs Phoenix</a>
+<a href="/compare/denver-vs-phuket" class="similar-city-link">Denver vs Phuket</a>
+<a href="/compare/denver-vs-playa-del-carmen" class="similar-city-link">Denver vs Playa del Carmen</a>
+<a href="/compare/denver-vs-portland" class="similar-city-link">Denver vs Portland</a>
+<a href="/compare/denver-vs-porto" class="similar-city-link">Denver vs Porto</a>
+<a href="/compare/denver-vs-prague" class="similar-city-link">Denver vs Prague</a>
+<a href="/compare/denver-vs-raleigh" class="similar-city-link">Denver vs Raleigh</a>
+<a href="/compare/denver-vs-riga" class="similar-city-link">Denver vs Riga</a>
+<a href="/compare/denver-vs-riyadh" class="similar-city-link">Denver vs Riyadh</a>
+<a href="/compare/denver-vs-rome" class="similar-city-link">Denver vs Rome</a>
+<a href="/compare/denver-vs-san-diego" class="similar-city-link">Denver vs San Diego</a>
+<a href="/compare/denver-vs-san-francisco" class="similar-city-link">Denver vs San Francisco</a>
+<a href="/compare/denver-vs-san-jose" class="similar-city-link">Denver vs San José (CR)</a>
+<a href="/compare/denver-vs-santiago" class="similar-city-link">Denver vs Santiago</a>
+<a href="/compare/denver-vs-seattle" class="similar-city-link">Denver vs Seattle</a>
+<a href="/compare/denver-vs-seoul" class="similar-city-link">Denver vs Seoul</a>
+<a href="/compare/denver-vs-shanghai" class="similar-city-link">Denver vs Shanghai</a>
+<a href="/compare/denver-vs-shenzhen" class="similar-city-link">Denver vs Shenzhen</a>
+<a href="/compare/denver-vs-singapore" class="similar-city-link">Denver vs Singapore</a>
+<a href="/compare/denver-vs-split" class="similar-city-link">Denver vs Split</a>
+<a href="/compare/denver-vs-stockholm" class="similar-city-link">Denver vs Stockholm</a>
+<a href="/compare/denver-vs-sydney" class="similar-city-link">Denver vs Sydney</a>
+<a href="/compare/denver-vs-sao-paulo" class="similar-city-link">Denver vs São Paulo</a>
+<a href="/compare/denver-vs-taipei" class="similar-city-link">Denver vs Taipei</a>
+<a href="/compare/denver-vs-tallinn" class="similar-city-link">Denver vs Tallinn</a>
+<a href="/compare/denver-vs-tampa" class="similar-city-link">Denver vs Tampa</a>
+<a href="/compare/denver-vs-tel-aviv" class="similar-city-link">Denver vs Tel Aviv</a>
+<a href="/compare/denver-vs-tokyo" class="similar-city-link">Denver vs Tokyo</a>
+<a href="/compare/denver-vs-toronto" class="similar-city-link">Denver vs Toronto</a>
+<a href="/compare/denver-vs-valencia" class="similar-city-link">Denver vs Valencia</a>
+<a href="/compare/denver-vs-vancouver" class="similar-city-link">Denver vs Vancouver</a>
+<a href="/compare/denver-vs-vienna" class="similar-city-link">Denver vs Vienna</a>
+<a href="/compare/denver-vs-warsaw" class="similar-city-link">Denver vs Warsaw</a>
+<a href="/compare/denver-vs-washington-dc" class="similar-city-link">Denver vs Washington DC</a>
+<a href="/compare/denver-vs-zurich" class="similar-city-link">Denver vs Zurich</a>
+</div></section>
+
         <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
             <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
                 <div style="flex:1; min-width:200px;">
@@ -963,14 +856,14 @@
 
         <section class="content-card">
             <h2>Frequently Asked Questions</h2>
-            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Denver is 65.7, which ranks #30 out of 113 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Denver to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately $49,275 in Denver.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Denver is approximately $1,900 USD.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the total payroll deductions in United States?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in United States is approximately 12%. Including social security and other mandatory contributions, total deductions are approximately 24.0%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most affordable neighborhoods include Montbello, Globeville, Federal Heights.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most expensive neighborhoods are Cherry Creek, LoDo (Lower Downtown), RiNo (River North).</p></div>
+            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the cost of living index for Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The cost of living index (COLI) for Denver is 65.7, which ranks #30 out of 113 cities globally. New York is the baseline at 100.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">How much salary do I need in Denver to match $75,000 in New York?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">To maintain the same purchasing power as $75,000 USD in New York, you would need approximately $49,275 in Denver.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What is the average rent in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The average monthly rent for a one-bedroom apartment in the city center of Denver is approximately $1,900 per month (local currency).</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the total payroll deductions in United States?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The approximate effective income tax rate for a mid-range earner in United States is approximately 12%. Including social security and other mandatory contributions, total deductions are approximately 24.0%.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the cheapest neighborhoods in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most affordable neighborhoods include Montbello, Globeville, Federal Heights.</p></div><div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f2;"><h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">What are the most expensive areas in Denver?</h3><p style="font-size: 0.9rem; color: #4a4a4c; line-height: 1.7; margin: 0;">The most expensive neighborhoods are Cherry Creek, LoDo (Lower Downtown), RiNo (River North).</p></div>
         </section>
 
         <section class="content-card">
             <h2>Data Sources &amp; Methodology</h2>
             <p>Our cost of living index (COLI) uses New York City as the baseline (COLI&nbsp;=&nbsp;100). Indices are derived from multiple sources including <a href="https://www.numbeo.com/cost-of-living/" target="_blank" rel="noopener">Numbeo</a>, <a href="https://www.expatistan.com/cost-of-living" target="_blank" rel="noopener">Expatistan</a>, and national statistics agencies. Exchange rates are sourced from the <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener">European Central Bank</a>.</p>
             <p>Tax rates represent approximate effective rates for mid-range earners based on <a href="https://www.oecd.org/tax/tax-policy/taxing-wages-brochure.pdf" target="_blank" rel="noopener">OECD Taxing Wages</a> data and do not constitute tax advice. Neighborhood cost multipliers are estimated from local rental indices and property data. Salary ranges are modeled by adjusting global baseline figures by each city's COLI.</p>
-            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-04-02. Data is refreshed periodically and may not reflect very recent changes. All figures are estimates for informational purposes only.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-bottom: 0;">Last updated: 2026-08-31. Data is refreshed periodically and may not reflect very recent changes. All figures are estimates for informational purposes only.</p>
         </section>
 
         <section class="content-card">
@@ -994,11 +887,13 @@
         <footer class="page-footer">
             <a href="/">Salary Converter</a>
             <a href="/city/">All Cities</a>
+            <a href="/compare/">City Comparisons</a>
             <a href="/retire/">Retire Abroad</a>
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
 
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
@@ -1034,6 +929,5 @@
     })();
     </script>
 
-    <script src="/consent.js?v=3" defer></script>
 </body>
 </html>

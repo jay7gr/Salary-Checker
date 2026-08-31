@@ -10,6 +10,8 @@ import json
 import html as html_mod
 from datetime import date
 
+from salary_market_data import market_quality, badge_html, badge_plain
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
 _source = open(os.path.join(ROOT, 'generate-pages.py'), encoding='utf-8').read()
@@ -58,24 +60,55 @@ for cat, titles in JOB_CATEGORIES.items():
 
 
 def compute_city_salary_data(job_title, city):
+    """Return both local-market and COLI-scaled lifestyle equivalent.
+
+    Market pay uses the same country multipliers / provenance badges as
+    /is-my-salary-good/. Equivalent is NYC baseline × city COLI / 100.
+    Never treat the equivalent as market pay.
+    """
     ranges = salaryRanges[job_title]
     mid_salary_usd = ranges['mid']
     coli = coliData.get(city, 50)
-    adjusted_usd = mid_salary_usd * (coli / 100)
     currency = cityToCurrency.get(city, 'USD')
     rate_to_local = exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)
-    local_salary = adjusted_usd * rate_to_local
     country = cityCountry.get(city, '')
-    if local_salary > 0:
-        ded = calculate_all_deductions(local_salary, country, city)
+
+    equiv_usd = mid_salary_usd * (coli / 100)
+    equiv_local = equiv_usd * rate_to_local
+
+    bench_mult, quality, src = market_quality(job_title, country)
+    if bench_mult is None:
+        market_usd = equiv_usd
+    else:
+        market_usd = mid_salary_usd * bench_mult
+    market_local = market_usd * rate_to_local
+
+    if market_local > 0:
+        ded = calculate_all_deductions(market_local, country, city)
         take_home_pct = 100 - ded['total_rate']
     else:
         take_home_pct = 100.0
-    local_formatted = format_currency_amount(local_salary, currency)
+
     return {
-        'adjusted_usd': adjusted_usd, 'local_salary': local_salary,
-        'local_formatted': local_formatted, 'currency': currency,
-        'coli': coli, 'take_home_pct': take_home_pct,
+        'adjusted_usd': equiv_usd,  # lifestyle equivalent in USD (legacy key)
+        'local_salary': equiv_local,
+        'local_formatted': format_currency_amount(equiv_local, currency),
+        'equiv_usd': equiv_usd,
+        'equiv_local': equiv_local,
+        'equiv_formatted': format_currency_amount(equiv_local, currency),
+        'market_usd': market_usd,
+        'market_local': market_local,
+        'market_formatted': format_currency_amount(market_local, currency),
+        'quality': quality,
+        'src': src,
+        'badge_html': badge_html(quality, src),
+        'badge_plain': badge_plain(quality, src),
+        'currency': currency,
+        'coli': coli,
+        'take_home_pct': take_home_pct,
+        'ny_mid_usd': mid_salary_usd,
+        'rate_to_local': rate_to_local,
+        'country': country,
     }
 
 
@@ -155,6 +188,14 @@ def _base_css():
         .faq-item:last-child {{ border-bottom: none; margin-bottom: 0; padding-bottom: 0; }}
         .faq-item h3 {{ font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }}
         .faq-item p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.7; margin: 0; }}
+        .src-badge {{ display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.68rem; font-weight:700; letter-spacing:.2px; }}
+        .src-verified {{ background:rgba(22,163,74,0.1); border:1px solid rgba(22,163,74,0.3); color:#16a34a; }}
+        .src-estimated {{ background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.35); color:#b45309; }}
+        .src-coli {{ background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); color:#dc2626; }}
+        .src-note {{ font-size:0.72rem; color:var(--text-secondary); }}
+        .salary-pair {{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }}
+        .salary-pair .stat-card {{ text-align:left; }}
+        @media (max-width: 600px) {{ .salary-pair {{ grid-template-columns: 1fr; }} }}
 {THEME_TOGGLE_CSS}
 {_share_bar_css()}
         @media (max-width: 600px) {{
@@ -194,6 +235,7 @@ def _footer():
             <a href="/city/">Cities</a>
             <a href="/compare/">Compare</a>
             <a href="/blog/">Blog</a>
+            <a href="/methodology/">Methodology</a>
         </footer>'''
 
 
@@ -219,17 +261,17 @@ def generate_salary_page(job_title):
     low_k, high_k = low // 1000, high // 1000
     canon = f'https://salary-converter.com/salary/{slug}'
     ptitle = f'{job_title} Salary by City ({CURRENT_YEAR}) | salary:converter'
-    mdesc = f'What do {jt_lower}s earn in {nc} cities worldwide? ${low_k}K-${high_k}K base, adjusted for cost of living. Compare take-home pay across cities.'
+    mdesc = f'Local-market and COLI-scaled lifestyle-equivalent {jt_lower} pay in {nc} cities. NYC baseline ${low_k}K–${high_k}K. Equivalent is not market pay.'
     sbar = build_share_bar(f'{job_title} Salary by City ({CURRENT_YEAR}) | salary:converter', canon)
     rows = ''
     for i, r in enumerate(city_data):
-        rows += f'<tr><td style="text-align:center; color:var(--text-secondary);">{i+1}</td><td><a href="/city/{r["city_slug"]}" style="color: var(--accent); text-decoration: none; font-weight: 500;">{html_mod.escape(r["city"])}</a></td><td style="text-align:right; font-weight:600;">{r["local_formatted"]}</td><td style="text-align:right;">${r["adjusted_usd"]:,.0f}</td><td style="text-align:center;">{r["coli"]:.1f}</td><td style="text-align:center;">{r["take_home_pct"]:.1f}%</td></tr>\n' 
+        rows += f'<tr><td style="text-align:center; color:var(--text-secondary);">{i+1}</td><td><a href="/salary/{slug}/{r["city_slug"]}" style="color: var(--accent); text-decoration: none; font-weight: 500;">{html_mod.escape(r["city"])}</a></td><td style="text-align:right; font-weight:600;">{r["market_formatted"]}</td><td style="text-align:right;">{r["equiv_formatted"]}</td><td style="text-align:center;">{r["coli"]:.1f}</td><td style="text-align:center;">{r["take_home_pct"]:.1f}%</td></tr>\n' 
     f1q = f'What is the average {jt_lower} salary in {CURRENT_YEAR}?'
-    f1a = f'The mid-career {jt_lower} base salary is {fmt_mid} (New York baseline). Entry-level starts around ${low:,} and senior roles can reach ${high:,}. These figures are adjusted for each city using local cost of living.'
+    f1a = f'The mid-career {jt_lower} New York baseline is {fmt_mid}. Each city shows two numbers: local-market pay (verified national stats, OECD estimate, or COLI fallback) and a lifestyle equivalent (NYC baseline scaled by city COLI). The equivalent is not what someone earns locally.'
     f2q = f'Which city pays {jt_lower}s the most?'
-    f2a = f'After adjusting for cost of living, {h_city} offers the highest {jt_lower} salary at {h_sal} (USD equivalent). See the full table above for all {nc} cities.'
+    f2a = f'The highest COLI-scaled lifestyle equivalent for a {jt_lower} is {h_city} at {h_sal} USD. That figure is purchasing-power scaled from the New York baseline, not local market pay. See both columns in the table for all {nc} cities.'
     f3q = 'How is the salary adjusted for each city?'
-    f3a = "We start with the New York baseline salary and scale it by each city's Cost of Living Index (COLI). For example, a city with COLI 50 means living costs are half of New York, so the adjusted salary is 50% of the baseline. Take-home percentage accounts for local income tax and social contributions."
+    f3a = "Local-market pay uses the same country multipliers as /is-my-salary-good/ (verified national statistics, OECD wage ratios, or COLI fallback). Lifestyle equivalent starts from the New York baseline and scales by city COLI (NYC = 100). Take-home percentage is tax and social contributions on the local-market figure."
     faq_s = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": f1q, "acceptedAnswer": {"@type": "Answer", "text": f1a}}, {"@type": "Question", "name": f2q, "acceptedAnswer": {"@type": "Answer", "text": f2a}}, {"@type": "Question", "name": f3q, "acceptedAnswer": {"@type": "Answer", "text": f3a}}]})
     bc_s = json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}, {"@type": "ListItem", "position": 2, "name": "Salaries", "item": "https://salary-converter.com/salary/"}, {"@type": "ListItem", "position": 3, "name": f'{job_title} Salary'}]})
     cat = JOB_TO_CATEGORY.get(job_title, '')
@@ -253,7 +295,7 @@ def generate_salary_page(job_title):
     <div class="page-wrapper">
         {_nav_bar()}
         <div class="breadcrumb"><a href="/">Home</a> &rsaquo; <a href="/salary/">Salaries</a> &rsaquo; {html_mod.escape(job_title)} Salary</div>
-        <div class="hero"><h1>{html_mod.escape(job_title)} Salary by City ({CURRENT_YEAR})</h1><p class="hero-desc">Mid-career base salary: {fmt_mid} in New York. See what it&rsquo;s worth in {nc} cities after adjusting for cost of living and taxes.</p></div>
+        <div class="hero"><h1>{html_mod.escape(job_title)} Salary by City ({CURRENT_YEAR})</h1><p class="hero-desc">Mid-career New York baseline: {fmt_mid}. Each city lists local-market pay and a COLI-scaled lifestyle equivalent — the equivalent is not market pay.</p></div>
         <div class="stat-grid">
             <div class="stat-card"><div class="stat-label">Highest Adjusted</div><div class="stat-value">{html_mod.escape(h_city)}</div><div class="stat-sub">{h_sal}</div></div>
             <div class="stat-card"><div class="stat-label">Median City</div><div class="stat-value">{html_mod.escape(m_city)}</div><div class="stat-sub">{m_sal}</div></div>
@@ -262,8 +304,8 @@ def generate_salary_page(job_title):
         {sbar}
         <section class="content-card">
             <h2>{html_mod.escape(job_title)} Salary &mdash; All {nc} Cities</h2>
-            <div class="table-wrapper"><table><thead><tr><th style="text-align:center; width:40px;">#</th><th>City</th><th style="text-align:right;">Salary (Local)</th><th style="text-align:right;">Salary (USD)</th><th style="text-align:center;">COLI</th><th style="text-align:center;">Take-Home %</th></tr></thead><tbody>{rows}</tbody></table></div>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Data covers {nc} cities worldwide. Salaries adjusted by Cost of Living Index (New York = 100). Updated {CURRENT_YEAR}.</p>
+            <div class="table-wrapper"><table><thead><tr><th style="text-align:center; width:40px;">#</th><th>City</th><th style="text-align:right;">Local market</th><th style="text-align:right;">Lifestyle equivalent</th><th style="text-align:center;">COLI</th><th style="text-align:center;">Take-Home %</th></tr></thead><tbody>{rows}</tbody></table></div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Data covers {nc} cities. Local market = verified / OECD / COLI badge (same as /is-my-salary-good/). Lifestyle equivalent = NYC baseline × city COLI / 100 — not market pay. Updated {CURRENT_YEAR}.</p>
         </section>
 {WISE_CTA}
         <section class="content-card"><h2>Salary Range</h2><p>Typical {html_mod.escape(jt_lower)} salary range (New York baseline, USD):</p>
@@ -288,7 +330,7 @@ def generate_salary_page(job_title):
 def generate_index_page():
     nc = len(coliData)
     ptitle = f'Salary by Job Title ({CURRENT_YEAR}) \u2014 37 Professions in {nc} Cities | salary:converter'
-    mdesc = f'Compare salaries for 37 professions across {nc} cities worldwide. Each salary is adjusted for local cost of living and taxes. Updated {CURRENT_YEAR}.'
+    mdesc = f'Compare 37 professions across {nc} cities. Local-market pay plus COLI-scaled lifestyle equivalent (NYC = 100). Equivalent is not market pay. Updated {CURRENT_YEAR}.'
     canon = 'https://salary-converter.com/salary/'
     bc_s = json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://salary-converter.com/"}, {"@type": "ListItem", "position": 2, "name": "Salaries"}]})
     sections = ''
@@ -324,7 +366,7 @@ def generate_index_page():
     <div class="page-wrapper">
         {_nav_bar()}
         <div class="breadcrumb"><a href="/">Home</a> &rsaquo; Salaries</div>
-        <div class="hero"><h1>Salary by Job Title ({CURRENT_YEAR})</h1><p>Compare salaries for 37 professions across {nc} cities worldwide. Each salary is adjusted for local cost of living and taxes.</p></div>
+        <div class="hero"><h1>Salary by Job Title ({CURRENT_YEAR})</h1><p>Compare 37 professions across {nc} cities. Each city page shows local-market pay and a COLI-scaled lifestyle equivalent (not market pay).</p></div>
         {sections}
 {WISE_CTA}
         <section class="content-card"><h2>Explore More</h2><div class="similar-cities"><a href="/rankings/" class="similar-city-link">City Rankings</a><a href="/city/" class="similar-city-link">All Cities</a><a href="/compare/" class="similar-city-link">Compare Cities</a><a href="/blog/" class="similar-city-link">Blog</a></div></section>
@@ -347,20 +389,27 @@ def generate_city_salary_page(job_title, city):
     currency = cityToCurrency.get(city, 'USD')
 
     d = compute_city_salary_data(job_title, city)
-    adjusted_usd = d['adjusted_usd']
-    local_formatted = d['local_formatted']
+    adjusted_usd = d['equiv_usd']
+    local_formatted = d['equiv_formatted']
+    market_formatted = d['market_formatted']
+    market_usd = d['market_usd']
     take_home_pct = d['take_home_pct']
     coli = d['coli']
+    quality = d['quality']
+    ny_mid = d['ny_mid_usd']
 
-    # Salary range adjusted for this city's COLI
-    low_local = format_currency_amount(low * (coli / 100) * (exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)), currency)
-    high_local = format_currency_amount(high * (coli / 100) * (exchangeRates.get(currency, 1) / exchangeRates.get('USD', 1)), currency)
-    take_home_usd = adjusted_usd * take_home_pct / 100
+    rate = d['rate_to_local']
+    low_local = format_currency_amount(low * (coli / 100) * rate, currency)
+    high_local = format_currency_amount(high * (coli / 100) * rate, currency)
+    take_home_usd = d['market_usd'] * take_home_pct / 100
     take_home_monthly = take_home_usd / 12
 
     canon = f'https://salary-converter.com/salary/{job_slug}/{city_slug}'
     ptitle = f'{job_title} Salary in {city} ({CURRENT_YEAR}) — salary:converter'
-    mdesc = f'{job_title}s in {city} earn {local_formatted}/year (≈${adjusted_usd:,.0f} USD), after adjusting for local cost of living. Take-home: {take_home_pct:.0f}%. See full breakdown.'
+    mdesc = (
+        f'Local-market {job_title} pay in {city}: {market_formatted}/year ({d["badge_plain"]}). '
+        f'Lifestyle equivalent of a New York ${ny_mid:,.0f} salary: {local_formatted} (COLI-scaled, not market pay).'
+    )
 
     # Top 5 cities by adjusted USD (same job) for comparison
     all_cities_data = sorted(
@@ -376,8 +425,8 @@ def generate_city_salary_page(job_title, city):
         top5_rows += (
             f'<tr><td><a href="/salary/{job_slug}/{r["slug"]}" '
             f'style="color:var(--accent);text-decoration:none;font-weight:500;">{html_mod.escape(r["city"])}</a></td>'
-            f'<td style="text-align:right;">{r["local_formatted"]}</td>'
-            f'<td style="text-align:right;">${r["adjusted_usd"]:,.0f}</td>'
+            f'<td style="text-align:right;">{r["market_formatted"]}</td>'
+            f'<td style="text-align:right;">{r["equiv_formatted"]}</td>'
             f'<td style="text-align:center;">{r["take_home_pct"]:.0f}%</td></tr>\n'
         )
 
@@ -401,16 +450,17 @@ def generate_city_salary_page(job_title, city):
 
     # FAQ
     f1q = f'How much does a {jt_lower} earn in {city}?'
-    f1a = (f'A {jt_lower} in {city} earns approximately {local_formatted}/year '
-           f'(≈${adjusted_usd:,.0f} USD equivalent), based on the {city} cost of living index of {coli}. '
-           f'Entry-level roles start around {low_local} and senior positions can reach {high_local}.')
+    f1a = (f'Local-market pay for a {jt_lower} in {city} is approximately {market_formatted}/year '
+           f'({d["badge_plain"]}). Separately, the lifestyle equivalent of a New York ${ny_mid:,.0f} salary '
+           f'is {local_formatted} (COLI {coli}, NYC = 100). That equivalent is not what someone earns locally. '
+           f'COLI-scaled entry/senior lifestyle equivalents: {low_local} – {high_local}.')
     f2q = f'What is the take-home pay for a {jt_lower} in {city}?'
     f2a = (f'After income tax and social contributions in {country or city}, a {jt_lower} in {city} '
            f'takes home approximately {take_home_pct:.0f}% of their gross salary, '
            f'or around ${take_home_monthly:,.0f}/month (${take_home_usd:,.0f}/year in USD equivalent).')
     f3q = f'How does {city} rank for {jt_lower} salaries globally?'
-    f3a = (f'{city} ranks #{city_rank} out of {total_cities} cities for {jt_lower} salaries '
-           f'after cost-of-living adjustment. The top city globally for this role is {all_cities_data[0]["city"]}.')
+    f3a = (f'{city} ranks #{city_rank} out of {total_cities} cities on COLI-scaled lifestyle equivalent '
+           f'for {jt_lower}s (not local market rank). The top city on that equivalent scale is {all_cities_data[0]["city"]}.')
 
     faq_s = json.dumps({
         "@context": "https://schema.org", "@type": "FAQPage",
@@ -465,32 +515,46 @@ def generate_city_salary_page(job_title, city):
         <div class="hero">
             <h1>{html_mod.escape(job_title)} Salary in {html_mod.escape(city)} ({CURRENT_YEAR})</h1>
             <p class="hero-desc">
-                {html_mod.escape(job_title)}s in {html_mod.escape(city)} earn <strong>{local_formatted}/year</strong>
-                (≈<strong>${adjusted_usd:,.0f} USD</strong>), adjusted for local cost of living.
-                Ranked #{city_rank} of {total_cities} cities for this role.
+                Typical local-market pay: <strong>{market_formatted}/year</strong>
+                ({d['badge_html']}).
+                Lifestyle equivalent of a New York ${ny_mid:,.0f} salary:
+                <strong>{local_formatted}/year</strong> (COLI-scaled, not market pay).
+                COLI rank #{city_rank} of {total_cities}.
             </p>
+        </div>
+        <div class="salary-pair">
+            <div class="stat-card">
+                <div class="label">Local market</div>
+                <div class="value">{market_formatted}</div>
+                <div class="sub">{d['badge_html']}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Lifestyle equivalent</div>
+                <div class="value">{local_formatted}</div>
+                <div class="sub">COLI {coli} · NYC ${ny_mid:,.0f} scaled · not market pay</div>
+            </div>
         </div>
         <div class="stat-grid">
             <div class="stat-card">
-                <div class="label">Local Salary</div>
-                <div class="value">{local_formatted}</div>
-                <div class="sub">per year</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">USD Equivalent</div>
-                <div class="value">${adjusted_usd:,.0f}</div>
-                <div class="sub">per year</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">Take-Home</div>
+                <div class="label">Take-home (on market pay)</div>
                 <div class="value">{take_home_pct:.0f}%</div>
                 <div class="sub">${take_home_monthly:,.0f}/mo net</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">COLI (NYC = 100)</div>
+                <div class="value">{coli}</div>
+                <div class="sub">#{city_rank} of {total_cities}</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">NYC baseline</div>
+                <div class="value">${ny_mid:,.0f}</div>
+                <div class="sub">mid-career USD</div>
             </div>
         </div>
         {sbar}
         <section class="content-card">
             <h2>Salary Range in {html_mod.escape(city)}</h2>
-            <p>Typical {html_mod.escape(jt_lower)} salary range in {html_mod.escape(city)}, adjusted for local cost of living (COLI: {coli}):</p>
+            <p>COLI-scaled lifestyle-equivalent range for a {html_mod.escape(jt_lower)} in {html_mod.escape(city)} (NYC baseline × COLI {coli} / 100). This is not local market pay.</p>
             <div class="stat-grid">
                 <div class="stat-card"><div class="label">Entry Level</div><div class="value">{low_local}</div></div>
                 <div class="stat-card"><div class="label">Mid-Career</div><div class="value">{local_formatted}</div></div>
@@ -499,13 +563,13 @@ def generate_city_salary_page(job_title, city):
         </section>
         <section class="content-card">
             <h2>Top Cities for {html_mod.escape(job_title)} Salary</h2>
-            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">Highest-paying cities for this role after cost-of-living adjustment:</p>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:12px;">Highest COLI-scaled lifestyle equivalents (not local market pay):</p>
             <div class="table-wrapper">
                 <table>
                     <thead><tr>
                         <th>City</th>
-                        <th style="text-align:right;">Local Salary</th>
-                        <th style="text-align:right;">USD Equiv.</th>
+                        <th style="text-align:right;">Local market</th>
+                        <th style="text-align:right;">Lifestyle equivalent</th>
                         <th style="text-align:center;">Take-Home</th>
                     </tr></thead>
                     <tbody>{top5_rows}</tbody>

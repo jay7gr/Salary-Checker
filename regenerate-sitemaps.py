@@ -49,11 +49,21 @@ PRIORITY = {
 }
 
 
+EXCLUDE_PREFIXES = ('admin/',)
+EXCLUDE_FILES = {'404.html', 'embed.html', 'retire-embed.html', 'widget.html'}
+
 def should_include(rel_path):
     """Decide if a page should be included in the sitemap."""
+    rel_path = rel_path.replace('\\', '/')
+    if rel_path in EXCLUDE_FILES or rel_path.startswith(EXCLUDE_PREFIXES):
+        return False
+    # /index is a homepage duplicate loc
+    if rel_path in ('index.html',):
+        return True  # mapped to / later, not /index
+
     parts = rel_path.strip('/').split('/')
 
-    # Always include root pages
+    # Always include root pages except 404/admin (already excluded)
     if len(parts) == 1:
         return True
 
@@ -104,16 +114,20 @@ def should_include(rel_path):
 
 def html_to_url(filepath):
     """Convert a file path to its canonical URL."""
-    rel = os.path.relpath(filepath, ROOT)
-    # Remove .html extension
-    if rel.endswith('/index.html'):
+    rel = os.path.relpath(filepath, ROOT).replace('\\', '/')
+    # Remove .html extension; root index.html is the homepage, not /index
+    if rel == 'index.html':
+        rel = ''
+    elif rel.endswith('/index.html'):
         rel = rel[:-len('/index.html')]
+        if rel:
+            rel = rel + '/'  # hub pages keep trailing slash (canonical)
     elif rel.endswith('.html'):
         rel = rel[:-len('.html')]
     # Skip non-page files
-    if rel in ('widget', 'embed'):
-        if rel == 'embed':
-            return None
+    if rel in ('embed', '404', 'admin/embeds', 'admin/feedback'):
+        return None
+    if rel in ('widget',):
         return f'{BASE_URL}/{rel}'
     return f'{BASE_URL}/{rel}' if rel else f'{BASE_URL}/'
 
@@ -186,7 +200,7 @@ for i in range(num_chunks):
 
     xml_entries = ''
     for url in chunk:
-        xml_entries += f'  <url><loc>{url}</loc><lastmod>{TODAY}</lastmod></url>\n'
+        xml_entries += f'  <url><loc>{url}</loc></url>\n'
 
     content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{xml_entries}</urlset>\n'
 
@@ -200,7 +214,7 @@ for i in range(num_chunks):
 # Write sitemap index
 index_entries = ''
 for filename in sitemap_files:
-    index_entries += f'  <sitemap>\n    <loc>{BASE_URL}/{filename}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </sitemap>\n'
+    index_entries += f'  <sitemap>\n    <loc>{BASE_URL}/{filename}</loc>\n  </sitemap>\n'
 
 index_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{index_entries}</sitemapindex>\n'
 

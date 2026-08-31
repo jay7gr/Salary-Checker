@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generates Retire Abroad SEO pages:
-  /retire/city/{slug}.html        — 182 city retirement guides
+  /retire/city/{slug}.html        — 230 city retirement guides
   /retire/country/{slug}.html     — ~55 country guides
   /retire/visa/{slug}.html        — ~45 visa guides
   /retire/budget/{slug}.html      — 12 budget pages
@@ -436,6 +436,7 @@ def build_footer():
             <a href="/blog/">Blog</a>
             <a href="/privacy/">Privacy</a>
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>'''
@@ -1288,7 +1289,7 @@ def generate_budget_page(budget_type, amount, label):
 
 # ═══════════════════════════════════════════════════════════════════
 #  PAGE TYPE F: /retire/city/{city}/on-{budget}.html
-#  Cross-product: "Retire in [City] on $X/month" (182 × 12 = 2,184 pages)
+#  Cross-product: "Retire in [City] on $X/month" (230 × 12 = 2,184 pages)
 # ═══════════════════════════════════════════════════════════════════
 def generate_city_budget_page(city, budget_type, amount, label):
     """Cross-product page: retiring in a specific city on a specific budget."""
@@ -1971,7 +1972,7 @@ for city_a, city_b in COMPARE_PAIRS:
         print(f"  Skipping compare {city_a} vs {city_b}: '{missing}' not found")
 print(f"Compare pages: {compare_count}")
 
-# F. City × Budget cross-product pages (182 cities × 12 budgets = 2,184 pages)
+# F. City × Budget cross-product pages (230 retire cities × 12 budgets = 2,184 pages)
 city_budget_count = 0
 for city in coli_data:
     city_slug = to_slug(city)

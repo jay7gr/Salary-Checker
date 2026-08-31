@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mont Boron, Nice: €1,138/mo Rent (2026)</title>
     <meta name="description" content="22% above Nice avg. 1BR: ~€1,138/mo. #2 of 18 neighborhoods. Salary needed & full cost breakdown inside.">
     <meta name="robots" content="index, follow">
@@ -74,7 +74,7 @@
             'ad_storage': 'denied',
             'ad_user_data': 'denied',
             'ad_personalization': 'denied',
-            'analytics_storage': 'denied',
+            'analytics_storage': 'granted',
             'wait_for_update': 500,
             'regions': ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH','BR','CA']
         });
@@ -101,8 +101,8 @@
         html { touch-action: manipulation; -ms-touch-action: manipulation; }
 
         :root {
-            --bg: #f4eee2;
-            --card-bg: #fcf9f2;
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --text-body: #4a4a4c;
@@ -113,7 +113,7 @@
             --border-light: #f0f0f2;
             --table-stripe: #f9f9fb;
             --tag-bg: #f0f0f2;
-            --stat-card-bg: #ece5d6;
+            --stat-card-bg: #f5f5f7;
         }
         [data-theme="dark"] {
             --bg: #000000;
@@ -272,6 +272,7 @@
             <div class="nav-links">
                 <a href="/">Converter</a>
                 <a href="/city/">Cities</a>
+                <a href="/compare/">City Comparisons</a>
                 <a href="/retire/">Retire Abroad</a>
                 <a href="/blog/">Blog</a>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
@@ -310,14 +311,14 @@
             <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 14px;">
                 For a typical resident of Mont Boron, housing takes up roughly <strong>45%</strong> of monthly expenses. Food and groceries account for about <strong>18%</strong>, while transportation costs around <strong>9%</strong>. To live comfortably here — meaning rent stays at or below 30% of gross income — you would need an annual salary of approximately <strong>€45,515</strong> before tax.
             </p>
-            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Typical Salaries in Mont Boron</h3>
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Lifestyle Equivalents in Mont Boron</h3>
             <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 8px;">
-                Salaries in Mont Boron reflect the local cost of living. Based on the neighborhood COLI of 64.3:
+                COLI-scaled lifestyle equivalents of New York mid-range salaries — <strong>not</strong> local market pay. Based on the neighborhood COLI of 64.3 (NYC = 100):
             </p>
             <ul style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.85; margin-bottom: 14px; padding-left: 20px;">
-                <li>A <strong>Software Engineer</strong> earns approximately <strong>€46,342</strong> per year.</li>
-<li>A <strong>Teacher</strong> earns approximately <strong>€26,169</strong> per year.</li>
-<li>A <strong>Nurse</strong> earns approximately <strong>€31,621</strong> per year.</li>
+                <li>The lifestyle equivalent for a <strong>Software Engineer</strong> is approximately <strong>€46,342</strong> per year.</li>
+<li>The lifestyle equivalent for a <strong>Teacher</strong> is approximately <strong>€26,169</strong> per year.</li>
+<li>The lifestyle equivalent for a <strong>Nurse</strong> is approximately <strong>€31,621</strong> per year.</li>
 
             </ul>
             <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75;">
@@ -451,6 +452,15 @@
             <a href="/" class="cta-btn">Open Salary Converter</a>
         </div>
 
+        <div class="card">
+            <h2>Compare Mont Boron</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                <a href="/compare/nice/promenade-des-anglais-vs-mont-boron" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Mont Boron vs Promenade des Anglais</a>
+<a href="/compare/nice/mont-boron-vs-old-nice-vieux-nice" style="display: inline-block; padding: 6px 14px; background: #f5f5f7; border-radius: 100px; font-size: 0.8rem; color: #1d1d1f; text-decoration: none; margin: 4px;">Mont Boron vs Old Nice (Vieux Nice)</a>
+
+            </div>
+        </div>
+
         
 
         <div class="card">
@@ -491,6 +501,7 @@
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -527,6 +538,5 @@
     })();
     </script>
 
-    <script src="/consent.js?v=3" defer></script>
 </body>
 </html>

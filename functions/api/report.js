@@ -131,7 +131,7 @@ function buildEmailHtml({ currentLabel, targetLabel, formattedAmount, formattedO
   </td></tr>
   <tr><td style="padding:0 32px 28px;">
     <div style="background:#f9fafb;border-radius:10px;padding:14px 18px;font-size:12px;color:#9ca3af;text-align:center;">
-      salary-converter.com &nbsp;·&nbsp; Compare salaries across 182 cities
+      salary-converter.com &nbsp;·&nbsp; Compare salaries across 113 cities
     </div>
   </td></tr>
 </table>
