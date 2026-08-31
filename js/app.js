@@ -2440,15 +2440,14 @@
             },
         };
 
-        // Dynamic city & neighborhood counts
-        const totalCities = Object.keys(coliData).length;
-        const totalNeighborhoods = Object.values(cityNeighborhoods).reduce((sum, n) => sum + Object.keys(n).length, 0);
-        const roundedNeighborhoods = Math.floor(totalNeighborhoods / 100) * 100;
-        const countText = `Compare salaries across ${totalCities} cities and over ${roundedNeighborhoods.toLocaleString()} neighborhoods worldwide.`;
+        // Canonical COL/salary coverage (do not advertise converter-internal extras)
+        const COL_CITIES = 113;
+        const COL_NEIGHBORHOODS = 2483;
+        const countText = `See your real purchasing power across ${COL_CITIES} cities · tax, rent & cost of living all baked in.`;
         const heroEl = document.getElementById('hero-subtitle');
         const footerEl = document.getElementById('footer-subtitle');
         if (heroEl) heroEl.textContent = countText;
-        if (footerEl) footerEl.textContent = countText;
+        if (footerEl) footerEl.textContent = `Compare salaries across ${COL_CITIES} cities and ${COL_NEIGHBORHOODS.toLocaleString()} neighborhoods worldwide.`;
 
         // Auto-suggest currency when a city is selected (always updates, user can still override)
         function suggestCurrency(city, currencySelectId, hintId) {
@@ -2928,13 +2927,12 @@
                 const targetDisposableNeeded = currentDisposable * exchangeRate * colRatio;
                 const targetTakeHomeNeeded = targetDisposableNeeded + targetExpenses.total;
 
-                // Edge case: source-city disposable income is non-positive (annual
-                // expenses already meet or exceed take-home pay — common for a low
-                // salary in an expensive city). "Matching" a negative disposable
-                // collapses the reverse-gross to 0, producing a meaningless "0"
-                // equivalent. Fall back to the cost-of-living-adjusted equivalent,
-                // which stays positive and is consistent with the headline ratio.
-                if (currentDisposable <= 0 || targetTakeHomeNeeded <= 0) {
+                // If disposable is negative, the user is underwater. Keep that
+                // fact visible. Only skip reverse-gross when the target take-home
+                // needed is non-positive (matching a hole would collapse to 0).
+                if (targetTakeHomeNeeded <= 0) {
+                    // Cannot match a non-positive take-home. Show COLI equivalent
+                    // AND say they are underwater — do not hide the hole.
                     usedColiFallback = true;
                     if (household.mode === 'family' && household.adults === 2) {
                         const totalInput = salary + salary2;
@@ -3160,30 +3158,10 @@
                 })();
             } catch(_e) { /* keep robust */ }
 
-            // T1.4 — animated counter
+            // Result amount — no count-up animation (trust: show the real number immediately)
             (function(){
                 const el = document.getElementById('resultAmount');
-                const finalText = formattedAmount;
-                // Extract numeric value from formatted text for animation
-                const match = finalText.match(/[\d,]+(\.\d+)?/);
-                if (!match) { el.textContent = finalText; return; }
-                const targetN = parseFloat(match[0].replace(/,/g,''));
-                if (!targetN || !isFinite(targetN)) { el.textContent = finalText; return; }
-                const prefix = finalText.slice(0, match.index);
-                const suffix = finalText.slice(match.index + match[0].length);
-                const dur = 800;
-                const t0 = performance.now();
-                const isInt = !match[1];
-                function step(t){
-                    const p = Math.min(1, (t - t0) / dur);
-                    // ease-out cubic
-                    const e = 1 - Math.pow(1 - p, 3);
-                    const v = targetN * e;
-                    const num = isInt ? Math.round(v).toLocaleString() : v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    el.textContent = prefix + num + suffix;
-                    if (p < 1) requestAnimationFrame(step);
-                }
-                requestAnimationFrame(step);
+                if (el) el.textContent = formattedAmount;
             })();
 
             let subtitleHtml = '';
@@ -3203,10 +3181,14 @@
                         ? `To maintain the same purchasing power you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, adjusted for taxes and local prices.`
                         : `Based on cost-of-living index comparison (limited data available).`;
             }
-            if (usedColiFallback) {
-                // Source-city expenses exceed take-home pay, so there's no positive
-                // disposable income to match. Explain the cost-of-living basis instead.
-                subtitleHtml = `Your expenses already exceed your take-home pay in ${currentLabel}, so we&rsquo;re showing the <strong>cost-of-living-adjusted equivalent</strong> of your <strong>${formattedOriginalCurrent}</strong> salary instead.`;
+            if (currentDisposable != null && currentDisposable <= 0) {
+                const hole = ` Disposable income is <strong>${fmtCurr(currentDisposable, currentCurrency)}</strong>/yr.`;
+                const underwater = `<strong>You are underwater</strong> in ${currentLabel}: expenses exceed take-home pay.${hole}`;
+                if (usedColiFallback) {
+                    subtitleHtml = `${underwater} Matching that hole would collapse the equivalent to zero, so the figure above is a COLI-scaled reference of your <strong>${formattedOriginalCurrent}</strong> salary — labelled as such, not as matching your lifestyle.`;
+                } else {
+                    subtitleHtml = `${underwater} ${subtitleHtml}`;
+                }
             }
             document.getElementById('resultSubtitle').innerHTML = subtitleHtml;
 

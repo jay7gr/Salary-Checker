@@ -36,14 +36,14 @@ export async function onRequestGet(context) {
     if (Math.abs(stretch) >= 3) {
       const dir = stretch > 0 ? "further" : "less";
       const pct = Math.abs(Math.round(stretch));
-      desc = `Same lifestyle, ${pct}% ${dir} purchasing power. Compare salaries across 182 cities with real cost-of-living data.`;
+      desc = `Same lifestyle, ${pct}% ${dir} purchasing power. Compare salaries across 113 cities with real cost-of-living data.`;
     } else {
-      desc = `Roughly on par after cost of living. Compare salaries across 182 cities with real data.`;
+      desc = `Roughly on par after cost of living. Compare salaries across 113 cities with real data.`;
     }
   } else {
     title = "What's your salary actually worth?";
     desc =
-      "Compare your salary across 182 cities with real cost-of-living, tax, and rent data. Free, instant, honest.";
+      "Compare your salary across 113 cities with real cost-of-living, tax, and rent data. Free, instant, honest.";
   }
 
   const canonical = url.origin + "/share?" + p.toString();
@@ -122,7 +122,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
         : ""
     }
     <a class="cta" href="/">Run your own comparison &rarr;</a>
-    <div class="foot">Free &middot; instant &middot; <a href="/">182 cities, 3,400+ neighbourhoods</a></div>
+    <div class="foot">Free &middot; instant &middot; <a href="/">113 cities, 2,483 neighbourhoods</a></div>
   </div>
 </div>
 </body>

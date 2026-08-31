@@ -6,8 +6,8 @@ Promote salary-converter.com daily on X (@SalaryConverter) and Quora (Jason Ilio
 ## About the Product
 - **URL**: salary-converter.com
 - **Key pages**: salary-converter.com/city/london, salary-converter.com/retire, salary-converter.com/blog
-- **What it does**: Compare salaries across 182 cities and 3,400+ neighborhoods. Covers cost of living, taxes, rent, childcare. Free tool. Single & family mode. Updated for 2026.
-- **Differentiator**: Neighborhood-level granularity (3,400+ neighborhoods), not just city-level.
+- **What it does**: Compare salaries across 113 cities and 2,483 neighborhoods. Covers cost of living, taxes, rent, childcare. Free tool. Single & family mode. Updated for 2026.
+- **Differentiator**: Neighborhood-level granularity (2,483 neighborhoods), not just city-level.
 
 ## Daily Workflow
 
@@ -28,7 +28,7 @@ Reply to the selected posts with helpful, conversational replies. Rules:
 - Lead with genuine value or insight, not the product
 - Mention salary-converter.com naturally (not as the first thing you say)
 - Keep it casual, not salesy
-- Reference specific features (182 cities, 3,400+ neighborhoods, taxes, rent, childcare)
+- Reference specific features (113 cities, 2,483 neighborhoods, taxes, rent, childcare)
 - Max 2 replies per day (new account has rate limits)
 
 ### Step 3: X — Post 1 Original Tweet

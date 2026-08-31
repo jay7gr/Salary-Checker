@@ -9,6 +9,8 @@ import json
 import re
 from datetime import date
 
+from salary_market_data import market_quality, badge_plain
+
 # ============================================================
 # DATA (mirrors index.html exactly)
 # ============================================================
@@ -2000,11 +2002,14 @@ def generate_city_page(city, comparison_pairs):
     rank = get_coli_rank(city)
     total_cities = len(coliData)
     region = get_region(city)
-    rent = cityRent1BR.get(city, 0)
+    rent_usd = cityRent1BR.get(city, 0)
+    rent = rent_usd  # keep USD for any remaining USD-denominated math
     neighborhoods = cityNeighborhoods.get(city, {})
 
     # Convert $75K USD to local currency equivalent for the "sample salary"
     rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+    rent_local = rent_usd * rate_to_local
+    fmt_rent = format_currency_amount(rent_local, currency)
     # Calculate effective tax rate for reference salary in local currency
     ref_salary_local = 75000 * (coli / 100) * rate_to_local
     tax_result_ref = calculate_tax(ref_salary_local, country)
@@ -2112,13 +2117,21 @@ def generate_city_page(city, comparison_pairs):
         fmt_low = format_currency_amount(local_low, currency)
         fmt_mid = format_currency_amount(local_mid, currency)
         fmt_high = format_currency_amount(local_high, currency)
-        salary_rows += f'''
-                        <tr>
-                            <td style="font-weight: 500;">{title}</td>
-                            <td style="text-align: center;">{fmt_low}</td>
-                            <td style="text-align: center; font-weight: 600;">{fmt_mid}</td>
-                            <td style="text-align: right;">{fmt_high}</td>
-                        </tr>'''
+        bench_mult, quality, src = market_quality(title, country)
+        if bench_mult is None:
+            market_mid = local_mid
+        else:
+            market_mid = ranges['mid'] * bench_mult * rate_to_local
+        fmt_market = format_currency_amount(market_mid, currency)
+        job_slug = slugify(title)
+        salary_rows += (
+            '<tr>'
+            f'<td style="font-weight: 500;"><a href="/salary/{job_slug}/{slug}" style="color:var(--accent);text-decoration:none;">{title}</a></td>'
+            f'<td style="text-align: center;">{fmt_market}<div style="font-size:0.68rem;color:var(--text-secondary);">{badge_plain(quality, src)}</div></td>'
+            f'<td style="text-align: center; font-weight: 600;">{fmt_mid}<div style="font-size:0.68rem;color:var(--text-secondary);">COLI equivalent</div></td>'
+            f'<td style="text-align: right;">{fmt_high}</td>'
+            '</tr>'
+        )
 
     # How much do you need section
     annual_rent = rent * 12
@@ -2157,7 +2170,7 @@ def generate_city_page(city, comparison_pairs):
         },
         {
             'q': f'What is the average rent in {city}?',
-            'a': f'The average monthly rent for a one-bedroom apartment in the city center of {city} is approximately ${rent:,} USD.'
+            'a': f'The average monthly rent for a one-bedroom apartment in the city center of {city} is approximately {fmt_rent} per month (local currency).'
         },
         {
             'q': f'What are the total payroll deductions in {country}?',
@@ -2323,7 +2336,7 @@ def generate_city_page(city, comparison_pairs):
     else:
         hood_meta = f"{len(neighborhoods)} neighborhoods ranked."
 
-    city_meta_desc = f"1BR rent: ${rent:,}/mo. Ranked #{rank}/{total_cities} globally. {hood_meta} Taxes, groceries & salary data."
+    city_meta_desc = f"1BR rent: {fmt_rent}/mo. Ranked #{rank}/{total_cities} globally. {hood_meta} Taxes, groceries & salary data."
 
     # Share bar
     share_text = f'{city} cost of living index: {coli}'
@@ -2337,7 +2350,7 @@ def generate_city_page(city, comparison_pairs):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})</title>
+    <title>{city} Cost of Living: {fmt_rent}/mo Rent ({CURRENT_YEAR})</title>
     <meta name="description" content="{city_meta_desc}">
     <meta name="keywords" content="{city} cost of living, {city} salary, {city} neighborhoods, cost of living {country}, salary comparison {city}, {city} rent prices {CURRENT_YEAR}">
     <meta name="author" content="salary:converter">
@@ -2346,12 +2359,12 @@ def generate_city_page(city, comparison_pairs):
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://salary-converter.com/city/{slug}">
-    <meta property="og:title" content="{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})">
+    <meta property="og:title" content="{city} Cost of Living: {fmt_rent}/mo Rent ({CURRENT_YEAR})">
     <meta property="og:description" content="{city_meta_desc}">
     <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{city} Cost of Living: ${rent:,}/mo Rent ({CURRENT_YEAR})">
+    <meta name="twitter:title" content="{city} Cost of Living: {fmt_rent}/mo Rent ({CURRENT_YEAR})">
     <meta name="twitter:description" content="{city_meta_desc}">
     <meta name="twitter:image" content="https://salary-converter.com/og-image.png">
     <script type="application/ld+json">
@@ -2584,7 +2597,7 @@ def generate_city_page(city, comparison_pairs):
                     <div class="stat-label">Total Deductions</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${rent:,}</div>
+                    <div class="stat-value">{fmt_rent}</div>
                     <div class="stat-label">1BR Rent/mo</div>
                 </div>
             </div>
@@ -2607,7 +2620,7 @@ def generate_city_page(city, comparison_pairs):
 
         <section class="content-card">
             <h2>Monthly Cost Breakdown in {city}</h2>
-            <p>Estimated monthly expense allocation for a mid-range earner living in {city}. Housing costs are based on average one-bedroom rent in the city center (${rent:,}/month), with other categories adjusted for the local cost of living index.</p>
+            <p>Estimated monthly expense allocation for a mid-range earner living in {city}. Housing costs are based on average one-bedroom rent in the city center ({fmt_rent}/month), with other categories adjusted for the local cost of living index.</p>
             {expense_rows}
             <p style="font-size: 0.8rem; color: var(--text-secondary, #86868b); margin-top: 16px; margin-bottom: 0;">Estimates based on a mid-range salary adjusted for {city}'s COLI of {coli} and {country}'s total deduction rate of {total_deduction_rate}%. Individual expenses will vary.</p>
         </section>
@@ -2616,15 +2629,15 @@ def generate_city_page(city, comparison_pairs):
 
         <section class="content-card">
             <h2>Salary Ranges by Job Title in {city} ({CURRENT_YEAR})</h2>
-            <p>Estimated annual salaries in {city} ({currency}) adjusted for cost of living. These figures represent local purchasing-power-adjusted ranges based on global baseline data.</p>
+            <p>Two numbers per role: <strong>local market</strong> (verified national stats, OECD estimate, or COLI fallback — same badges as /is-my-salary-good/) and a <strong>lifestyle equivalent</strong> (NYC baseline × city COLI / 100). The equivalent is not market pay. Senior column is COLI-scaled.</p>
             <div style="overflow-x: auto;">
             <table>
                 <thead>
                     <tr>
                         <th>Job Title</th>
-                        <th style="text-align: center;">Entry Level</th>
-                        <th style="text-align: center;">Mid Level</th>
-                        <th style="text-align: right;">Senior Level</th>
+                        <th style="text-align: center;">Local market (mid)</th>
+                        <th style="text-align: center;">Lifestyle equivalent (mid)</th>
+                        <th style="text-align: right;">COLI senior equivalent</th>
                     </tr>
                 </thead>
                 <tbody>{salary_rows}
@@ -2636,7 +2649,7 @@ def generate_city_page(city, comparison_pairs):
 
         <section class="content-card">
             <h2>How Much Do You Need to Earn in {city}?</h2>
-            <p>Understanding your take-home pay is critical when evaluating a move to {city}. With total deductions of approximately <strong>{total_deduction_rate}%</strong> (income tax + social security) in {country} and average one-bedroom rent of <strong>${rent:,}/month</strong>, here is what a mid-range salary looks like:</p>
+            <p>Understanding your take-home pay is critical when evaluating a move to {city}. With total deductions of approximately <strong>{total_deduction_rate}%</strong> (income tax + social security) in {country} and average one-bedroom rent of <strong>{fmt_rent}/month</strong>, here is what a mid-range salary looks like:</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
                 <div class="stat-card">
                     <div class="stat-value" style="font-size: 1.2rem;">{fmt_mid_salary_local}</div>
@@ -2722,6 +2735,7 @@ def generate_city_page(city, comparison_pairs):
             <a href="/privacy/">Privacy</a>
 
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
@@ -2748,6 +2762,8 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
     coli = coliData[city]
     rent = cityRent1BR.get(city, 0)
     neighborhoods = cityNeighborhoods.get(city, {})
+    rate_to_local = exchangeRates[currency] / exchangeRates['USD']
+    fmt_rent = format_currency_amount(rent * rate_to_local, currency)
 
     if not neighborhoods:
         return ''
@@ -2821,14 +2837,14 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
         faq1_q = f"What is the cheapest neighborhood in {city}?"
         faq1_a = f"The cheapest neighborhood in {city} is {cheapest_name}, with an estimated 1-bedroom rent of ${cheapest_rent:,}/month \u2014 {abs(round((cheapest_mult - 1.0) * 100))}% below the city average."
         faq2_q = f"What is the average rent in {city}?"
-        faq2_a = f"The average 1-bedroom rent in {city} is approximately ${rent:,}/month. Rents range from ${cheapest_rent:,}/mo ({cheapest_name}) to ${most_exp_rent:,}/mo ({most_exp_name})."
+        faq2_a = f"The average 1-bedroom rent in {city} is approximately {fmt_rent}/month. Rents range from ${cheapest_rent:,}/mo ({cheapest_name}) to ${most_exp_rent:,}/mo ({most_exp_name})."
         faq3_q = f"How many neighborhoods does {city} have?"
         faq3_a = f"Our database covers {total_nhoods} neighborhoods in {city}, each with detailed cost-of-living and salary data."
     else:
         faq1_q = f"What is the most expensive neighborhood in {city}?"
         faq1_a = f"The most expensive neighborhood in {city} is {most_exp_name}, with an estimated 1-bedroom rent of ${most_exp_rent:,}/month \u2014 {round((most_exp_mult - 1.0) * 100)}% above the city average."
         faq2_q = f"How much more expensive is {most_exp_name} than the city average?"
-        faq2_a = f"{most_exp_name} is approximately {round((most_exp_mult - 1.0) * 100)}% more expensive than the {city} average. 1-bedroom rent is ${most_exp_rent:,}/mo vs ${rent:,}/mo city-wide."
+        faq2_a = f"{most_exp_name} is approximately {round((most_exp_mult - 1.0) * 100)}% more expensive than the {city} average. 1-bedroom rent is ${most_exp_rent:,}/mo vs {fmt_rent}/mo city-wide."
         faq3_q = f"How many neighborhoods does {city} have?"
         faq3_a = f"Our database covers {total_nhoods} neighborhoods in {city}, each with detailed cost-of-living and salary data."
 
@@ -2967,7 +2983,7 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
             </div>
             <div class="stat-card">
                 <div class="label">City Avg Rent</div>
-                <div class="value">${rent:,}/mo</div>
+                <div class="value">{fmt_rent}/mo</div>
             </div>
             <div class="stat-card">
                 <div class="label">Neighborhoods</div>
@@ -2994,7 +3010,7 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
                 </tbody>
             </table>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Rent estimates based on city average of ${rent:,}/mo adjusted by neighborhood cost index. Index 1.00 = city average.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Rent estimates based on city average of {fmt_rent}/mo adjusted by neighborhood cost index. Index 1.00 = city average.</p>
         </section>
 
 {wise_cta}
@@ -3025,6 +3041,7 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
             <a href="/blog/">Blog</a>
 
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -3580,8 +3597,8 @@ def generate_comparison_page(city1, city2):
         </section>
 
         <section class="content-card">
-            <h2>Salary Comparison by Job Title</h2>
-            <p>Estimated mid-level annual salaries in local currency, adjusted for each city's cost of living:</p>
+            <h2>Lifestyle Equivalent by Job Title</h2>
+            <p>COLI-scaled lifestyle equivalents of New York mid-range salaries — <strong>not</strong> local market pay. For verified/OECD local-market figures see <a href="/salary/">salary pages</a>.</p>
             <div style="overflow-x: auto;">
             <table>
                 <thead>
@@ -3595,7 +3612,7 @@ def generate_comparison_page(city1, city2):
                 </tbody>
             </table>
             </div>
-            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">Salary estimates are adjusted by each city's COLI relative to the New York baseline. Actual salaries vary by company, experience, and industry.</p>
+            <p style="font-size: 0.8rem; color: #86868b; margin-top: 16px; margin-bottom: 0;">These are COLI lifestyle equivalents of the New York mid baseline, not typical local market pay. See <a href="/methodology/">methodology</a> and profession×city salary pages for market figures with source badges.</p>
         </section>
 
         {neigh_section}
@@ -3650,6 +3667,7 @@ def generate_comparison_page(city1, city2):
             <a href="/privacy/">Privacy</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
@@ -3851,6 +3869,7 @@ def generate_city_index():
             <a href="/privacy/">Privacy</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
@@ -4090,6 +4109,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
             <a href="/privacy/">Privacy</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
         </footer>
@@ -4749,6 +4769,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -5123,6 +5144,7 @@ def generate_neighborhood_comparison_page(city, n1, m1, n2, m2):
             <a href="/blog/">Blog</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -5378,6 +5400,7 @@ def generate_blog_undervalued_neighborhoods():
             <a href="/city/">All Cities</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -5613,6 +5636,7 @@ def generate_blog_salary_goes_furthest():
             <a href="/city/">All Cities</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -5809,6 +5833,7 @@ def generate_blog_major_cities_breakdown():
             <a href="/city/">All Cities</a>
         
             <a href="/about/">About</a>
+            <a href="/methodology/">Methodology</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
             <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
@@ -5836,6 +5861,8 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
     urls.append('https://salary-converter.com/city/')
     urls.append('https://salary-converter.com/compare/')
     urls.append('https://salary-converter.com/blog/')
+    urls.append('https://salary-converter.com/about/')
+    urls.append('https://salary-converter.com/methodology/')
 
     # Blog articles
     blog_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blog', 'articles')
@@ -5898,7 +5925,7 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
 
         xml_entries = ''
         for url in chunk:
-            xml_entries += f'  <url><loc>{url}</loc><lastmod>{TODAY}</lastmod></url>\n'
+            xml_entries += f'  <url><loc>{url}</loc></url>\n'
 
         sitemap_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{xml_entries}</urlset>\n'
 
@@ -5909,7 +5936,7 @@ def generate_sitemaps(base_dir, comparison_pairs, neighborhood_comparison_data=N
     # Write sitemap index
     index_entries = ''
     for filename in sitemap_files:
-        index_entries += f'  <sitemap>\n    <loc>https://salary-converter.com/{filename}</loc>\n    <lastmod>{TODAY}</lastmod>\n  </sitemap>\n'
+        index_entries += f'  <sitemap>\n    <loc>https://salary-converter.com/{filename}</loc>\n  </sitemap>\n'
 
     index_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{index_entries}</sitemapindex>\n'
 

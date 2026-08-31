@@ -45,7 +45,7 @@ export async function onRequestGet(context) {
     }
   } else {
     headline = "What's your salary actually worth?";
-    sub = "Compare salaries across 182 cities";
+    sub = "Compare salaries across 113 cities";
   }
 
   function esc(s) {
@@ -118,7 +118,7 @@ export async function onRequestGet(context) {
   }
 
   <!-- Footer -->
-  <text x="600" y="565" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="20" font-weight="500" fill="#86868b">salary-converter.com  ·  free  ·  instant  ·  182 cities</text>
+  <text x="600" y="565" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="20" font-weight="500" fill="#86868b">salary-converter.com  ·  free  ·  instant  ·  113 cities</text>
 </svg>`;
 
   return new Response(svg, {

@@ -1034,7 +1034,7 @@ def build_blog_html(slug, title, meta_description, tag, article_body_html, read_
             <!-- CTA: Retire Abroad Calculator -->
             <div class="cta-box">
                 <h3>Find Your Ideal Retirement Destination</h3>
-                <p>Enter your savings, income, and preferences to discover where your money goes furthest. 182 cities, real data.</p>
+                <p>Enter your savings, income, and preferences to discover where your money goes furthest. 230 retire cities, real data.</p>
                 <a href="/retire/" class="cta-button">Try the Retire Abroad Calculator</a>
                 <br>
                 <a href="/" class="cta-button-secondary">Or Compare Salaries Between Cities</a>
@@ -1188,7 +1188,7 @@ def generate_blog_2000_month():
     body = f'''
             <p>The idea of retiring abroad on just $2,000 a month might sound too good to be true if you are used to American prices. But across dozens of cities worldwide, couples are living comfortably on exactly that budget, covering rent, groceries, healthcare, transportation, and entertainment with room to spare.</p>
 
-            <p>We analyzed monthly costs for all 182 cities in the <a href="/retire/">Retire Abroad Calculator</a> to find where a couple can live well on $2,000 or less per month. The results are based on real cost-of-living data including rent for a one-bedroom apartment (scaled for couples), groceries, utilities, local transport, and healthcare.</p>
+            <p>We analyzed monthly costs for all 230 retire cities in the <a href="/retire/">Retire Abroad Calculator</a> to find where a couple can live well on $2,000 or less per month. The results are based on real cost-of-living data including rent for a one-bedroom apartment (scaled for couples), groceries, utilities, local transport, and healthcare.</p>
 
             <h2>The 20 Most Affordable Cities for a $2,000/Month Retirement</h2>
 
@@ -1256,7 +1256,7 @@ def generate_blog_2000_month():
 
             <p>Retiring on $2,000 a month abroad is not only possible, it can fund a genuinely comfortable lifestyle in dozens of cities worldwide. The key is choosing a destination where your dollar stretches furthest while still meeting your standards for safety, healthcare, and quality of life.</p>
 
-            <p>Use the <a href="/retire/">Retire Abroad Calculator</a> to model your own budget across all 182 cities, factoring in your savings, income sources, and personal priorities. And if you are still working, the <a href="/">salary converter</a> can help you understand what your current income would be worth in any of these destinations.</p>'''
+            <p>Use the <a href="/retire/">Retire Abroad Calculator</a> to model your own budget across all 230 retire cities, factoring in your savings, income sources, and personal priorities. And if you are still working, the <a href="/">salary converter</a> can help you understand what your current income would be worth in any of these destinations.</p>'''
 
     return body
 
@@ -1323,7 +1323,7 @@ def generate_blog_visas():
     body = f'''
             <p>Securing legal residency is the first practical step of any international retirement plan. The good news: many countries actively compete for retirees by offering dedicated visa programs with relatively low barriers to entry. Income requirements can start as low as a few hundred dollars per month.</p>
 
-            <p>We reviewed the visa programs available across 182 cities in the <a href="/retire/">Retire Abroad Calculator</a> and ranked them by accessibility, focusing on minimum income and savings requirements, pathways to permanent residency, and time to citizenship.</p>
+            <p>We reviewed the visa programs available across 230 retire cities in the <a href="/retire/">Retire Abroad Calculator</a> and ranked them by accessibility, focusing on minimum income and savings requirements, pathways to permanent residency, and time to citizenship.</p>
 
             <h2>Retirement Visa Programs Ranked by Income Requirement</h2>
 
@@ -1467,7 +1467,7 @@ def generate_blog_social_security():
     body = f'''
             <p>The average Social Security retirement benefit in the United States is approximately $1,800 per month in early 2026. In most American cities, that barely covers rent, let alone food, healthcare, and transportation. But in dozens of cities around the world, $1,800 a month is enough to fund a comfortable, independent retirement.</p>
 
-            <p>We analyzed all 182 cities in the <a href="/retire/">Retire Abroad Calculator</a> to identify where a single retiree can live on the average Social Security check alone, without dipping into savings. The monthly costs below include rent, groceries, utilities, transport, and healthcare.</p>
+            <p>We analyzed all 230 retire cities in the <a href="/retire/">Retire Abroad Calculator</a> to identify where a single retiree can live on the average Social Security check alone, without dipping into savings. The monthly costs below include rent, groceries, utilities, transport, and healthcare.</p>
 
             <h2>15 Cities Where Social Security Covers Your Entire Budget</h2>
 
@@ -1750,7 +1750,7 @@ def generate_blog_healthcare():
     body = f'''
             <p>Healthcare is consistently ranked as the number one concern for Americans considering retirement abroad. The fear of being far from familiar doctors and hospitals, combined with the knowledge that Medicare does not cover care overseas, keeps many retirees from making the move. But the data tells a more encouraging story: many countries offer healthcare that rivals or exceeds U.S. quality at a fraction of the cost.</p>
 
-            <p>We aggregated healthcare quality scores across all 182 cities in the <a href="/retire/">Retire Abroad Calculator</a>, averaged them by country, and combined them with health insurance cost data for retirees aged 60 and over. The result is a comprehensive ranking of the best countries for retirement healthcare in 2026.</p>
+            <p>We aggregated healthcare quality scores across all 230 retire cities in the <a href="/retire/">Retire Abroad Calculator</a>, averaged them by country, and combined them with health insurance cost data for retirees aged 60 and over. The result is a comprehensive ranking of the best countries for retirement healthcare in 2026.</p>
 
             <h2>Top 25 Countries for Retirement Healthcare</h2>
 
@@ -1812,7 +1812,7 @@ def generate_blog_healthcare():
 
             <p>The quality of healthcare available to retirees abroad often surpasses expectations. Many countries on this list offer care that is comparable to or better than what is available in the U.S., at dramatically lower costs. The key is research: verify that the specific medical services you need are available in your target city, not just the country as a whole.</p>
 
-            <p>Use the <a href="/retire/">Retire Abroad Calculator</a> to compare healthcare scores, insurance costs, and overall quality of life across 182 cities. For salary comparisons and cost-of-living analysis, the <a href="/">salary converter</a> covers 113 cities worldwide.</p>'''
+            <p>Use the <a href="/retire/">Retire Abroad Calculator</a> to compare healthcare scores, insurance costs, and overall quality of life across 230 retire cities. For salary comparisons and cost-of-living analysis, the <a href="/">salary converter</a> covers 113 cities worldwide.</p>'''
 
     return body
 
@@ -1852,7 +1852,7 @@ BLOG_CONFIGS = [
     {
         'slug': 'best-retirement-healthcare-countries-2026',
         'title': 'Best Countries for Retirement Healthcare in 2026: Ranked by Quality & Affordability',
-        'meta_description': 'Ranking the best countries for retirement healthcare in 2026. Aggregated quality scores, insurance costs for 60+, and coverage options across 25+ countries and 182 cities.',
+        'meta_description': 'Ranking the best countries for retirement healthcare in 2026. Aggregated quality scores, insurance costs for 60+, and coverage options across 25+ countries and 230 retire cities.',
         'tag': 'Retire Abroad',
         'generator': generate_blog_healthcare,
     },
