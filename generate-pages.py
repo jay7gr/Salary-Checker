@@ -1620,6 +1620,7 @@ salaryRanges = {
 
 CURRENT_YEAR = date.today().year
 TOTAL_NEIGHBORHOODS = sum(len(v) for v in cityNeighborhoods.values())
+TOTAL_CITIES = len(coliData)
 ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
 
 # Wise affiliate link (replace with real invite link when approved)
@@ -4377,7 +4378,7 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             continue
         local_mid = ranges['mid'] * (nhood_coli / 100) * rate_to_local
         fmt_job_salary = format_currency_amount(local_mid, currency)
-        job_salary_lines += f'<li>A <strong>{job_title}</strong> earns approximately <strong>{fmt_job_salary}</strong> per year.</li>\n'
+        job_salary_lines += f'<li>The lifestyle equivalent for a <strong>{job_title}</strong> is approximately <strong>{fmt_job_salary}</strong> per year.</li>\n'
 
     # Cost tier description
     tier_pct = rank_in_city / total_in_city
@@ -4417,9 +4418,9 @@ def generate_neighborhood_page(city, neighborhood, multiplier):
             <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 14px;">
                 For a typical resident of {neighborhood}, housing takes up roughly <strong>{nhood_housing_pct}%</strong> of monthly expenses. Food and groceries account for about <strong>{nhood_food_pct}%</strong>, while transportation costs around <strong>{nhood_transport_pct}%</strong>. To live comfortably here — meaning rent stays at or below 30% of gross income — you would need an annual salary of approximately <strong>{fmt_comfortable}</strong> before tax.
             </p>
-            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Typical Salaries in {neighborhood}</h3>
+            <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px;">Lifestyle Equivalents in {neighborhood}</h3>
             <p style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.75; margin-bottom: 8px;">
-                Salaries in {neighborhood} reflect the local cost of living. Based on the neighborhood COLI of {nhood_coli}:
+                COLI-scaled lifestyle equivalents of New York mid-range salaries — <strong>not</strong> local market pay. Based on the neighborhood COLI of {nhood_coli} (NYC = 100):
             </p>
             <ul style="font-size: 0.92rem; color: var(--text-body, #4a4a4c); line-height: 1.85; margin-bottom: 14px; padding-left: 20px;">
                 {job_salary_lines}
@@ -5265,7 +5266,7 @@ def generate_blog_undervalued_neighborhoods():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR}) — salary:converter</title>
-    <meta name="description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index. Data-driven analysis of {total:,} neighborhoods across 101 cities.">
+    <meta name="description" content="Discover the 50 most affordable neighborhoods globally, ranked by cost of living index. Data-driven analysis of {total:,} neighborhoods across {TOTAL_CITIES} cities.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/blog/articles/50-most-undervalued-neighborhoods-in-the-world">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -5356,7 +5357,7 @@ def generate_blog_undervalued_neighborhoods():
             <h1>50 Most Undervalued Neighborhoods in the World ({CURRENT_YEAR})</h1>
             <div class="meta">Published {article_date} &middot; salary:converter Research &middot; Based on {total:,} neighborhoods</div>
 
-            <p>Not all neighborhoods are created equal. While city-level cost of living data gives you a general picture, the real story is at the neighborhood level. We analyzed <strong>{total:,} neighborhoods across 101 cities</strong> to find the most affordable places to live worldwide.</p>
+            <p>Not all neighborhoods are created equal. While city-level cost of living data gives you a general picture, the real story is at the neighborhood level. We analyzed <strong>{total:,} neighborhoods across {TOTAL_CITIES} cities</strong> to find the most affordable places to live worldwide.</p>
 
             <p>Each neighborhood is scored using an absolute COLI (Cost of Living Index), calculated by multiplying the city's baseline COLI by the neighborhood's local multiplier. A lower score means a more affordable place to live.</p>
 
@@ -5385,7 +5386,7 @@ def generate_blog_undervalued_neighborhoods():
 
             <div class="cta-box">
                 <h2>Compare Any Neighborhood</h2>
-                <p>Use our converter with {ROUNDED_NEIGHBORHOODS:,}+ neighborhood-level adjustments for precise salary comparisons.</p>
+                <p>Use our converter with {total:,} neighborhood-level adjustments for precise salary comparisons.</p>
                 <a href="/" class="cta-btn">Open Salary Converter</a>
             </div>
 
@@ -5486,7 +5487,7 @@ def generate_blog_salary_goes_furthest():
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR}) — salary:converter</title>
-    <meta name="description" content="Discover which neighborhoods give you the most purchasing power. Analysis of {total:,} neighborhoods across 101 cities worldwide.">
+    <meta name="description" content="Discover which neighborhoods give you the most purchasing power. Analysis of {total:,} neighborhoods across {TOTAL_CITIES} cities worldwide.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/blog/articles/where-your-salary-goes-furthest-neighborhood-edition">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -5576,7 +5577,7 @@ def generate_blog_salary_goes_furthest():
             <h1>Where Your Salary Goes Furthest: Neighborhood Edition ({CURRENT_YEAR})</h1>
             <div class="meta">Published {article_date} &middot; salary:converter Research &middot; {total:,} neighborhoods analyzed</div>
 
-            <p>A $100,000 salary means very different things depending on where you live &mdash; not just which city, but which <em>neighborhood</em>. We calculated the purchasing power of the same salary across <strong>{total:,} neighborhoods in 101 cities</strong> to find where your money goes furthest.</p>
+            <p>A $100,000 salary means very different things depending on where you live &mdash; not just which city, but which <em>neighborhood</em>. We calculated the purchasing power of the same salary across <strong>{total:,} neighborhoods in {TOTAL_CITIES} cities</strong> to find where your money goes furthest.</p>
 
             <p>Purchasing power is shown as a percentage of New York City baseline (100%). A score of 500% means your dollar buys 5x more than in NYC.</p>
 
@@ -5818,7 +5819,7 @@ def generate_blog_major_cities_breakdown():
 
             <div class="cta-box">
                 <h2>Compare Any Two Neighborhoods</h2>
-                <p>Our converter handles {ROUNDED_NEIGHBORHOODS:,}+ neighborhoods across 101 cities with real-time salary equivalents.</p>
+                <p>Our converter handles {total:,} neighborhoods across {TOTAL_CITIES} cities with real-time salary equivalents.</p>
                 <a href="/" class="cta-btn">Open Salary Converter</a>
             </div>
 

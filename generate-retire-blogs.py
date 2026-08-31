@@ -1248,7 +1248,7 @@ def generate_blog_2000_month():
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
                 <p style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 6px;">What would your salary be worth in another city?</p>
-                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,400+ neighborhoods &mdash; free, instant results.</p>
+                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,483 neighborhoods &mdash; free, instant results.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:#fff;color:#1e3a5f;border-radius:10px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:transform 0.2s;">Calculate Your Equivalent Salary &rarr;</a>
             </div>
 
@@ -1352,7 +1352,7 @@ def generate_blog_visas():
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
                 <p style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 6px;">What would your salary be worth in another city?</p>
-                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,400+ neighborhoods &mdash; free, instant results.</p>
+                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,483 neighborhoods &mdash; free, instant results.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:#fff;color:#1e3a5f;border-radius:10px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:transform 0.2s;">Calculate Your Equivalent Salary &rarr;</a>
             </div>
 
@@ -1505,7 +1505,7 @@ def generate_blog_social_security():
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
                 <p style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 6px;">What would your salary be worth in another city?</p>
-                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,400+ neighborhoods &mdash; free, instant results.</p>
+                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,483 neighborhoods &mdash; free, instant results.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:#fff;color:#1e3a5f;border-radius:10px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:transform 0.2s;">Calculate Your Equivalent Salary &rarr;</a>
             </div>
 
@@ -1652,7 +1652,7 @@ def generate_blog_inheritance_tax():
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
                 <p style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 6px;">What would your salary be worth in another city?</p>
-                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,400+ neighborhoods &mdash; free, instant results.</p>
+                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,483 neighborhoods &mdash; free, instant results.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:#fff;color:#1e3a5f;border-radius:10px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:transform 0.2s;">Calculate Your Equivalent Salary &rarr;</a>
             </div>
 
@@ -1794,7 +1794,7 @@ def generate_blog_healthcare():
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
                 <p style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 6px;">What would your salary be worth in another city?</p>
-                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,400+ neighborhoods &mdash; free, instant results.</p>
+                <p style="color:rgba(255,255,255,0.8);font-size:0.88rem;margin:0 0 14px;">Compare 113 cities and 2,483 neighborhoods &mdash; free, instant results.</p>
                 <a href="/" style="display:inline-block;padding:10px 24px;background:#fff;color:#1e3a5f;border-radius:10px;text-decoration:none;font-size:0.9rem;font-weight:600;transition:transform 0.2s;">Calculate Your Equivalent Salary &rarr;</a>
             </div>
 
