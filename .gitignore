@@ -5,3 +5,5 @@ __pycache__/
 # OS / editor cruft
 .DS_Store
 *.swp
+# Nested neighborhood-vs-neighborhood HTML. Committing these exceeds Cloudflare Pages 20k file limit.
+/compare/*/*.html
