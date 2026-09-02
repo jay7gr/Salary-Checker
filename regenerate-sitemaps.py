@@ -1,139 +1,143 @@
 #!/usr/bin/env python3
 """
-Regenerate sitemaps with SMART FILTERING for SEO crawl budget optimization.
+Regenerate sitemaps for salary-converter.com.
 
-Instead of submitting all 13,000+ URLs (most of which Google ignores),
-we focus on high-value pages that are most likely to get indexed and rank.
+Includes live money URLs: city pages, neighborhood pages (/city/{city}/{hood}),
+city-vs-city compare pages, /salary-needed/{city} and hood-level salary-needed
+when those HTML files exist.
 
-Strategy:
-- Homepage, blog, rankings, salary hub pages: ALWAYS include
-- City pages: main city pages only (no neighborhoods)
-- Compare pages: only major city pairs (top 30 cities × top 30 cities)
-- Retire pages: all (they're high-value, unique content)
-- Salary-needed: hub page only (noindex on individual pages)
-- Neighborhoods: EXCLUDE (too thin, dilutes crawl budget)
+Excludes: /404, /admin/*, nested compare/{city}/* (nhood-vs-nhood, gitignored,
+Cloudflare Pages 20k cap), encoding-duplicate slugs, embed/widget one-offs.
 
-Produces sitemap-s1.xml through sitemap-sN.xml + sitemap.xml index.
+lastmod is the HTML file's mtime (UTC date), not a fake global stamp.
 """
 import os
 import glob
-from datetime import date
+import re
+from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CHUNK_SIZE = 500
-TODAY = date.today().isoformat()
 BASE_URL = 'https://salary-converter.com'
 
-# Top 30 cities by search volume / importance — these get compare pages in sitemap
-TOP_CITIES = {
-    'london', 'new-york', 'paris', 'tokyo', 'dubai', 'singapore',
-    'hong-kong', 'san-francisco', 'los-angeles', 'sydney',
-    'toronto', 'berlin', 'amsterdam', 'barcelona', 'miami',
-    'chicago', 'seattle', 'boston', 'melbourne', 'munich',
-    'zurich', 'geneva', 'copenhagen', 'stockholm', 'dublin',
-    'lisbon', 'bangkok', 'shanghai', 'austin', 'denver',
-}
-
-# Priority order for URL sorting
 PRIORITY = {
-    '': 0,           # homepage
-    'blog': 1,       # blog posts rank best — put first
+    '': 0,
+    'blog': 1,
     'rankings': 2,
     'city': 3,
     'retire': 4,
     'compare': 5,
     'salary': 6,
     'salary-needed': 7,
-    'widget': 8,
-    'privacy': 9,
+    'methodology': 8,
+    'widget': 9,
+    'privacy': 10,
 }
-
 
 EXCLUDE_PREFIXES = ('admin/',)
 EXCLUDE_FILES = {'404.html', 'embed.html', 'retire-embed.html', 'widget.html'}
 
+
+def load_redirect_sources():
+    """Paths that _redirects already 301s away — do not list the dupe in sitemap."""
+    sources = set()
+    path = os.path.join(ROOT, '_redirects')
+    if not os.path.isfile(path):
+        return sources
+    with open(path, encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split()
+            if len(parts) >= 2 and parts[0].startswith('/'):
+                sources.add(parts[0].rstrip('/'))
+    return sources
+
+
+REDIRECT_SOURCES = load_redirect_sources()
+
+
+def is_encoding_dupe(rel_path):
+    if '%' in rel_path:
+        return True
+    if any(ord(c) > 127 for c in rel_path):
+        return True
+    return False
+
+
 def should_include(rel_path):
-    """Decide if a page should be included in the sitemap."""
     rel_path = rel_path.replace('\\', '/')
     if rel_path in EXCLUDE_FILES or rel_path.startswith(EXCLUDE_PREFIXES):
         return False
-    # /index is a homepage duplicate loc
-    if rel_path in ('index.html',):
-        return True  # mapped to / later, not /index
+    if is_encoding_dupe(rel_path):
+        return False
 
     parts = rel_path.strip('/').split('/')
 
-    # Always include root pages except 404/admin (already excluded)
+    if rel_path == 'index.html':
+        return True
+
     if len(parts) == 1:
         return True
 
     section = parts[0]
 
-    # Blog: include everything
-    if section == 'blog':
+    if section in ('blog', 'rankings', 'salary', 'retire', 'methodology'):
         return True
 
-    # Rankings: include everything
-    if section == 'rankings':
-        return True
-
-    # Salary pages: include everything (only ~38 pages)
-    if section == 'salary':
-        return True
-
-    # Retire: include everything (439 pages, all high-value unique content)
-    if section == 'retire':
-        return True
-
-    # City pages: only main city pages (city/london), not neighborhoods (city/london/mayfair)
+    # City: hub, city page, and neighborhood pages
     if section == 'city':
-        # city/index.html or city/london.html → include
-        # city/london/mayfair.html → exclude
-        return len(parts) == 2
+        return len(parts) in (2, 3)
 
-    # Compare pages: only top city × top city comparisons (no neighborhoods)
+    # City-vs-city only. Nested compare/{city}/* is banned (Pages cap).
     if section == 'compare':
-        # compare/index.html → include
-        if len(parts) == 2:
-            filename = parts[1].replace('.html', '')
-            # Must be city1-vs-city2 format
-            if '-vs-' in filename:
-                city1, city2 = filename.split('-vs-', 1)
-                return city1 in TOP_CITIES and city2 in TOP_CITIES
-            # Hub page
-            return filename == 'index'
-        return False
+        if len(parts) != 2:
+            return False
+        filename = parts[1].replace('.html', '')
+        if filename == 'index':
+            return True
+        return '-vs-' in filename
 
-    # Salary-needed: only the hub page
+    # Hub, /salary-needed/{city}, and hood-level if the HTML exists
     if section == 'salary-needed':
-        return len(parts) == 1 or (len(parts) == 2 and parts[1] in ('index.html', ''))
+        return True
 
-    # Privacy, widget etc
     return True
 
 
-def html_to_url(filepath):
-    """Convert a file path to its canonical URL."""
+def html_to_path(filepath):
     rel = os.path.relpath(filepath, ROOT).replace('\\', '/')
-    # Remove .html extension; root index.html is the homepage, not /index
     if rel == 'index.html':
-        rel = ''
-    elif rel.endswith('/index.html'):
-        rel = rel[:-len('/index.html')]
-        if rel:
-            rel = rel + '/'  # hub pages keep trailing slash (canonical)
-    elif rel.endswith('.html'):
+        return '/'
+    if rel.endswith('/index.html'):
+        rel = rel[:-len('index.html')]
+        return '/' + rel
+    if rel.endswith('.html'):
         rel = rel[:-len('.html')]
-    # Skip non-page files
     if rel in ('embed', '404', 'admin/embeds', 'admin/feedback'):
         return None
-    if rel in ('widget',):
-        return f'{BASE_URL}/{rel}'
-    return f'{BASE_URL}/{rel}' if rel else f'{BASE_URL}/'
+    return '/' + rel
 
 
-def sort_key(url):
-    """Sort URLs by directory priority, then alphabetically."""
+def html_to_url(filepath):
+    path = html_to_path(filepath)
+    if path is None:
+        return None
+    if path in REDIRECT_SOURCES:
+        return None
+    if path == '/':
+        return f'{BASE_URL}/'
+    return f'{BASE_URL}{path}'
+
+
+def lastmod_for(filepath):
+    ts = os.path.getmtime(filepath)
+    return datetime.fromtimestamp(ts, tz=timezone.utc).date().isoformat()
+
+
+def sort_key(item):
+    url = item[0]
     path = url.replace(BASE_URL, '').strip('/')
     parts = path.split('/')
     section = parts[0] if parts[0] else ''
@@ -141,8 +145,7 @@ def sort_key(url):
     return (priority, path)
 
 
-# Collect URLs with filtering
-urls = set()
+entries = {}  # url -> lastmod
 skipped = 0
 total_on_disk = 0
 
@@ -150,32 +153,29 @@ for filepath in glob.glob(os.path.join(ROOT, '**', '*.html'), recursive=True):
     if '/.' in filepath:
         continue
     total_on_disk += 1
-
     rel = os.path.relpath(filepath, ROOT)
-
     if not should_include(rel):
         skipped += 1
         continue
-
     url = html_to_url(filepath)
-    if url:
-        urls.add(url)
+    if not url:
+        skipped += 1
+        continue
+    lm = lastmod_for(filepath)
+    if url not in entries or lm > entries[url]:
+        entries[url] = lm
 
-# Ensure homepage
-urls.add(f'{BASE_URL}/')
+entries[f'{BASE_URL}/'] = entries.get(f'{BASE_URL}/', lastmod_for(os.path.join(ROOT, 'index.html')))
 
-# Sort
-urls = sorted(urls, key=sort_key)
+items = sorted(entries.items(), key=sort_key)
 
 print(f'Total HTML files on disk: {total_on_disk}')
-print(f'Included in sitemap: {len(urls)}')
-print(f'Excluded (thin/neighborhood): {skipped}')
-print(f'Reduction: {100 - len(urls) / total_on_disk * 100:.0f}%')
+print(f'Included in sitemap: {len(items)}')
+print(f'Excluded: {skipped}')
 print()
 
-# Breakdown by section
 sections = {}
-for url in urls:
+for url, _lm in items:
     path = url.replace(BASE_URL, '').strip('/')
     section = path.split('/')[0] if '/' in path else (path or 'homepage')
     sections[section] = sections.get(section, 0) + 1
@@ -183,42 +183,48 @@ for url in urls:
 for section, count in sorted(sections.items(), key=lambda x: -x[1]):
     print(f'  {section}: {count} URLs')
 
-# Remove old sitemap files
 for pattern in ['sitemap-*.xml', 'sitemap-s*.xml']:
     for old in glob.glob(os.path.join(ROOT, pattern)):
         os.remove(old)
         print(f'  Removed old: {os.path.basename(old)}')
 
-# Split into chunks and write sitemaps
-num_chunks = (len(urls) + CHUNK_SIZE - 1) // CHUNK_SIZE
+num_chunks = (len(items) + CHUNK_SIZE - 1) // CHUNK_SIZE
 sitemap_files = []
 
 for i in range(num_chunks):
-    chunk = urls[i * CHUNK_SIZE : (i + 1) * CHUNK_SIZE]
+    chunk = items[i * CHUNK_SIZE:(i + 1) * CHUNK_SIZE]
     filename = f'sitemap-s{i + 1}.xml'
     filepath = os.path.join(ROOT, filename)
-
     xml_entries = ''
-    for url in chunk:
-        xml_entries += f'  <url><loc>{url}</loc></url>\n'
-
-    content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{xml_entries}</urlset>\n'
-
+    for url, lm in chunk:
+        xml_entries += f'  <url><loc>{url}</loc><lastmod>{lm}</lastmod></url>\n'
+    content = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'{xml_entries}</urlset>\n'
+    )
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
-
     size_kb = os.path.getsize(filepath) / 1024
     print(f'  {filename}: {len(chunk)} URLs ({size_kb:.0f} KB)')
-    sitemap_files.append(filename)
+    sitemap_files.append((filename, max(lm for _u, lm in chunk)))
 
-# Write sitemap index
 index_entries = ''
-for filename in sitemap_files:
-    index_entries += f'  <sitemap>\n    <loc>{BASE_URL}/{filename}</loc>\n  </sitemap>\n'
+for filename, lm in sitemap_files:
+    index_entries += (
+        f'  <sitemap>\n'
+        f'    <loc>{BASE_URL}/{filename}</loc>\n'
+        f'    <lastmod>{lm}</lastmod>\n'
+        f'  </sitemap>\n'
+    )
 
-index_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{index_entries}</sitemapindex>\n'
+index_content = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n'
+    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    f'{index_entries}</sitemapindex>\n'
+)
 
 with open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8') as f:
     f.write(index_content)
 
-print(f'\nDone: sitemap.xml index + {num_chunks} sitemaps ({len(urls)} total URLs)')
+print(f'\nDone: sitemap.xml index + {num_chunks} sitemaps ({len(items)} total URLs)')
