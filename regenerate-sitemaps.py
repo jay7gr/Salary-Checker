@@ -9,12 +9,15 @@ when those HTML files exist.
 Excludes: /404, /admin/*, nested compare/{city}/* (nhood-vs-nhood, gitignored,
 Cloudflare Pages 20k cap), encoding-duplicate slugs, embed/widget one-offs.
 
-lastmod is the HTML file's mtime (UTC date), not a fake global stamp.
+lastmod is the last git commit date that touched the HTML file (existing files
+only), not a fake global stamp. Falls back to file mtime if git has no date.
 """
 import os
-import glob
 import re
+import glob
+import subprocess
 from datetime import datetime, timezone
+from urllib.parse import unquote
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CHUNK_SIZE = 500
@@ -37,9 +40,16 @@ PRIORITY = {
 EXCLUDE_PREFIXES = ('admin/',)
 EXCLUDE_FILES = {'404.html', 'embed.html', 'retire-embed.html', 'widget.html'}
 
+# Truncated UTF-8 / mangled-ASCII twins. Keep the canonical when both exist.
+MANGLE_PAIRS = (
+    ('medell-n', 'medellin'),
+    ('s-o-paulo', 'sao-paulo'),
+    ('m-laga', 'malaga'),
+)
+
 
 def load_redirect_sources():
-    """Paths that _redirects already 301s away — do not list the dupe in sitemap."""
+    """Exact _redirects sources — do not list the redirected URL in sitemap."""
     sources = set()
     path = os.path.join(ROOT, '_redirects')
     if not os.path.isfile(path):
@@ -50,12 +60,40 @@ def load_redirect_sources():
             if not line or line.startswith('#'):
                 continue
             parts = line.split()
-            if len(parts) >= 2 and parts[0].startswith('/'):
+            if len(parts) >= 2 and parts[0].startswith('/') and '*' not in parts[0] and ':' not in parts[0]:
                 sources.add(parts[0].rstrip('/'))
     return sources
 
 
 REDIRECT_SOURCES = load_redirect_sources()
+
+
+def load_git_lastmods():
+    """Newest commit date per currently-tracked HTML file."""
+    dates = {}
+    try:
+        out = subprocess.check_output(
+            ['git', 'log', '--name-only', '--pretty=format:%cs', '--', '*.html'],
+            cwd=ROOT,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return dates
+    current = None
+    for line in out.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', line):
+            current = line
+            continue
+        if current and line.endswith('.html') and line not in dates:
+            dates[line] = current
+    return dates
+
+
+GIT_LASTMODS = load_git_lastmods()
 
 
 def is_encoding_dupe(rel_path):
@@ -86,7 +124,6 @@ def should_include(rel_path):
     if section in ('blog', 'rankings', 'salary', 'retire', 'methodology'):
         return True
 
-    # City: hub, city page, and neighborhood pages
     if section == 'city':
         return len(parts) in (2, 3)
 
@@ -99,7 +136,6 @@ def should_include(rel_path):
             return True
         return '-vs-' in filename
 
-    # Hub, /salary-needed/{city}, and hood-level if the HTML exists
     if section == 'salary-needed':
         return True
 
@@ -132,8 +168,19 @@ def html_to_url(filepath):
 
 
 def lastmod_for(filepath):
+    rel = os.path.relpath(filepath, ROOT).replace('\\', '/')
+    if rel in GIT_LASTMODS:
+        return GIT_LASTMODS[rel]
     ts = os.path.getmtime(filepath)
     return datetime.fromtimestamp(ts, tz=timezone.utc).date().isoformat()
+
+
+def normalize_url(url):
+    u = unquote(url)
+    for mangled, canonical in MANGLE_PAIRS:
+        u = u.replace(mangled, canonical)
+    u = re.sub(r'/bogot(?!a)', '/bogota', u)
+    return u
 
 
 def sort_key(item):
@@ -165,13 +212,104 @@ for filepath in glob.glob(os.path.join(ROOT, '**', '*.html'), recursive=True):
     if url not in entries or lm > entries[url]:
         entries[url] = lm
 
-entries[f'{BASE_URL}/'] = entries.get(f'{BASE_URL}/', lastmod_for(os.path.join(ROOT, 'index.html')))
+entries[f'{BASE_URL}/'] = entries.get(
+    f'{BASE_URL}/', lastmod_for(os.path.join(ROOT, 'index.html'))
+)
+
+# Drop encoding-dupe slugs when the canonical URL is also present.
+url_set = set(entries)
+dropped_dupes = 0
+for url in list(entries):
+    norm = normalize_url(url)
+    if norm != url and norm in url_set:
+        del entries[url]
+        dropped_dupes += 1
+        skipped += 1
+
+# Sibling diacritic twins in the same city/salary-needed folder
+# (kad-k-y vs kadikoy). Keep the generate-pages hyphenated slug.
+from collections import defaultdict
+from functools import lru_cache
+
+def _aligns(a, b):
+    @lru_cache(None)
+    def rec(i, j):
+        if i == len(a) and j == len(b):
+            return True
+        if i >= len(a):
+            return False
+        if j < len(b) and a[i] == b[j] and rec(i + 1, j + 1):
+            return True
+        if a[i] == '-':
+            if rec(i + 1, j):
+                return True
+            if j < len(b) and b[j] != '-' and rec(i + 1, j + 1):
+                return True
+            if j + 1 < len(b) and b[j] != '-' and b[j + 1] != '-' and rec(i + 1, j + 2):
+                return True
+        return False
+    return rec(0, 0)
+
+def _is_variant(a, b):
+    if a == b:
+        return False
+    if a.replace('-', '') == b.replace('-', ''):
+        return True
+    return _aligns(a, b) or _aligns(b, a)
+
+def _prefer(a, b):
+    if a.count('-') != b.count('-'):
+        return a if a.count('-') > b.count('-') else b
+    return a if len(a) >= len(b) else b
+
+by_parent = defaultdict(list)
+for url in list(entries):
+    path = url.replace(BASE_URL, '')
+    parts = [x for x in path.split('/') if x]
+    if len(parts) != 3 or parts[0] not in ('city', 'salary-needed'):
+        continue
+    parent, _, slug = path.rstrip('/').rpartition('/')
+    by_parent[parent].append((slug, url))
+
+for parent, items_in_dir in by_parent.items():
+    slugs = [s for s, _u in items_in_dir]
+    n = len(slugs)
+    parent_idx = list(range(n))
+    def find(x, parent_idx=parent_idx):
+        while parent_idx[x] != x:
+            parent_idx[x] = parent_idx[parent_idx[x]]
+            x = parent_idx[x]
+        return x
+    def union(x, y, parent_idx=parent_idx):
+        px, py = find(x), find(y)
+        if px != py:
+            parent_idx[px] = py
+    for i in range(n):
+        for j in range(i + 1, n):
+            if _is_variant(slugs[i], slugs[j]):
+                union(i, j)
+    groups = defaultdict(list)
+    for i in range(n):
+        groups[find(i)].append(i)
+    for members in groups.values():
+        if len(members) < 2:
+            continue
+        keep_slug = slugs[members[0]]
+        for i in members[1:]:
+            keep_slug = _prefer(keep_slug, slugs[i])
+        for i in members:
+            if slugs[i] != keep_slug:
+                url = items_in_dir[i][1]
+                if url in entries:
+                    del entries[url]
+                    dropped_dupes += 1
+                    skipped += 1
 
 items = sorted(entries.items(), key=sort_key)
 
 print(f'Total HTML files on disk: {total_on_disk}')
 print(f'Included in sitemap: {len(items)}')
-print(f'Excluded: {skipped}')
+print(f'Excluded: {skipped} (encoding dupes dropped this pass: {dropped_dupes})')
 print()
 
 sections = {}
