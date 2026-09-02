@@ -34,13 +34,12 @@ Cost of Living Index (COLI) is benchmarked to New York City = 100. A city with C
 - Neighborhoods tracked: 2,483 across 113 cities
 - Professions tracked: 37 across 8 categories
 - City-to-city comparisons: 6,328
-- Neighborhood-to-neighborhood comparisons: 27,045
 
 ## Site sections
 
 - [All Cities](/city/): Cost of living indices, salary data, and neighborhood breakdowns for 113 cities
 - [City Comparisons](/compare/): 6,328 city-vs-city cost of living comparisons
-- [Neighborhood Comparisons](/compare/{city}/): 27,045 neighborhood-vs-neighborhood comparisons within cities
+- [Neighborhood pages](/city/{city}/{hood}): neighborhood-level cost of living inside each city (not neighborhood-vs-neighborhood URLs)
 - [Salary by Profession](/salary/): 37 professions with salary adjusted for 113 cities
 - [Profession × City Salary](/salary/{profession}/{city}): Specific salary, take-home pay, and salary range for any profession in any city
 - [Retire Abroad Calculator](/retire/): Retirement cost planning for 230 cities with visa and tax data

@@ -3939,7 +3939,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/compare/">
     <meta property="og:title" content="{total:,} City Cost of Living Comparisons {CURRENT_YEAR}">
-    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between any two of 101 cities worldwide.">
+    <meta property="og:description" content="Side-by-side comparison of salaries and cost of living between any two of {TOTAL_CITIES} cities worldwide.">
     <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
     <script type="application/ld+json">
@@ -3947,7 +3947,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
         "@context": "https://schema.org",
         "@type": "CollectionPage",
         "name": "City Cost of Living Comparisons",
-        "description": "{total:,} city-to-city comparisons across 101 cities worldwide",
+        "description": "{total:,} city-to-city comparisons across {TOTAL_CITIES} cities worldwide",
         "url": "https://salary-converter.com/compare/",
         "numberOfItems": {total}
     }}
@@ -4081,7 +4081,7 @@ def generate_compare_index(comparison_pairs, featured_pairs=None):
 
         <section class="hero">
             <h1>City Comparisons</h1>
-            <p>{total:,} city-to-city comparisons across 101 cities</p>
+            <p>{total:,} city-to-city comparisons across {TOTAL_CITIES} cities</p>
             <div class="compare-form">
                 <span class="compare-form-label">Compare</span>
                 <select id="cityA" class="city-select">
@@ -5985,7 +5985,7 @@ if __name__ == '__main__':
         ('Mumbai', 'Bangalore'), ('Hong Kong', 'Taipei'),
     }
 
-    # Generate ALL city pairs (101 cities = 5,050 pairs)
+    # Generate ALL city pairs (113 COL cities = 6,328 directed-undirected pairs)
     all_cities = sorted(coliData.keys())
     comparison_pairs = []
     for i, c1 in enumerate(all_cities):
