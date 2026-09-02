@@ -226,6 +226,85 @@ for url in list(entries):
         dropped_dupes += 1
         skipped += 1
 
+# Sibling diacritic twins in the same city/salary-needed folder
+# (kad-k-y vs kadikoy). Keep the generate-pages hyphenated slug.
+from collections import defaultdict
+from functools import lru_cache
+
+def _aligns(a, b):
+    @lru_cache(None)
+    def rec(i, j):
+        if i == len(a) and j == len(b):
+            return True
+        if i >= len(a):
+            return False
+        if j < len(b) and a[i] == b[j] and rec(i + 1, j + 1):
+            return True
+        if a[i] == '-':
+            if rec(i + 1, j):
+                return True
+            if j < len(b) and b[j] != '-' and rec(i + 1, j + 1):
+                return True
+            if j + 1 < len(b) and b[j] != '-' and b[j + 1] != '-' and rec(i + 1, j + 2):
+                return True
+        return False
+    return rec(0, 0)
+
+def _is_variant(a, b):
+    if a == b:
+        return False
+    if a.replace('-', '') == b.replace('-', ''):
+        return True
+    return _aligns(a, b) or _aligns(b, a)
+
+def _prefer(a, b):
+    if a.count('-') != b.count('-'):
+        return a if a.count('-') > b.count('-') else b
+    return a if len(a) >= len(b) else b
+
+by_parent = defaultdict(list)
+for url in list(entries):
+    path = url.replace(BASE_URL, '')
+    parts = [x for x in path.split('/') if x]
+    if len(parts) != 3 or parts[0] not in ('city', 'salary-needed'):
+        continue
+    parent, _, slug = path.rstrip('/').rpartition('/')
+    by_parent[parent].append((slug, url))
+
+for parent, items_in_dir in by_parent.items():
+    slugs = [s for s, _u in items_in_dir]
+    n = len(slugs)
+    parent_idx = list(range(n))
+    def find(x, parent_idx=parent_idx):
+        while parent_idx[x] != x:
+            parent_idx[x] = parent_idx[parent_idx[x]]
+            x = parent_idx[x]
+        return x
+    def union(x, y, parent_idx=parent_idx):
+        px, py = find(x), find(y)
+        if px != py:
+            parent_idx[px] = py
+    for i in range(n):
+        for j in range(i + 1, n):
+            if _is_variant(slugs[i], slugs[j]):
+                union(i, j)
+    groups = defaultdict(list)
+    for i in range(n):
+        groups[find(i)].append(i)
+    for members in groups.values():
+        if len(members) < 2:
+            continue
+        keep_slug = slugs[members[0]]
+        for i in members[1:]:
+            keep_slug = _prefer(keep_slug, slugs[i])
+        for i in members:
+            if slugs[i] != keep_slug:
+                url = items_in_dir[i][1]
+                if url in entries:
+                    del entries[url]
+                    dropped_dupes += 1
+                    skipped += 1
+
 items = sorted(entries.items(), key=sort_key)
 
 print(f'Total HTML files on disk: {total_on_disk}')
