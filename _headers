@@ -1,9 +1,0 @@
-# XML sitemaps — force application/xml so HTML-accepting
-# fetchers (non-curl UAs) do not get the Pages Functions HTML pipeline.
-/sitemap.xml
-  Content-Type: application/xml; charset=utf-8
-  X-Content-Type-Options: nosniff
-
-/sitemap-*.xml
-  Content-Type: application/xml; charset=utf-8
-  X-Content-Type-Options: nosniff
