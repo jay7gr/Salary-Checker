@@ -2752,6 +2752,21 @@
 .rc-success{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(34,197,94,.09);border-radius:10px;color:#16a34a;font-size:.87rem;font-weight:600}
 .rc-error-msg{font-size:.82rem;color:#dc2626;padding:7px 0 0;text-align:center}
 @media(max-width:480px){.rc-field-row{flex-direction:column}.rc-submit{justify-content:center}}
+/* Email me this result — primary keep-result strip */
+.email-result-strip{margin:14px 0 4px;padding:14px 14px 12px;border:1.5px solid var(--border-light,#e5e7eb);border-radius:14px;background:var(--card-bg,#fff)}
+.er-label{font-size:.92rem;font-weight:700;color:var(--text-primary);margin:0 0 4px;letter-spacing:-.2px}
+.er-sub{font-size:.8rem;color:var(--text-secondary);margin:0 0 10px;line-height:1.45}
+.er-form .rc-field-row{margin:0}
+.er-privacy{font-size:.72rem;color:var(--text-secondary);margin:7px 0 0;text-align:left}
+.er-success{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(34,197,94,.09);border-radius:10px;color:#16a34a;font-size:.87rem;font-weight:600}
+.er-error{font-size:.82rem;color:#dc2626;padding:7px 0 0}
+/* PDF demoted — collapsed secondary below Wise */
+.report-capture-details{margin-top:16px;border:1.5px solid var(--border-light,#e5e7eb);border-radius:14px;background:var(--card-bg,#fff);overflow:hidden}
+.report-capture-details>summary{cursor:pointer;list-style:none;padding:14px 16px;font-size:.9rem;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;user-select:none}
+.report-capture-details>summary::-webkit-details-marker{display:none}
+.report-capture-details>summary::before{content:"B8";color:var(--text-secondary);font-size:.85rem;transition:transform .15s}
+.report-capture-details[open]>summary::before{transform:rotate(90deg)}
+.report-capture-details .report-capture-card{border:none;border-radius:0;background:transparent;padding:0 16px 16px;border-top:1px solid var(--border-light,#e5e7eb)}
 /* Wise affiliate CTA */
 .wise-cta-block{border:1px solid #9fe870;border-left:4px solid #9fe870;border-radius:16px;padding:20px 24px;background:var(--card-bg)}
 .wise-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -3110,6 +3125,27 @@
                 </a>
             </div>
 
+            <!-- Primary keep-result email — under Save my results / share -->
+            <div id="emailResultStrip" class="email-result-strip" style="display:none;" hidden>
+                <div class="er-label">Email me this result</div>
+                <p class="er-sub">We&rsquo;ll send a link that reopens this comparison — no account.</p>
+                <form id="emailResultForm" class="er-form rc-form" novalidate>
+                  <div class="rc-field-row">
+                    <input type="email" id="emailResultEmail" class="rc-email" placeholder="your@email.com" autocomplete="email" required>
+                    <button type="submit" class="rc-submit" id="emailResultSubmitBtn">
+                      <span id="emailResultSubmitLabel">Send link</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                  </div>
+                  <p class="er-privacy">No spam. One email with your link.</p>
+                  <div id="emailResultError" class="er-error" style="display:none"></div>
+                </form>
+                <div id="emailResultSuccess" class="er-success" style="display:none">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Sent — check your inbox for the link.</span>
+                </div>
+            </div>
+
             <!-- 2. Target Salary Comparison (is your target salary enough?) -->
             <div class="offer-comparison" id="offerComparison" style="display: none;"></div>
 
@@ -3204,12 +3240,12 @@
                 <a href="/retire/" style="display:inline-block; padding:8px 20px; background:var(--accent); color:#fff; border-radius:10px; text-decoration:none; font-size:0.82rem; font-weight:600;">Try Retire Abroad Calculator &rarr;</a>
             </div>
 
-            <!-- Report Capture CTA — shown after a successful result -->
-            <div id="reportCapture" style="display:none; margin-top:20px;">
+            <!-- PDF report — demoted secondary, collapsed below Wise -->
+            <div id="reportCapture" style="display:none; margin-top:16px;">
+              <details class="report-capture-details" id="reportCaptureDetails">
+                <summary>Also get a PDF negotiation report</summary>
               <div class="report-capture-card">
-                <div class="rc-badge">📄 Free Personalized Report</div>
-                <h3 class="rc-heading">Get your Salary Negotiation Report</h3>
-                <p class="rc-sub">A professional PDF you can forward directly to HR — backed by real data from 113 cities.</p>
+                <p class="rc-sub">A professional PDF you can forward to HR — backed by real data from 113 cities.</p>
                 <ul class="rc-bullets">
                   <li><span class="rc-check">✓</span> 3 negotiation talking points tailored to <strong id="rcFromCity">your situation</strong> → <strong id="rcToCity"></strong></li>
                   <li><span class="rc-check">✓</span> Monthly take-home vs. expenses breakdown</li>
@@ -3232,6 +3268,7 @@
                   <span>Your report is on its way — check your inbox in the next few minutes.</span>
                 </div>
               </div>
+              </details>
             </div>
         </div>
     
@@ -4018,12 +4055,99 @@
     return doc.output('datauristring').split(',')[1];
   }
 
-  // ── Form wiring ──────────────────────────────────────────────────────────
+  // ── Durable reopen URL (homepage /?from=&to=&salary= only) ───────────────
+  function getDurableResultUrl() {
+    try {
+      if (window._scLastResult && window._scLastResult.durableUrl) return window._scLastResult.durableUrl;
+    } catch(_) {}
+    if (location.search && location.search.length > 1) {
+      return location.origin + "/" + (location.search.charAt(0) === "?" ? location.search : ("?" + location.search));
+    }
+    return "";
+  }
+
+  // ── Primary: Email me this result (link-only, no PDF) ─────────────────────
+  var erForm = document.getElementById("emailResultForm");
+  var erEmail = document.getElementById("emailResultEmail");
+  var reportEmail = document.getElementById("reportEmail");
+  if (erEmail && reportEmail) {
+    erEmail.addEventListener("input", function() {
+      if (!reportEmail.value || reportEmail.dataset.prefilled === "1") {
+        reportEmail.value = erEmail.value;
+        reportEmail.dataset.prefilled = "1";
+      }
+    });
+    var details = document.getElementById("reportCaptureDetails");
+    if (details) {
+      details.addEventListener("toggle", function() {
+        if (details.open && erEmail.value && !reportEmail.value) {
+          reportEmail.value = erEmail.value;
+          reportEmail.dataset.prefilled = "1";
+        }
+      });
+    }
+  }
+  if (erForm) {
+    erForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      var email = (erEmail && erEmail.value || "").trim();
+      if (!email || !email.includes("@")) return;
+      var btn = document.getElementById("emailResultSubmitBtn");
+      var lbl = document.getElementById("emailResultSubmitLabel");
+      var errEl = document.getElementById("emailResultError");
+      var successEl = document.getElementById("emailResultSuccess");
+      var resultUrl = getDurableResultUrl();
+      if (!resultUrl) {
+        if (errEl) { errEl.textContent = "Result link not ready — recalculate and try again."; errEl.style.display = "block"; }
+        return;
+      }
+      btn.disabled = true;
+      if (lbl) lbl.textContent = "Sending…";
+      if (errEl) errEl.style.display = "none";
+      var d = window._scLastResult || {};
+      fetch("/api/email-result", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          resultUrl: resultUrl,
+          reportData: {
+            currentLabel: d.currentLabel,
+            targetLabel: d.targetLabel,
+            formattedOriginalCurrent: d.formattedOriginalCurrent,
+            formattedAmount: d.formattedAmount,
+            generatedAt: d.generatedAt,
+          }
+        })
+      }).then(function(res) {
+        if (!res.ok) throw new Error("send failed");
+        erForm.style.display = "none";
+        if (successEl) successEl.style.display = "flex";
+        if (reportEmail && !reportEmail.value) {
+          reportEmail.value = email;
+          reportEmail.dataset.prefilled = "1";
+        }
+        try { if (typeof gtag === "function") gtag("event", "email_result_link", { from_city: d.currentCity, to_city: d.targetCity }); } catch(_) {}
+      }).catch(function(err) {
+        btn.disabled = false;
+        if (lbl) lbl.textContent = "Send link";
+        if (errEl) { errEl.textContent = "Something went wrong — please try again."; errEl.style.display = "block"; }
+        console.error("Email result error:", err);
+      });
+    });
+  }
+
+  // ── PDF form wiring (secondary, collapsed) ───────────────────────────────
   var form = document.getElementById('reportCaptureForm');
   if (!form) return;
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     var email = (document.getElementById('reportEmail').value || '').trim();
+    if (!email || !email.includes('@')) {
+      var primary = (document.getElementById('emailResultEmail') || {}).value || '';
+      email = primary.trim();
+      if (email) document.getElementById('reportEmail').value = email;
+    }
     if (!email || !email.includes('@')) return;
     var btn = document.getElementById('reportSubmitBtn');
     var lbl = document.getElementById('reportSubmitLabel');
