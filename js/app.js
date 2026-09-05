@@ -3112,15 +3112,12 @@
                 const tweetBtn = document.getElementById('shareTweetBtn');
                 const copyLabel = document.getElementById('shareBtnLabel');
                 if (shareRow && copyBtn && tweetBtn) {
+                    // Durable share URL = homepage deep-link (/?from=&to=&salary=). /share 404s.
                     const params = new URLSearchParams();
                     params.set('from', currentCity);
                     params.set('to', targetCity);
-                    params.set('fromSal', String(Math.round(salary || 0)));
-                    params.set('toSal', String(Math.round(trueEquivalentSalary || coliEquivalentSalary || 0)));
-                    params.set('fromCur', currentCurrency);
-                    params.set('toCur', targetCurrency);
-                    params.set('stretch', String(stretchPct));
-                    const shareUrl = location.origin + '/share?' + params.toString();
+                    params.set('salary', String(Math.round(salary || 0)));
+                    const shareUrl = location.origin + '/?' + params.toString();
                     const tweetText = stretchPct >= 3
                         ? `Same lifestyle costs ~${Math.abs(stretchPct)}% less in ${targetCity} than ${currentCity} — cost of living gap is real.`
                         : stretchPct <= -3
@@ -3732,21 +3729,14 @@
             if (household.noCommute) shareParams.set('noCommute', '1');
             try { history.replaceState(null, '', '?' + shareParams.toString()); } catch(_) {}
 
-            // Populate share bar.
-            // Share the rich /share page (custom OG card) so the link unfurls
-            // with the user's specific result on LinkedIn / WhatsApp / X /
-            // iMessage / Slack — not the generic homepage preview. The address
-            // bar keeps the /?... prefill URL (set via replaceState above).
+            // Populate share bar data attrs. Durable URL is homepage deep-link
+            // (/?from=&to=&salary=) — /share 404s; address bar already uses /?...
             const shareBar = document.getElementById('resultShareBar');
             const ogParams = new URLSearchParams();
             ogParams.set('from', currentCity);
             ogParams.set('to', targetCity);
-            ogParams.set('fromSal', String(Math.round(salary || 0)));
-            ogParams.set('toSal', String(Math.round(trueEquivalentSalary || coliEquivalentSalary || 0)));
-            ogParams.set('fromCur', currentCurrency);
-            ogParams.set('toCur', targetCurrency);
-            ogParams.set('stretch', String(stretchPct || 0));
-            const shareUrl = window.location.origin + '/share?' + ogParams.toString();
+            ogParams.set('salary', String(Math.round(salary || 0)));
+            const shareUrl = window.location.origin + '/?' + ogParams.toString();
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
             const shareText = household.remote
