@@ -854,6 +854,105 @@
             font-family: inherit;
         }
 
+        /* Homepage first-run: progressive disclosure + result framing */
+        .more-precision {
+            margin: 8px 0 20px;
+            border: 1px solid var(--border-section);
+            border-radius: 14px;
+            background: var(--card-bg);
+            overflow: hidden;
+        }
+        .more-precision > summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 14px 18px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            user-select: none;
+        }
+        .more-precision > summary::-webkit-details-marker { display: none; }
+        .more-precision > summary::after {
+            content: '+';
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .more-precision[open] > summary::after { content: '−'; }
+        .more-precision-body {
+            padding: 4px 18px 18px;
+            border-top: 1px solid var(--border-light);
+        }
+        .field-error {
+            display: none;
+            margin-top: 6px;
+            font-size: 0.78rem;
+            color: #dc2626;
+            line-height: 1.35;
+        }
+        .field-error.show { display: block; }
+        .form-group.has-error input,
+        .form-group.has-error select {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+        }
+        .result-lifestyle-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin: 4px 0 6px;
+        }
+        .market-salary-block {
+            margin: 14px 0 4px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+        }
+        .market-salary-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .market-salary-amount {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .reconcile-line {
+            margin: 12px 0 4px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            font-size: 0.86rem;
+            line-height: 1.45;
+            color: var(--text-body);
+        }
+        .rate-result-btn {
+            display: none;
+            margin: 18px auto 0;
+            background: transparent;
+            border: 1px solid var(--input-border);
+            color: var(--text-secondary);
+            border-radius: 100px;
+            padding: 8px 16px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .rate-result-btn.show { display: inline-flex; }
+        .rate-result-btn:hover { background: var(--stat-card-bg); color: var(--text-primary); }
+        .firstrun-required h2 { margin-bottom: 6px; }
+        .firstrun-required .section-subtitle { font-weight: 400; color: var(--text-secondary); font-size: 0.85rem; }
+
         .btn-calculate {
             background: var(--accent);
             color: white;
@@ -2700,7 +2799,7 @@
                 <a href="/offer-evaluator/">Offer Evaluator</a>
             </div>
             <h1 class="hero-headline" id="hero-headline">What&rsquo;s your salary <em>actually</em> worth&nbsp;&mdash; anywhere?</h1>
-            <p class="hero-sub" id="hero-subtitle">See your real purchasing power across 113 cities &middot; tax, rent &amp; cost of living all baked in.</p>
+            <p class="hero-sub" id="hero-subtitle">Compare take-home and cost of living across 113 cities and 2,483 neighborhoods — free, instant.</p>
             <p style="margin:16px 0 0;"><a href="/?from=London&amp;to=New%20York&amp;salary=60000" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:rgba(37,99,235,0.08);color:#2563eb;border:1px solid rgba(37,99,235,0.25);border-radius:100px;text-decoration:none;font-size:0.92rem;font-weight:600;">&#9654;&nbsp;See an example &mdash; &pound;60k in London vs New York</a></p>
             <p class="hero-meta"><a href="/furthest/" class="hero-link">🌍 Or skip ahead — find where your salary goes furthest →</a></p>
         </div>
@@ -2708,26 +2807,28 @@
 
         <div class="error-message" id="error"></div>
 
-        <div class="form-section">
-            <h2>📍 Current Location</h2>
+        <div class="form-section firstrun-required">
+            <h2>Compare your salary <span class="section-subtitle">(3 fields to start)</span></h2>
             <div id="singleSalaryRow">
             <div class="two-column">
-                <div class="form-group">
+                <div class="form-group" id="currentSalaryGroup">
                     <label for="currentSalary" id="salaryLabel">Your Salary</label>
                     <div style="display:flex;gap:8px;align-items:center;">
-                        <input type="text" id="currentSalary" placeholder="e.g. $60,000" style="flex:1;">
+                        <input type="text" id="currentSalary" placeholder="e.g. 45,000" inputmode="numeric" style="flex:1;">
                         <select id="salaryFrequency" style="width:auto;min-width:90px;padding:10px 8px;font-size:0.85rem;">
                             <option value="annual">/ year</option>
                             <option value="monthly">/ month</option>
                             <option value="hourly">/ hour</option>
                         </select>
                     </div>
+                    <div class="field-error" id="currentSalaryError" role="alert"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="currentCityGroup">
                     <label for="currentCity">Current City</label>
                     <select id="currentCity">
-                        <option value="">Select a city...</option>
+                        <option value="">Select a city…</option>
                     </select>
+                    <div class="field-error" id="currentCityError" role="alert"></div>
                 </div>
             </div>
             </div><!-- /singleSalaryRow -->
@@ -2736,20 +2837,39 @@
                     <div class="form-group">
                         <label for="adult1Salary">Adult 1 Salary</label>
                         <input type="text" id="adult1Salary" placeholder="e.g. 80,000" inputmode="numeric">
+                        <div class="field-error" id="adult1SalaryError" role="alert"></div>
                     </div>
                     <div class="form-group">
                         <label for="adult2Salary">Adult 2 Salary</label>
                         <input type="text" id="adult2Salary" placeholder="e.g. 45,000" inputmode="numeric">
+                        <div class="field-error" id="adult2SalaryError" role="alert"></div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="familyCityGroup">
                     <label for="familyCity">Current City</label>
                     <select id="familyCity">
-                        <option value="">Select a city...</option>
+                        <option value="">Select a city…</option>
                     </select>
+                    <div class="field-error" id="familyCityError" role="alert"></div>
                 </div>
             </div>
             <div class="quick-select" id="currentCityQuick"></div>
+            <div class="form-group" id="targetCityGroup" style="margin-top:12px;">
+                <label for="targetCity">Target City</label>
+                <select id="targetCity">
+                    <option value="">Select a city…</option>
+                </select>
+                <div class="field-error" id="targetCityError" role="alert"></div>
+            </div>
+            <div class="quick-select" id="targetCityQuick"></div>
+            <p class="info-text">ℹ️ Salary, current city, and target city are enough for a first result.</p>
+        </div>
+
+        <details class="more-precision" id="morePrecision">
+            <summary>More precision</summary>
+            <div class="more-precision-body">
+        <div class="form-section" style="margin:0;padding:12px 0 0;border:none;box-shadow:none;">
+            <h2 style="font-size:1rem;">📍 Current location details</h2>
             <div class="neighborhood-group" id="currentNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
                     <label for="currentNeighborhood">Neighborhood</label>
@@ -2768,20 +2888,10 @@
                     <div class="currency-hint" id="currentCurrencyHint"></div>
                 </div>
             </div>
-            <p class="info-text">ℹ️ Select or type to choose your current location</p>
         </div>
 
-        <div class="form-section">
-            <h2>✈️ Comparable Location <span class="section-subtitle">(what if I were to move to this city?)</span></h2>
-            <div class="two-column">
-                <div class="form-group">
-                    <label for="targetCity">Target City</label>
-                    <select id="targetCity">
-                        <option value="">Select a city...</option>
-                    </select>
-                </div>
-            </div>
-            <div class="quick-select" id="targetCityQuick"></div>
+        <div class="form-section" style="margin:16px 0 0;padding:12px 0 0;border:none;box-shadow:none;">
+            <h2 style="font-size:1rem;">✈️ Target location details</h2>
             <div class="neighborhood-group" id="targetNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
                     <label for="targetNeighborhood">Neighborhood</label>
@@ -2827,11 +2937,10 @@
                     Have target salaries or offers? Enter them for a personalized comparison.
                 </div>
             </div>
-            <p class="info-text">ℹ️ Choose where you'd like to compare your salary</p>
         </div>
 
-        <div class="form-section household-section" id="householdSection">
-            <h2>👥 Household</h2>
+        <div class="form-section household-section" id="householdSection" style="margin:16px 0 0;padding:12px 0 0;border:none;box-shadow:none;">
+            <h2 style="font-size:1rem;">👥 Household</h2>
             <div class="household-mode-toggle" id="householdModeToggle">
                 <button class="mode-btn active" data-mode="single" type="button">Single</button>
                 <button class="mode-btn" data-mode="family" type="button">Family</button>
@@ -2870,6 +2979,8 @@
                 </div>
             </div>
         </div>
+            </div>
+        </details>
 
         <div class="button-group">
             <button class="btn btn-calculate" id="calculateBtn">Calculate True Equivalent</button>
@@ -2884,10 +2995,20 @@
             </div>
             <!-- T1.5 — Findings header -->
             <div class="findings-eyebrow">Findings &middot; <span id="findingsTimestamp">just now</span></div>
-            <!-- 1. Headline -->
+            <!-- 1. Primary — Lifestyle equivalent -->
+            <div class="result-lifestyle-label" id="lifestyleLabel">Lifestyle equivalent</div>
             <div class="result-title" id="resultTitle">Your True Equivalent Salary</div>
             <div class="result-amount" id="resultAmount"></div>
             <div class="result-subtitle" id="resultSubtitle"></div>
+
+            <!-- Secondary — Market salary (only when real data available; never invent) -->
+            <div class="market-salary-block" id="marketSalaryBlock" style="display:none;" hidden>
+                <div class="market-salary-label">Typical market pay in <span id="marketSalaryCity"></span></div>
+                <div class="market-salary-amount" id="marketSalaryAmount"></div>
+            </div>
+
+            <!-- Reconcile COLI % vs lifestyle jump -->
+            <div class="reconcile-line" id="reconcileLine" style="display:none;"></div>
 
             <!-- T1.5 — Findings narrative sentence -->
             <div class="findings-sentence" id="findingsSentence" style="display:none;"></div>
@@ -2980,6 +3101,10 @@
                     <span id="rangesToggleText">Show all roles</span>
                     <span class="toggle-arrow">▼</span>
                 </div>
+            </div>
+
+            <div style="text-align:center;">
+                <button type="button" class="rate-result-btn" id="rateResultBtn">Rate this result</button>
             </div>
 
             <!-- Wise affiliate CTA -->
@@ -3589,6 +3714,12 @@
     }).observe(widget, { attributes: true, attributeFilter: ['class'] });
   }
 
+  var rateBtn = document.getElementById('rateResultBtn');
+  if (rateBtn) {
+    rateBtn.addEventListener('click', function(){
+      if (typeof window.scOpenFeedback === 'function') window.scOpenFeedback();
+    });
+  }
   // Trust: do not auto-open the feedback modal over results.
   // Manual open remains available via window.scOpenFeedback().
 })();
