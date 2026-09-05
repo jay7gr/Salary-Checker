@@ -4159,3 +4159,66 @@
             }
         })();
 
+
+        // Homepage → /offer-evaluator/ secondary CTA with existing ?a=&b= prefill
+        (function(){
+            const cta = document.getElementById('haveOfferCta');
+            if (!cta) return;
+
+            function parseSalaryValue(el) {
+                if (!el || !el.value) return '';
+                const raw = String(el.value).replace(/,/g, '').replace(/[^\d.]/g, '');
+                const n = parseFloat(raw);
+                return (n && n > 0) ? String(Math.round(n)) : '';
+            }
+
+            function annualizeSalary(raw, freqEl) {
+                if (!raw) return '';
+                let n = parseFloat(raw);
+                if (!n || n <= 0) return '';
+                const freq = freqEl ? freqEl.value : 'annual';
+                if (freq === 'monthly') n *= 12;
+                else if (freq === 'hourly') n *= 2080;
+                return String(Math.round(n));
+            }
+
+            function buildOfferEvaluatorHref() {
+                const household = getHousehold();
+                let cityA = '';
+                let salA = '';
+                let cityB = '';
+                let salB = '';
+
+                if (household.mode === 'family' && household.adults === 2) {
+                    const familyCity = document.getElementById('familyCity');
+                    const currentCity = document.getElementById('currentCity');
+                    cityA = (familyCity && familyCity.value) || (currentCity && currentCity.value) || '';
+                    salA = parseSalaryValue(document.getElementById('adult1Salary'));
+                    cityB = (document.getElementById('targetCity') || {}).value || '';
+                    salB = parseSalaryValue(document.getElementById('offer1Salary'))
+                        || parseSalaryValue(document.getElementById('targetSalary'));
+                } else {
+                    cityA = (document.getElementById('currentCity') || {}).value || '';
+                    salA = annualizeSalary(
+                        parseSalaryValue(document.getElementById('currentSalary')),
+                        document.getElementById('salaryFrequency')
+                    );
+                    cityB = (document.getElementById('targetCity') || {}).value || '';
+                    salB = parseSalaryValue(document.getElementById('targetSalary'));
+                }
+
+                // Existing offer-evaluator contract: ?a=City:salary&b=City:salary
+                if (cityA && cityB) {
+                    const qs = new URLSearchParams();
+                    qs.set('a', cityA + ':' + salA);
+                    qs.set('b', cityB + ':' + salB);
+                    return '/offer-evaluator/?' + qs.toString();
+                }
+                return '/offer-evaluator/';
+            }
+
+            cta.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = buildOfferEvaluatorHref();
+            });
+        })();
