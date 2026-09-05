@@ -2443,7 +2443,7 @@
         // Canonical COL/salary coverage (do not advertise converter-internal extras)
         const COL_CITIES = 113;
         const COL_NEIGHBORHOODS = 2483;
-        const countText = `See your real purchasing power across ${COL_CITIES} cities · tax, rent & cost of living all baked in.`;
+        const countText = `Compare take-home and cost of living across ${COL_CITIES} cities and ${COL_NEIGHBORHOODS.toLocaleString()} neighborhoods — free, instant.`;
         const heroEl = document.getElementById('hero-subtitle');
         const footerEl = document.getElementById('footer-subtitle');
         if (heroEl) heroEl.textContent = countText;
@@ -2677,34 +2677,52 @@
             });
         }
 
-        // Show/hide error with scroll-to and field highlight
+        // Clear all inline field errors
+        function clearFieldErrors() {
+            document.querySelectorAll('.field-error').forEach(el => {
+                el.textContent = '';
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-group.has-error').forEach(el => el.classList.remove('has-error'));
+        }
+
+        // Show/hide error with inline text under the empty field (first-run UX)
         function showError(message, fieldId) {
+            clearFieldErrors();
             const _rb = document.getElementById('resultBox');
             if (_rb) {
                 _rb.classList.remove('is-analyzing');
-                // Always show the result box with error content so mobile users
-                // see feedback without having to scroll back up to the error banner
                 const titleEl = document.getElementById('resultTitle');
                 const subtitleEl = document.getElementById('resultSubtitle');
                 if (titleEl) titleEl.textContent = 'Check your inputs';
                 if (subtitleEl) subtitleEl.textContent = message;
                 document.getElementById('resultAmount').textContent = '';
+                const lifestyleLabel = document.getElementById('lifestyleLabel');
+                if (lifestyleLabel) lifestyleLabel.style.display = 'none';
+                const marketBlock = document.getElementById('marketSalaryBlock');
+                if (marketBlock) { marketBlock.style.display = 'none'; marketBlock.hidden = true; }
+                const reconcile = document.getElementById('reconcileLine');
+                if (reconcile) { reconcile.style.display = 'none'; reconcile.textContent = ''; }
+                const rateBtn = document.getElementById('rateResultBtn');
+                if (rateBtn) rateBtn.classList.remove('show');
                 _rb.classList.add('show');
-                setTimeout(() => {
-                    _rb.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 50);
             }
             if (fieldId) {
                 const field = document.getElementById(fieldId);
-                if (field) {
-                    field.style.borderColor = '#dc2626';
-                    field.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.15)';
-                    field.focus();
-                    setTimeout(() => {
-                        field.style.borderColor = '';
-                        field.style.boxShadow = '';
-                    }, 3000);
+                const errEl = document.getElementById(fieldId + 'Error');
+                if (errEl) {
+                    errEl.textContent = message;
+                    errEl.classList.add('show');
                 }
+                if (field) {
+                    const group = field.closest('.form-group');
+                    if (group) group.classList.add('has-error');
+                    field.focus();
+                    try { field.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(_) {}
+                }
+                // If the field lives behind More precision, open it
+                const more = document.getElementById('morePrecision');
+                if (more && field && more.contains(field) && !more.open) more.open = true;
             }
         }
 
@@ -2776,12 +2794,12 @@
                 const raw2 = document.getElementById('adult2Salary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
                 salary = parseFloat(raw1);
                 salary2 = parseFloat(raw2);
-                if (!salary || salary <= 0) { showError('Please enter Adult 1 salary', 'adult1Salary'); return; }
+                clearFieldErrors(); if (!salary || salary <= 0) { showError('Please enter Adult 1 salary', 'adult1Salary'); return; }
                 if (!salary2 || salary2 <= 0) { showError('Please enter Adult 2 salary', 'adult2Salary'); return; }
             } else {
                 const rawSalary = document.getElementById('currentSalary').value.replace(/,/g, '').replace(/[^\d.]/g, '');
                 salary = parseFloat(rawSalary);
-                if (!salary || salary <= 0) { showError('Please enter your salary', 'currentSalary'); return; }
+                clearFieldErrors(); if (!salary || salary <= 0) { showError('Please enter your salary', 'currentSalary'); return; }
                 // Convert to annual based on frequency toggle
                 const freq = document.getElementById('salaryFrequency') ? document.getElementById('salaryFrequency').value : 'annual';
                 if (freq === 'monthly') salary *= 12;
@@ -2822,16 +2840,26 @@
 
             // For family mode, total salary is combined
             const totalSalary = salary2 ? salary + salary2 : salary;
+            clearFieldErrors();
             if (!currentCity) {
                 showError('Please select your current city', 'currentCity');
                 return;
             }
-            if (!currentCurrency) {
-                showError('Please select your current currency', 'currentCurrency');
-                return;
-            }
             if (!targetCity) {
                 showError('Please select a comparable city', 'targetCity');
+                return;
+            }
+            // Currency is auto-selected from city — not a first-run required field
+            if (!currentCurrency && cityToCurrency[currentCity]) {
+                suggestCurrency(currentCity, 'currentCurrency', 'currentCurrencyHint');
+                currentCurrency = document.getElementById('currentCurrency').value;
+            }
+            if (!targetCurrency && cityToCurrency[targetCity]) {
+                suggestCurrency(targetCity, 'targetCurrency', 'targetCurrencyHint');
+                targetCurrency = document.getElementById('targetCurrency').value;
+            }
+            if (!currentCurrency) {
+                showError('Please select your current currency', 'currentCurrency');
                 return;
             }
             if (!targetCurrency) {
@@ -3019,9 +3047,11 @@
             if (household.remote) {
                 headlinePrefix = isHouseholdMode ? 'Your Household Purchasing Power in' : 'Your Purchasing Power in';
             } else {
-                headlinePrefix = isHouseholdMode ? 'Your Household True Equivalent in' : 'Your True Equivalent Salary in';
+                headlinePrefix = isHouseholdMode ? 'Household lifestyle equivalent in' : 'Lifestyle equivalent in';
             }
             document.getElementById('resultTitle').textContent = `${headlinePrefix} ${targetCity}`;
+            const lifestyleLabelEl = document.getElementById('lifestyleLabel');
+            if (lifestyleLabelEl) lifestyleLabelEl.style.display = '';
 
             // T1.5 — Findings narrative sentence (turn the numbers into a story)
             // Function-scoped so the OG/share-card builder further down can read it too.
@@ -3052,6 +3082,27 @@
                         fSent.style.display = '';
                     } else {
                         fSent.style.display = 'none';
+                    }
+
+                    // Reconcile line when "% more expensive" sits next to a larger lifestyle number
+                    const reconcileEl = document.getElementById('reconcileLine');
+                    if (reconcileEl) {
+                        const coliPct = Math.abs(stretchPct);
+                        const lifestyleLarger = !!(trueEquivalentSalary && coliEquivalentSalary && trueEquivalentSalary > coliEquivalentSalary * 1.02);
+                        if (stretchPct <= -3 && (lifestyleLarger || trueEquivalentSalary)) {
+                            reconcileEl.innerHTML = `Prices in ${targetCity} are ~${coliPct}% higher than ${currentCity}. The lifestyle number is higher mainly because of tax, rent, and exchange rate — not prices alone.`;
+                            reconcileEl.style.display = '';
+                        } else {
+                            reconcileEl.style.display = 'none';
+                            reconcileEl.textContent = '';
+                        }
+                    }
+
+                    // Market salary: omit unless real verified market data exists (never invent NYC×COLI)
+                    const marketBlock = document.getElementById('marketSalaryBlock');
+                    if (marketBlock) {
+                        marketBlock.style.display = 'none';
+                        marketBlock.hidden = true;
                     }
                 }
 
@@ -3176,9 +3227,9 @@
                 if (hasFullData) subtitleHtml += `<br><span style="font-size:0.82rem;color:var(--text-secondary);">To match the household standard of living you have on <strong>${fmtCurr(totalSalary, currentCurrency)}</strong> in ${currentLabel}.</span>`;
             } else {
                 subtitleHtml = hasFullData
-                    ? `To maintain the same standard of living you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel} — your disposable income adjusted for taxes, rent, and local prices.`
+                    ? `To keep your lifestyle on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, you’d need about <strong>${formattedAmount}</strong> in ${targetLabel}.`
                     : hasTaxData
-                        ? `To maintain the same purchasing power you have on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, adjusted for taxes and local prices.`
+                        ? `To keep your lifestyle on <strong>${formattedOriginalCurrent}</strong> in ${currentLabel}, you’d need about <strong>${formattedAmount}</strong> in ${targetLabel} (tax + local prices).`
                         : `Based on cost-of-living index comparison (limited data available).`;
             }
             if (currentDisposable != null && currentDisposable <= 0) {
@@ -3554,10 +3605,12 @@
             const _el = document.getElementById('explanationLabel');
             if (_el) _el.style.display = '';
 
-            // === 8. COLI REFERENCE (demoted) ===
+            // === 8. COLI REFERENCE — only under "Show the math" (no third headline number) ===
             const coliRef = document.getElementById('coliReference');
-            document.getElementById('coliRefAmount').textContent = formatter.format(coliEquivalentSalary);
-            coliRef.style.display = '';
+            if (coliRef) {
+                document.getElementById('coliRefAmount').textContent = formatter.format(coliEquivalentSalary);
+                coliRef.style.display = 'none';
+            }
 
             // === T1.3 SHOW THE MATH ===
             try {
@@ -3575,7 +3628,8 @@
                     if (exchangeRate && exchangeRate !== 1) {
                         rows.push('<div class="math-row"><span>× Exchange rate</span><span><code>' + exchangeRate.toFixed(4) + '</code> ' + currentCurrency + '→' + targetCurrency + '</span></div>');
                     }
-                    rows.push('<div class="math-row"><span>= COLI-equivalent salary</span><span>' + formatter.format(coliEquivalentSalary) + '</span></div>');
+                    rows.push('<div class="math-row"><span>= COLI-only equivalent</span><span>' + formatter.format(coliEquivalentSalary) + '</span></div>');
+                    rows.push('<div class="math-row" style="font-size:.72rem;color:var(--text-secondary);"><span>COLI-only adjusts prices + FX — no tax or rent basket</span><span></span></div>');
                     if (typeof trueEquivalentSalary !== 'undefined' && trueEquivalentSalary && trueEquivalentSalary !== coliEquivalentSalary) {
                         rows.push('<div class="math-row" style="border-top:1px solid var(--border);padding-top:10px;margin-top:6px;font-size:.74rem;color:var(--text-secondary);"><span>Then we adjust for local taxes &amp; cost-of-living basket</span><span></span></div>');
                         rows.push('<div class="math-row"><span>= True equivalent</span><span>' + formatter.format(trueEquivalentSalary) + '</span></div>');
@@ -3711,6 +3765,9 @@
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
+            const rateResultBtn = document.getElementById('rateResultBtn');
+            if (rateResultBtn) rateResultBtn.classList.add('show');
+
             // Signal to the feedback popup that a real result is on screen
             try { window.dispatchEvent(new CustomEvent('sc:result-shown', { detail: { tool: 'main' } })); } catch(_){}
 
@@ -3799,6 +3856,11 @@
             document.getElementById('offerComparison').style.display = 'none';
             document.getElementById('resultBox').classList.remove('show');
             document.getElementById('resultAmount').textContent = '';
+            clearFieldErrors();
+            const _rec = document.getElementById('reconcileLine'); if (_rec) { _rec.style.display = 'none'; _rec.textContent = ''; }
+            const _msb = document.getElementById('marketSalaryBlock'); if (_msb) { _msb.style.display = 'none'; _msb.hidden = true; }
+            const _rr = document.getElementById('rateResultBtn'); if (_rr) _rr.classList.remove('show');
+            const _ll = document.getElementById('lifestyleLabel'); if (_ll) _ll.style.display = '';
             document.getElementById('shareRow').style.display = 'none';
             document.getElementById('findingsSentence').style.display = 'none';
             document.getElementById('dataSourcesFootnote').style.display = 'none';
