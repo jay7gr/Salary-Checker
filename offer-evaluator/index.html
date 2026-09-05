@@ -780,7 +780,7 @@ footer a:hover{color:var(--accent)}
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">2. <strong>Tax &amp; social security</strong> — calculated using the progressive income tax brackets and social security rates for each city's country.</p>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">3. <strong>Take-home converted to USD</strong> — using ECB reference rates for a like-for-like comparison.</p>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">4. <strong>Rent deducted</strong> — average 1-bedroom rent for each city (USD/month) is subtracted to show after-rent disposable income.</p>
-    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">5. <strong>Real purchasing power</strong> — after-rent disposable income is adjusted by the city's actual non-rent cost basket (groceries, utilities, transport, healthcare) relative to New York. This avoids double-counting rent and uses granular per-category data rather than a blunt cost-of-living index.</p>
+    <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">5. <strong>Spending power index</strong> — after-rent disposable income is scaled by the city's non-rent cost basket (groceries, utilities, transport, healthcare) relative to New York. Shown as an <em>NYC-equivalent index</em>, not local leftover cash: when non-rent costs are below NYC, the index can exceed After-Rent Disposable in the same dollar units. Rent is never double-counted.</p>
     <p style="font-size:.78rem;color:var(--text-secondary);margin-top:12px">Tax calculations are estimates for a single filer with no special deductions. Actual figures depend on your individual circumstances. <a href="/about/" style="color:var(--accent)">Data sources &rarr;</a></p>
   </div>
 
@@ -958,9 +958,9 @@ function evaluate(city,salaryLocal){
   const takeHomeMonthly=takeHomeUSD/12;
   const rentMonthly=cityRent1BR[city]||800;
   const afterRent=takeHomeMonthly-rentMonthly;
-  // Spending power: after-rent disposable adjusted for non-rent cost basket vs NYC.
-  // Uses per-category costs (groceries+utilities+transport+healthcare) — not blunt COLI —
-  // so rent is never double-counted.
+  // Spending-power INDEX: after-rent disposable scaled by non-rent cost basket vs NYC.
+  // Intentional COLI-style scaling for cross-city comparison — NOT local leftover cash.
+  // When non-rent costs are below NYC, this index exceeds afterRent; never label it $/mo disposable.
   const costs=cityLivingCosts[city];
   const nonRentCost=costs?(costs.groceries+costs.utilities+costs.transport+costs.healthcare):NYC_NONRENT*(coli/100);
   const purchPower=afterRent/(nonRentCost/NYC_NONRENT);
@@ -1000,13 +1000,13 @@ function renderResults(a,b){
   const nA=escH(nameA()),nB=escH(nameB());
   if(pct<5){
     vEl.className='verdict tied';
-    vEl.innerHTML='<div class="verdict-title">These offers are roughly equivalent</div><div class="verdict-sub">Real purchasing power is within 5% after tax, rent &amp; cost-of-living adjustment.</div>';
+    vEl.innerHTML='<div class="verdict-title">These offers are roughly equivalent</div><div class="verdict-sub">NYC-equivalent spending-power index is within 5% after tax, rent &amp; non-rent cost adjustment.</div>';
   } else if(diff>0){
     vEl.className='verdict b-wins';
-    vEl.innerHTML='<div class="verdict-title">'+nB+' gives you '+fmtUSD(Math.abs(diff),false)+' more per month</div><div class="verdict-sub">In real spending power after tax, rent, and non-rent costs — '+nB+' wins.</div>';
+    vEl.innerHTML='<div class="verdict-title">'+nB+' leads on spending-power index (+'+pct.toFixed(0)+'%)</div><div class="verdict-sub">Index = after-rent disposable scaled by non-rent costs vs NYC — not extra local cash beyond After-Rent Disposable. '+nB+' wins on relative purchasing power.</div>';
   } else {
     vEl.className='verdict a-wins';
-    vEl.innerHTML='<div class="verdict-title">'+nA+' gives you '+fmtUSD(Math.abs(diff),false)+' more per month</div><div class="verdict-sub">In real spending power after tax, rent, and non-rent costs — '+nA+' wins.</div>';
+    vEl.innerHTML='<div class="verdict-title">'+nA+' leads on spending-power index (+'+pct.toFixed(0)+'%)</div><div class="verdict-sub">Index = after-rent disposable scaled by non-rent costs vs NYC — not extra local cash beyond After-Rent Disposable. '+nA+' wins on relative purchasing power.</div>';
   }
   // Headers
   document.getElementById('headA').textContent=nA+' ('+a.city+')';
@@ -1023,7 +1023,7 @@ function renderResults(a,b){
     ['row-label','Avg 1BR Rent / Month',fmtUSD(a.rentMonthly)+'/mo',fmtUSD(b.rentMonthly)+'/mo',false],
     ['row-label highlight','After-Rent Disposable',fmtUSD(a.afterRent)+'/mo',fmtUSD(b.afterRent)+'/mo',false],
     ['row-label','Non-rent costs / Month',(()=>{const c=cityLivingCosts[a.city];return fmtUSD(c?c.groceries+c.utilities+c.transport+c.healthcare:NYC_NONRENT*(a.coli/100))+'/mo';})()+(a.city in cityLivingCosts?'':' (est.)'),(()=>{const c=cityLivingCosts[b.city];return fmtUSD(c?c.groceries+c.utilities+c.transport+c.healthcare:NYC_NONRENT*(b.coli/100))+'/mo';})()+(b.city in cityLivingCosts?'':' (est.)'),false],
-    ['row-label highlight top-row','Spending Power (after rent & costs)',fmtUSD(a.purchPower)+'/mo'+(winA?badge(true):''),fmtUSD(b.purchPower)+'/mo'+(!winA?badge(true):''),true],
+    ['row-label highlight top-row','Spending Power Index (NYC non-rent basket)',fmtUSD(a.purchPower)+' NYC-equiv.'+(winA?badge(true):''),fmtUSD(b.purchPower)+' NYC-equiv.'+(!winA?badge(true):''),true],
   ];
   let tbody='';
   for(const[cls,label,va,vb,isTop]of rows){
