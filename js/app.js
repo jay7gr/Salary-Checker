@@ -3106,59 +3106,79 @@
                     }
                 }
 
-                // T2.6 — Build share URL and wire buttons
+                // Phase 1 PR3 Design B — toast for save/copy confirmation
+                const showCopyToast = function(message){
+                    const toast = document.getElementById('copyToast');
+                    if (!toast) return;
+                    toast.textContent = message || 'Results link copied';
+                    toast.hidden = false;
+                    toast.classList.add('is-visible');
+                    clearTimeout(showCopyToast._t);
+                    showCopyToast._t = setTimeout(function(){
+                        toast.classList.remove('is-visible');
+                        setTimeout(function(){ toast.hidden = true; }, 200);
+                    }, 2200);
+                };
+                const copyTextToClipboard = function(text, onDone){
+                    const fallback = function(){
+                        const ta = document.createElement('textarea');
+                        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                        document.body.appendChild(ta); ta.select();
+                        try { document.execCommand('copy'); } catch(_){}
+                        document.body.removeChild(ta);
+                    };
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(onDone).catch(function(){ fallback(); onDone(); });
+                    } else {
+                        fallback(); onDone();
+                    }
+                };
+                // Durable results URL = homepage deep-link with the same share contract
+                // already written by replaceState (from/to/salary + neighborhoods etc.).
+                // Never /share?, /saved/, or /r/{id}.
+                const buildDurableResultsUrl = function(){
+                    // Prefer live address-bar query after replaceState (full contract).
+                    if (location.search && location.search.length > 1) {
+                        return location.origin + '/' + (location.search.charAt(0) === '?' ? location.search : ('?' + location.search));
+                    }
+                    const p = new URLSearchParams();
+                    p.set('from', currentCity);
+                    p.set('to', targetCity);
+                    p.set('salary', String(Math.round(salary || 0)));
+                    if (typeof currentNeighborhood !== 'undefined' && currentNeighborhood) p.set('fromN', currentNeighborhood);
+                    if (typeof targetNeighborhood !== 'undefined' && targetNeighborhood) p.set('toN', targetNeighborhood);
+                    return location.origin + '/?' + p.toString();
+                };
+
+                // T2.6 — Save my results + optional Post on X (Copy share link removed — same URL twice)
                 const shareRow = document.getElementById('shareRow');
-                const copyBtn = document.getElementById('shareCopyBtn');
                 const tweetBtn = document.getElementById('shareTweetBtn');
-                const copyLabel = document.getElementById('shareBtnLabel');
-                if (shareRow && copyBtn && tweetBtn) {
-                    // Durable share URL = homepage deep-link (/?from=&to=&salary=). /share 404s.
-                    const params = new URLSearchParams();
-                    params.set('from', currentCity);
-                    params.set('to', targetCity);
-                    params.set('salary', String(Math.round(salary || 0)));
-                    const shareUrl = location.origin + '/?' + params.toString();
+                const saveBtn = document.getElementById('saveCopyBtn');
+                const saveLabel = document.getElementById('saveCopyBtnLabel');
+                if (shareRow && saveBtn && tweetBtn) {
+                    const shareUrl = buildDurableResultsUrl();
                     const tweetText = stretchPct >= 3
                         ? `Same lifestyle costs ~${Math.abs(stretchPct)}% less in ${targetCity} than ${currentCity} — cost of living gap is real.`
                         : stretchPct <= -3
                         ? `${targetCity} has ~${Math.abs(stretchPct)}% higher prices than ${currentCity} (tax, rent & FX). Same lifestyle, different cost.`
                         : `Cost of living in ${currentCity} vs ${targetCity}: roughly similar lifestyle costs after tax, rent & FX.`;
                     tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(shareUrl);
-                    // On touch devices, the primary button opens the native
-                    // share sheet (WhatsApp, Messages, Instagram, …) — the
-                    // highest-converting mobile share path. Desktop keeps copy.
-                    const canNativeShare = !!navigator.share && ((navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches));
-                    if (canNativeShare && copyLabel) copyLabel.textContent = 'Share';
-                    copyBtn.onclick = function(){
-                        const fallback = function(){
-                            const ta = document.createElement('textarea');
-                            ta.value = shareUrl; ta.style.position = 'fixed'; ta.style.opacity = '0';
-                            document.body.appendChild(ta); ta.select();
-                            try { document.execCommand('copy'); } catch(_){}
-                            document.body.removeChild(ta);
-                        };
-                        const after = function(){
-                            copyBtn.classList.add('is-copied');
-                            if (copyLabel) copyLabel.textContent = 'Link copied!';
-                            setTimeout(function(){
-                                copyBtn.classList.remove('is-copied');
-                                if (copyLabel) copyLabel.textContent = 'Copy share link';
-                            }, 1800);
-                            try { if (typeof gtag === 'function') gtag('event', 'share_copy', { from: currentCity, to: targetCity }); } catch(_){}
-                        };
-                        if (canNativeShare) {
-                            navigator.share({ title: 'salary:converter', text: tweetText, url: shareUrl })
-                                .then(function(){ try { if (typeof gtag === 'function') gtag('event', 'share', { method: 'native', from: currentCity, to: targetCity }); } catch(_){} })
-                                .catch(function(){ /* user cancelled the sheet — no-op */ });
-                            return;
-                        }
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                            navigator.clipboard.writeText(shareUrl).then(after).catch(function(){ fallback(); after(); });
-                        } else {
-                            fallback(); after();
-                        }
-                    };
                     shareRow.style.display = '';
+
+                    // Design B: Save my results — durable /?from=&to=&salary= (+ existing deep-link params)
+                    saveBtn.onclick = function(){
+                        const durableUrl = buildDurableResultsUrl();
+                        copyTextToClipboard(durableUrl, function(){
+                            saveBtn.classList.add('is-copied');
+                            if (saveLabel) saveLabel.textContent = 'Saved!';
+                            showCopyToast('Results link copied — paste anytime to reopen');
+                            setTimeout(function(){
+                                saveBtn.classList.remove('is-copied');
+                                if (saveLabel) saveLabel.textContent = 'Save my results';
+                            }, 1800);
+                            try { if (typeof gtag === 'function') gtag('event', 'save_copy', { from: currentCity, to: targetCity }); } catch(_){}
+                        });
+                    };
                 }
 
                 // Populate result share card
@@ -3742,7 +3762,7 @@
             const shareText = household.remote
                 ? 'Same lifestyle in ' + targetLabel2 + ': remote ' + formattedOriginalCurrent + ' stretches differently after local prices (tax, rent & FX) \u2014 salary:converter'
                 : 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' ≈ ' + formattedAmount + ' in ' + targetLabel2 + ' (tax, rent & FX) \u2014 salary:converter';
-            // Lower share bar stays hidden (≤2 affordances: dark card + Copy share link)
+            // Lower share bar stays hidden (dark share card + Save my results (+ optional Post on X))
             if (shareBar) {
                 shareBar.setAttribute('data-share-text', shareText);
                 shareBar.setAttribute('data-share-url', shareUrl);
