@@ -2782,6 +2782,7 @@
             document.getElementById('error').classList.remove('show');
             document.getElementById('resultAmount').textContent = '';
             document.getElementById('shareRow').style.display = 'none';
+            (function(){ var er=document.getElementById('emailResultStrip'); if(er){ er.style.display='none'; er.hidden=true; } })();
 
             // Defer calculation to next event-loop tick so the browser can repaint
             // and actually show the loading overlay before the synchronous work blocks
@@ -3791,6 +3792,11 @@
             try {
                 var _vb = document.getElementById('verdictBanner');
                 var _vClass = (_vb && _vb.style.display !== 'none') ? _vb.className.replace('verdict-banner', '').trim() : '';
+                var _durableUrl = (typeof buildDurableResultsUrl === 'function')
+                    ? buildDurableResultsUrl()
+                    : (location.search && location.search.length > 1
+                        ? (location.origin + '/' + (location.search.charAt(0) === '?' ? location.search : ('?' + location.search)))
+                        : (location.origin + '/?from=' + encodeURIComponent(currentCity) + '&to=' + encodeURIComponent(targetCity) + '&salary=' + encodeURIComponent(String(Math.round(salary || 0)))));
                 window._scLastResult = {
                     currentCity: currentCity, targetCity: targetCity,
                     currentLabel: currentLabel, targetLabel: targetLabel,
@@ -3809,12 +3815,32 @@
                     household: Object.assign({}, household),
                     hasFullData: hasFullData, hasTaxData: hasTaxData,
                     hasOffer: hasOffer, targetSalaryOffer: hasOffer ? targetSalaryOffer : null,
-                    generatedAt: new Date().toISOString()
+                    generatedAt: new Date().toISOString(),
+                    durableUrl: _durableUrl
                 };
-                // Show report capture CTA
+                // Show primary email-result strip + demoted PDF capture
+                var _er = document.getElementById('emailResultStrip');
+                if (_er) {
+                    _er.style.display = '';
+                    _er.hidden = false;
+                    var _erForm = document.getElementById('emailResultForm');
+                    var _erSuccess = document.getElementById('emailResultSuccess');
+                    var _erErr = document.getElementById('emailResultError');
+                    var _erBtn = document.getElementById('emailResultSubmitBtn');
+                    var _erLbl = document.getElementById('emailResultSubmitLabel');
+                    var _erEmail = document.getElementById('emailResultEmail');
+                    if (_erForm) _erForm.style.display = '';
+                    if (_erSuccess) _erSuccess.style.display = 'none';
+                    if (_erErr) _erErr.style.display = 'none';
+                    if (_erBtn) _erBtn.disabled = false;
+                    if (_erLbl) _erLbl.textContent = 'Send link';
+                    // keep typed email across recalculate if present
+                }
                 var _rc = document.getElementById('reportCapture');
                 if (_rc) {
                     _rc.style.display = '';
+                    var _rcDetails = document.getElementById('reportCaptureDetails');
+                    if (_rcDetails) _rcDetails.open = false;
                     var _rcFrom = document.getElementById('rcFromCity');
                     var _rcTo = document.getElementById('rcToCity');
                     if (_rcFrom) _rcFrom.textContent = currentLabel;
@@ -3830,6 +3856,13 @@
                     if (_rcErr) _rcErr.style.display = 'none';
                     if (_rcBtn) _rcBtn.disabled = false;
                     if (_rcLbl) _rcLbl.textContent = 'Send my free report';
+                    // Prefill PDF email from primary keep-result field
+                    var _erEmail2 = document.getElementById('emailResultEmail');
+                    var _rcEmail = document.getElementById('reportEmail');
+                    if (_rcEmail && _erEmail2 && _erEmail2.value && (!_rcEmail.value || _rcEmail.dataset.prefilled === '1')) {
+                        _rcEmail.value = _erEmail2.value;
+                        _rcEmail.dataset.prefilled = '1';
+                    }
                 }
             } catch(_rcErr) { console.warn('Report capture setup error:', _rcErr); }
 
@@ -3878,12 +3911,15 @@
             const _rr = document.getElementById('rateResultBtn'); if (_rr) _rr.classList.remove('show');
             const _ll = document.getElementById('lifestyleLabel'); if (_ll) _ll.style.display = '';
             document.getElementById('shareRow').style.display = 'none';
+            (function(){ var er=document.getElementById('emailResultStrip'); if(er){ er.style.display='none'; er.hidden=true; } })();
             document.getElementById('findingsSentence').style.display = 'none';
             document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('retireCrossPromo').style.display = 'none';
             document.getElementById('wiseCta').style.display = 'none';
             var _scHide = document.getElementById('shareCard'); if (_scHide) _scHide.style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
+            const _erReset = document.getElementById('emailResultStrip');
+            if (_erReset) { _erReset.style.display = 'none'; _erReset.hidden = true; }
             const _rcReset = document.getElementById('reportCapture');
             if (_rcReset) _rcReset.style.display = 'none';
             document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
