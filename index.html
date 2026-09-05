@@ -1097,6 +1097,44 @@
             border-color: var(--accent);
         }
         .share-btn-link.is-copied svg { color: #fff; }
+        .share-btn-link.share-btn-save {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .share-btn-link.share-btn-save:hover {
+            filter: brightness(1.06);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .share-btn-link.share-btn-save.is-copied {
+            background: #16a34a;
+            border-color: #16a34a;
+        }
+        .copy-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%) translateY(12px);
+            z-index: 9999;
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.94);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            box-shadow: 0 10px 30px rgba(0,0,0,.28);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease;
+            max-width: min(92vw, 420px);
+            text-align: center;
+        }
+        .copy-toast.is-visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
         .findings-label {
             font-size: 0.7rem;
             font-weight: 700;
@@ -3062,6 +3100,10 @@
 
             <!-- T2.6 — Share buttons -->
             <div class="share-row" id="shareRow" style="display:none;">
+                <button type="button" class="share-btn-link share-btn-save" id="saveCopyBtn" aria-label="Copy my results">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    <span id="saveCopyBtnLabel">Copy my results</span>
+                </button>
                 <button type="button" class="share-btn-link" id="shareCopyBtn" aria-label="Copy share link">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     <span id="shareBtnLabel">Copy share link</span>
@@ -4038,5 +4080,7 @@
 </script>
     <script src="/js/embed-promo.js?v=2" defer></script>
     <script src="/consent.js?v=3" defer></script>
+
+<div id="copyToast" class="copy-toast" role="status" aria-live="polite" hidden>Results link copied</div>
 </body>
 </html>

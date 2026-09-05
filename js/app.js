@@ -3106,11 +3106,57 @@
                     }
                 }
 
+                // Phase 1 PR3 Design B — toast for save/copy confirmation
+                const showCopyToast = function(message){
+                    const toast = document.getElementById('copyToast');
+                    if (!toast) return;
+                    toast.textContent = message || 'Results link copied';
+                    toast.hidden = false;
+                    toast.classList.add('is-visible');
+                    clearTimeout(showCopyToast._t);
+                    showCopyToast._t = setTimeout(function(){
+                        toast.classList.remove('is-visible');
+                        setTimeout(function(){ toast.hidden = true; }, 200);
+                    }, 2200);
+                };
+                const copyTextToClipboard = function(text, onDone){
+                    const fallback = function(){
+                        const ta = document.createElement('textarea');
+                        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                        document.body.appendChild(ta); ta.select();
+                        try { document.execCommand('copy'); } catch(_){}
+                        document.body.removeChild(ta);
+                    };
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(onDone).catch(function(){ fallback(); onDone(); });
+                    } else {
+                        fallback(); onDone();
+                    }
+                };
+                // Durable results URL = homepage deep-link with the same share contract
+                // already written by replaceState (from/to/salary + neighborhoods etc.).
+                // Never /share?, /saved/, or /r/{id}.
+                const buildDurableResultsUrl = function(){
+                    // Prefer live address-bar query after replaceState (full contract).
+                    if (location.search && location.search.length > 1) {
+                        return location.origin + '/' + (location.search.charAt(0) === '?' ? location.search : ('?' + location.search));
+                    }
+                    const p = new URLSearchParams();
+                    p.set('from', currentCity);
+                    p.set('to', targetCity);
+                    p.set('salary', String(Math.round(salary || 0)));
+                    if (typeof currentNeighborhood !== 'undefined' && currentNeighborhood) p.set('fromN', currentNeighborhood);
+                    if (typeof targetNeighborhood !== 'undefined' && targetNeighborhood) p.set('toN', targetNeighborhood);
+                    return location.origin + '/?' + p.toString();
+                };
+
                 // T2.6 — Build share URL and wire buttons
                 const shareRow = document.getElementById('shareRow');
                 const copyBtn = document.getElementById('shareCopyBtn');
                 const tweetBtn = document.getElementById('shareTweetBtn');
                 const copyLabel = document.getElementById('shareBtnLabel');
+                const saveBtn = document.getElementById('saveCopyBtn');
+                const saveLabel = document.getElementById('saveCopyBtnLabel');
                 if (shareRow && copyBtn && tweetBtn) {
                     // Durable share URL = homepage deep-link (/?from=&to=&salary=). /share 404s.
                     const params = new URLSearchParams();
@@ -3159,6 +3205,23 @@
                         }
                     };
                     shareRow.style.display = '';
+
+                    // Explicit Design B save affordance — copies durable /?from=&to=&salary= (+ existing deep-link params)
+                    if (saveBtn) {
+                        saveBtn.onclick = function(){
+                            const durableUrl = buildDurableResultsUrl();
+                            copyTextToClipboard(durableUrl, function(){
+                                saveBtn.classList.add('is-copied');
+                                if (saveLabel) saveLabel.textContent = 'Copied!';
+                                showCopyToast('Results link copied — paste anytime to reopen');
+                                setTimeout(function(){
+                                    saveBtn.classList.remove('is-copied');
+                                    if (saveLabel) saveLabel.textContent = 'Copy my results';
+                                }, 1800);
+                                try { if (typeof gtag === 'function') gtag('event', 'save_copy', { from: currentCity, to: targetCity }); } catch(_){}
+                            });
+                        };
+                    }
                 }
 
                 // Populate result share card
