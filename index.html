@@ -972,6 +972,22 @@
             background: var(--stat-card-bg);
         }
 
+        .have-offer-wrap {
+            margin: 14px 0 0;
+            text-align: center;
+        }
+        .have-offer-link {
+            display: inline-block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 6px 4px;
+        }
+        .have-offer-link:hover {
+            text-decoration: underline;
+        }
+
         .btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
@@ -2986,6 +3002,9 @@
             <button class="btn btn-calculate" id="calculateBtn">Calculate True Equivalent</button>
             <button class="btn btn-reset" id="resetBtn">Reset</button>
         </div>
+        <p class="have-offer-wrap">
+            <a href="/offer-evaluator/" id="haveOfferCta" class="have-offer-link">I have an offer →</a>
+        </p>
 
         <div class="result-box" id="resultBox">
             <!-- T1.4 — Analyzing flash overlay -->
@@ -3509,7 +3528,7 @@
         <p class="ai-disclaimer">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai">verified by our team</a>.</p>
     </footer>
 
-    <script src="/js/app.js?v=15"></script>
+    <script src="/js/app.js?v=16"></script>
     <script src="/chat.js?v=2"></script>
 <script>
 (function(){
