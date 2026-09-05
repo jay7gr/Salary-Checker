@@ -3122,10 +3122,10 @@
                     params.set('stretch', String(stretchPct));
                     const shareUrl = location.origin + '/share?' + params.toString();
                     const tweetText = stretchPct >= 3
-                        ? `My salary goes ${Math.abs(stretchPct)}% further in ${targetCity} than ${currentCity} 🤯 same lifestyle, way more breathing room.`
+                        ? `Same lifestyle costs ~${Math.abs(stretchPct)}% less in ${targetCity} than ${currentCity} — cost of living gap is real.`
                         : stretchPct <= -3
-                        ? `${targetCity} costs ${Math.abs(stretchPct)}% more than ${currentCity} — eye-opening to see the real number.`
-                        : `Compared salaries between ${currentCity} and ${targetCity}. Surprising what cost of living does to a paycheck.`;
+                        ? `${targetCity} has ~${Math.abs(stretchPct)}% higher prices than ${currentCity} (tax, rent & FX). Same lifestyle, different cost.`
+                        : `Cost of living in ${currentCity} vs ${targetCity}: roughly similar lifestyle costs after tax, rent & FX.`;
                     tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(shareUrl);
                     // On touch devices, the primary button opens the native
                     // share sheet (WhatsApp, Messages, Instagram, …) — the
@@ -3179,16 +3179,16 @@
                     if (_fv) _fv.textContent = formattedOriginalCurrent;
                     if (_tv) _tv.textContent = formattedAmount;
                     if (_bg) {
-                        if (stretchPct >= 3) { _bg.textContent = '↑ ' + stretchPct + '% further'; _bg.className = 'sc-badge pos'; }
-                        else if (stretchPct <= -3) { _bg.textContent = '↓ ' + Math.abs(stretchPct) + '% more expensive'; _bg.className = 'sc-badge neg'; }
+                        if (stretchPct >= 3) { _bg.textContent = '~' + stretchPct + '% lower prices'; _bg.className = 'sc-badge pos'; }
+                        else if (stretchPct <= -3) { _bg.textContent = '~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX'; _bg.className = 'sc-badge neg'; }
                         else { _bg.textContent = '≈ Roughly equivalent cost of living'; _bg.className = 'sc-badge neu'; }
                     }
                     if (_cb) {
                         var _txt = stretchPct >= 3
-                            ? 'My ' + formattedOriginalCurrent + ' in ' + currentLabel + ' = ' + formattedAmount + ' in ' + targetLabel + ' — stretches ' + stretchPct + '% further 🤯\nsalary-converter.com'
+                            ? 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel + ' ≈ ' + formattedAmount + ' in ' + targetLabel + ' (~' + stretchPct + '% lower prices)\nsalary-converter.com'
                             : stretchPct <= -3
-                            ? 'My ' + formattedOriginalCurrent + ' in ' + currentLabel + ' = ' + formattedAmount + ' in ' + targetLabel + ' (' + Math.abs(stretchPct) + '% pricier than home)\nsalary-converter.com'
-                            : currentLabel + ' vs ' + targetLabel + ': ' + formattedOriginalCurrent + ' ≈ ' + formattedAmount + ' after taxes & cost of living\nsalary-converter.com';
+                            ? 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel + ' ≈ ' + formattedAmount + ' in ' + targetLabel + ' (~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX)\nsalary-converter.com'
+                            : currentLabel + ' vs ' + targetLabel + ': ' + formattedOriginalCurrent + ' ≈ ' + formattedAmount + ' for a similar lifestyle (tax, rent & FX)\nsalary-converter.com';
                         _cb.onclick = function() {
                             var _done = function() {
                                 _cb.textContent = '✓ Copied!';
@@ -3750,10 +3750,16 @@
             const currentLabel2 = currentNeighborhood ? currentNeighborhood + ', ' + currentCity : currentCity;
             const targetLabel2 = targetNeighborhood ? targetNeighborhood + ', ' + targetCity : targetCity;
             const shareText = household.remote
-                ? 'My ' + formattedOriginalCurrent + ' salary goes ' + (targetDisposable > currentDisposable * exchangeRate ? 'further' : 'less far') + ' in ' + targetLabel2 + ' \u2014 salary:converter'
-                : 'My ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' needs ' + formattedAmount + ' in ' + targetLabel2 + ' (after taxes & living costs) \u2014 salary:converter';
-            shareBar.setAttribute('data-share-text', shareText);
-            shareBar.setAttribute('data-share-url', shareUrl);
+                ? 'Same lifestyle in ' + targetLabel2 + ': remote ' + formattedOriginalCurrent + ' stretches differently after local prices (tax, rent & FX) \u2014 salary:converter'
+                : 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel2 + ' ≈ ' + formattedAmount + ' in ' + targetLabel2 + ' (tax, rent & FX) \u2014 salary:converter';
+            // Lower share bar stays hidden (≤2 affordances: dark card + Copy share link)
+            if (shareBar) {
+                shareBar.setAttribute('data-share-text', shareText);
+                shareBar.setAttribute('data-share-url', shareUrl);
+                shareBar.style.display = 'none';
+                shareBar.hidden = true;
+                shareBar.setAttribute('aria-hidden', 'true');
+            }
 
             // Show result and scroll into view
             const resultBox = document.getElementById('resultBox');
