@@ -418,6 +418,13 @@
         </div>
 
         <!-- ═══════ SALARY CONVERTER WIDGET ═══════ -->
+
+        <div class="host-field-wrap" style="max-width:720px;margin:0 auto 28px;padding:0 20px;">
+            <label for="embedHostInput" style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;">Your site domain <span style="font-weight:500;color:#86868b;">(optional)</span></label>
+            <input id="embedHostInput" type="text" placeholder="e.g. expatica.com" autocomplete="off" spellcheck="false" style="width:100%;max-width:420px;padding:10px 14px;border:1px solid #e5e5ea;border-radius:10px;font:inherit;font-size:0.95rem;">
+            <p style="font-size:0.78rem;color:#86868b;margin-top:6px;">Adds <code>host=</code> and <code>utm_content=</code> to copied snippets for reliable embed attribution.</p>
+        </div>
+
         <div class="widget-panel active" id="salaryPanel">
             <div class="content">
                 <div class="preview-section">
@@ -900,9 +907,40 @@
         document.getElementById(type + 'Panel').classList.add('active');
     }
 
+    
+    function normalizePublisherHost(raw) {
+        if (!raw) return '';
+        let v = String(raw).trim().toLowerCase();
+        try {
+            if (v.includes('://')) v = new URL(v).hostname;
+            else if (v.includes('/')) v = v.split('/')[0];
+        } catch (e) { return ''; }
+        v = v.replace(/^www\./, '').replace(/:\d+$/, '');
+        if (!/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/i.test(v)) return '';
+        return v;
+    }
+    function getPublisherHost() {
+        const el = document.getElementById('embedHostInput');
+        return normalizePublisherHost(el ? el.value : '');
+    }
+    function taggedSrc(baseSrc, campaign) {
+        let u;
+        try { u = new URL(baseSrc); } catch (e) { return baseSrc; }
+        u.searchParams.set('utm_source', 'embed');
+        u.searchParams.set('utm_medium', 'widget');
+        if (campaign) u.searchParams.set('utm_campaign', campaign);
+        const host = getPublisherHost();
+        if (host) {
+            u.searchParams.set('host', host);
+            u.searchParams.set('utm_content', host);
+        }
+        return u.toString();
+    }
+
     function copyCode(type) {
         const cfg = widgetConfig[type];
-        const code = `<div style="max-width:${cfg.defaultW}px"><iframe src="${cfg.src}" width="${cfg.defaultW}" height="${cfg.defaultH}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
+        const src = taggedSrc(cfg.src, type);
+        const code = `<div style="max-width:${cfg.defaultW}px"><iframe src="${src}" width="${cfg.defaultW}" height="${cfg.defaultH}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
         navigator.clipboard.writeText(window['_code_' + type] || code).then(() => {
             const btn = document.getElementById(cfg.copyBtnId);
             btn.textContent = 'Copied!';
@@ -928,7 +966,7 @@
         const codeEl = document.getElementById(cfg.codeId);
         codeEl.innerHTML = `<span class="tag">&lt;div</span> <span class="attr">style</span>=<span class="val">"max-width:${mw}"</span><span class="tag">&gt;</span>
   <span class="tag">&lt;iframe</span>
-    <span class="attr">src</span>=<span class="val">"${cfg.src}"</span>
+    <span class="attr">src</span>=<span class="val">"${taggedSrc(cfg.src, type)}"</span>
     <span class="attr">width</span>=<span class="val">"${wVal}"</span>
     <span class="attr">height</span>=<span class="val">"${h}"</span>
     <span class="attr">frameborder</span>=<span class="val">"0"</span>
@@ -937,7 +975,8 @@
   <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"${cfg.credit}"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span>
 <span class="tag">&lt;/div&gt;</span>`;
 
-        window['_code_' + type] = `<div style="max-width:${mw}"><iframe src="${cfg.src}" width="${wVal}" height="${h}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
+        const embedSrc = taggedSrc(cfg.src, type);
+        window['_code_' + type] = `<div style="max-width:${mw}"><iframe src="${embedSrc}" width="${wVal}" height="${h}" frameborder="0" style="border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,0.08);width:100%;"></iframe>\n<p style="font-size:0.75rem;color:#86868b;margin:6px 0 0;text-align:center">Powered by <a href="${cfg.credit}" rel="noopener">salary-converter.com</a></p></div>`;
     }
 
     // Handle URL hash for direct linking

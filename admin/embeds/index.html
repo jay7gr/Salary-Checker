@@ -45,7 +45,7 @@ tr:last-child td{border-bottom:none}
   <header>
     <div>
       <h1>Embed Tracker</h1>
-      <p class="muted">Sites that have embedded your widgets. Newest pings first.</p>
+      <p class="muted">Grouped by host, then origin. Newest pings first.</p>
     </div>
     <div class="token-row">
       <input id="token" type="password" placeholder="Admin token" autocomplete="current-password">
@@ -57,7 +57,7 @@ tr:last-child td{border-bottom:none}
   <div id="error" class="error" style="display:none"></div>
 
   <div id="summary" class="summary" style="display:none">
-    <div class="kpi"><div class="lab">Unique Sites</div><div class="val" id="kpiSites">—</div></div>
+    <div class="kpi"><div class="lab">Unique Hosts</div><div class="val" id="kpiSites">—</div></div>
     <div class="kpi"><div class="lab">Total Hits</div><div class="val" id="kpiHits">—</div></div>
     <div class="kpi"><div class="lab">Last Ping</div><div class="val" id="kpiLast">—</div></div>
   </div>
@@ -66,7 +66,8 @@ tr:last-child td{border-bottom:none}
     <table>
       <thead>
         <tr>
-          <th>Domain</th>
+          <th>Host</th>
+          <th>Origin</th>
           <th>Widget</th>
           <th>Hits</th>
           <th>Countries</th>
@@ -111,24 +112,37 @@ tr:last-child td{border-bottom:none}
   if (saved) load();
 
   function render(entries) {
-    // Group by origin
+    // Group by host, then origin
     var sites = {};
     entries.forEach(function(e){
-      var o = e.origin || 'unknown';
-      if (!sites[o]) sites[o] = { origin: o, hits: 0, countries: {}, widgets: {}, first: e.ts, last: e.ts, example: e.ref };
-      sites[o].hits++;
-      if (e.country) sites[o].countries[e.country] = (sites[o].countries[e.country]||0)+1;
+      var host = e.host || '';
+      if (!host && e.origin) {
+        try { host = new URL(e.origin).hostname.replace(/^www\./,''); } catch(_){ host = e.origin; }
+      }
+      if (!host) host = '(unknown)';
+      var o = e.origin || ('https://' + host);
+      var key = host + '|' + o;
+      if (!sites[key]) sites[key] = { host: host, origin: o, hits: 0, countries: {}, widgets: {}, first: e.ts, last: e.ts, example: e.ref || '' };
+      sites[key].hits++;
+      if (e.country) sites[key].countries[e.country] = (sites[key].countries[e.country]||0)+1;
       var wk = e.widget || 'unknown';
-      sites[o].widgets[wk] = (sites[o].widgets[wk]||0)+1;
-      if (e.ts < sites[o].first) sites[o].first = e.ts;
-      if (e.ts > sites[o].last) { sites[o].last = e.ts; sites[o].example = e.ref; }
+      sites[key].widgets[wk] = (sites[key].widgets[wk]||0)+1;
+      if (e.ts < sites[key].first) sites[key].first = e.ts;
+      if (e.ts > sites[key].last) { sites[key].last = e.ts; if (e.ref) sites[key].example = e.ref; }
     });
 
-    var arr = Object.values(sites).sort(function(a,b){ return b.hits - a.hits; });
+    var arr = Object.values(sites).sort(function(a,b){
+      if (b.hits !== a.hits) return b.hits - a.hits;
+      if (a.host < b.host) return -1;
+      if (a.host > b.host) return 1;
+      return (a.origin < b.origin) ? -1 : (a.origin > b.origin ? 1 : 0);
+    });
     var maxHits = arr.length ? arr[0].hits : 1;
+    var uniqueHosts = {};
+    arr.forEach(function(s){ uniqueHosts[s.host] = true; });
 
     // KPIs
-    document.getElementById('kpiSites').textContent = arr.length;
+    document.getElementById('kpiSites').textContent = Object.keys(uniqueHosts).length;
     document.getElementById('kpiHits').textContent = entries.length;
     var lastTs = entries.length ? entries.reduce(function(a,b){ return a.ts>b.ts?a:b; }).ts : null;
     document.getElementById('kpiLast').textContent = lastTs ? fmtDate(lastTs) : '—';
@@ -143,14 +157,16 @@ tr:last-child td{border-bottom:none}
       var countries = Object.entries(s.countries).sort(function(a,b){return b[1]-a[1];}).slice(0,5).map(function(e){return e[0];}).join(', ');
       var widgets = Object.entries(s.widgets).sort(function(a,b){return b[1]-a[1];}).map(function(e){return e[0];}).join(', ');
       var exUrl = s.example && s.example.length > 60 ? s.example.slice(0,60)+'…' : (s.example||'');
+      var hostLink = (s.host && s.host !== '(unknown)') ? ('https://' + s.host) : s.origin;
       return '<tr>' +
-        '<td><div class="domain"><a href="'+esc(s.origin)+'" target="_blank" rel="noopener">'+esc(s.origin)+'</a></div></td>' +
+        '<td><div class="domain"><a href="'+esc(hostLink)+'" target="_blank" rel="noopener">'+esc(s.host)+'</a></div></td>' +
+        '<td style="font-size:.78rem;word-break:break-all;"><a href="'+esc(s.origin)+'" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">'+esc(s.origin)+'</a></td>' +
         '<td>'+esc(widgets||'—')+'</td>' +
         '<td><span class="badge">'+s.hits+'</span><div class="hits-bar" style="width:'+pct+'%;max-width:80px"></div></td>' +
         '<td>'+esc(countries||'—')+'</td>' +
         '<td>'+fmtDate(s.first)+'</td>' +
         '<td>'+fmtDate(s.last)+'</td>' +
-        '<td style="font-size:.78rem;color:var(--text-secondary);word-break:break-all;" title="'+esc(s.example||'')+'">'+esc(exUrl)+'</td>' +
+        '<td style="font-size:.78rem;color:var(--text-secondary);word-break:break-all;" title="'+esc(s.example||'')+'">'+esc(exUrl||'—')+'</td>' +
         '</tr>';
     }).join('');
 
