@@ -6057,13 +6057,65 @@ function findTopCities(params) {
     });
 
     </script>
+<script>
+(function(){
+  function normalizeHost(v){
+    if(!v) return '';
+    v = String(v).trim().toLowerCase().slice(0,253);
+    if(!v || v==='(unknown)' || v==='(direct)') return '';
+    try {
+      if(v.indexOf('://')!==-1) v = new URL(v).hostname;
+      else if(v.indexOf('/')!==-1) v = v.split('/')[0];
+    } catch(e){ return ''; }
+    v = v.replace(/^www\./,'').replace(/:\d+$/,'');
+    if(!/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/i.test(v)) return '';
+    return v;
+  }
+  function resolveEmbeddingHost(){
+    var params = new URLSearchParams(location.search);
+    var host = normalizeHost(params.get('host'));
+    if(host) return host;
+    var utm = params.get('utm_content');
+    if(utm && normalizeHost(utm)) return normalizeHost(utm);
+    if(document.referrer){
+      try { return normalizeHost(new URL(document.referrer).hostname) || '(unknown)'; } catch(e){}
+    }
+    try {
+      if(location.ancestorOrigins && location.ancestorOrigins.length){
+        var a = normalizeHost(new URL(location.ancestorOrigins[0]).hostname);
+        if(a) return a;
+      }
+    } catch(e){}
+    return '(unknown)';
+  }
+  function withEmbedUtm(url, widget, host){
+    try {
+      var u = new URL(url, location.href);
+      if(u.hostname.indexOf('salary-converter.com')===-1) return url;
+      u.searchParams.set('utm_source','embed');
+      u.searchParams.set('utm_medium','widget');
+      u.searchParams.set('utm_campaign', widget);
+      u.searchParams.set('utm_content', host || '(unknown)');
+      return u.toString();
+    } catch(e){ return url; }
+  }
+  var host = resolveEmbeddingHost();
+  window.__embedHost = host;
+  window.__embedRef = document.referrer || '';
+  var widget = 'retire';
+  document.querySelectorAll('a[href*="salary-converter.com"]').forEach(function(a){
+    a.href = withEmbedUtm(a.getAttribute('href'), widget, host);
+  });
+})();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMZSM2Z96B"></script>
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());gtag('config','G-MMZSM2Z96B');
 gtag('event','widget_embedded',{
   widget_type:'retire_abroad',
-  embedding_domain:document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)',
+  embedding_host: window.__embedHost || '(unknown)',
+  embedding_domain: (window.__embedHost && window.__embedHost !== '(unknown)' ? window.__embedHost : (document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)')),
   embedding_url:document.referrer?document.referrer.slice(0,100):'(direct)'
 });
 </script>
@@ -6071,9 +6123,14 @@ gtag('event','widget_embedded',{
 (function(){
   try {
     if (window.top === window.self) return; // only track real iframe embeds
-    var ref = document.referrer;
-    if (ref && new URL(ref).origin === location.origin) return;
-    fetch('/api/widget-ping?w=retire&ref=' + encodeURIComponent(ref || ''), { keepalive: true }).catch(function(){});
+    var ref = document.referrer || '';
+    var host = window.__embedHost || '(unknown)';
+    if (host === 'salary-converter.com' || /\.salary-converter\.com$/.test(host)) return;
+    if (ref) {
+      try { if (new URL(ref).origin === location.origin && host === '(unknown)') return; } catch(_){}
+    }
+    if (host === '(unknown)' && !ref) return;
+    fetch('/api/widget-ping?w=retire&host=' + encodeURIComponent(host) + '&ref=' + encodeURIComponent(ref), { keepalive: true }).catch(function(){});
   } catch(_){}
 })();
 </script>
