@@ -302,25 +302,39 @@ footer a{color:var(--accent);text-decoration:none}
         .form-group textarea{resize:vertical;min-height:80px}
         .contact-success{text-align:center;color:var(--green,#16a34a);font-weight:600;padding:16px 0}
 
-/* feedback-widget-v1 */
-.feedback-widget{margin:36px 0 0;padding:24px 0 0;border-top:1px solid var(--border-light);display:none;opacity:0;transition:opacity .35s ease-out}.feedback-widget.is-revealed{display:block;opacity:1}
-.feedback-widget h2{font-size:1.15rem;font-weight:700;color:var(--text-primary);margin:0 0 6px;letter-spacing:-.2px}
-.feedback-widget .fb-sub{font-size:.85rem;color:var(--text-secondary);margin:0 0 16px}
-.fb-stars{display:flex;gap:6px;margin-bottom:14px}
-.fb-star{cursor:pointer;width:32px;height:32px;background:transparent;border:none;padding:0;color:var(--border);transition:color .15s,transform .1s}
+/* feedback-strip-v2 — one-tap inline ratings (Phase A) */
+.feedback-widget{margin:16px 0 0;padding:14px 14px 12px;border:1.5px solid var(--border-light);border-radius:14px;background:var(--card-bg);display:none;opacity:0;transition:opacity .35s ease-out;position:relative}
+.feedback-widget.is-revealed{display:block;opacity:1}
+.fb-prompt-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fb-label{font-size:.92rem;font-weight:700;color:var(--text-primary);letter-spacing:-.2px;margin:0}
+.fb-stars{display:flex;gap:4px;margin:0}
+.fb-star{cursor:pointer;width:30px;height:30px;background:transparent;border:none;padding:0;color:var(--border);transition:color .15s,transform .1s;line-height:0}
 .fb-star:hover{transform:scale(1.08)}
 .fb-star.is-filled{color:#f59e0b}
-.fb-star svg{width:100%;height:100%;display:block}
-.fb-row{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.fb-row input,.fb-row textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--card-bg);color:var(--text-primary);font-family:inherit;font-size:.9rem;line-height:1.5;box-sizing:border-box}
-.fb-row textarea{min-height:84px;resize:vertical}
-.fb-row input:focus,.fb-row textarea:focus{outline:none;border-color:var(--accent)}
-.fb-submit{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:100px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s}
-.fb-submit:hover{opacity:.9}
-.fb-submit:disabled{opacity:.5;cursor:not-allowed}
-.fb-success{display:none;padding:14px 16px;background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:10px;color:#16a34a;font-size:.9rem;font-weight:600}
-.feedback-widget.is-sent .fb-form{display:none}
+.fb-star:disabled{cursor:default;transform:none}
+.fb-star svg{width:100%;height:100%;display:block;pointer-events:none}
+.fb-dismiss{margin-left:auto;width:28px;height:28px;border:none;border-radius:8px;background:transparent;color:var(--text-secondary);cursor:pointer;font-size:1.2rem;line-height:1;padding:0;flex-shrink:0}
+.fb-dismiss:hover{background:var(--stat-card-bg,#f3f4f6)}
+.fb-comment-wrap{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light)}
+.feedback-widget.is-comment .fb-comment-wrap{display:block}
+.fb-comment-label{font-size:.82rem;color:var(--text-secondary);margin:0 0 8px;display:block}
+.fb-comment-row{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.fb-comment-row input{flex:1;min-width:140px;padding:10px 12px;border:1.5px solid var(--border-light);border-radius:10px;background:var(--card-bg);color:var(--text-primary);font-family:inherit;font-size:.88rem;box-sizing:border-box}
+.fb-comment-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.fb-add,.fb-skip{padding:10px 14px;border-radius:10px;font-size:.84rem;font-weight:600;cursor:pointer;font-family:inherit;border:none;white-space:nowrap}
+.fb-add{background:var(--accent);color:#fff}
+.fb-add:hover{opacity:.9}
+.fb-add:disabled{opacity:.5;cursor:not-allowed}
+.fb-skip{background:transparent;color:var(--text-secondary);border:1px solid var(--border-light)}
+.fb-skip:hover{background:var(--stat-card-bg,#f3f4f6)}
+.fb-success{display:none;padding:4px 0;color:#16a34a;font-size:.9rem;font-weight:600}
+.feedback-widget.is-sent .fb-prompt-row{display:none}
 .feedback-widget.is-sent .fb-success{display:block}
+.feedback-widget.is-comment.is-sent .fb-comment-wrap{display:block}
+.feedback-widget.is-comment.is-sent .fb-success{display:block;margin-bottom:8px}
+.feedback-widget.is-thanks-only .fb-prompt-row,
+.feedback-widget.is-thanks-only .fb-comment-wrap{display:none}
+.feedback-widget.is-thanks-only .fb-success{display:block}
 </style>
 <script>(function(){if(new URLSearchParams(location.search).get('embed')==='1'){document.documentElement.classList.add('embed-mode');window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'widget_embedded',widget_type:'salary_check',embedding_domain:document.referrer?(function(){try{return new URL(document.referrer).hostname}catch(e){return document.referrer}})():'(direct)',embedding_url:document.referrer?document.referrer.slice(0,100):'(direct)'});}})()</script>
 <style>.embed-mode .nav-burger,.embed-mode .nav-dropdown,.embed-mode .tool-switcher,.embed-mode footer,.embed-mode nav.footer-links-grid,.embed-mode .site-footer,.embed-mode .contact-overlay{display:none!important}</style>
@@ -470,6 +484,30 @@ footer a{color:var(--accent);text-decoration:none}
         <a href="/offer-evaluator/" id="oeLink">Compare Offers</a>
       </div>
     </div>
+        <!-- feedback-strip-v2 -->
+        <section class="feedback-widget" data-tool="salary-benchmark" aria-label="Rate this result">
+          <div class="fb-prompt-row">
+            <span class="fb-label">Was this useful?</span>
+            <div class="fb-stars" role="radiogroup" aria-label="Rating">
+              <button type="button" class="fb-star" data-value="1" aria-label="1 star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="2" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="3" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="4" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+              <button type="button" class="fb-star" data-value="5" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+            </div>
+            <button type="button" class="fb-dismiss" aria-label="Dismiss rating prompt">&times;</button>
+          </div>
+          <div class="fb-comment-wrap">
+            <label class="fb-comment-label" for="fbCommentBenchmark">Anything we got right? (optional)</label>
+            <div class="fb-comment-row">
+              <input type="text" id="fbCommentBenchmark" name="comment" maxlength="120" placeholder="A short note helps (optional)" autocomplete="off">
+              <button type="button" class="fb-add">Add</button>
+              <button type="button" class="fb-skip">Skip</button>
+            </div>
+          </div>
+          <div class="fb-success" role="status">Thanks — that helps.</div>
+        </section>
+
   </div>
 
   <section class="how-it-works" aria-labelledby="hiw-heading">
@@ -527,24 +565,6 @@ footer a{color:var(--accent);text-decoration:none}
     <p>&copy; 2026 <a href="/">salary-converter.com</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a></p>
   </footer>
 
-        <!-- feedback-widget-v1 -->
-        <section class="feedback-widget" data-tool="salary-benchmark">
-          <h2>Was this helpful?</h2>
-          <p class="fb-sub">Rate this tool and leave a note — it helps us improve.</p>
-          <form class="fb-form" novalidate>
-            <div class="fb-stars" role="radiogroup" aria-label="Rating">
-              <button type="button" class="fb-star" data-value="1" aria-label="1 star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
-              <button type="button" class="fb-star" data-value="2" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
-              <button type="button" class="fb-star" data-value="3" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
-              <button type="button" class="fb-star" data-value="4" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
-              <button type="button" class="fb-star" data-value="5" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
-            </div>
-            <div class="fb-row"><textarea name="comment" placeholder="What did you like or what could be better? (optional)" maxlength="1000"></textarea></div>
-            <div class="fb-row"><input type="text" name="name" placeholder="Your name (optional)" maxlength="80"></div>
-            <button type="submit" class="fb-submit">Send feedback</button>
-          </form>
-          <div class="fb-success" role="status">Thanks — your feedback was sent.</div>
-        </section>
     </div>
     <aside class="sidebar">
         <div class="sidebar-card">
@@ -1369,73 +1389,153 @@ if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const 
 })();
 </script>
 <script>
-/* feedback-widget-v1 — posts to /api/feedback (Cloudflare Pages Function + KV). Always logs a GA4 event too. */
+/* feedback-strip-v2 — one-tap stars → POST /api/feedback; soft comment on 4–5★; session cap */
 (function(){
   if (window.__feedbackWidget) return;
   window.__feedbackWidget = true;
-  // Same-origin endpoint backed by Cloudflare Pages Function functions/api/feedback.js
   var ENDPOINT = '/api/feedback';
-  document.querySelectorAll('.feedback-widget').forEach(function(w){
+  var GA_ID = 'G-MMZSM2Z96B';
+
+  function sessionKey(tool){ return 'sc_fb_done_' + (tool || 'main'); }
+  function isDone(tool){
+    try { return !!sessionStorage.getItem(sessionKey(tool)); } catch(_){ return false; }
+  }
+  function markDone(tool){
+    try { sessionStorage.setItem(sessionKey(tool), '1'); } catch(_){}
+  }
+
+  function trackFeedback(tool, rating, hasComment){
+    var params = {
+      tool: String(tool || ''),
+      rating: Number(rating) || 0,
+      has_comment: hasComment ? 1 : 0
+    };
+    try {
+      if (typeof gtag === 'function') {
+        gtag('event', 'tool_feedback', Object.assign({ send_to: GA_ID }, params));
+      }
+    } catch(_){}
+  }
+
+  function postFeedback(payload){
+    return fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {'Accept':'application/json','Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r; }).catch(function(){ return null; });
+  }
+
+  function bindWidget(w){
+    var tool = w.getAttribute('data-tool') || 'main';
+    if (isDone(tool)) return;
     var rating = 0;
+    var submitted = false;
     var stars = w.querySelectorAll('.fb-star');
+    var dismiss = w.querySelector('.fb-dismiss');
+    var commentInput = w.querySelector('input[name="comment"], textarea[name="comment"]');
+    var addBtn = w.querySelector('.fb-add');
+    var skipBtn = w.querySelector('.fb-skip');
+
     function paint(){
       stars.forEach(function(s){
         var v = parseInt(s.getAttribute('data-value'),10);
         s.classList.toggle('is-filled', v <= rating);
       });
     }
+
+    function finishThanks(showComment){
+      markDone(tool);
+      if (showComment) {
+        w.classList.add('is-sent', 'is-comment');
+        w.classList.remove('is-thanks-only');
+        if (commentInput) try { commentInput.focus(); } catch(_){}
+      } else {
+        w.classList.add('is-sent', 'is-thanks-only');
+        w.classList.remove('is-comment');
+      }
+    }
+
+    function submitRating(v){
+      if (submitted) return;
+      submitted = true;
+      rating = v;
+      paint();
+      stars.forEach(function(s){ s.disabled = true; });
+      var payload = {
+        tool: tool,
+        rating: rating,
+        comment: '',
+        name: '',
+        url: location.pathname,
+        ts: new Date().toISOString()
+      };
+      trackFeedback(tool, rating, false);
+      postFeedback(payload);
+      finishThanks(rating >= 4);
+    }
+
     stars.forEach(function(s){
       s.addEventListener('click', function(){
-        rating = parseInt(s.getAttribute('data-value'),10);
-        paint();
+        var v = parseInt(s.getAttribute('data-value'),10);
+        if (!v || submitted) return;
+        submitRating(v);
       });
       s.addEventListener('mouseenter', function(){
+        if (submitted) return;
         var v = parseInt(s.getAttribute('data-value'),10);
         stars.forEach(function(x){
           var xv = parseInt(x.getAttribute('data-value'),10);
           x.classList.toggle('is-filled', xv <= v);
         });
       });
-      s.addEventListener('mouseleave', paint);
+      s.addEventListener('mouseleave', function(){ if (!submitted) paint(); });
     });
-    var form = w.querySelector('.fb-form');
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      if (rating < 1) { alert('Please pick a rating from 1 to 5 stars.'); return; }
-      var btn = form.querySelector('.fb-submit');
-      btn.disabled = true; btn.textContent = 'Sending…';
+
+    if (dismiss) {
+      dismiss.addEventListener('click', function(){
+        markDone(tool);
+        w.classList.remove('is-revealed');
+        w.style.display = 'none';
+      });
+    }
+
+    function submitComment(){
+      if (!commentInput) return;
+      var note = (commentInput.value || '').trim().slice(0, 120);
+      if (!note) {
+        w.classList.remove('is-comment');
+        w.classList.add('is-thanks-only');
+        return;
+      }
+      if (addBtn) { addBtn.disabled = true; addBtn.textContent = 'Sending…'; }
       var payload = {
-        tool: w.getAttribute('data-tool'),
-        rating: rating,
-        comment: form.elements['comment'].value || '',
-        name: form.elements['name'].value || '',
+        tool: tool,
+        rating: rating || 5,
+        comment: note,
+        name: '',
         url: location.pathname,
         ts: new Date().toISOString()
       };
-      // GA4 event so the rating shows up in your analytics
-      try {
-        if (typeof gtag === 'function') {
-          gtag('event', 'tool_feedback', {
-            tool: payload.tool, rating: payload.rating,
-            has_comment: payload.comment.length > 0 ? 1 : 0,
-            comment_excerpt: payload.comment.slice(0,90)
-          });
-        }
-      } catch(_){}
-      function done(){ w.classList.add('is-sent'); }
-      function fail(){ btn.disabled = false; btn.textContent = 'Send feedback'; alert('Could not send feedback. Please try again later.'); }
-      if (ENDPOINT) {
-        fetch(ENDPOINT, {
-          method: 'POST',
-          headers: {'Accept':'application/json','Content-Type':'application/json'},
-          body: JSON.stringify(payload)
-        }).then(function(r){ if(r.ok) done(); else fail(); }).catch(fail);
-      } else {
-        // No endpoint configured — record to GA4 only and show success
-        done();
-      }
+      trackFeedback(tool, payload.rating, true);
+      postFeedback(payload).then(function(){
+        w.classList.remove('is-comment');
+        w.classList.add('is-thanks-only', 'is-sent');
+      });
+    }
+
+    if (addBtn) addBtn.addEventListener('click', submitComment);
+    if (skipBtn) skipBtn.addEventListener('click', function(){
+      w.classList.remove('is-comment');
+      w.classList.add('is-thanks-only', 'is-sent');
     });
-  });
+    if (commentInput) {
+      commentInput.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') { e.preventDefault(); submitComment(); }
+      });
+    }
+  }
+
+  document.querySelectorAll('.feedback-widget').forEach(bindWidget);
 })();
 </script>
 <script>
@@ -1445,6 +1545,12 @@ if(_cf)_cf.addEventListener('submit',async function(e){e.preventDefault();const 
   window.__fbGate = true;
   var widget = document.querySelector('.feedback-widget');
   if (!widget) return;
+  // Session cap: never re-prompt after rate/dismiss
+  try {
+    var tool = widget.getAttribute('data-tool') || '';
+    if (tool && sessionStorage.getItem('sc_fb_done_' + tool)) return;
+  } catch(_){}
+
   // Selectors for each tool's primary result container
   var resultSelectors = ['#resultBox', '#results', '#resultBoxOffer', '#resultBox2', '#calcResults', '.result-box', '.results-card'];
   function isVisible(el){
