@@ -7,7 +7,7 @@ exec(_src.split("if __name__ == '__main__':")[0],_ns)
 coliData=_ns['coliData'];cityToCurrency=_ns['cityToCurrency'];cityCountry=_ns['cityCountry']
 cityRent1BR=_ns['cityRent1BR'];exchangeRates=_ns['exchangeRates'];taxBrackets=_ns['taxBrackets']
 countryDeductions=_ns['countryDeductions'];cityDeductions=_ns.get('cityDeductions',{})
-GA4=_ns['GA4_SNIPPET'];WISE_LINK=_ns['WISE_LINK'];TOGGLE_CSS=_ns['THEME_TOGGLE_CSS'];THEME_JS=_ns['THEME_JS']
+GA4=_ns['GA4_SNIPPET'];TOGGLE_CSS=_ns['THEME_TOGGLE_CSS'];THEME_JS=_ns['THEME_JS']
 def _exjs(txt,name):
     m=re.search(rf'{re.escape(name)}\s*=\s*({{.*?}});',txt,re.DOTALL)
     if not m: return {}
@@ -129,7 +129,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .share-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
 .share-btn-action{padding:10px 20px;border:1.5px solid var(--border);border-radius:100px;background:var(--card-bg);color:var(--text-primary);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
 .share-btn-action:hover{border-color:var(--accent);color:var(--accent)}
-.wise-cta{border:1px solid #9fe870;border-left:4px solid #9fe870;border-radius:16px;padding:20px 24px;background:var(--card-bg);margin-bottom:20px}
 footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border-light);display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
 footer a{font-size:.78rem;color:var(--text-secondary);text-decoration:none}
 footer a:hover{color:var(--accent)}
@@ -220,12 +219,6 @@ city_options +
         <button class="share-btn-action" onclick="copyShareLink()">&#128279; Copy shareable link</button>
         <span id="copyMsg" style="font-size:.82rem;color:var(--green);display:none">Copied!</span>
       </div>
-    </div>
-    <div class="wise-cta">
-      <p style="font-size:.65rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Sponsored</p>
-      <strong style="font-size:.95rem">Moving money between countries?</strong>
-      <p style="font-size:.85rem;color:var(--text-body);margin:6px 0 12px">Send your salary internationally at the real exchange rate — save up to 6x vs banks.</p>
-      <a href="''' + WISE_LINK + '''" rel="noopener noreferrer sponsored" target="_blank" style="display:inline-block;padding:10px 24px;background:#9fe870;color:#1a1a1a;border-radius:100px;font-weight:700;font-size:.85rem;text-decoration:none">Try Wise for Free &rarr;</a>
     </div>
   </div>
 

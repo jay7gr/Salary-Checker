@@ -41,7 +41,6 @@ THEME_TOGGLE_CSS = _namespace['THEME_TOGGLE_CSS']
 THEME_JS = _namespace['THEME_JS']
 SHARE_JS = _namespace['SHARE_JS']
 GA4_SNIPPET = _namespace['GA4_SNIPPET']
-WISE_LINK = _namespace['WISE_LINK']
 
 CURRENT_YEAR = date.today().year
 
@@ -207,24 +206,6 @@ def get_family_cost(city):
     return rent * 1.5 + lc.get('childcare', 0) + lc.get('groceries', 0) * 1.5
 
 
-# ============================================================
-# WISE CTA HTML
-# ============================================================
-
-WISE_CTA = f'''
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Planning a move abroad?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Send money internationally at the real exchange rate. Save up to 6x vs traditional banks.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
-                        Try Wise for Free &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>'''
 
 
 # ============================================================
@@ -675,7 +656,6 @@ def generate_ranking_page(ranking, all_rankings):
             <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Data covers {len(data)} cities worldwide. COLI baseline: New York = 100. Updated {CURRENT_YEAR}.</p>
         </section>
 
-{WISE_CTA}
 
         <section class="content-card">
             <h2>Frequently Asked Questions</h2>
@@ -808,7 +788,6 @@ def generate_index_page(all_rankings):
         <div class="ranking-cards">{cards}
         </div>
 
-{WISE_CTA}
 
         <section class="content-card">
             <h2>Explore More</h2>

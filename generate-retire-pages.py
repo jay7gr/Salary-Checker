@@ -47,7 +47,6 @@ GA4_SNIPPET = '''
     <!-- Google AdSense Auto Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4472082543745200" crossorigin="anonymous"></script>'''
 
-WISE_LINK = 'https://wise.com/invite/drhc/iason-georgiosi'
 
 # ── Read retire/index.html ──────────────────────────────────────────
 with open(os.path.join(BASE_DIR, 'retire', 'index.html'), 'r', encoding='utf-8') as f:
@@ -397,20 +396,6 @@ DATA_SOURCES_HTML = '''
             <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:12px;">All data is for informational purposes only and updated periodically. Individual circumstances may vary. Consult a qualified financial advisor for personal retirement planning. Last updated: March 2026.</p>
         </section>'''
 
-WISE_CTA_HTML = f'''
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving money abroad?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Send your pension or savings internationally at the real exchange rate. Save up to 6x vs traditional banks.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none;">
-                        Try Wise for Free &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>'''
 
 RETIRE_CTA_HTML = '''
         <section class="content-card" style="text-align:center;background:var(--accent);color:#fff;border:none;">
@@ -872,7 +857,6 @@ def generate_city_page(city):
 
 {SALARY_CTA_HTML}
 
-{WISE_CTA_HTML}
 
         <section class="content-card">
             <h2>Frequently Asked Questions</h2>
@@ -1046,7 +1030,6 @@ def generate_country_page(country_code, country_name, cities):
 
 {RETIRE_CTA_HTML}
 {SALARY_CTA_HTML}
-{WISE_CTA_HTML}
 {DATA_SOURCES_HTML}
 {build_footer()}
     </div>
@@ -1162,7 +1145,6 @@ def generate_visa_page(country_code, country_name, visas):
 
 {RETIRE_CTA_HTML}
 {SALARY_CTA_HTML}
-{WISE_CTA_HTML}
 {DATA_SOURCES_HTML}
 {build_footer()}
     </div>
@@ -1278,7 +1260,6 @@ def generate_budget_page(budget_type, amount, label):
 
 {RETIRE_CTA_HTML}
 {SALARY_CTA_HTML}
-{WISE_CTA_HTML}
 {DATA_SOURCES_HTML}
 {build_footer()}
     </div>
@@ -1589,7 +1570,6 @@ def generate_city_budget_page(city, budget_type, amount, label):
 
 {RETIRE_CTA_HTML}
 {SALARY_CTA_HTML}
-{WISE_CTA_HTML}
 {DATA_SOURCES_HTML}
 {build_footer()}
     </div>
@@ -1738,7 +1718,6 @@ def generate_compare_page(city_a, city_b):
 
 {RETIRE_CTA_HTML}
 {SALARY_CTA_HTML}
-{WISE_CTA_HTML}
 {DATA_SOURCES_HTML}
 {build_footer()}
     </div>
