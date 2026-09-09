@@ -3780,7 +3780,6 @@
             resultBox.classList.add('show');
             document.getElementById('dataSourcesFootnote').style.display = 'block';
             document.getElementById('retireCrossPromo').style.display = 'block';
-            document.getElementById('wiseCta').style.display = 'block';
             setTimeout(() => {
                 resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
@@ -3918,7 +3917,6 @@
             document.getElementById('findingsSentence').style.display = 'none';
             document.getElementById('dataSourcesFootnote').style.display = 'none';
             document.getElementById('retireCrossPromo').style.display = 'none';
-            document.getElementById('wiseCta').style.display = 'none';
             var _scHide = document.getElementById('shareCard'); if (_scHide) _scHide.style.display = 'none';
             document.getElementById('salaryRangesSection').style.display = 'none';
             const _erReset = document.getElementById('emailResultStrip');

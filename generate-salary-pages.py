@@ -38,7 +38,6 @@ THEME_TOGGLE_CSS = _namespace['THEME_TOGGLE_CSS']
 THEME_JS = _namespace['THEME_JS']
 SHARE_JS = _namespace['SHARE_JS']
 GA4_SNIPPET = _namespace['GA4_SNIPPET']
-WISE_LINK = _namespace['WISE_LINK']
 
 CURRENT_YEAR = date.today().year
 
@@ -112,20 +111,6 @@ def compute_city_salary_data(job_title, city):
     }
 
 
-WISE_CTA = f'''
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Planning a move abroad?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Send money internationally at the real exchange rate. Save up to 6x vs traditional banks.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
-                        Try Wise for Free &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>'''
 
 
 def _share_bar_css():
@@ -307,7 +292,6 @@ def generate_salary_page(job_title):
             <div class="table-wrapper"><table><thead><tr><th style="text-align:center; width:40px;">#</th><th>City</th><th style="text-align:right;">Local market</th><th style="text-align:right;">Lifestyle equivalent</th><th style="text-align:center;">COLI</th><th style="text-align:center;">Take-Home %</th></tr></thead><tbody>{rows}</tbody></table></div>
             <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Data covers {nc} cities. Local market = verified / OECD / COLI badge (same as /is-my-salary-good/). Lifestyle equivalent = NYC baseline × city COLI / 100 — not market pay. Updated {CURRENT_YEAR}.</p>
         </section>
-{WISE_CTA}
         <section class="content-card"><h2>Salary Range</h2><p>Typical {html_mod.escape(jt_lower)} salary range (New York baseline, USD):</p>
             <div class="stat-grid"><div class="stat-card"><div class="stat-label">Entry Level</div><div class="stat-value">${low:,}</div></div><div class="stat-card"><div class="stat-label">Mid-Career</div><div class="stat-value">${mid:,}</div></div><div class="stat-card"><div class="stat-label">Senior</div><div class="stat-value">${high:,}</div></div></div>
         </section>
@@ -368,7 +352,6 @@ def generate_index_page():
         <div class="breadcrumb"><a href="/">Home</a> &rsaquo; Salaries</div>
         <div class="hero"><h1>Salary by Job Title ({CURRENT_YEAR})</h1><p>Compare 37 professions across {nc} cities. Each city page shows local-market pay and a COLI-scaled lifestyle equivalent (not market pay).</p></div>
         {sections}
-{WISE_CTA}
         <section class="content-card"><h2>Explore More</h2><div class="similar-cities"><a href="/rankings/" class="similar-city-link">City Rankings</a><a href="/city/" class="similar-city-link">All Cities</a><a href="/compare/" class="similar-city-link">Compare Cities</a><a href="/blog/" class="similar-city-link">Blog</a></div></section>
         {_footer()}
     </div>
@@ -579,7 +562,6 @@ def generate_city_salary_page(job_title, city):
                 <a href="/salary/{job_slug}" style="color:var(--accent);">See all {total_cities} cities for {html_mod.escape(job_title)} &rarr;</a>
             </p>
         </section>
-{WISE_CTA}
         <section class="content-card">
             <h2>Other Jobs in {html_mod.escape(city)}</h2>
             <div class="similar-cities">{related_links}</div>

@@ -10,7 +10,6 @@ import os, re, json, math, html as html_mod
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, 'blog', 'articles')
 
-WISE_LINK = 'https://wise.com/invite/drhc/iason-georgiosi'
 
 # ── Read retire/index.html ──────────────────────────────────────────
 with open(os.path.join(BASE_DIR, 'retire', 'index.html'), 'r', encoding='utf-8') as f:
@@ -1177,12 +1176,6 @@ def generate_blog_2000_month():
                 </div>
             </div>'''
 
-    wise_section = f'''
-            <div style="margin:32px 0;padding:20px 24px;background:var(--stat-card-bg,#f5f5f7);border:1px solid #9fe870;border-left:4px solid #9fe870;border-radius:16px;">
-                <p style="font-size:0.65rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin:0 0 6px;">Sponsored</p>
-                <h3 style="font-size:1rem;font-weight:600;margin:0 0 6px;">Moving money abroad? Save up to 6x vs banks.</h3>
-                <p style="font-size:0.85rem;color:var(--text-body);margin:0 0 12px;">Send your pension or savings at the real exchange rate with <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank" style="color:#2563eb;font-weight:600;">Wise</a>.</p>
-            </div>'''
 
     cheapest = top20[0]
     body = f'''
@@ -1218,7 +1211,7 @@ def generate_blog_2000_month():
 
             {dest_cards}
 
-            {wise_section}
+            
 
             <h2>What $2,000 a Month Actually Covers</h2>
 
@@ -1240,7 +1233,7 @@ def generate_blog_2000_month():
 
             <ul>
                 <li><strong>Rent before you buy.</strong> Always rent for at least 6 months before making any property decisions. Markets and neighborhoods can surprise you.</li>
-                <li><strong>Use local banking wisely.</strong> Services like <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank">Wise</a> offer real exchange rates and low fees for international transfers, saving hundreds per year compared to traditional banks.</li>
+                <li><strong>Use local banking wisely.</strong> Services like Wise offer real exchange rates and low fees for international transfers, saving hundreds per year compared to traditional banks.</li>
                 <li><strong>Shop at local markets.</strong> Imported goods are expensive everywhere. Eating locally is both cheaper and often healthier.</li>
                 <li><strong>Secure healthcare early.</strong> Many countries offer affordable private insurance for retirees, but premiums rise with age. Enroll as early as possible.</li>
                 <li><strong>Maintain a U.S. dollar buffer.</strong> Keep 3 to 6 months of expenses in USD to protect against currency fluctuations.</li>
@@ -1375,7 +1368,7 @@ def generate_blog_visas():
                 <li>Get documents apostilled early, as processing times vary by state.</li>
                 <li>Consider hiring a local immigration attorney for your top-choice country.</li>
                 <li>Have your documents professionally translated if required.</li>
-                <li>Open a multi-currency account with <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank">Wise</a> to simplify proof of funds and ongoing transfers.</li>
+                <li>Open a multi-currency account with Wise to simplify proof of funds and ongoing transfers.</li>
             </ul>
 
             <h2>The Bottom Line</h2>
@@ -1496,7 +1489,7 @@ def generate_blog_social_security():
             <p>Living abroad on Social Security is financially feasible but requires careful planning around several specific issues:</p>
 
             <ul>
-                <li><strong>Direct deposit works in most countries.</strong> The Social Security Administration can deposit benefits directly into U.S. bank accounts, and you can access funds abroad via ATM or transfer services like <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank">Wise</a>. However, a few countries (Cuba, North Korea, and some former Soviet states) have restrictions.</li>
+                <li><strong>Direct deposit works in most countries.</strong> The Social Security Administration can deposit benefits directly into U.S. bank accounts, and you can access funds abroad via ATM or transfer services like Wise. However, a few countries (Cuba, North Korea, and some former Soviet states) have restrictions.</li>
                 <li><strong>Medicare does not travel.</strong> Medicare coverage does not extend outside the United States. You will need local private health insurance or must pay out of pocket. In many countries on this list, private insurance for retirees costs $50 to $200 per month.</li>
                 <li><strong>U.S. tax obligations continue.</strong> American citizens must file U.S. tax returns regardless of where they live. Social Security benefits may be taxable depending on your total income. The U.S. has tax treaties with many countries to prevent double taxation.</li>
                 <li><strong>Currency fluctuations matter.</strong> Your Social Security arrives in U.S. dollars, but your expenses are in local currency. A 10 to 15 percent swing can meaningfully impact your purchasing power. Build a buffer into your budget.</li>
@@ -1647,7 +1640,7 @@ def generate_blog_inheritance_tax():
                 <li><strong>Review tax treaties.</strong> Check whether the U.S. has an estate or gift tax treaty with your destination country. Treaties can prevent double taxation.</li>
                 <li><strong>Consider asset structure.</strong> Trusts, holding companies, and other structures may help optimize your estate plan across borders. Professional advice is essential.</li>
                 <li><strong>Update beneficiaries.</strong> Ensure all U.S. financial accounts, insurance policies, and retirement accounts have up-to-date beneficiary designations.</li>
-                <li><strong>Use multi-currency accounts.</strong> Services like <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank">Wise</a> make it easier to manage assets across currencies and can simplify estate administration.</li>
+                <li><strong>Use multi-currency accounts.</strong> Services like Wise make it easier to manage assets across currencies and can simplify estate administration.</li>
             </ul>
 
             <div class="blog-inline-cta-v1" style="margin:36px 0;padding:20px 24px;background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);border-radius:16px;text-align:center;">
@@ -1806,7 +1799,7 @@ def generate_blog_healthcare():
 
             <h2>Transferring Money for Healthcare Costs</h2>
 
-            <p>When paying for healthcare abroad, exchange rates and transfer fees can add up. Using a service like <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank">Wise</a> to transfer funds at the real mid-market rate can save you significant amounts compared to traditional bank wire transfers, which often include hidden markups of 3 to 5 percent.</p>
+            <p>When paying for healthcare abroad, exchange rates and transfer fees can add up. Using a service like Wise to transfer funds at the real mid-market rate can save you significant amounts compared to traditional bank wire transfers, which often include hidden markups of 3 to 5 percent.</p>
 
             <h2>The Bottom Line</h2>
 

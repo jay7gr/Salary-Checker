@@ -1623,8 +1623,6 @@ TOTAL_NEIGHBORHOODS = sum(len(v) for v in cityNeighborhoods.values())
 TOTAL_CITIES = len(coliData)
 ROUNDED_NEIGHBORHOODS = (TOTAL_NEIGHBORHOODS // 100) * 100
 
-# Wise affiliate link (replace with real invite link when approved)
-WISE_LINK = 'https://wise.com/invite/drhc/iason-georgiosi'
 
 # Google Analytics 4 + Consent Mode v2 snippet (injected into all page templates)
 GA4_SNIPPET = '''
@@ -2685,19 +2683,6 @@ def generate_city_page(city, comparison_pairs):
 
         {comp_section}
 
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving to {city}?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Open a multi-currency account to manage {currency} and your home currency. No hidden fees, real exchange rate.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
-                        Open a Wise Account &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>
 
         <section class="cta-section">
             <h2>Calculate Your Exact Salary</h2>
@@ -2871,187 +2856,6 @@ def generate_neighborhood_hub_page(city, mode='cheapest'):
         ]
     })
 
-    # Wise CTA
-    wise_cta = f'''
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving to {city}?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Open a multi-currency account to manage {currency} and your home currency. No hidden fees, real exchange rate.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
-                        Open a Wise Account &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>'''
-
-    html = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>{page_title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta name="description" content="{page_desc}">
-    <link rel="canonical" href="{canonical_url}">
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="{page_title}">
-    <meta property="og:description" content="{page_desc}">
-    <meta property="og:url" content="{canonical_url}">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{page_title}">
-    <meta name="twitter:description" content="{page_desc}">
-    <script type="application/ld+json">{breadcrumb_schema}</script>
-    <script type="application/ld+json">{faq_schema}</script>
-{GA4_SNIPPET}
-    <style>
-{THEME_CSS_VARS}
-        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.5; -webkit-font-smoothing: antialiased; }}
-        .page-wrapper {{ max-width: 900px; margin: 0 auto; padding: 32px 24px 60px; }}
-        .nav-bar {{ display: flex; align-items: center; justify-content: space-between; padding: 16px 0 24px; border-bottom: 1px solid var(--border-light); margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }}
-        .nav-bar a {{ color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; font-weight: 500; }}
-        .nav-bar a:hover {{ color: var(--accent); }}
-        .logo {{ font-size: 1rem; font-weight: 700; color: var(--text-primary) !important; letter-spacing: -0.5px; }}
-        .breadcrumb {{ font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 24px; }}
-        .breadcrumb a {{ color: var(--accent); text-decoration: none; }}
-        .hero {{ margin-bottom: 24px; }}
-        .hero h1 {{ font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }}
-        .hero p {{ font-size: 0.9rem; color: var(--text-body); }}
-        .stat-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }}
-        .stat-card {{ background: var(--stat-card-bg); border-radius: 12px; padding: 16px; text-align: center; }}
-        .stat-card .label {{ font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); margin-bottom: 4px; }}
-        .stat-card .value {{ font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }}
-        .content-card {{ background: var(--card-bg); border-radius: 16px; padding: 28px 24px; box-shadow: var(--shadow); margin-bottom: 20px; }}
-        .content-card h2 {{ font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; }}
-        .content-card p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.6; margin-bottom: 12px; }}
-        table {{ width: 100%; border-collapse: collapse; font-size: 0.85rem; }}
-        th {{ text-align: left; padding: 10px 8px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); border-bottom: 2px solid var(--border); }}
-        td {{ padding: 10px 8px; border-bottom: 1px solid var(--border-light); }}
-        tr:nth-child(even) {{ background: var(--table-stripe); }}
-        .similar-cities {{ display: flex; flex-wrap: wrap; gap: 8px; }}
-        .similar-city-link {{ display: inline-block; padding: 8px 16px; background: var(--stat-card-bg); border-radius: 8px; color: var(--accent); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: background 0.2s; }}
-        .similar-city-link:hover {{ background: var(--border); }}
-        .page-footer {{ margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-light); display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }}
-        .page-footer a {{ font-size: 0.78rem; color: var(--text-secondary); text-decoration: none; }}
-        .page-footer a:hover {{ color: var(--accent); }}
-        .faq-item {{ margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }}
-        .faq-item:last-child {{ border-bottom: none; margin-bottom: 0; padding-bottom: 0; }}
-        .faq-item h3 {{ font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }}
-        .faq-item p {{ font-size: 0.9rem; color: var(--text-body); line-height: 1.7; margin: 0; }}
-{THEME_TOGGLE_CSS}
-        @media (max-width: 600px) {{
-            .page-wrapper {{ padding: 16px 16px 48px; }}
-            .hero h1 {{ font-size: 1.3rem; }}
-            .stat-grid {{ grid-template-columns: 1fr; }}
-            table {{ font-size: 0.8rem; }}
-            th, td {{ padding: 8px 6px; }}
-        }}
-    </style>
-</head>
-<body>
-    <div class="page-wrapper">
-        <nav class="nav-bar">
-            <a href="/" class="logo">salary:converter</a>
-            <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <a href="/city/">Cities</a>
-                <a href="/compare/">Compare</a>
-                <a href="/blog/">Blog</a>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
-                    <span class="toggle-thumb">
-                        <svg class="toggle-icon icon-sun" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
-                        <svg class="toggle-icon icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
-                    </span>
-                </button>
-            </div>
-        </nav>
-
-        <div class="breadcrumb">
-            <a href="/">Home</a> &rsaquo; <a href="/city/">Cities</a> &rsaquo; <a href="/city/{slug}">{city}</a> &rsaquo; {hero_label}
-        </div>
-
-        <div class="hero">
-            <h1>{hero_label} in {city}</h1>
-            <p>All {total_nhoods} neighborhoods in {city} ranked by cost of living index. Updated {CURRENT_YEAR}.</p>
-        </div>
-
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="label">{hero_stat_label}</div>
-                <div class="value">{hero_stat_value}</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">City Avg Rent</div>
-                <div class="value">{fmt_rent}/mo</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">Neighborhoods</div>
-                <div class="value">{total_nhoods}</div>
-            </div>
-        </div>
-
-        {share_bar}
-
-        <section class="content-card">
-            <h2>{hero_label} in {city} &mdash; Full Rankings</h2>
-            <div style="overflow-x:auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="text-align:center; width:40px;">#</th>
-                        <th>Neighborhood</th>
-                        <th style="text-align:center;">1BR Rent</th>
-                        <th style="text-align:center;">Index</th>
-                        <th style="text-align:right;">vs Avg</th>
-                    </tr>
-                </thead>
-                <tbody>{table_rows}
-                </tbody>
-            </table>
-            </div>
-            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 0;">Rent estimates based on city average of {fmt_rent}/mo adjusted by neighborhood cost index. Index 1.00 = city average.</p>
-        </section>
-
-{wise_cta}
-
-        <section class="content-card">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item"><h3>{faq1_q}</h3><p>{faq1_a}</p></div>
-            <div class="faq-item"><h3>{faq2_q}</h3><p>{faq2_a}</p></div>
-            <div class="faq-item"><h3>{faq3_q}</h3><p>{faq3_a}</p></div>
-        </section>
-
-        <section class="content-card">
-            <h2>Explore More</h2>
-            <div class="similar-cities">
-                <a href="{opposite_url}" class="similar-city-link">{opposite_label}</a>
-                <a href="/city/{slug}" class="similar-city-link">{city} Cost of Living Guide</a>
-                <a href="/salary-needed/{slug}" class="similar-city-link">Salary Needed in {city}</a>
-                <a href="/city/" class="similar-city-link">All Cities</a>
-            </div>
-        </section>
-
-        <footer class="page-footer">
-            <a href="/">Salary Converter</a>
-            <a href="/city/{slug}">{city}</a>
-            <a href="/city/">Cities</a>
-            <a href="/compare/">Compare</a>
-            <a href="/retire/">Retire Abroad</a>
-            <a href="/blog/">Blog</a>
-
-            <a href="/about/">About</a>
-            <a href="/methodology/">Methodology</a>
-            <a href="/privacy/">Privacy</a>
-            <a href="/terms/">Terms</a>
-            <p class="ai-disclaimer" style="width:100%;font-size:0.72rem;color:var(--text-secondary);margin-top:8px;text-align:center;">AI-powered salary insights &mdash; built with real cost-of-living data and <a href="/about/#how-we-use-ai" style="color:var(--text-secondary);text-decoration:underline;text-underline-offset:2px;">verified by our team</a>.</p>
-        </footer>
-    </div>
-{THEME_JS}
-{SHARE_JS}
-</body>
-</html>'''
     return html
 
 
@@ -3618,19 +3422,6 @@ def generate_comparison_page(city1, city2):
 
         {neigh_section}
 
-        <section class="content-card wise-cta" style="border: 1px solid #9fe870; border-left: 4px solid #9fe870; background: var(--card-bg);">
-            <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
-                <div style="flex:1; min-width:200px;">
-                    <p style="font-size:0.65rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.5px; margin:0 0 6px;">Sponsored</p>
-                    <h3 style="font-size:1rem; font-weight:600; margin:0 0 6px; color:var(--text-primary);">Moving between {city1} and {city2}?</h3>
-                    <p style="font-size:0.85rem; color:var(--text-body); line-height:1.5; margin:0 0 12px;">Save up to 6x on international transfers. Send money at the real exchange rate with no hidden fees.</p>
-                    <a href="{WISE_LINK}" rel="noopener noreferrer sponsored" target="_blank"
-                       style="display:inline-block; padding:10px 24px; background:#9fe870; color:#1a1a1a; border-radius:100px; font-weight:600; font-size:0.85rem; text-decoration:none; transition:transform 0.2s;">
-                        Compare Transfer Fees &rarr;
-                    </a>
-                </div>
-            </div>
-        </section>
 
         <section class="cta-section">
             <h2>Get Your Exact Number</h2>
