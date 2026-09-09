@@ -2705,6 +2705,8 @@
                 if (reconcile) { reconcile.style.display = 'none'; reconcile.textContent = ''; }
                 const rateBtn = document.getElementById('rateResultBtn');
                 if (rateBtn) rateBtn.classList.remove('show');
+                const _fbErr = document.getElementById('feedbackStrip');
+                if (_fbErr) { _fbErr.classList.remove('is-revealed'); }
                 _rb.classList.add('show');
             }
             if (fieldId) {
@@ -3785,7 +3787,7 @@
             const rateResultBtn = document.getElementById('rateResultBtn');
             if (rateResultBtn) rateResultBtn.classList.add('show');
 
-            // Signal to the feedback popup that a real result is on screen
+            // Signal inline feedback strip (Phase A) that a real result is on screen
             try { window.dispatchEvent(new CustomEvent('sc:result-shown', { detail: { tool: 'main' } })); } catch(_){}
 
             // Store result snapshot for PDF report generation
@@ -3909,6 +3911,7 @@
             const _rec = document.getElementById('reconcileLine'); if (_rec) { _rec.style.display = 'none'; _rec.textContent = ''; }
             const _msb = document.getElementById('marketSalaryBlock'); if (_msb) { _msb.style.display = 'none'; _msb.hidden = true; }
             const _rr = document.getElementById('rateResultBtn'); if (_rr) _rr.classList.remove('show');
+            (function(){ var fb=document.getElementById('feedbackStrip'); if(fb){ fb.classList.remove('is-revealed'); } })();
             const _ll = document.getElementById('lifestyleLabel'); if (_ll) _ll.style.display = '';
             document.getElementById('shareRow').style.display = 'none';
             (function(){ var er=document.getElementById('emailResultStrip'); if(er){ er.style.display='none'; er.hidden=true; } })();
