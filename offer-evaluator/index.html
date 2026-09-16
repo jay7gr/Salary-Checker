@@ -110,6 +110,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .share-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:8px}
 .share-btn-action{padding:10px 20px;border:1.5px solid var(--border);border-radius:100px;background:var(--card-bg);color:var(--text-primary);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s}
 .share-btn-action:hover{border-color:var(--accent);color:var(--accent)}
+/* Decision share card */
+.decision-card{border-radius:16px;background:linear-gradient(135deg,#1c3252 0%,#0e1f35 100%);color:#fff;padding:20px 20px 16px;margin:0 0 24px}
+.decision-card .dc-header{font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.decision-card .dc-verdict{font-size:1.02rem;font-weight:800;line-height:1.35;margin-bottom:12px;color:#fff}
+.decision-card .dc-rows{border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px}
+.decision-card .dc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.decision-card .dc-row:last-child{border-bottom:none}
+.decision-card .dc-label{font-size:.7rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.45px;font-weight:600}
+.decision-card .dc-val{font-size:.98rem;font-weight:800;text-align:right;letter-spacing:-.2px}
+.decision-card .dc-val.hi{color:#9fe870}
+.decision-card .dc-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.decision-card .dc-copy{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit}
+.decision-card .dc-copy:hover{background:rgba(255,255,255,.22)}
+.decision-card .dc-copy.done{background:rgba(159,232,112,.18);border-color:rgba(159,232,112,.35);color:#9fe870}
+.decision-card .dc-brand{font-size:.7rem;color:rgba(255,255,255,.3)}
 footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border-light);display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
 footer a{font-size:.78rem;color:var(--text-secondary);text-decoration:none}
 footer a:hover{color:var(--accent)}
@@ -746,6 +761,19 @@ footer a:hover{color:var(--accent)}
 
   <div id="results">
     <div id="verdict" class="verdict"></div>
+    <div id="oeDecisionCard" class="decision-card" style="display:none" aria-label="Decision summary">
+      <div class="dc-header">Offer comparison</div>
+      <div class="dc-verdict" id="oeDcVerdict"></div>
+      <div class="dc-rows">
+        <div class="dc-row"><span class="dc-label" id="oeDcLabelA">Offer A</span><span class="dc-val" id="oeDcValA"></span></div>
+        <div class="dc-row"><span class="dc-label" id="oeDcLabelB">Offer B</span><span class="dc-val" id="oeDcValB"></span></div>
+        <div class="dc-row"><span class="dc-label">Gap</span><span class="dc-val hi" id="oeDcGap"></span></div>
+      </div>
+      <div class="dc-actions">
+        <button type="button" class="dc-copy" id="oeDcCopyBtn" onclick="copyDecision()">Copy decision</button>
+        <span class="dc-brand">salary-converter.com</span>
+      </div>
+    </div>
     <div class="content-card">
       <h2>Side-by-Side Breakdown</h2>
       <div style="overflow-x:auto">
@@ -775,7 +803,7 @@ footer a:hover{color:var(--accent)}
       <h2>Share This Comparison</h2>
       <p style="font-size:.85rem;color:var(--text-body);margin-bottom:8px">Send this comparison to a friend or save it for later.</p>
       <div class="share-row">
-        <button class="share-btn-action" onclick="copyShareLink()">&#128279; Copy shareable link</button>
+        <button class="share-btn-action" type="button" onclick="copyDecision()">Copy decision</button>
         <span id="copyMsg" style="font-size:.82rem;color:var(--green);display:none">Copied!</span>
       </div>
     </div>
@@ -1021,6 +1049,49 @@ function renderResults(a,b){
     vEl.className='verdict a-wins';
     vEl.innerHTML='<div class="verdict-title">'+nA+' leads on spending-power index (+'+pct.toFixed(0)+'%)</div><div class="verdict-sub">Index = after-rent disposable scaled by non-rent costs vs NYC — not extra local cash beyond After-Rent Disposable. '+nA+' wins on relative purchasing power.</div>';
   }
+  // Decision card (verdict + 3 nums for Slack paste)
+  (function(){
+    var plainNA=nameA(), plainNB=nameB();
+    var verdictPlain;
+    var gapPlain;
+    if(pct<5){
+      verdictPlain='These offers are roughly equivalent';
+      gapPlain='within 5% / tied';
+    } else if(diff>0){
+      verdictPlain=plainNB+' leads on spending-power index (+'+pct.toFixed(0)+'%)';
+      gapPlain='+'+pct.toFixed(0)+'% (Offer B)';
+    } else {
+      verdictPlain=plainNA+' leads on spending-power index (+'+pct.toFixed(0)+'%)';
+      gapPlain='+'+pct.toFixed(0)+'% (Offer A)';
+    }
+    var valA=fmtUSD(a.purchPower)+' NYC-equiv.';
+    var valB=fmtUSD(b.purchPower)+' NYC-equiv.';
+    var card=document.getElementById('oeDecisionCard');
+    var v=document.getElementById('oeDcVerdict');
+    var la=document.getElementById('oeDcLabelA');
+    var lb=document.getElementById('oeDcLabelB');
+    var va=document.getElementById('oeDcValA');
+    var vb=document.getElementById('oeDcValB');
+    var g=document.getElementById('oeDcGap');
+    if(v) v.textContent=verdictPlain;
+    if(la) la.textContent=plainNA+' (spending-power index)';
+    if(lb) lb.textContent=plainNB+' (spending-power index)';
+    if(va) va.textContent=valA;
+    if(vb) vb.textContent=valB;
+    if(g) g.textContent=gapPlain;
+    if(card) card.style.display='block';
+    window.__oeDecision = {
+      verdict: verdictPlain,
+      num1Label: plainNA+' spending-power index',
+      num1: valA,
+      num2Label: plainNB+' spending-power index',
+      num2: valB,
+      num3Label: 'Gap',
+      num3: gapPlain,
+      from: a.city,
+      to: b.city
+    };
+  })();
   // Headers
   document.getElementById('headA').textContent=nA+' ('+a.city+')';
   document.getElementById('headB').textContent=nB+' ('+b.city+')';
@@ -1090,12 +1161,43 @@ function updateURL(cA,sA,cB,sB){
   u.searchParams.set('b',cB+':'+sB);
   history.replaceState({},'',u);
 }
-function copyShareLink(){
-  navigator.clipboard.writeText(location.href).then(()=>{
-    const m=document.getElementById('copyMsg');
-    m.style.display='inline';setTimeout(()=>m.style.display='none',2500);
-  });
+function copyDecision(){
+  var d=window.__oeDecision;
+  var url=location.href;
+  var txt;
+  if(d){
+    txt=d.verdict+'\n'
+      +'• '+d.num1Label+': '+d.num1+'\n'
+      +'• '+d.num2Label+': '+d.num2+'\n'
+      +'• '+d.num3Label+': '+d.num3+'\n'
+      +url+'\n'
+      +'salary-converter.com';
+  } else {
+    txt=url;
+  }
+  var done=function(){
+    var m=document.getElementById('copyMsg');
+    if(m){m.style.display='inline';setTimeout(function(){m.style.display='none';},2500);}
+    var btn=document.getElementById('oeDcCopyBtn');
+    if(btn){
+      btn.classList.add('done');
+      var prev=btn.textContent;
+      btn.textContent='✓ Copied!';
+      setTimeout(function(){btn.textContent='Copy decision';btn.classList.remove('done');},2000);
+    }
+    try{if(typeof gtag==='function')gtag('event','decision_copy',{tool:'offer',from:d&&d.from,to:d&&d.to});}catch(_){}
+  };
+  var fallback=function(){
+    var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(_){}
+    document.body.removeChild(ta);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(function(){fallback();done();});
+  } else {fallback();done();}
 }
+function copyShareLink(){copyDecision();}
 window.addEventListener('DOMContentLoaded',()=>{
   const p=new URLSearchParams(location.search);
   const a=p.get('a'),b=p.get('b');
