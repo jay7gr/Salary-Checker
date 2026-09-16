@@ -108,6 +108,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .pct-share-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border:1px solid var(--border);background:var(--card-bg);color:var(--text-primary);border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;transition:all .18s}
 .pct-share-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 .pct-share-btn.is-copied{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* Decision share card */
+.decision-card{border-radius:16px;background:linear-gradient(135deg,#1c3252 0%,#0e1f35 100%);color:#fff;padding:20px 20px 16px;margin:0 0 20px}
+.decision-card .dc-header{font-size:.72rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px}
+.decision-card .dc-verdict{font-size:1.02rem;font-weight:800;line-height:1.35;margin-bottom:12px;color:#fff}
+.decision-card .dc-rows{border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px}
+.decision-card .dc-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.decision-card .dc-row:last-child{border-bottom:none}
+.decision-card .dc-label{font-size:.7rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.45px;font-weight:600}
+.decision-card .dc-val{font-size:.98rem;font-weight:800;text-align:right;letter-spacing:-.2px}
+.decision-card .dc-val.hi{color:#9fe870}
+.decision-card .dc-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.decision-card .dc-copy{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit}
+.decision-card .dc-copy:hover{background:rgba(255,255,255,.22)}
+.decision-card .dc-copy.done{background:rgba(159,232,112,.18);border-color:rgba(159,232,112,.35);color:#9fe870}
+.decision-card .dc-brand{font-size:.7rem;color:rgba(255,255,255,.3)}
 .oe-cta{border:1.5px solid var(--accent);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:8px}
 .oe-cta-text p{font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600;color:var(--accent);margin-bottom:4px}
 .oe-cta-text h3{font-size:1rem;font-weight:700;color:var(--text-primary)}
@@ -432,6 +447,21 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="verdict-title" id="verdictTitle"></div>
       <div class="verdict-sub" id="verdictSub"></div>
       <div id="sourceBadge" style="margin-top:10px;font-size:0.7rem;opacity:0.75;"></div>
+    </div>
+
+    <!-- Decision share card -->
+    <div id="salDecisionCard" class="decision-card" style="display:none" aria-label="Decision summary">
+      <div class="dc-header">Salary check</div>
+      <div class="dc-verdict" id="salDcVerdict"></div>
+      <div class="dc-rows">
+        <div class="dc-row"><span class="dc-label">Your salary</span><span class="dc-val" id="salDcSalary"></span></div>
+        <div class="dc-row"><span class="dc-label">Market midpoint</span><span class="dc-val" id="salDcMid"></span></div>
+        <div class="dc-row"><span class="dc-label">Percentile</span><span class="dc-val hi" id="salDcPct"></span></div>
+      </div>
+      <div class="dc-actions">
+        <button type="button" class="dc-copy" id="salDcCopyBtn">Copy decision</button>
+        <span class="dc-brand">salary-converter.com</span>
+      </div>
     </div>
 
     <!-- T2.9 — Shareable percentile badge -->
@@ -1038,6 +1068,57 @@ function checkSalary() {
     : `🔴 COLI estimate only · no salary survey data for this region`;
   document.getElementById('sourceBadge').innerHTML = srcHtml;
 
+  // Decision card — verdict + 3 nums + durable URL
+  (function(){
+    const midLocal = toLocal(midUSD, currency);
+    const salaryDisp = fmtLocal(salary, currency) + '/yr';
+    const midDisp = fmtLocal(midLocal, currency) + '/yr';
+    const _ord = (function(n){ const s=['th','st','nd','rd'], v=n%100; return s[(v-20)%10]||s[v]||s[0]; })(pctR);
+    const pctDisp = pctR + _ord + ' percentile vs ' + prof + 's in ' + city;
+    const durableUrl = location.origin + '/is-my-salary-good/?city=' + encodeURIComponent(city) + '&prof=' + encodeURIComponent(prof) + '&salary=' + encodeURIComponent(String(Math.round(salary)));
+    const card = document.getElementById('salDecisionCard');
+    const v = document.getElementById('salDcVerdict');
+    const sEl = document.getElementById('salDcSalary');
+    const mEl = document.getElementById('salDcMid');
+    const pEl = document.getElementById('salDcPct');
+    if (v) v.textContent = title;
+    if (sEl) sEl.textContent = salaryDisp;
+    if (mEl) mEl.textContent = midDisp;
+    if (pEl) pEl.textContent = pctDisp;
+    if (card) card.style.display = 'block';
+    const pasteTxt = title + '\n'
+      + '• Your salary: ' + salaryDisp + '\n'
+      + '• Market midpoint: ' + midDisp + '\n'
+      + '• Percentile: ' + pctDisp + '\n'
+      + durableUrl + '\n'
+      + 'salary-converter.com';
+    const copyBtn = document.getElementById('salDcCopyBtn');
+    if (copyBtn) {
+      copyBtn.onclick = function(){
+        const after = function(){
+          copyBtn.classList.add('done');
+          copyBtn.textContent = '✓ Copied!';
+          setTimeout(function(){ copyBtn.textContent = 'Copy decision'; copyBtn.classList.remove('done'); }, 2000);
+          try { if (typeof gtag === 'function') gtag('event', 'decision_copy', { tool: 'salary', from: city }); } catch(_){}
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(pasteTxt).then(after).catch(function(){
+            const ta = document.createElement('textarea'); ta.value = pasteTxt;
+            ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select();
+            try { document.execCommand('copy'); } catch(_){}
+            document.body.removeChild(ta); after();
+          });
+        } else {
+          const ta = document.createElement('textarea'); ta.value = pasteTxt;
+          ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch(_){}
+          document.body.removeChild(ta); after();
+        }
+      };
+    }
+    window.__salDecisionUrl = durableUrl;
+  })();
+
   // T2.9 — Populate the shareable percentile badge
   try {
     const wrap = document.getElementById('pctBadgeWrap');
@@ -1053,7 +1134,7 @@ function checkSalary() {
       wrap.style.display = '';
 
       const tweet = 'I earn more than ' + pctR + '% of ' + prof + 's in ' + city + '. Found out via salary-converter.com';
-      const shareUrl = location.origin + '/is-my-salary-good/?city=' + encodeURIComponent(city) + '&prof=' + encodeURIComponent(prof) + '&sal=' + encodeURIComponent(sal);
+      const shareUrl = window.__salDecisionUrl || (location.origin + '/is-my-salary-good/?city=' + encodeURIComponent(city) + '&prof=' + encodeURIComponent(prof) + '&salary=' + encodeURIComponent(String(Math.round(salary))));
       const tweetBtn = document.getElementById('pctTweetBtn');
       if (tweetBtn) tweetBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet) + '&url=' + encodeURIComponent(shareUrl);
 
@@ -1190,7 +1271,7 @@ function checkSalary() {
 // URL params on load
 window.addEventListener('DOMContentLoaded', () => {
   const p = new URLSearchParams(location.search);
-  const city = p.get('city'), prof = p.get('prof'), sal = p.get('salary');
+  const city = p.get('city'), prof = p.get('prof'), sal = p.get('salary') || p.get('sal');
   if (city) {
     document.getElementById('citySelect').value = city;
     onCityChange();

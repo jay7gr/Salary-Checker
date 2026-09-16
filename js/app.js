@@ -3184,7 +3184,7 @@
                     };
                 }
 
-                // Populate result share card
+                // Populate decision share card (verdict + 3 nums + durable URL paste)
                 (function(){
                     var _sc = document.getElementById('shareCard');
                     if (!_sc) return;
@@ -3192,37 +3192,57 @@
                     var _tc = document.getElementById('scToCity');
                     var _fv = document.getElementById('scFromVal');
                     var _tv = document.getElementById('scToVal');
-                    var _bg = document.getElementById('scBadge');
+                    var _gv = document.getElementById('scGapVal');
+                    var _vd = document.getElementById('scVerdict');
                     var _cb = document.getElementById('scCopyBtn');
+                    var _earnDisplay = formattedOriginalCurrent + ' (' + currentLabel + ')';
+                    var _equivDisplay = formattedAmount + ' (' + targetLabel + ')';
+                    var _verdict, _gapLabel, _tone;
+                    if (stretchPct >= 3) {
+                        _verdict = targetLabel + ' stretches further than ' + currentLabel + ' (~' + stretchPct + '% lower prices)';
+                        _gapLabel = '~' + stretchPct + '% lower prices · tax, rent & FX';
+                        _tone = 'pos';
+                    } else if (stretchPct <= -3) {
+                        _verdict = targetLabel + ' has higher prices than ' + currentLabel + ' (~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX)';
+                        _gapLabel = '~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX';
+                        _tone = 'neg';
+                    } else {
+                        _verdict = 'Roughly equivalent cost of living';
+                        _gapLabel = '≈ similar';
+                        _tone = 'neu';
+                    }
                     if (_fc) _fc.textContent = currentLabel;
                     if (_tc) _tc.textContent = targetLabel;
-                    if (_fv) _fv.textContent = formattedOriginalCurrent;
-                    if (_tv) _tv.textContent = formattedAmount;
-                    if (_bg) {
-                        if (stretchPct >= 3) { _bg.textContent = '~' + stretchPct + '% lower prices'; _bg.className = 'sc-badge pos'; }
-                        else if (stretchPct <= -3) { _bg.textContent = '~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX'; _bg.className = 'sc-badge neg'; }
-                        else { _bg.textContent = '≈ Roughly equivalent cost of living'; _bg.className = 'sc-badge neu'; }
+                    if (_fv) _fv.textContent = _earnDisplay;
+                    if (_tv) _tv.textContent = _equivDisplay;
+                    if (_gv) {
+                        _gv.textContent = _gapLabel;
+                        _gv.className = 'sc-row-val gap-' + _tone;
+                    }
+                    if (_vd) {
+                        _vd.textContent = _verdict;
+                        _vd.className = 'sc-verdict ' + _tone;
                     }
                     if (_cb) {
-                        var _txt = stretchPct >= 3
-                            ? 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel + ' ≈ ' + formattedAmount + ' in ' + targetLabel + ' (~' + stretchPct + '% lower prices)\nsalary-converter.com'
-                            : stretchPct <= -3
-                            ? 'Same lifestyle: ' + formattedOriginalCurrent + ' in ' + currentLabel + ' ≈ ' + formattedAmount + ' in ' + targetLabel + ' (~' + Math.abs(stretchPct) + '% higher prices · tax, rent & FX)\nsalary-converter.com'
-                            : currentLabel + ' vs ' + targetLabel + ': ' + formattedOriginalCurrent + ' ≈ ' + formattedAmount + ' for a similar lifestyle (tax, rent & FX)\nsalary-converter.com';
+                        var _durable = buildDurableResultsUrl();
+                        var _txt = _verdict + '\n'
+                            + '• You earn: ' + _earnDisplay + '\n'
+                            + '• Lifestyle equivalent: ' + _equivDisplay + '\n'
+                            + '• Price gap: ' + _gapLabel + '\n'
+                            + _durable + '\n'
+                            + 'salary-converter.com';
+                        var _btnHtml = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy decision';
                         _cb.onclick = function() {
                             var _done = function() {
                                 _cb.textContent = '✓ Copied!';
                                 _cb.classList.add('done');
                                 setTimeout(function() {
-                                    _cb.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy for social';
+                                    _cb.innerHTML = _btnHtml;
                                     _cb.classList.remove('done');
                                 }, 2000);
-                                try { if (typeof gtag === 'function') gtag('event', 'share_card_copy', {from: currentCity, to: targetCity}); } catch(_){}
+                                try { if (typeof gtag === 'function') gtag('event', 'decision_copy', { tool: 'main', from: currentCity, to: targetCity }); } catch(_){}
                             };
-                            var _fb = function() { var ta=document.createElement('textarea');ta.value=_txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(_){}document.body.removeChild(ta); };
-                            if (navigator.clipboard && navigator.clipboard.writeText) {
-                                navigator.clipboard.writeText(_txt).then(_done).catch(function(){ _fb(); _done(); });
-                            } else { _fb(); _done(); }
+                            copyTextToClipboard(_txt, _done);
                         };
                     }
                     _sc.style.display = 'block';
