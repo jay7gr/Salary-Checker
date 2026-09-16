@@ -129,6 +129,50 @@ footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border-light)
 footer a{font-size:.78rem;color:var(--text-secondary);text-decoration:none}
 footer a:hover{color:var(--accent)}
 
+
+/* Mode toggle (Compare | Salary to match) */
+.oe-mode-wrap{margin:0 0 20px;text-align:center}
+.oe-mode-toggle{display:inline-flex;gap:0;background:var(--stat-card-bg);border-radius:12px;padding:4px;max-width:100%}
+.oe-mode-btn{padding:10px 22px;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;background:transparent;color:var(--text-secondary);transition:all .2s;font-family:inherit;white-space:nowrap}
+.oe-mode-btn.active{background:var(--accent);color:#fff;box-shadow:0 1px 4px rgba(37,99,235,.25)}
+.oe-mode-btn:hover:not(.active){color:var(--text-primary)}
+.oe-lead{font-size:.92rem;color:var(--text-body);max-width:640px;margin:12px auto 0;line-height:1.45}
+.oe-mode-sticky{position:sticky;top:0;z-index:40;background:var(--bg);padding:8px 0 4px;margin:0 0 12px}
+@media(max-width:640px){.oe-mode-btn{padding:10px 14px;font-size:.84rem;flex:1}.oe-mode-toggle{width:100%;display:flex}}
+.salary-calc-placeholder{flex:1;padding:10px 14px;border:1.5px dashed var(--border);border-radius:10px;font-size:.88rem;color:var(--text-secondary);background:var(--stat-card-bg);font-style:italic}
+.field-error input,.field-error select{border-color:var(--red)!important}
+.field-error-msg{display:none;font-size:.78rem;color:var(--red);margin-top:6px}
+.field-error .field-error-msg{display:block}
+.oe-toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#1d1d1f;color:#fff;padding:12px 18px;border-radius:12px;font-size:.88rem;font-weight:600;z-index:1000;box-shadow:0 8px 24px rgba(0,0,0,.2);display:none}
+[data-theme=dark] .oe-toast{background:#f5f5f7;color:#1d1d1f}
+/* Reverse / match result */
+#matchPanel{display:none}
+.match-verdict{border-radius:16px;padding:28px 24px;margin-bottom:20px;text-align:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #93c5fd}
+[data-theme=dark] .match-verdict{background:linear-gradient(135deg,#0f1c33,#152a4a);border-color:#1e3a5f}
+.match-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.match-hero-num{font-size:2.35rem;font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:6px;color:var(--text-primary)}
+.match-hero-sub{font-size:.9rem;color:var(--text-secondary);margin-bottom:14px}
+.match-verdict-line{font-size:1.02rem;font-weight:600;color:var(--text-primary);line-height:1.4;max-width:520px;margin:0 auto 14px}
+.match-honesty{display:inline-block;font-size:.78rem;line-height:1.4;color:var(--text-secondary);background:var(--card-bg);border:1px solid var(--border);border-radius:100px;padding:8px 14px;max-width:100%}
+.match-gap-note{margin-top:12px;font-size:.82rem;color:var(--amber);font-weight:600}
+.match-support{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:20px}
+.match-row{background:var(--card-bg);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.match-row-label{font-size:.78rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.4px}
+.match-row-val{font-size:1.05rem;font-weight:800;text-align:right}
+.match-row-meta{font-size:.78rem;color:var(--text-secondary);font-weight:500;display:block;margin-top:2px}
+.match-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px}
+.match-btn{padding:12px 20px;border-radius:100px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:all .2s}
+.match-btn-primary{background:var(--accent);color:#fff}
+.match-btn-primary:hover{background:var(--accent-hover)}
+.match-btn-secondary{background:var(--card-bg);color:var(--text-primary);border:1.5px solid var(--border)}
+.match-btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.match-warn{border-radius:16px;padding:24px;background:#fff7ed;border:1px solid #fdba74;margin-bottom:20px}
+[data-theme=dark] .match-warn{background:#2a1c0e;border-color:#92400e}
+.match-warn-title{font-size:1.05rem;font-weight:800;color:var(--amber);margin-bottom:8px}
+.match-warn-body{font-size:.9rem;color:var(--text-body);line-height:1.45}
+.match-warn a{color:var(--accent)}
+#comparePanel{display:block}
+
 /* feedback-strip-v2 — one-tap inline ratings (Phase A) */
 .feedback-widget{margin:16px 0 0;padding:14px 14px 12px;border:1.5px solid var(--border-light);border-radius:14px;background:var(--card-bg);display:none;opacity:0;transition:opacity .35s ease-out;position:relative}
 .feedback-widget.is-revealed{display:block;opacity:1}
@@ -505,13 +549,22 @@ footer a:hover{color:var(--accent)}
   <div class="breadcrumb"><a href="/">Home</a> &rsaquo; Offer Evaluator</div>
   <div class="hero">
     <h1>Which Job Offer Is Actually Better?</h1>
-    <p>Enter two offers — we calculate take-home pay, rent-adjusted disposable income, and real purchasing power. You get a verdict.</p>
+    <p id="oeLeadCompare">Enter two offers — we calculate take-home pay, rent-adjusted disposable income, and real purchasing power. You get a verdict.</p>
+    <p id="oeLeadMatch" class="oe-lead" style="display:none">Offer A is your anchor. Pick city B — we solve for the gross in B that matches A’s after-rent spending power.</p>
+  </div>
+  <div class="oe-mode-sticky" id="oeModeSticky">
+    <div class="oe-mode-wrap">
+      <div class="oe-mode-toggle" role="tablist" aria-label="Offer evaluator mode">
+        <button type="button" class="oe-mode-btn active" id="oeModeCompare" data-mode="compare" role="tab" aria-selected="true">Compare two offers</button>
+        <button type="button" class="oe-mode-btn" id="oeModeMatch" data-mode="match" role="tab" aria-selected="false">Salary to match</button>
+      </div>
+    </div>
   </div>
   <div class="offers-grid">
     <div class="offer-card offer-a">
       <div class="offer-label">&#9679; Offer A</div>
       <div class="field"><label for="labelA">Label (optional)</label><input id="labelA" type="text" placeholder="e.g. Google London" maxlength="40"></div>
-      <div class="field"><label for="cityA">City</label><select id="cityA" onchange="onCityChange('A')"><option value="" disabled selected>Select a city…</option>
+      <div class="field" id="fieldCityA"><label for="cityA">City</label><select id="cityA" onchange="onCityChange('A')"><option value="" disabled selected>Select a city…</option>
 <option value="Abu Dhabi">Abu Dhabi</option>
 <option value="Amsterdam">Amsterdam</option>
 <option value="Athens">Athens</option>
@@ -624,18 +677,20 @@ footer a:hover{color:var(--accent)}
 <option value="Vienna">Vienna</option>
 <option value="Warsaw">Warsaw</option>
 <option value="Washington DC">Washington DC</option>
-<option value="Zurich">Zurich</option></select></div>
-      <div class="field"><label>Annual Salary</label>
+<option value="Zurich">Zurich</option></select>
+        <div class="field-error-msg" id="errCityA"></div></div>
+      <div class="field" id="fieldSalaryA"><label>Annual Salary</label>
         <div class="salary-row">
           <input id="salaryA" type="number" placeholder="e.g. 65000" min="0" step="1000" style="flex:1">
           <div class="currency-badge" id="currBadgeA">USD</div>
         </div>
+        <div class="field-error-msg" id="errSalaryA"></div>
       </div>
     </div>
     <div class="offer-card offer-b">
       <div class="offer-label" style="color:var(--amber)">&#9679; Offer B</div>
       <div class="field"><label for="labelB">Label (optional)</label><input id="labelB" type="text" placeholder="e.g. Meta New York" maxlength="40"></div>
-      <div class="field"><label for="cityB">City</label><select id="cityB" onchange="onCityChange('B')"><option value="" disabled selected>Select a city…</option>
+      <div class="field" id="fieldCityB"><label for="cityB">City</label><select id="cityB" onchange="onCityChange('B')"><option value="" disabled selected>Select a city…</option>
 <option value="Abu Dhabi">Abu Dhabi</option>
 <option value="Amsterdam">Amsterdam</option>
 <option value="Athens">Athens</option>
@@ -748,18 +803,53 @@ footer a:hover{color:var(--accent)}
 <option value="Vienna">Vienna</option>
 <option value="Warsaw">Warsaw</option>
 <option value="Washington DC">Washington DC</option>
-<option value="Zurich">Zurich</option></select></div>
-      <div class="field"><label>Annual Salary</label>
-        <div class="salary-row">
+<option value="Zurich">Zurich</option></select>
+        <div class="field-error-msg" id="errCityB"></div></div>
+      <div class="field" id="fieldSalaryB"><label id="labelSalaryB">Annual Salary</label>
+        <div class="salary-row" id="salaryBRow">
           <input id="salaryB" type="number" placeholder="e.g. 130000" min="0" step="1000" style="flex:1">
+          <div class="salary-calc-placeholder" id="salaryBPlaceholder" style="display:none" aria-hidden="true">We’ll calculate the gross needed</div>
           <div class="currency-badge" id="currBadgeB">USD</div>
         </div>
+        <div class="field-error-msg" id="errSalaryB"></div>
       </div>
     </div>
   </div>
-  <button class="compare-btn" onclick="compare()">Compare Offers &rarr;</button>
+  <button class="compare-btn" id="oePrimaryBtn" onclick="oePrimaryAction()">Compare Offers &rarr;</button>
+  <div class="oe-toast" id="oeToast" role="status" aria-live="polite"></div>
 
   <div id="results">
+    <div id="matchPanel" style="display:none">
+      <div id="matchWarn" class="match-warn" style="display:none"></div>
+      <div id="matchVerdict" class="match-verdict" style="display:none">
+        <div class="match-eyebrow">Salary to match · after-rent spending power</div>
+        <div class="match-hero-num" id="matchHeroNum"></div>
+        <div class="match-hero-sub" id="matchHeroSub"></div>
+        <div class="match-verdict-line" id="matchVerdictLine"></div>
+        <div class="match-honesty">Spending-power index is NYC-equivalent — not extra local cash beyond after-rent disposable.</div>
+        <div class="match-gap-note" id="matchGapNote" style="display:none"></div>
+      </div>
+      <div class="match-support" id="matchSupport" style="display:none"></div>
+      <div class="match-actions" id="matchActions" style="display:none">
+        <button type="button" class="match-btn match-btn-primary" onclick="copyDecision()">Copy decision</button>
+        <button type="button" class="match-btn match-btn-secondary" id="matchCompareThese" onclick="compareTheseFromMatch()">Compare these</button>
+        <span id="copyMsgMatch" style="font-size:.82rem;color:var(--green);display:none">Copied!</span>
+      </div>
+      <div id="oeDecisionCardMatch" class="decision-card" style="display:none" aria-label="Decision summary">
+        <div class="dc-header">Salary to match</div>
+        <div class="dc-verdict" id="oeDcMatchVerdict"></div>
+        <div class="dc-rows">
+          <div class="dc-row"><span class="dc-label" id="oeDcMatchLabel1">Offer A gross</span><span class="dc-val" id="oeDcMatchVal1"></span></div>
+          <div class="dc-row"><span class="dc-label" id="oeDcMatchLabel2">B gross needed</span><span class="dc-val" id="oeDcMatchVal2"></span></div>
+          <div class="dc-row"><span class="dc-label" id="oeDcMatchLabel3">Index</span><span class="dc-val hi" id="oeDcMatchVal3"></span></div>
+        </div>
+        <div class="dc-actions">
+          <button type="button" class="dc-copy" id="oeDcMatchCopyBtn" onclick="copyDecision()">Copy decision</button>
+          <span class="dc-brand">salary-converter.com</span>
+        </div>
+      </div>
+    </div>
+    <div id="comparePanel">
     <div id="verdict" class="verdict"></div>
     <div id="oeDecisionCard" class="decision-card" style="display:none" aria-label="Decision summary">
       <div class="dc-header">Offer comparison</div>
@@ -830,10 +920,11 @@ footer a:hover{color:var(--accent)}
           </div>
           <div class="fb-success" role="status">Thanks — that helps.</div>
         </section>
+    </div><!-- /comparePanel -->
 
   </div>
 
-  <div class="content-card" style="margin-top:32px">
+  <div class="content-card" style="margin-top:32px" id="methodology-note">
     <h2>How It Works</h2>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">1. <strong>Gross salary in local currency</strong> — you enter this directly.</p>
     <p style="font-size:.88rem;color:var(--text-body);margin-bottom:8px">2. <strong>Tax &amp; social security</strong> — calculated using the progressive income tax brackets and social security rates for each city's country.</p>
@@ -1016,7 +1107,103 @@ function onCityChange(ab){
   const cur=cityToCurrency[city]||'USD';
   document.getElementById('currBadge'+ab).textContent=cur;
 }
+let oeMode='compare'; // 'compare' | 'match'
+let savedSalaryB='';
+let lastSolvedB=null;
+function clearFieldErrors(){
+  ['fieldCityA','fieldSalaryA','fieldCityB','fieldSalaryB'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.classList.remove('field-error');
+  });
+  ['errCityA','errSalaryA','errCityB','errSalaryB'].forEach(function(id){
+    var el=document.getElementById(id); if(el){ el.textContent=''; }
+  });
+}
+function setFieldError(fieldId, errId, msg){
+  var f=document.getElementById(fieldId); if(f) f.classList.add('field-error');
+  var e=document.getElementById(errId); if(e) e.textContent=msg||'';
+}
+function showToast(msg){
+  var t=document.getElementById('oeToast');
+  if(!t){alert(msg);return;}
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(function(){t.style.display='none';},3200);
+}
+function setOeMode(mode, opts){
+  opts=opts||{};
+  if(mode!=='match') mode='compare';
+  var prev=oeMode;
+  oeMode=mode;
+  var btnC=document.getElementById('oeModeCompare');
+  var btnM=document.getElementById('oeModeMatch');
+  if(btnC){btnC.classList.toggle('active', mode==='compare'); btnC.setAttribute('aria-selected', mode==='compare'?'true':'false');}
+  if(btnM){btnM.classList.toggle('active', mode==='match'); btnM.setAttribute('aria-selected', mode==='match'?'true':'false');}
+  var leadC=document.getElementById('oeLeadCompare');
+  var leadM=document.getElementById('oeLeadMatch');
+  if(leadC) leadC.style.display=mode==='compare'?'':'none';
+  if(leadM) leadM.style.display=mode==='match'?'':'none';
+  var salInput=document.getElementById('salaryB');
+  var salPh=document.getElementById('salaryBPlaceholder');
+  if(mode==='match'){
+    if(prev!=='match' && salInput){
+      savedSalaryB=salInput.value;
+      salInput.value='';
+    }
+    if(salInput){salInput.style.display='none'; salInput.removeAttribute('required');}
+    if(salPh){salPh.style.display='block'; salPh.setAttribute('aria-hidden','false');}
+  } else {
+    if(salInput){
+      salInput.style.display='';
+      if(prev==='match'){
+        if(lastSolvedB!=null && opts.keepSolved){
+          salInput.value=String(lastSolvedB);
+        } else if(!salInput.value && savedSalaryB){
+          salInput.value=savedSalaryB;
+        }
+      }
+    }
+    if(salPh){salPh.style.display='none'; salPh.setAttribute('aria-hidden','true');}
+  }
+  var btn=document.getElementById('oePrimaryBtn');
+  if(btn) btn.innerHTML=mode==='match'?'Find salary needed &rarr;':'Compare Offers &rarr;';
+  var cmp=document.getElementById('comparePanel');
+  var mat=document.getElementById('matchPanel');
+  if(cmp) cmp.style.display=mode==='compare'?'block':'none';
+  if(mat) mat.style.display=mode==='match'?'block':'none';
+  if(!opts.keepResults){
+    var res=document.getElementById('results');
+    if(res && !opts.preserveVisible){ /* leave visibility; hide only when switching empty */ }
+  }
+  clearFieldErrors();
+  if(!opts.keepResults){
+    var res=document.getElementById('results');
+    if(res) res.style.display='none';
+  }
+  if(!opts.skipUrl){
+    // refresh mode in URL without forcing run
+    var u=new URL(location.href);
+    if(mode==='match') u.searchParams.set('mode','match');
+    else u.searchParams.delete('mode');
+    // keep a/b params as currently in form
+    var cA=document.getElementById('cityA')&&document.getElementById('cityA').value;
+    var cB=document.getElementById('cityB')&&document.getElementById('cityB').value;
+    var sA=document.getElementById('salaryA')&&document.getElementById('salaryA').value;
+    var sB=document.getElementById('salaryB')&&document.getElementById('salaryB').value;
+    if(cA&&sA) u.searchParams.set('a', cA+':'+sA);
+    if(mode==='match'){
+      if(cB) u.searchParams.set('b', cB);
+    } else if(cB&&sB){
+      u.searchParams.set('b', cB+':'+sB);
+    }
+    history.replaceState({},'',u);
+  }
+}
+function oePrimaryAction(){
+  if(oeMode==='match') findSalaryNeeded();
+  else compare();
+}
 function compare(){
+  clearFieldErrors();
   const cityA=document.getElementById('cityA').value;
   const cityB=document.getElementById('cityB').value;
   const salA=parseFloat(document.getElementById('salaryA').value);
@@ -1027,12 +1214,172 @@ function compare(){
   renderResults(a,b);
   const el=document.getElementById('results');
   el.style.display='block';
+  var cmp=document.getElementById('comparePanel');
+  var mat=document.getElementById('matchPanel');
+  if(cmp) cmp.style.display='block';
+  if(mat) mat.style.display='none';
   el.scrollIntoView({behavior:'smooth',block:'start'});
-  updateURL(cityA,salA,cityB,salB);
+  updateURL(cityA,salA,cityB,salB,'compare');
 }
 function nameA(){const l=document.getElementById('labelA').value.trim();return l||'Offer A';}
 function nameB(){const l=document.getElementById('labelB').value.trim();return l||'Offer B';}
 function escH(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function solveGrossForPurchPower(city, targetPP){
+  if(!(targetPP>0) || !isFinite(targetPP)) return {ok:false, reason:'bad_target'};
+  var lo=0, hi=20000, guard=0;
+  var rHi=evaluate(city, hi);
+  while(rHi.purchPower < targetPP && hi < 5e8 && guard++ < 48){
+    hi = hi < 1 ? 20000 : hi * 2;
+    rHi=evaluate(city, hi);
+  }
+  if(!(rHi.purchPower >= targetPP)) return {ok:false, reason:'no_converge'};
+  for(var i=0;i<64;i++){
+    var mid=(lo+hi)/2;
+    var r=evaluate(city, mid);
+    if(r.purchPower < targetPP) lo=mid; else hi=mid;
+  }
+  var raw=hi;
+  var rounded=Math.max(0, Math.round(raw/100)*100);
+  var best=rounded, bestR=evaluate(city, rounded), bestDiff=Math.abs(bestR.purchPower-targetPP);
+  // Nudge ± a few steps if rounding drifted
+  [rounded-200, rounded-100, rounded, rounded+100, rounded+200, Math.round(raw)].forEach(function(cand){
+    if(!(cand>=0)) return;
+    var rr=evaluate(city, cand);
+    var d=Math.abs(rr.purchPower-targetPP);
+    if(d<bestDiff){ bestDiff=d; best=cand; bestR=rr; }
+  });
+  if(!isFinite(bestR.purchPower) || best<=0) return {ok:false, reason:'no_converge'};
+  return {ok:true, salary:best, result:bestR, targetPP:targetPP};
+}
+function findSalaryNeeded(){
+  clearFieldErrors();
+  var cityA=document.getElementById('cityA').value;
+  var cityB=document.getElementById('cityB').value;
+  var salA=parseFloat(document.getElementById('salaryA').value);
+  var ok=true;
+  if(!cityA){ setFieldError('fieldCityA','errCityA','Add offer A’s city'); ok=false; }
+  if(!salA||salA<=0){ setFieldError('fieldSalaryA','errSalaryA','Add offer A’s gross salary'); ok=false; }
+  if(!cityB){ setFieldError('fieldCityB','errCityB','Pick the city you want the matching salary for'); ok=false; }
+  if(!ok){
+    if(!cityA || !salA || salA<=0) showToast('Add offer A’s city and gross salary');
+    else showToast('Pick the city you want the matching salary for');
+    return;
+  }
+  if(!coliData[cityA] || !coliData[cityB]){
+    showToast('Unknown or unsupported city');
+    return;
+  }
+  var a=evaluate(cityA, salA);
+  var el=document.getElementById('results');
+  el.style.display='block';
+  var cmp=document.getElementById('comparePanel');
+  var mat=document.getElementById('matchPanel');
+  if(cmp) cmp.style.display='none';
+  if(mat) mat.style.display='block';
+
+  // Underwater A
+  if(!(a.afterRent>0) || !(a.purchPower>0)){
+    lastSolvedB=null;
+    renderMatchEdge('underwater', a, null, null);
+    updateURL(cityA, salA, cityB, null, 'match');
+    document.getElementById('matchWarn').scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  var solved=solveGrossForPurchPower(cityB, a.purchPower);
+  if(!solved.ok){
+    lastSolvedB=null;
+    renderMatchEdge('solver', a, cityB, null);
+    updateURL(cityA, salA, cityB, null, 'match');
+    document.getElementById('matchWarn').scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  lastSolvedB=solved.salary;
+  savedSalaryB=String(solved.salary);
+  renderMatchSuccess(a, solved.result, solved.salary);
+  updateURL(cityA, salA, cityB, null, 'match');
+  var hero=document.getElementById('matchVerdict');
+  if(hero) hero.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderMatchEdge(kind, a, cityB, b){
+  var warn=document.getElementById('matchWarn');
+  var verd=document.getElementById('matchVerdict');
+  var support=document.getElementById('matchSupport');
+  var actions=document.getElementById('matchActions');
+  var card=document.getElementById('oeDecisionCardMatch');
+  if(verd) verd.style.display='none';
+  if(support) support.style.display='none';
+  if(actions) actions.style.display='none';
+  if(card) card.style.display='none';
+  if(!warn) return;
+  warn.style.display='block';
+  if(kind==='underwater'){
+    warn.innerHTML='<div class="match-warn-title">Can’t solve a match</div><div class="match-warn-body">Offer A doesn’t leave positive after-rent disposable in our model — we can’t solve a match. Try a higher gross or a different city for A. <a href="#methodology-note">See methodology</a></div>';
+  } else {
+    warn.innerHTML='<div class="match-warn-title">No clean match</div><div class="match-warn-body">We couldn’t find a clean match (tax brackets). Try Compare with a guessed B salary, or adjust A.</div>';
+  }
+  window.__oeDecision=null;
+}
+function renderMatchSuccess(a, b, solvedGross){
+  var warn=document.getElementById('matchWarn');
+  if(warn) warn.style.display='none';
+  var verd=document.getElementById('matchVerdict');
+  var support=document.getElementById('matchSupport');
+  var actions=document.getElementById('matchActions');
+  var card=document.getElementById('oeDecisionCardMatch');
+  var nA=nameA(), nB=nameB();
+  var heroNum=fmtCur(solvedGross, b.cur);
+  document.getElementById('matchHeroNum').textContent=heroNum;
+  document.getElementById('matchHeroSub').textContent='/ year gross in '+b.city;
+  document.getElementById('matchVerdictLine').textContent='To match '+nA+' in '+a.city+', you’d need about '+heroNum+' gross in '+b.city+'.';
+  var gap=document.getElementById('matchGapNote');
+  var aUSD=a.salaryUSD, bUSD=b.salaryUSD;
+  if(bUSD > 3 * aUSD){
+    gap.style.display='block';
+    gap.textContent='This is a large gap — check currency and cities.';
+  } else {
+    gap.style.display='none';
+  }
+  verd.style.display='block';
+
+  var idxDiff=b.purchPower-a.purchPower;
+  var idxPct=Math.abs(a.purchPower)>0?Math.abs(idxDiff/a.purchPower)*100:0;
+  var idxStatus=idxPct<5?'matched':'Δ '+idxPct.toFixed(0)+'%';
+  support.innerHTML=
+    '<div class="match-row"><div><div class="match-row-label">Offer A after-rent disposable</div><span class="match-row-meta">'+escH(a.city)+'</span></div><div class="match-row-val">'+fmtUSD(a.afterRent)+'/mo</div></div>'+
+    '<div class="match-row"><div><div class="match-row-label">Offer B after-rent disposable (at solved gross)</div><span class="match-row-meta">'+escH(b.city)+'</span></div><div class="match-row-val">'+fmtUSD(b.afterRent)+'/mo</div></div>'+
+    '<div class="match-row"><div><div class="match-row-label">Spending-power index (A vs B)</div><span class="match-row-meta">NYC-equivalent · '+idxStatus+'</span></div><div class="match-row-val">'+fmtUSD(a.purchPower)+' vs '+fmtUSD(b.purchPower)+'</div></div>'+
+    '<p style="font-size:.8rem;color:var(--text-secondary);margin:4px 2px 0">Estimated take-home at solved B gross: '+fmtCur(b.takeHomeLocal,b.cur)+'/yr ('+fmtUSD(b.takeHomeMonthly)+'/mo)</p>';
+  support.style.display='grid';
+  actions.style.display='flex';
+
+  var verdictPlain='To match '+nA+' in '+a.city+', you’d need about '+heroNum+' gross in '+b.city+'.';
+  document.getElementById('oeDcMatchVerdict').textContent=verdictPlain;
+  document.getElementById('oeDcMatchLabel1').textContent=nA+' gross';
+  document.getElementById('oeDcMatchVal1').textContent=fmtCur(a.salaryLocal,a.cur)+'/yr';
+  document.getElementById('oeDcMatchLabel2').textContent=nB+' gross needed';
+  document.getElementById('oeDcMatchVal2').textContent=heroNum+'/yr';
+  document.getElementById('oeDcMatchLabel3').textContent='Spending-power index';
+  document.getElementById('oeDcMatchVal3').textContent=fmtUSD(a.purchPower)+' ≈ '+fmtUSD(b.purchPower)+' ('+idxStatus+')';
+  if(card) card.style.display='block';
+
+  window.__oeDecision={
+    verdict: verdictPlain,
+    num1Label: nA+' gross',
+    num1: fmtCur(a.salaryLocal,a.cur)+'/yr',
+    num2Label: nB+' gross needed',
+    num2: heroNum+'/yr',
+    num3Label: 'Spending-power index (NYC-equiv)',
+    num3: fmtUSD(a.purchPower)+' vs '+fmtUSD(b.purchPower)+' ('+idxStatus+')',
+    from: a.city,
+    to: b.city
+  };
+}
+function compareTheseFromMatch(){
+  if(lastSolvedB==null){ showToast('Run Salary to match first'); return; }
+  setOeMode('compare', {keepSolved:true, skipUrl:true, keepResults:true});
+  document.getElementById('salaryB').value=String(lastSolvedB);
+  compare();
+}
 function renderResults(a,b){
   // Verdict
   const diff=b.purchPower-a.purchPower;
@@ -1155,10 +1502,16 @@ function taxHTML(r){
   items.push(['Total Deductions',fmtCur(r.totalDed,r.cur),r.totalRate.toFixed(1)+'%']);
   return items.map(([l,a,p])=>'<div class="tax-item"><span>'+l+'</span><span>'+a+' <small style="color:var(--text-secondary)">('+p+')</small></span></div>').join('');
 }
-function updateURL(cA,sA,cB,sB){
+function updateURL(cA,sA,cB,sB,mode){
   const u=new URL(location.href);
   u.searchParams.set('a',cA+':'+sA);
-  u.searchParams.set('b',cB+':'+sB);
+  if(mode==='match'){
+    u.searchParams.set('mode','match');
+    u.searchParams.set('b',cB); // city only (or city: ignored salary)
+  } else {
+    u.searchParams.delete('mode');
+    u.searchParams.set('b',cB+':'+sB);
+  }
   history.replaceState({},'',u);
 }
 function copyDecision(){
@@ -1178,6 +1531,8 @@ function copyDecision(){
   var done=function(){
     var m=document.getElementById('copyMsg');
     if(m){m.style.display='inline';setTimeout(function(){m.style.display='none';},2500);}
+    var m2=document.getElementById('copyMsgMatch');
+    if(m2){m2.style.display='inline';setTimeout(function(){m2.style.display='none';},2500);}
     var btn=document.getElementById('oeDcCopyBtn');
     if(btn){
       btn.classList.add('done');
@@ -1185,7 +1540,13 @@ function copyDecision(){
       btn.textContent='✓ Copied!';
       setTimeout(function(){btn.textContent='Copy decision';btn.classList.remove('done');},2000);
     }
-    try{if(typeof gtag==='function')gtag('event','decision_copy',{tool:'offer',from:d&&d.from,to:d&&d.to});}catch(_){}
+    var btn2=document.getElementById('oeDcMatchCopyBtn');
+    if(btn2){
+      btn2.classList.add('done');
+      btn2.textContent='✓ Copied!';
+      setTimeout(function(){btn2.textContent='Copy decision';btn2.classList.remove('done');},2000);
+    }
+    try{if(typeof gtag==='function')gtag('event','decision_copy',{tool:'offer',from:d&&d.from,to:d&&d.to,mode:oeMode});}catch(_){}
   };
   var fallback=function(){
     var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';
@@ -1198,19 +1559,50 @@ function copyDecision(){
   } else {fallback();done();}
 }
 function copyShareLink(){copyDecision();}
+function parseOfferParam(raw){
+  if(!raw) return {city:'', salary:''};
+  var idx=raw.indexOf(':');
+  if(idx<0) return {city:raw, salary:''};
+  return {city:raw.slice(0,idx), salary:raw.slice(idx+1)};
+}
 window.addEventListener('DOMContentLoaded',()=>{
+  var btnC=document.getElementById('oeModeCompare');
+  var btnM=document.getElementById('oeModeMatch');
+  if(btnC) btnC.addEventListener('click', function(){ setOeMode('compare'); });
+  if(btnM) btnM.addEventListener('click', function(){ setOeMode('match'); });
+
   const p=new URLSearchParams(location.search);
+  const modeParam=(p.get('mode')||'').toLowerCase();
   const a=p.get('a'),b=p.get('b');
-  if(a&&b){
-    const[cA,sA]=a.split(':');const[cB,sB]=b.split(':');
-    const setCity=(id,city,ab)=>{
-      const sel=document.getElementById('city'+ab);
-      for(const opt of sel.options)if(opt.value===city){sel.value=city;break;}
-      onCityChange(ab);
-    };
-    setCity('cityA',cA,'A');document.getElementById('salaryA').value=sA;
-    setCity('cityB',cB,'B');document.getElementById('salaryB').value=sB;
-    compare();
+  const setCity=(ab,city)=>{
+    if(!city) return;
+    const sel=document.getElementById('city'+ab);
+    for(const opt of sel.options)if(opt.value===city){sel.value=city;break;}
+    onCityChange(ab);
+  };
+  if(modeParam==='match'){
+    setOeMode('match', {skipUrl:true});
+    if(a){
+      var pa=parseOfferParam(a);
+      setCity('A', pa.city);
+      if(pa.salary) document.getElementById('salaryA').value=pa.salary;
+    }
+    if(b){
+      var pb=parseOfferParam(b);
+      setCity('B', pb.city);
+      // ignore b salary in match mode
+    }
+    if(a && b && parseOfferParam(a).salary && parseOfferParam(a).city && parseOfferParam(b).city){
+      findSalaryNeeded();
+    }
+  } else if(a&&b){
+    setOeMode('compare', {skipUrl:true});
+    const pa=parseOfferParam(a); const pb=parseOfferParam(b);
+    setCity('A',pa.city); if(pa.salary) document.getElementById('salaryA').value=pa.salary;
+    setCity('B',pb.city); if(pb.salary) document.getElementById('salaryB').value=pb.salary;
+    if(pa.salary && pb.salary) compare();
+  } else {
+    setOeMode('compare', {skipUrl:true});
   }
 });
 </script>
