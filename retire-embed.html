@@ -6134,6 +6134,31 @@ gtag('event','widget_embedded',{
   } catch(_){}
 })();
 </script>
+
+<script>
+(function(){
+  try {
+    if (window.top === window.self) return;
+    var last = 0;
+    function send(){
+      var h = Math.ceil(Math.max(
+        document.documentElement.scrollHeight || 0,
+        document.body ? document.body.scrollHeight : 0
+      ));
+      if (!h || Math.abs(h - last) < 8) return;
+      last = h;
+      parent.postMessage({ type: 'salary-converter-embed-resize', height: h, widget: 'retire' }, '*');
+    }
+    send();
+    window.addEventListener('load', send);
+    window.addEventListener('resize', send);
+    if (window.ResizeObserver) {
+      try { new ResizeObserver(send).observe(document.documentElement); } catch(_){}
+    }
+    document.addEventListener('click', function(){ setTimeout(send, 50); });
+  } catch(_){}
+})();
+</script>
     <script src="/consent.js?v=3" defer></script>
 </body>
 </html>

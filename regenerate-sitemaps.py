@@ -33,12 +33,12 @@ PRIORITY = {
     'salary': 6,
     'salary-needed': 7,
     'methodology': 8,
-    'widget': 9,
+    'widgets': 9,
     'privacy': 10,
 }
 
 EXCLUDE_PREFIXES = ('admin/',)
-EXCLUDE_FILES = {'404.html', 'embed.html', 'retire-embed.html', 'widget.html'}
+EXCLUDE_FILES = {'404.html', 'embed.html', 'retire-embed.html', 'widget.html', 'widget/index.html'}
 
 # Truncated UTF-8 / mangled-ASCII twins. Keep the canonical when both exist.
 MANGLE_PAIRS = (

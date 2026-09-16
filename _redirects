@@ -6,6 +6,15 @@
 # /compare/ and must be crawlable/indexable. (Removed /compare/* → /offer-evaluator/)
 
 # Broken UTF-8 / mangled city slugs (GSC 404s) → correct ASCII
+
+# Canonical widgets gallery (SEO): /widget and /widget/ → /widgets
+# Force (!) so static widget.html / widget/index.html do not win over the 301.
+/widget /widgets 301!
+/widget/ /widgets 301!
+/widget.html /widgets 301!
+# Prefer non-trailing canonical for the survivor page
+/widgets/ /widgets 301!
+
 /salary-needed/bogot /salary-needed/bogota 301
 /salary-needed/bogot/* /salary-needed/bogota/:splat 301
 /city/bogot /city/bogota 301
