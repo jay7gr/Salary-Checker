@@ -4156,6 +4156,38 @@
             });
         }
 
+
+        // Normalize city query params (case / slug / hyphen / plus) to a <select> option value
+        function normalizeCityParam(raw, selectEl) {
+            if (!raw || !selectEl) return '';
+            var s = String(raw).trim();
+            if (!s) return '';
+            var opts = Array.prototype.slice.call(selectEl.options || []);
+            var exact = opts.find(function(o){ return o.value === s; });
+            if (exact) return exact.value;
+            var lower = s.toLowerCase();
+            var ci = opts.find(function(o){ return o.value && o.value.toLowerCase() === lower; });
+            if (ci) return ci.value;
+            function slugify(t) {
+                return String(t).toLowerCase()
+                    .replace(/[+/_]+/g, ' ')
+                    .replace(/[-]+/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+            var slug = slugify(s);
+            var bySlug = opts.find(function(o){
+                return o.value && slugify(o.value) === slug;
+            });
+            if (bySlug) return bySlug.value;
+            // also try hyphenated form vs spaced city names
+            var hyph = lower.replace(/\s+/g, '-').replace(/_+/g, '-');
+            var byHyph = opts.find(function(o){
+                return o.value && o.value.toLowerCase().replace(/\s+/g, '-') === hyph;
+            });
+            return byHyph ? byHyph.value : '';
+        }
+
         // URL parameter support — auto-populate and calculate from shared links
         (function(){
             var params = new URLSearchParams(window.location.search);
@@ -4191,10 +4223,17 @@
                 householdState.noCommute = true;
             }
             if (from && to && sal) {
-                document.getElementById('currentCity').value = from;
-                document.getElementById('currentCity').dispatchEvent(new Event('change'));
-                document.getElementById('targetCity').value = to;
-                document.getElementById('targetCity').dispatchEvent(new Event('change'));
+                var currentCityEl = document.getElementById('currentCity');
+                var targetCityEl = document.getElementById('targetCity');
+                var fromCity = normalizeCityParam(from, currentCityEl);
+                var toCity = normalizeCityParam(to, targetCityEl);
+                if (!fromCity || !toCity) {
+                    // leave selects blank — showError path on manual calculate
+                } else {
+                currentCityEl.value = fromCity;
+                currentCityEl.dispatchEvent(new Event('change'));
+                targetCityEl.value = toCity;
+                targetCityEl.dispatchEvent(new Event('change'));
                 if (!(mode === 'family' && (parseInt(params.get('adults')) || 2) === 2)) {
                     document.getElementById('currentSalary').value = sal;
                 }
@@ -4209,6 +4248,7 @@
                     window._fromUrlParams = true;
                     document.getElementById('calculateBtn').click();
                 }, 150);
+                }
             }
         })();
 
