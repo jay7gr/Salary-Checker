@@ -6,7 +6,7 @@
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Free Embeddable Salary Converter Widget — salary:converter</title>
-    <meta name="description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+    <meta name="description" content="Embed free salary and retire widgets. Salary: 113 cities / 2,483 neighborhoods. Retire: 230 cities. Dark mode, any device — no API key.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salary-converter.com/widgets">
 
@@ -18,14 +18,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salary-converter.com/widgets">
     <meta property="og:title" content="Free Embeddable Salary Converter Widget — salary:converter">
-    <meta property="og:description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+    <meta property="og:description" content="Embed free salary and retire widgets. Salary: 113 cities / 2,483 neighborhoods. Retire: 230 cities. Dark mode, any device — no API key.">
     <meta property="og:image" content="https://salary-converter.com/og-image.png">
     <meta property="og:site_name" content="salary:converter">
 
     <!-- Twitter/X Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Free Embeddable Salary Converter Widget — salary:converter">
-    <meta name="twitter:description" content="Embed a free salary comparison widget on your blog, career site, or HR platform. Covers 113 cities, supports dark mode, and works on any device.">
+    <meta name="twitter:description" content="Embed free salary and retire widgets. Salary: 113 cities / 2,483 neighborhoods. Retire: 230 cities. Dark mode, any device — no API key.">
 
     <!-- BreadcrumbList Schema -->
     <script type="application/ld+json">
@@ -42,8 +42,8 @@
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Widget",
-                "item": "https://salary-converter.com/widget/"
+                "name": "Widgets",
+                "item": "https://salary-converter.com/widgets"
             }
         ]
     }
@@ -581,6 +581,7 @@
 
         .code-block .tag { color: #f38ba8; }
         .code-block .attr { color: #a6e3a1; }
+        .code-block .com { color: #9ca3af; font-style: italic; }
         .code-block .val { color: #f9e2af; }
 
         .copy-btn {
@@ -955,7 +956,7 @@
 
         <!-- Salary Converter -->
         <div class="tool-tab-panel active" data-panel="salary-converter">
-            <p class="tool-tab-desc">Compare salaries across 113 cities worldwide with real cost-of-living adjustments, tax estimates, and currency conversion.</p>
+            <p class="tool-tab-desc">Compare salaries across 113 cities and 2,483 neighborhoods worldwide with real cost-of-living adjustments, tax estimates, and currency conversion.</p>
             <div class="preview-wrapper" style="margin-bottom:32px;">
                 <div class="preview-toolbar">
                     <span class="preview-toolbar-label">Live Preview</span>
@@ -970,31 +971,40 @@
                 <h2>Embed the Salary Converter</h2>
                 <p>Copy this code and paste it anywhere in your HTML.</p>
                 <div class="size-options">
-                    <button class="size-btn" data-height="600" type="button">Small (600px)</button>
+                    <button class="size-btn" data-height="680" type="button">Small (680px)</button>
                     <button class="size-btn active" data-height="800" type="button">Medium (800px)</button>
                     <button class="size-btn" data-height="1000" type="button">Large (1000px)</button>
                 </div>
                 <div class="code-block-wrap">
                     <pre class="code-block" id="codeBlock"><span class="tag">&lt;iframe</span>
+  <span class="attr">id</span>=<span class="val">"sc-embed"</span>
   <span class="attr">src</span>=<span class="val">"https://salary-converter.com/embed.html?utm_source=embed&amp;utm_medium=widget&amp;utm_campaign=salary-converter"</span>
   <span class="attr">width</span>=<span class="val">"100%"</span>
   <span class="attr">height</span>=<span class="val">"<span id="codeHeight">800</span>"</span>
   <span class="attr">frameborder</span>=<span class="val">"0"</span>
-  <span class="attr">style</span>=<span class="val">"border:none; border-radius:12px;"</span>
+  <span class="attr">style</span>=<span class="val">"border:none; border-radius:12px; min-height:680px;"</span>
   <span class="attr">title</span>=<span class="val">"Salary Converter Widget"</span><span class="tag">&gt;&lt;/iframe&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+<span class="com">/* optional: auto-resize from embed postMessage (min-height 680px; recommended 800px) */</span>
+window.addEventListener(<span class="val">'message'</span>, function (e) {
+  if (!e.data || e.data.type !== <span class="val">'salary-converter-embed-resize'</span>) return;
+  var f = document.getElementById(<span class="val">'sc-embed'</span>);
+  if (f &amp;&amp; e.data.height) f.style.height = Math.max(680, e.data.height) + <span class="val">'px'</span>;
+});
+<span class="tag">&lt;/script&gt;</span>
 <span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="val">"text-align:center;font:13px/1.5 sans-serif;margin:8px 0 0;color:#6b7280"</span><span class="tag">&gt;</span>Powered by <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://salary-converter.com"</span> <span class="attr">rel</span>=<span class="val">"noopener"</span><span class="tag">&gt;</span>salary-converter.com<span class="tag">&lt;/a&gt;&lt;/p&gt;</span></pre>
                     <button class="copy-btn" id="copyBtn" type="button">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         <span id="copyLabel">Copy Code</span>
                     </button>
                 </div>
-                <p class="embed-note">Powered by <a href="https://salary-converter.com" style="color:var(--accent);">salary-converter.com</a> — free, no API key required.</p>
+                <p class="embed-note">Powered by <a href="https://salary-converter.com" style="color:var(--accent);">salary-converter.com</a> — free, no API key required. <strong>Min-height:</strong> 680px (CTA visible); <strong>recommended:</strong> 800px. Snippet includes optional <code>postMessage</code> auto-resize.</p>
             </div>
         </div>
 
         <!-- Retire Abroad -->
         <div class="tool-tab-panel" data-panel="retire-abroad">
-            <p class="tool-tab-desc">Help your readers find the best city to retire abroad based on cost of living, visa ease, healthcare, and quality of life across 113 cities.</p>
+            <p class="tool-tab-desc">Help your readers find the best city to retire abroad based on cost of living, visa ease, healthcare, and quality of life across 230 retirement destinations (visa, healthcare &amp; quality of life).</p>
             <div class="preview-wrapper" style="margin-bottom:32px;">
                 <div class="preview-toolbar">
                     <span class="preview-toolbar-label">Live Preview</span>
@@ -1096,8 +1106,13 @@
         <div class="features-grid">
             <div class="feature-card">
                 <span class="feature-icon" aria-hidden="true">&#127758;</span>
-                <h3>113 Cities Worldwide</h3>
+                <h3>113 salary cities · 2,483 neighborhoods</h3>
                 <p>Compare salaries across major cities globally, with real cost-of-living adjustments, tax estimates, and currency conversion.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" aria-hidden="true">&#127968;</span>
+                <h3>230 retire cities</h3>
+                <p>Help readers plan retirement abroad with cost of living, visa ease, healthcare access, and quality-of-life signals across 230 destinations.</p>
             </div>
             <div class="feature-card">
                 <span class="feature-icon" aria-hidden="true">&#127769;</span>
@@ -1207,15 +1222,43 @@
         matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(e){if(!localStorage.getItem('theme'))a(e.matches?'dark':'light')});
 
         /* ---- Tool tab switcher ---- */
+        function activateToolTab(tabId){
+            var btn = document.querySelector('.tool-tab-btn[data-tab="' + tabId + '"]');
+            if(!btn) return;
+            document.querySelectorAll('.tool-tab-btn').forEach(function(b){ b.classList.remove('active'); });
+            document.querySelectorAll('.tool-tab-panel').forEach(function(p){ p.classList.remove('active'); });
+            btn.classList.add('active');
+            var panel = document.querySelector('[data-panel="' + tabId + '"]');
+            if(panel) panel.classList.add('active');
+        }
         document.querySelectorAll('.tool-tab-btn').forEach(function(btn){
             btn.addEventListener('click', function(){
-                document.querySelectorAll('.tool-tab-btn').forEach(function(b){ b.classList.remove('active'); });
-                document.querySelectorAll('.tool-tab-panel').forEach(function(p){ p.classList.remove('active'); });
-                btn.classList.add('active');
-                var panel = document.querySelector('[data-panel="' + btn.getAttribute('data-tab') + '"]');
-                if(panel) panel.classList.add('active');
+                activateToolTab(btn.getAttribute('data-tab'));
+                try {
+                    var id = btn.getAttribute('data-tab');
+                    var hash = ({ 'retire-abroad': 'retire', 'offer-evaluator': 'offer', 'salary-check': 'benchmark' })[id];
+                    history.replaceState(null, '', hash ? '/widgets#' + hash : '/widgets');
+                } catch(_){}
             });
         });
+        (function deepLinkTabs(){
+            var params = new URLSearchParams(location.search);
+            var q = (params.get('tab') || '').toLowerCase();
+            var hash = (location.hash || '').replace(/^#/, '').toLowerCase();
+            var key = q || hash;
+            var map = {
+                'retire': 'retire-abroad',
+                'retire-abroad': 'retire-abroad',
+                'salary': 'salary-converter',
+                'salary-converter': 'salary-converter',
+                'offer': 'offer-evaluator',
+                'offer-evaluator': 'offer-evaluator',
+                'benchmark': 'salary-check',
+                'salary-check': 'salary-check',
+                'salary-benchmark': 'salary-check'
+            };
+            if (map[key]) activateToolTab(map[key]);
+        })();
 
         /* ---- Preview light/dark toggles ---- */
         document.querySelectorAll('.preview-toggle-btn').forEach(function(btn){
@@ -1254,7 +1297,9 @@
         if(copyBtn){
             copyBtn.addEventListener('click', function(){
                 var src = buildEmbedSrc('https://salary-converter.com/embed.html', 'salary-converter');
-                var code = '<iframe src="' + src + '" width="100%" height="' + currentHeight + '" frameborder="0" style="border:none; border-radius:12px;" title="Salary Converter Widget"></iframe>\n<p style="text-align:center;font:13px/1.5 sans-serif;margin:8px 0 0;color:#6b7280">Powered by <a href="https://salary-converter.com" rel="noopener">salary-converter.com</a></p>';
+                var code = '<iframe id="sc-embed" src="' + src + '" width="100%" height="' + currentHeight + '" frameborder="0" style="border:none; border-radius:12px; min-height:680px;" title="Salary Converter Widget"></iframe>\n' +
+                    '<script>window.addEventListener("message",function(e){if(!e.data||e.data.type!=="salary-converter-embed-resize")return;var f=document.getElementById("sc-embed");if(f&&e.data.height)f.style.height=Math.max(680,e.data.height)+"px";});</'+'script>\n' +
+                    '<p style="text-align:center;font:13px/1.5 sans-serif;margin:8px 0 0;color:#6b7280">Powered by <a href="https://salary-converter.com" rel="noopener">salary-converter.com</a></p>';
                 var label = document.getElementById('copyLabel');
                 navigator.clipboard.writeText(code).then(function(){
                     copyBtn.classList.add('copied'); label.textContent = 'Copied!';
@@ -1311,7 +1356,10 @@
         var campaignName = campaign || 'widget';
         var taggedSrc = buildEmbedSrc(src, campaignName);
         var credit = creditUrl || 'https://salary-converter.com';
-        var code = '<iframe src="' + taggedSrc + '" width="100%" height="' + height + '" frameborder="0" style="border:none; border-radius:12px;" title="' + title + '"></iframe>\n<p style="text-align:center;font:13px/1.5 sans-serif;margin:8px 0 0;color:#6b7280">Powered by <a href="' + credit + '" rel="noopener">salary-converter.com</a></p>';
+        var iframeId = 'sc-embed-' + campaignName;
+        var code = '<iframe id="' + iframeId + '" src="' + taggedSrc + '" width="100%" height="' + height + '" frameborder="0" style="border:none; border-radius:12px; min-height:680px;" title="' + title + '"></iframe>\n' +
+            '<script>window.addEventListener("message",function(e){if(!e.data||e.data.type!=="salary-converter-embed-resize")return;var f=document.getElementById("' + iframeId + '");if(f&&e.data.height)f.style.height=Math.max(680,e.data.height)+"px";});</'+'script>\n' +
+            '<p style="text-align:center;font:13px/1.5 sans-serif;margin:8px 0 0;color:#6b7280">Powered by <a href="' + credit + '" rel="noopener">salary-converter.com</a></p>';
         var span = btn.querySelector('span');
         navigator.clipboard.writeText(code).then(function(){
             btn.classList.add('copied'); span.textContent = 'Copied!';

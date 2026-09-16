@@ -373,9 +373,14 @@
         .button-group {
             display: flex;
             gap: 12px;
-            margin-top: 36px;
-            padding-top: 32px;
+            margin-top: 24px;
+            padding: 12px 0 8px;
             border-top: 1px solid var(--border-section);
+            position: sticky;
+            bottom: 0;
+            z-index: 20;
+            background: var(--bg, #ffffff);
+            box-shadow: 0 -8px 24px rgba(0,0,0,0.06);
         }
 
         .btn {
@@ -1879,11 +1884,11 @@
             <div class="quick-select" id="currentCityQuick"></div>
             <div class="neighborhood-group" id="currentNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="currentNeighborhood">Neighborhood</label>
+                    <label for="currentNeighborhood">Neighborhood <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
                     <select id="currentNeighborhood">
                         <option value="">Select a neighborhood...</option>
                     </select>
-                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="currentNeighborhoodHint">Optional — pick a neighborhood for finer COL and local tax detail</div>
                 </div>
             </div>
             <div class="two-column">
@@ -1912,11 +1917,11 @@
             <div class="quick-select" id="targetCityQuick"></div>
             <div class="neighborhood-group" id="targetNeighborhoodGroup" style="display: none;">
                 <div class="form-group">
-                    <label for="targetNeighborhood">Neighborhood</label>
+                    <label for="targetNeighborhood">Neighborhood <span style="font-weight:400;color:var(--text-secondary);">(optional)</span></label>
                     <select id="targetNeighborhood">
                         <option value="">Select a neighborhood...</option>
                     </select>
-                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Select a neighborhood for more accurate cost of living and local tax rates</div>
+                    <div class="neighborhood-hint" id="targetNeighborhoodHint">Optional — pick a neighborhood for finer COL and local tax detail</div>
                 </div>
             </div>
             <div class="two-column">
@@ -4453,11 +4458,10 @@
             },
         };
 
-        // Dynamic city & neighborhood counts
-        const totalCities = Object.keys(coliData).length;
-        const totalNeighborhoods = Object.values(cityNeighborhoods).reduce((sum, n) => sum + Object.keys(n).length, 0);
-        const roundedNeighborhoods = Math.floor(totalNeighborhoods / 100) * 100;
-        const countText = `Compare salaries across ${totalCities} cities and over ${roundedNeighborhoods.toLocaleString()} neighborhoods worldwide.`;
+        // Publisher-facing honesty counts (salary/COL inventory pages): 113 cities / 2,483 neighborhoods.
+        // Do not overwrite with Object.keys(coliData) — that dataset is broader than the public salary city set.
+        const totalCities = 113;
+        const countText = 'Compare salaries across 113 cities and over 2,483 neighborhoods worldwide.';
         const heroEl = document.getElementById('hero-subtitle');
         const footerEl = document.getElementById('footer-subtitle');
         if (heroEl) heroEl.textContent = countText;
@@ -4773,14 +4777,7 @@
                 showError('Please select a target currency', 'targetCurrency');
                 return;
             }
-            if (cityNeighborhoods[currentCity] && !currentNeighborhood ) {
-                showError('Please select a neighborhood for your current city', 'currentNeighborhood');
-                return;
-            }
-            if (cityNeighborhoods[targetCity] && !targetNeighborhood ) {
-                showError('Please select a neighborhood for your target city', 'targetNeighborhood');
-                return;
-            }
+            // Neighborhoods are optional on the embed — city-level COL/spending power works without them.
             // (removed for embed)
 
             // Get base cost of living indices
@@ -5743,6 +5740,33 @@ gtag('event','widget_embedded',{
     }
     if (host === '(unknown)' && !ref) return;
     fetch('/api/widget-ping?w=salary-converter&host=' + encodeURIComponent(host) + '&ref=' + encodeURIComponent(ref), { keepalive: true }).catch(function(){});
+  } catch(_){}
+})();
+</script>
+
+<script>
+(function(){
+  /* Optional parent helper: listen for {type:'salary-converter-embed-resize', height:n}
+     and set iframe height. Recommended min-height for salary embed: 800px (CTA visible from ~680px with sticky button). */
+  try {
+    if (window.top === window.self) return;
+    var last = 0;
+    function send(){
+      var h = Math.ceil(Math.max(
+        document.documentElement.scrollHeight || 0,
+        document.body ? document.body.scrollHeight : 0
+      ));
+      if (!h || Math.abs(h - last) < 8) return;
+      last = h;
+      parent.postMessage({ type: 'salary-converter-embed-resize', height: h, widget: 'salary-converter' }, '*');
+    }
+    send();
+    window.addEventListener('load', send);
+    window.addEventListener('resize', send);
+    if (window.ResizeObserver) {
+      try { new ResizeObserver(send).observe(document.documentElement); } catch(_){}
+    }
+    document.addEventListener('click', function(){ setTimeout(send, 50); });
   } catch(_){}
 })();
 </script>
