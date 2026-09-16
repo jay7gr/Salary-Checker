@@ -1282,7 +1282,7 @@ function findSalaryNeeded(){
     lastSolvedB=null;
     renderMatchEdge('underwater', a, null, null);
     updateURL(cityA, salA, cityB, null, 'match');
-    document.getElementById('matchVerdict').scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('matchWarn').scrollIntoView({behavior:'smooth',block:'start'});
     return;
   }
   var solved=solveGrossForPurchPower(cityB, a.purchPower);
