@@ -64,7 +64,7 @@
     // Short copy keeps it to ~1 line on phones; the CTA never breaks mid-phrase.
     bar.innerHTML =
       '🧩 <strong>Run a website?</strong> Embed these calculators free — ' +
-      '<a href="/widget" style="color:#fff;text-decoration:underline;font-weight:600;white-space:nowrap;">get the code →</a>' +
+      '<a href="/widgets" style="color:#fff;text-decoration:underline;font-weight:600;white-space:nowrap;">get the code →</a>' +
       '<button type="button" id="embedPromoClose" aria-label="Dismiss" ' +
       'style="position:absolute;top:0;right:0;height:100%;width:44px;background:none;border:0;' +
       'color:#fff;font-size:22px;line-height:1;cursor:pointer;opacity:0.85;padding:0;">×</button>';
