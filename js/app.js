@@ -2777,6 +2777,9 @@
 
         // Calculate salary
         document.getElementById('calculateBtn').addEventListener('click', () => {
+            // Skip Recent write when this click came from shared-URL hydrate (v1).
+            var _skipRecentWrite = !!window._fromUrlParams;
+            window._fromUrlParams = false;
             // Synchronous: clear previous state and show loading overlay immediately
             const _rb = document.getElementById('resultBox');
             _rb.classList.remove('show');
@@ -2870,7 +2873,6 @@
                 return;
             }
             // Neighborhoods are optional — code defaults to city-average multiplier (1.0) when omitted
-            window._fromUrlParams = false;
 
             // Get base cost of living indices
             const baseCOLICurrent = coliData[currentCity];
@@ -3809,6 +3811,19 @@
             // Signal inline feedback strip (Phase A) that a real result is on screen
             try { window.dispatchEvent(new CustomEvent('sc:result-shown', { detail: { tool: 'main' } })); } catch(_){}
 
+            // Keep-result Recent — after successful calc only (not URL hydrate)
+            if (!_skipRecentWrite && window.SCRecent) {
+                try {
+                    var _recentUrl = (typeof buildDurableResultsUrl === 'function')
+                        ? buildDurableResultsUrl()
+                        : (location.origin + '/' + (location.search || ''));
+                    var _salCompact = window.SCRecent.compactSalary(totalSalary || salary, currentCurrency);
+                    var _recentLabel = currentCity + ' → ' + targetCity + (_salCompact ? (' · ' + _salCompact) : '');
+                    window.SCRecent.add('main', { label: _recentLabel, url: _recentUrl });
+                    window.SCRecent.refresh('main');
+                } catch (_re) {}
+            }
+
             // Store result snapshot for PDF report generation
             try {
                 var _vb = document.getElementById('verdictBanner');
@@ -4207,6 +4222,12 @@
             });
             return byHyph ? byHyph.value : '';
         }
+
+        // Keep-result: mount quiet Recent strip (hidden when empty)
+        (function(){
+            var root = document.getElementById('scRecentRoot');
+            if (root && window.SCRecent) window.SCRecent.mount('main', root);
+        })();
 
         // URL parameter support — auto-populate and calculate from shared links
         (function(){
