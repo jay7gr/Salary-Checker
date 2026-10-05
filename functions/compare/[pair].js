@@ -9,12 +9,35 @@
 // - 6,328 reverse slugs exceed Pages _redirects limits (~2,100 rules / 20 KB)
 // - Generating reverse HTML would push the repo from ~19.4k files over the 20k cap
 // Existing static compare pages are served via ASSETS.fetch (no new HTML).
+//
+// Affiliate CTA: inject shared /js/wise-affiliate.js before </body> so compare
+// pages pick up the flagged Wise line without regenerating ~16k HTML files.
+// The script no-ops when WISE_AFFILIATE_URL is empty.
+
+const AFFILIATE_SCRIPT =
+  '<script src="/js/wise-affiliate.js?v=1" defer></script>';
+
+function injectAffiliateScript(response) {
+  const ct = response.headers.get("content-type") || "";
+  if (!ct.includes("text/html")) return response;
+  return new HTMLRewriter()
+    .on("body", {
+      element(el) {
+        el.append(AFFILIATE_SCRIPT, { html: true });
+      },
+    })
+    .transform(response);
+}
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const pair = context.params.pair || "";
   const slug = String(pair).replace(/\.html$/i, "");
 
-  const serve = () => context.env.ASSETS.fetch(context.request);
+  const serve = async () => {
+    const res = await context.env.ASSETS.fetch(context.request);
+    return injectAffiliateScript(res);
+  };
 
   if (!slug.includes("-vs-")) {
     return serve();
@@ -22,7 +45,7 @@ export async function onRequest(context) {
 
   const existing = await context.env.ASSETS.fetch(context.request);
   if (existing.ok) {
-    return existing;
+    return injectAffiliateScript(existing);
   }
 
   const idx = slug.indexOf("-vs-");
