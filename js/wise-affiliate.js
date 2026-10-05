@@ -58,7 +58,6 @@
         'letter-spacing:0.02em;' +
         'text-transform:uppercase;' +
         'color:var(--text-secondary,#86868b);' +
-        'opacity:0.85;' +
       '}';
     document.head.appendChild(style);
   }
@@ -138,10 +137,9 @@
     var codes = currenciesFromCompareDom();
     if (codes.length < 2) return;
 
-    var anchor =
-      document.querySelector('.hero .share-bar') ||
-      document.querySelector('section.hero') ||
-      document.querySelector('.compare-grid');
+    // Live compare pages: share-bar is a sibling after section.hero, not inside it.
+    // Anchor after the first Key Differences content-card only — no hero/share-bar fallback.
+    var anchor = document.querySelector('section.content-card');
     if (!anchor) return;
 
     mount({

@@ -1242,15 +1242,19 @@ function oeRecordRecent(label){
 function updateWiseAffiliate(cityA, cityB, ok){
   if(!window.SCWiseAffiliate) return;
   if(!ok){ SCWiseAffiliate.clear(); return; }
-  var cA=(cityToCurrency[cityA]||'USD');
-  var cB=(cityToCurrency[cityB]||'USD');
+  // No USD fallback for the differ-check: missing/unmapped currency → nothing.
+  var cA=cityToCurrency[cityA];
+  var cB=cityToCurrency[cityB];
+  if(!cA || !cB){ SCWiseAffiliate.clear(); return; }
   var anchor=null;
   var mat=document.getElementById('matchPanel');
   var cmp=document.getElementById('comparePanel');
   if(mat && mat.style.display!=='none'){
-    anchor=document.getElementById('matchVerdict')||document.getElementById('matchActions');
+    // After decision actions/card: card → actions → verdict
+    anchor=document.getElementById('oeDecisionCardMatch')||document.getElementById('matchActions')||document.getElementById('matchVerdict');
   } else if(cmp && cmp.style.display!=='none'){
-    anchor=document.getElementById('verdict');
+    // After decision card (Copy decision); fall back to verdict only
+    anchor=document.getElementById('oeDecisionCard')||document.getElementById('verdict');
   }
   if(!anchor){ SCWiseAffiliate.clear(); return; }
   SCWiseAffiliate.mount({pageType:'offer_evaluator', currencyA:cA, currencyB:cB, anchor:anchor, position:'after'});
